@@ -1,0 +1,17 @@
+{
+  "name": "@tddc/reference",
+  "version": "1.0.27",
+  "description": "关联引用",
+  "author": "周泽飞 <zefei.zhou@tongdun.net>",
+  "license": "ISC",
+  "main": "lib/index.js",
+  "files": [
+    "lib"
+  ],
+  "peerDependencies": {
+    "antd": ">=3.20.1",
+    "react": ">=16.8.0",
+    "react-dom": ">=16.8.0"
+  },
+  "gitHead": "681d4356e5fb95aa24b117f71601e20835b7ab43"
+}

@@ -1,0 +1,21 @@
+.tnt-layout .tnt-layout-header .tnt-layout-header-app-select {
+    display: flex;
+    align-items: center;
+    margin-left: 10px;
+    .ant-select-selection {
+        min-width: 160px;
+        line-height: 28px;
+        height: 28px;
+        background-color: transparent;
+        border: 1px solid rgba(23, 35, 61, 0.3);
+        .ant-select-selection__rendered {
+            color: rgba(23, 35, 61, 0.3);
+        }
+        .ant-select-arrow {
+            color: rgba(23, 35, 61, 0.3);
+        }
+    }
+    &.ant-select-open .ant-select-selection {
+        box-shadow: 0 0 0 1px rgba(23, 35, 61, 0.1);
+    }
+}

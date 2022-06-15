@@ -1,0 +1,82 @@
+.tnt-layout .tnt-layout-header .tnt-layout-header-org-app {
+    display: flex;
+    align-items: center;
+    margin-left: 10px;
+    .ant-input-group {
+        width: auto !important;
+        min-width: 160px;
+        height: 28px;
+        line-height: 28px;
+        .ant-select-selection {
+            background-color: transparent;
+            border: 1px solid rgba(23, 35, 61, 0.3);
+            .ant-select-selection__rendered {
+                color: rgba(23, 35, 61, 0.3);
+            }
+            .ant-select-arrow {
+                color: rgba(23, 35, 61, 0.3);
+            }
+        }
+        .ant-select-open .ant-select-selection {
+            box-shadow: 0 0 0 1px rgba(23, 35, 61, 0.1);
+        }
+        .org-app-select {
+            .ant-select-selection {
+                border-left-width: 0;
+            }
+        }
+    }
+}
+
+.org-tree-select {
+    &.ant-select-tree-dropdown .ant-select-dropdown-search {
+        padding: 10px;
+
+        .ant-select-search__field {
+            padding: 0 7px;
+            height: 28px;
+            line-height: 28px;
+        }
+    }
+
+    .ant-select-tree {
+        margin-top: 0;
+        padding: 0 10px 0 4px;
+
+        li {
+            margin: 4px 0;
+
+            .ant-select-tree-switcher {
+                height: 30px;
+                line-height: 30px;
+                float: left;
+            }
+
+            .ant-select-tree-node-content-wrapper {
+                height: 30px;
+                line-height: 30px;
+                padding: 0;
+                border-radius: 0;
+
+                &.ant-select-tree-node-selected {
+                    background: #E7F0FE;
+                }
+            }
+
+            .ant-select-tree-node-content-wrapper:hover {
+                background: #E7F0FE;
+            }
+
+            .ant-select-tree-title {
+                font-family: PingFangSC-Regular;
+                color: #17233D;
+                padding-left: 4px;
+                padding-right: 4px;
+                display: block;
+                overflow: hidden;
+                white-space: nowrap;
+                text-overflow: ellipsis;
+            }
+        }
+    }
+}

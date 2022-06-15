@@ -1,0 +1,20 @@
+{
+  "name": "@tddc/layout",
+  "version": "1.0.0",
+  "description": "Layout",
+  "author": "李桑桑 <sangsang.li@tongdun.net>",
+  "license": "ISC",
+  "main": "lib/index.js",
+  "files": [
+    "lib"
+  ],
+  "peerDependencies": {
+    "antd": "^3.26.20",
+    "lib-service": ">=0.2.21",
+    "react": ">=16.8.0",
+    "react-dom": ">=16.8.0"
+  },
+  "dependencies": {
+    "jsencrypt": "^3.2.1"
+  }
+}

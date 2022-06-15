@@ -1,0 +1,198 @@
+.tnt-layout .tnt-layout-header {
+    .tnt-navigation {
+        cursor: pointer;
+        font-size: 12px;
+
+        &:hover {
+            color: #17233D !important;
+
+            .tnt-icon {
+                color: #17233D;
+            }
+
+            span {
+                color: #17233D;
+            }
+        }
+
+        .tnt-icon {
+            margin-right: 4px;
+            font-size: 18px;
+            color: rgba(23, 35, 61, 0.5);
+        }
+
+        span {
+            color: rgba(23, 35, 61, 0.5);
+            position: relative;
+            top: -2px;
+        }
+
+    }
+}
+
+.tnt-navigation-popup {
+    position: absolute;
+    left: 0;
+    top: 50px;
+    width: 100%;
+    height: 530px;
+    background: #FFF;
+    box-shadow: 0 10px 10px -8px rgba(0, 0, 0, .1) inset,
+        0 10px 10px -8px rgba(0, 0, 0, .1);
+    transition: all .15s ease-in-out;
+    overflow: hidden;
+    padding: 20px 16px;
+    box-sizing: border-box;
+
+    &.hide {
+        height: 0;
+        padding: 0;
+    }
+
+    .search-area {
+        position: relative;
+        font-size: 14px;
+        margin-bottom: 20px;
+        color: rgba(23, 35, 61, .8);
+
+        &.active {
+            color: #126BFB;
+
+            input {
+                border-color: #126BFB;
+                ;
+            }
+        }
+
+        .tnt-icon {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            line-height: 1em;
+
+            &[type="close"] {
+                right: 0;
+                top: 0;
+                font-size: 18px;
+                cursor: pointer;
+            }
+        }
+
+        input {
+            border-width: 0 0 1px;
+            border-style: solid;
+            border-color: #B2BECD;
+            width: 100%;
+            padding: 4px 20px;
+            line-height: 20px;
+            background-color: transparent;
+            outline: none;
+        }
+
+        ul {
+            background: #fff;
+            max-height: 320px;
+            overflow-y: auto;
+            margin: 0;
+            padding: 6px 0;
+            list-style: none;
+            font-size: 13px;
+            position: absolute;
+            top: 29px;
+            width: 100%;
+            box-shadow: 0 3px 6px -4px rgba(0, 0, 0, .12), 0 6px 16px 0 rgba(0, 0, 0, .08), 0 9px 28px 8px rgba(0, 0, 0, .05);
+
+            li {
+                cursor: pointer;
+                line-height: 32px;
+                padding: 0 10px;
+
+                color: #17233D;
+
+                &:hover {
+                    color: #005df4;
+                    background-color: #F1F2F5;
+                }
+            }
+        }
+    }
+
+    .group-menus {
+        height: calc(100% - 50px);
+        overflow: auto;
+
+        &>div {
+            width: 200px;
+            margin-right: 10px;
+            display: inline-block;
+            vertical-align: top;
+        }
+
+        h5 {
+            line-height: 20px !important;
+            margin: 0;
+            margin-bottom: 12px;
+            font-size: 14px;
+            color: #17233D;
+            font-weight: 500;
+        }
+
+        .menu-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            margin-bottom: 20px;
+
+            .menu-list-item {
+                display: block;
+                line-height: 30px;
+                font-size: 12px;
+                cursor: pointer;
+
+                &:hover {
+                    a {
+                        color: #126BFB !important
+                    }
+
+                    ;
+                }
+
+                a {
+                    color: rgba(23, 35, 61, 0.8);
+                }
+
+                &.active a {
+                    color: #126BFB;
+                }
+            }
+        }
+    }
+
+    .main-menu {
+        border: 1px solid #B2BECD;
+        border-radius: 2px;
+        line-height: 30px;
+        margin: 0 0 16px;
+        padding: 0;
+        display: inline-block;
+
+        &>li {
+            padding: 0 20px;
+            display: inline-block;
+            cursor: pointer;
+            font-size: 14px;
+            color: #17233D;
+            font-weight: 400;
+
+            &:not(:last-child) {
+                border-right: 1px solid #B2BECD;
+                ;
+            }
+
+            &.active {
+                background-color: #126BFB;
+                color: #fff;
+            }
+        }
+    }
+}

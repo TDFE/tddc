@@ -1,0 +1,70 @@
+.reference-body{
+  .reference-body-title{
+      position: relative;
+      padding-left: 16px;
+      height: 30px;
+      line-height: 30px;
+      font-size: 14px;
+      .ml-6{
+        margin-left: 6px;
+      }
+      &::before{
+          content:"";
+          width: 3px;
+          height:6px;
+          background-color: #126BFB;
+          position: absolute;
+          left:0;
+          top: 14px;
+      }
+      &::after{
+          content:"";
+          width: 3px;
+          height:11px;
+          background-color: #126BFB;
+          position: absolute;
+          left:6px;
+          top: 9px;
+      }
+
+      .body-title-content{
+          display: inline-block;
+          max-width: 500px;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          white-space: nowrap;
+      }
+  }
+  .reference-body-item{
+    margin-bottom: 20px;
+    .refer-tag{
+      height: 22px;
+      line-height: 22px;
+      border-radius: 1px;
+      font-size: 12px;
+      display: inline-block;
+      margin-right: 6px;
+      padding:0 8px;
+      &.refer-tag-weak{
+        color: #454F64;
+        background: rgba(139,145,158,0.10);
+        border: 1px solid rgba(139,145,158,0.4);
+      }
+      &.refer-tag-strong{
+        color: #D96156;
+        background: rgba(217,97,86,0.10);
+        border: 1px solid rgba(217,97,86,0.4);
+      }
+    }
+  }
+  .ant-table-tbody > tr > td{
+    .tnt-ellipsis{
+      line-height: 22px !important;
+    }
+    &.refer-warning-txt{
+      *{
+        color:#D96156 !important;
+      }
+    }
+  }
+}
