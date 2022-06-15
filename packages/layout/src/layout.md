@@ -65,6 +65,7 @@ export default () => {
   return (
     <TGLayout
       location={window.location}
+      isDev={true}
     /> 
   )
 } 

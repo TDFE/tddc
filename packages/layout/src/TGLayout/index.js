@@ -29,6 +29,7 @@ const TGLayout = (props) => {
         onLanguageChange,
         onAppChange,
         onMenuSelect,
+        isDev,
         ...rest
     } = props;
     const [locale, setLocale] = useState(zhCN);
@@ -88,7 +89,7 @@ const TGLayout = (props) => {
     useEffect(() => {
         if (needAuth) {
             // 如果没有csrf则默认跳转到登录页面
-            if (!sessionStorage.getItem('_csrf_') && process.env.NODE_ENV !== 'development') {
+            if (!sessionStorage.getItem('_csrf_') && process.env.NODE_ENV !== 'development' && !isDev) {
                 if (search) {
                     const callbackUrl = origin + pathname + encodeURIComponent(search);
                     window.location = '/user/login?callbackUrl=' + callbackUrl;

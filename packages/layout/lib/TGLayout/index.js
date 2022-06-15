@@ -31,7 +31,7 @@ var _index = _interopRequireDefault(require("./service/index"));
 
 require("./index.less");
 
-var _excluded = ["actions", "syncGlobalState", "children", "appListVisible", "orgListVisible", "orgAppListVisible", "onOrgChange", "onLanguageChange", "onAppChange", "onMenuSelect"];
+var _excluded = ["actions", "syncGlobalState", "children", "appListVisible", "orgListVisible", "orgAppListVisible", "onOrgChange", "onLanguageChange", "onAppChange", "onMenuSelect", "isDev"];
 
 var _window;
 
@@ -94,6 +94,7 @@ var TGLayout = function TGLayout(props) {
       onLanguageChange = props.onLanguageChange,
       onAppChange = props.onAppChange,
       _onMenuSelect = props.onMenuSelect,
+      isDev = props.isDev,
       rest = _objectWithoutProperties(props, _excluded);
 
   var _useState = (0, _react.useState)(_zh_CN.default),
@@ -207,7 +208,7 @@ var TGLayout = function TGLayout(props) {
   (0, _react.useEffect)(function () {
     if (needAuth) {
       // 如果没有csrf则默认跳转到登录页面
-      if (!sessionStorage.getItem('_csrf_') && process.env.NODE_ENV !== 'development') {
+      if (!sessionStorage.getItem('_csrf_') && process.env.NODE_ENV !== 'development' && !isDev) {
         if (search) {
           var callbackUrl = origin + pathname + encodeURIComponent(search);
           window.location = '/user/login?callbackUrl=' + callbackUrl;
