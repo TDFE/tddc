@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="68px" height="68px" viewBox="0 0 68 68" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 52.4 (67378) - http://www.bohemiancoding.com/sketch -->
+    <title>上下</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <rect id="path-1" x="0" y="0" width="68" height="68"></rect>
+        <polygon id="path-3" points="4.4408921e-16 0 20 0 20 51 8.8817842e-16 51"></polygon>
+        <linearGradient x1="98.4814453%" y1="14.4287109%" x2="-1.51855469%" y2="85.5712891%" id="linearGradient-5">
+            <stop stop-color="#8ABEFF" offset="0%"></stop>
+            <stop stop-color="#62A7FF" offset="100%"></stop>
+        </linearGradient>
+    </defs>
+    <g id="大盘" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="V2-Copy-2" transform="translate(-1324.000000, -412.000000)">
+            <g id="上下" transform="translate(1324.000000, 412.000000)">
+                <mask id="mask-2" fill="white">
+                    <use xlink:href="#path-1"></use>
+                </mask>
+                <use id="Mask" fill="#E3EBFF" xlink:href="#path-1"></use>
+                <g id="矩形" mask="url(#mask-2)">
+                    <g transform="translate(0.000000, 17.000000)" id="大气科技镭射渐变背景-copy">
+                        <g>
+                            <mask id="mask-4" fill="white">
+                                <use xlink:href="#path-3"></use>
+                            </mask>
+                            <use id="Mask" fill="#2E81F7" opacity="0.169926525" xlink:href="#path-3"></use>
+                        </g>
+                    </g>
+                </g>
+                <rect id="矩形-copy-5" fill="url(#linearGradient-5)" opacity="0.819707961" mask="url(#mask-2)" x="0" y="0" width="68" height="17"></rect>
+            </g>
+        </g>
+    </g>
+</svg>

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="26px" height="30px" viewBox="0 0 26 30" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 63 (92445) - https://sketch.com -->
+    <title>切片</title>
+    <desc>Created with Sketch.</desc>
+    <g id="数据资产管理" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="datax-logo-01备份" fill-rule="nonzero">
+            <path d="M0.0478873239,7.5056338 L13.028169,0.0112676056 L26.0084507,7.5056338 L13.028169,15 L0.0478873239,7.5056338 Z" id="形状结合" fill="#7DCAFF"></path>
+            <path d="M0.0478873239,7.5056338 L13.028169,15 L13.028169,29.9887324 L0.0478873239,22.4943662 L0.0478873239,7.5056338 Z" id="形状结合" fill="#2E81F7"></path>
+            <polygon id="路径" fill="#0073D1" points="26.0084507 7.5056338 26.0084507 7.5056338 13.028169 15 13.028169 15 26.0084507 22.4943662 26.0084507 22.4943662"></polygon>
+            <polygon id="路径" fill="#0073D1" points="13.028169 29.9887324 13.028169 29.9887324 26.0084507 22.4943662 13.028169 15"></polygon>
+            <path d="M4.55422535,10.1077465 L13.028169,5.21549296 L21.5021127,10.1077465 L13.028169,15 L4.55422535,10.1077465 Z" id="形状结合" fill="#FFFFFF"></path>
+            <polygon id="路径" fill="#5CD9FE" points="4.55422535 10.1077465 4.55422535 19.8922535 13.028169 15"></polygon>
+            <path d="M13.028169,24.784507 L13.028169,15 L21.5021127,10.1077465 L21.5021127,19.8922535 L13.028169,24.784507 Z" id="形状结合" fill="#40FAFF"></path>
+            <polygon id="路径" fill="#06ADF9" points="13.028169 15 4.55422535 19.8922535 4.55422535 19.8922535 13.028169 24.784507 13.028169 15"></polygon>
+        </g>
+    </g>
+</svg>

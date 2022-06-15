@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="100px" height="100px" viewBox="0 0 100 100" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 63.1 (92452) - https://sketch.com -->
+    <title>feature</title>
+    <desc>Created with Sketch.</desc>
+    <g id="feature" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <polygon id="路径" fill="#8BC5F9" fill-rule="nonzero" points="35.3325966 86 8 42.0754577 14.6564201 37.9717961 34.639103 70.0852301 63.1114899 14 91 50.7603909 84.7518463 55.4563335 64.4347205 28.6756556"></polygon>
+        <path d="M0,40 L0,40 C0,46.6274179 5.37258207,52 12,52 C18.6274179,52 24,46.6274179 24,40 L24,40 C24,33.3725821 18.6274179,28 12,28 C5.37258207,28 0,33.3725821 0,40 L0,40 Z" id="路径" fill="#FF8839" fill-rule="nonzero"></path>
+        <path d="M76,53 L76,53 C76,59.6274179 81.3725821,65 88,65 C94.6274179,65 100,59.6274179 100,53 L100,53 C100,46.3725821 94.6274179,41 88,41 C81.3725821,41 76,46.3725821 76,53 L76,53 Z" id="路径" fill="#0AA5DE" fill-rule="nonzero"></path>
+        <path d="M48,20.5 L48,20.5 C48,29.0604105 54.9395895,36 63.5,36 C72.0604105,36 79,29.0604105 79,20.5 L79,20.5 C79,11.9395895 72.0604105,5 63.5,5 C54.9395895,5 48,11.9395895 48,20.5 L48,20.5 Z" id="路径" fill="#1F8FF6" fill-rule="nonzero"></path>
+        <path d="M22,80.5 L22,80.5 C22,88.5081241 28.4918759,95 36.5,95 C44.5081241,95 51,88.5081241 51,80.5 L51,80.5 C51,72.4918759 44.5081241,66 36.5,66 C28.4918759,66 22,72.4918759 22,80.5 L22,80.5 Z" id="路径" fill="#1CC09F" fill-rule="nonzero"></path>
+    </g>
+</svg>
