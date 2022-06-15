@@ -1,6 +1,6 @@
 # tddc
 
-## Getting Started
+## 立即开始
 
 Install dependencies,
 
@@ -17,13 +17,7 @@ $ npm start
 Build documentation,
 
 ```bash
-$ npm run docs:build
-```
-
-Run test,
-
-```bash
-$ npm test
+$ npm run deploy
 ```
 
 Build library via `father-build`,
