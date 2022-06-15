@@ -1,0 +1,59 @@
+.tnt-layout-header-avatar-popover {
+    .user-info-body-menu-row{
+        margin-top: 20px;
+        .menu{
+            height: 36px;
+            width: 90px;
+            background: #FFFFFF;
+            border: 1px solid #E1E6EE;
+            border-radius: 2px;
+            color: #17233D;
+            font-family: PingFangSC-Regular;
+            font-size: 12px;
+            position: relative;
+            cursor:pointer;
+            &.checked,&:hover{
+                border: 1px solid #126BFB;
+                color: #126BFB;
+            }
+            .menu-icon{
+                width:16px;
+                height:16px;
+                display: inline-block;
+                margin-right: 4px;
+            }
+            &.menu-2{
+                margin-right: 14px;
+                .menu-icon{
+                    background: url(../../images/menuLevel/menu-2.svg);
+                }
+            }
+            &.menu-3{
+                .menu-icon{
+                    background: url(../../images/menuLevel/menu-3.svg);
+                }
+            }
+            .icon-checked-wrap{
+                width: 14px;
+                height: 14px;
+                border-radius: 100%;
+                background: #126BFB;
+                position: absolute;
+                top: -5px;
+                right: -5px;
+                &:after{
+                    content:'';
+                    width: 4px;
+                    height: 6px;
+                    border-color: #FFFFFF;
+                    border-width: 0 1px 1px 0;
+                    border-style: solid;
+                    transform: rotate(45deg);
+                    position: absolute;
+                    top: 3px;
+                    left: 5px;
+                }
+            }
+        }
+    }
+}

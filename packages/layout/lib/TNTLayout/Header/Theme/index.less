@@ -1,0 +1,50 @@
+.tnt-layout-header-avatar-popover {
+    .user-info-body-theme-row{
+        margin-top: 20px;
+        >div{
+            width: 90px;
+            height: 36px;
+            line-height: 36px;
+            font-family: PingFangSC-Regular;
+            font-size: 12px;
+            border-radius: 2px;
+            text-align: center;
+            cursor:pointer;
+            position: relative;
+            &.themeS3{
+                background-image: linear-gradient(180deg, #1D4295 0%, #0F75D6 100%);
+                color: #FFFFFF;
+            }
+            &.themeS2{
+                background: #1D2231;
+                color: #FFFFFF;
+            }
+            &.themeS1{
+                background: #FFFFFF;
+                box-shadow: 0px 0px 4px 0px rgba(0,0,0,0.1);
+                color: #17233D;
+            }
+            .icon-checked-wrap{
+                width: 14px;
+                height: 14px;
+                border-radius: 100%;
+                background: #126BFB;
+                position: absolute;
+                top: -5px;
+                right: -5px;
+                &:after{
+                    content:'';
+                    width: 4px;
+                    height: 6px;
+                    border-color: #FFFFFF;
+                    border-width: 0 1px 1px 0;
+                    border-style: solid;
+                    transform: rotate(45deg);
+                    position: absolute;
+                    top: 3px;
+                    left: 5px;
+                }
+            }
+        }
+    }
+}
