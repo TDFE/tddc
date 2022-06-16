@@ -20,7 +20,7 @@ export default () => {
       <TNTLayout
           name="名称"
           enName="name"
-          location={window.location}
+          location={location}
           userInfo={{
             account: "zefei.zhou",
             userName:"周泽飞",
@@ -64,7 +64,7 @@ import { TGLayout } from "@tddc/layout";
 export default () => {
   return (
     <TGLayout
-      location={window.location}
+      location={location}
       isDev={true}
     /> 
   )

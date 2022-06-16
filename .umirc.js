@@ -61,6 +61,7 @@ export default defineConfig({
       'process.env':  JSON.stringify(process.env)
     }]);
   },
+  dynamicImport:{},
   metas: [
     {
       property: 'og:description',
