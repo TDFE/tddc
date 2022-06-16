@@ -76,14 +76,14 @@ export default defineConfig({
       null,
       {
         title: 'GitHub',
-        path: 'https://github.com/MrXujiang/best-cps',
+        path: 'https://github.com/TDFE/tddc',
       },
     ],
     'zh-CN': [
       null,
       {
         title: 'GitHub',
-        path: 'https://github.com/MrXujiang/best-cps',
+        path: 'https://github.com/TDFE/tddc',
       },
     ],
   },
