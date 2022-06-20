@@ -41,8 +41,8 @@ var Base = /*#__PURE__*/ (function () {
     this.data = null;
     this.flattenNodes = [];
     this.flattenLinks = [];
-    this.hierarchyData = {};
-    this.finalValue = {};
+    this.hierarchyData = null;
+    this.finalValue = null;
     this.keyDefault = 0;
   }
 

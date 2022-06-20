@@ -803,124 +803,139 @@ var Tree = /*#__PURE__*/ (function (_Base) {
     {
       key: 'drawNode',
       value: function drawNode() {
-        var _this2 = this;
+        var _this$Nodes,
+          _this$flattenNodes,
+          _this2 = this;
 
         var result = []; // 扁平化树
 
-        this.flattenNodes = this.Nodes.descendants();
-        this.flattenNodes.forEach(function (node) {
-          var data = node.data,
-            x = node.x,
-            y = node.y;
-          var key = data.key,
-            nodeName = data.nodeName;
+        this.flattenNodes =
+          ((_this$Nodes = this.Nodes) === null || _this$Nodes === void 0
+            ? void 0
+            : _this$Nodes.descendants()) || [];
+        ((_this$flattenNodes = this.flattenNodes) === null || _this$flattenNodes === void 0
+          ? void 0
+          : _this$flattenNodes.forEach(function (node) {
+              var data = node.data,
+                x = node.x,
+                y = node.y;
+              var key = data.key,
+                nodeName = data.nodeName;
 
-          var isExceed = (0, _utils.getTextPixelWith)(nodeName) > _this2.constant.COMPONENT_WIDTH;
+              var isExceed =
+                (0, _utils.getTextPixelWith)(nodeName) > _this2.constant.COMPONENT_WIDTH;
 
-          var Eledom = function Eledom() {
-            var NodeIns =
-              (_this2.nodeDom &&
-                _this2.nodeDom({
-                  node: node,
-                  nodeToggle: function nodeToggle(data) {
-                    return _this2.foldingClick(data);
-                  },
-                  id: _this2.getHierarchyId(key, 'root') + x + y,
-                  constants: _constants.default,
+              var Eledom = function Eledom() {
+                var NodeIns =
+                  (_this2.nodeDom &&
+                    _this2.nodeDom({
+                      node: node,
+                      nodeToggle: function nodeToggle(data) {
+                        return _this2.foldingClick(data);
+                      },
+                      id: _this2.getHierarchyId(key, 'root') + x + y,
+                      constants: _constants.default,
+                      fixed: _this2.fixed,
+                    })) ||
+                  null;
+                return NodeIns;
+              };
+
+              var Ele = (0, _WrapNode.default)(Eledom);
+              result.push(
+                /*#__PURE__*/ _react.default.createElement(Ele, {
+                  key: _this2.getHierarchyId(key, 'root') + x + y,
+                  id: _this2.getHierarchyId(key, 'root'),
+                  width: !isExceed && _this2.constant.COMPONENT_WIDTH,
+                  minWidth: _this2.constant.COMPONENT_WIDTH,
+                  minHeight: _this2.constant.COMPONENT_HEIGHT,
+                  x: x,
+                  y: y,
                   fixed: _this2.fixed,
-                })) ||
-              null;
-            return NodeIns;
-          };
-
-          var Ele = (0, _WrapNode.default)(Eledom);
-          result.push(
-            /*#__PURE__*/ _react.default.createElement(Ele, {
-              key: _this2.getHierarchyId(key, 'root') + x + y,
-              id: _this2.getHierarchyId(key, 'root'),
-              width: !isExceed && _this2.constant.COMPONENT_WIDTH,
-              minWidth: _this2.constant.COMPONENT_WIDTH,
-              minHeight: _this2.constant.COMPONENT_HEIGHT,
-              x: x,
-              y: y,
-              fixed: _this2.fixed,
-            }),
-          );
-        });
+                }),
+              );
+            })) || [];
         return result;
       },
     },
     {
       key: 'drawLine',
       value: function drawLine() {
-        var _this3 = this;
+        var _this$Nodes2,
+          _this3 = this;
 
-        this.flattenLinks = this.Nodes.links();
+        this.flattenLinks =
+          ((_this$Nodes2 = this.Nodes) === null || _this$Nodes2 === void 0
+            ? void 0
+            : _this$Nodes2.links()) || [];
         var result = [];
-        result = this.flattenLinks.map(function (link) {
-          var _source$data, _source$data2, _source$data3;
+        result =
+          (this === null || this === void 0
+            ? void 0
+            : this.flattenLinks.map(function (link) {
+                var _source$data, _source$data2, _source$data3;
 
-          var source = link.source,
-            target = link.target;
-          var sourceKey = source.data.key;
-          var targetKey = target.data.key;
-          var x = source.y;
-          var nodeNameWidth = (0, _utils.getTextPixelWith)(source.data.nodeName || ''); // 组件名称宽度
+                var source = link.source,
+                  target = link.target;
+                var sourceKey = source.data.key;
+                var targetKey = target.data.key;
+                var x = source.y;
+                var nodeNameWidth = (0, _utils.getTextPixelWith)(source.data.nodeName || ''); // 组件名称宽度
 
-          if (!source.parent) {
-            x = source.y + _this3.constant.COMPONENT_WIDTH;
-          } else {
-            if (_this3.fixed) {
-              x = source.y + _this3.constant.COMPONENT_WIDTH;
-            } else {
-              x =
-                source.y +
-                (nodeNameWidth > _this3.constant.COMPONENT_WIDTH
-                  ? nodeNameWidth
-                  : _this3.constant.COMPONENT_WIDTH);
-            }
-          }
+                if (!source.parent) {
+                  x = source.y + _this3.constant.COMPONENT_WIDTH;
+                } else {
+                  if (_this3.fixed) {
+                    x = source.y + _this3.constant.COMPONENT_WIDTH;
+                  } else {
+                    x =
+                      source.y +
+                      (nodeNameWidth > _this3.constant.COMPONENT_WIDTH
+                        ? nodeNameWidth
+                        : _this3.constant.COMPONENT_WIDTH);
+                  }
+                }
 
-          var length =
-            (source === null || source === void 0
-              ? void 0
-              : (_source$data = source.data) === null || _source$data === void 0
-              ? void 0
-              : _source$data.children.length) ||
-            (source === null || source === void 0
-              ? void 0
-              : (_source$data2 = source.data) === null || _source$data2 === void 0
-              ? void 0
-              : _source$data2._children.length) ||
-            0;
-          return /*#__PURE__*/ _react.default.createElement(
-            'div',
-            {
-              key: _this3.getHierarchyId(sourceKey, targetKey) + source.x + source.y,
-              'data-key': _this3.getHierarchyId(sourceKey, targetKey) + source.x + source.y,
-            },
-            /*#__PURE__*/ _react.default.createElement(_Link.default, {
-              root: !source.parent,
-              color:
-                source === null || source === void 0
-                  ? void 0
-                  : (_source$data3 = source.data) === null || _source$data3 === void 0
-                  ? void 0
-                  : _source$data3.color,
-              length: length,
-              source: {
-                x: x,
-                y: source.x,
-              },
-              target: {
-                x: target.y,
-                y: target.x,
-              },
-              type: _this3.lineType,
-              linkType: _this3.linkType,
-            }),
-          );
-        });
+                var length =
+                  (source === null || source === void 0
+                    ? void 0
+                    : (_source$data = source.data) === null || _source$data === void 0
+                    ? void 0
+                    : _source$data.children.length) ||
+                  (source === null || source === void 0
+                    ? void 0
+                    : (_source$data2 = source.data) === null || _source$data2 === void 0
+                    ? void 0
+                    : _source$data2._children.length) ||
+                  0;
+                return /*#__PURE__*/ _react.default.createElement(
+                  'div',
+                  {
+                    key: _this3.getHierarchyId(sourceKey, targetKey) + source.x + source.y,
+                    'data-key': _this3.getHierarchyId(sourceKey, targetKey) + source.x + source.y,
+                  },
+                  /*#__PURE__*/ _react.default.createElement(_Link.default, {
+                    root: !source.parent,
+                    color:
+                      source === null || source === void 0
+                        ? void 0
+                        : (_source$data3 = source.data) === null || _source$data3 === void 0
+                        ? void 0
+                        : _source$data3.color,
+                    length: length,
+                    source: {
+                      x: x,
+                      y: source.x,
+                    },
+                    target: {
+                      x: target.y,
+                      y: target.x,
+                    },
+                    type: _this3.lineType,
+                    linkType: _this3.linkType,
+                  }),
+                );
+              })) || [];
         return result;
       }, // 计算定位
     },
@@ -932,56 +947,60 @@ var Tree = /*#__PURE__*/ (function (_Base) {
         var leafCount = 0;
         var domWidth = 0;
         var domHeight = 0;
-        var Nodes = data.eachAfter(function (node) {
-          var exceedWidth = _this4.calcWidth(node) || 0;
-          var children = node.children,
-            data = node.data,
-            parent = node.parent;
+        var Nodes =
+          data === null || data === void 0
+            ? void 0
+            : data.eachAfter(function (node) {
+                var exceedWidth = _this4.calcWidth(node) || 0;
+                var children = node.children,
+                  data = node.data,
+                  parent = node.parent;
 
-          if (!_this4.fixed) {
-            node.y =
-              node.depth *
-                (_this4.constant.COMPONENT_WIDTH + _this4.constant.COMPONENT_SPACE_HORIZONTAL) +
-              exceedWidth;
-          } else {
-            node.y =
-              node.depth *
-              (_this4.constant.COMPONENT_WIDTH + _this4.constant.COMPONENT_SPACE_HORIZONTAL);
-          }
+                if (!_this4.fixed) {
+                  node.y =
+                    node.depth *
+                      (_this4.constant.COMPONENT_WIDTH +
+                        _this4.constant.COMPONENT_SPACE_HORIZONTAL) +
+                    exceedWidth;
+                } else {
+                  node.y =
+                    node.depth *
+                    (_this4.constant.COMPONENT_WIDTH + _this4.constant.COMPONENT_SPACE_HORIZONTAL);
+                }
 
-          if (_this4.customPosition) {
-            var _this4$customPosition = _this4.customPosition(node);
+                if (_this4.customPosition) {
+                  var _this4$customPosition = _this4.customPosition(node);
 
-            var _this4$customPosition2 = _slicedToArray(_this4$customPosition, 2);
+                  var _this4$customPosition2 = _slicedToArray(_this4$customPosition, 2);
 
-            node.x = _this4$customPosition2[0];
-            node.y = _this4$customPosition2[1];
-          }
+                  node.x = _this4$customPosition2[0];
+                  node.y = _this4$customPosition2[1];
+                }
 
-          if (parent === null) {
-            node.y = 0;
-            node.x =
-              children && children.length
-                ? (children[0].x + children[children.length - 1].x) / 2
-                : 0;
-          } else if (data.type === 'relation') {
-            node.x =
-              children && children.length
-                ? (children[0].x + children[children.length - 1].x) / 2
-                : 0;
-          } else {
-            node.x =
-              leafCount *
-              (_this4.constant.COMPONENT_HEIGHT + _this4.constant.COMPONENT_SPACE_VERTICAL);
-            leafCount += 1;
-          }
+                if (parent === null) {
+                  node.y = 0;
+                  node.x =
+                    children && children.length
+                      ? (children[0].x + children[children.length - 1].x) / 2
+                      : 0;
+                } else if (data.type === 'relation') {
+                  node.x =
+                    children && children.length
+                      ? (children[0].x + children[children.length - 1].x) / 2
+                      : 0;
+                } else {
+                  node.x =
+                    leafCount *
+                    (_this4.constant.COMPONENT_HEIGHT + _this4.constant.COMPONENT_SPACE_VERTICAL);
+                  leafCount += 1;
+                }
 
-          domWidth = Math.max(
-            node.y + (0, _utils.getTextPixelWith)(node.data.nodeName || ''),
-            domWidth,
-          );
-          domHeight = Math.max(node.x + _constants.COMPONENT_HEIGHT, domHeight);
-        }); // 设置容器宽度
+                domWidth = Math.max(
+                  node.y + (0, _utils.getTextPixelWith)(node.data.nodeName || ''),
+                  domWidth,
+                );
+                domHeight = Math.max(node.x + _constants.COMPONENT_HEIGHT, domHeight);
+              }); // 设置容器宽度
 
         this.domWidth = domWidth;
         this.domHeight = domHeight;
