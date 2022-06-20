@@ -299,29 +299,30 @@ class Tree extends Base {
   }
 }
 
-let BaseProxy = new Proxy(new Tree(), {
-  set(target, propertyKey, value) {
-    if (propertyKey === 'data') {
-      if (!value) return true;
-      if (target.initType === true || !target.interaction) {
-        value?.children?.forEach(expandTree);
-      } else {
-        value?.children?.forEach(collapseTree);
+let BaseProxy = () =>
+  new Proxy(new Tree(), {
+    set(target, propertyKey, value) {
+      if (propertyKey === 'data') {
+        if (!value) return true;
+        if (target.initType === true || !target.interaction) {
+          value?.children?.forEach(expandTree);
+        } else {
+          value?.children?.forEach(collapseTree);
+        }
+        Reflect.set(target, propertyKey, value);
+        target.initData();
+        target.render();
+        return true;
       }
       Reflect.set(target, propertyKey, value);
-      target.initData();
-      target.render();
       return true;
-    }
-    Reflect.set(target, propertyKey, value);
-    return true;
-  },
-  get(target, propertyKey) {
-    if (Reflect.has(target, propertyKey)) {
-      return Reflect.get(target, propertyKey);
-    }
-    return -1;
-  },
-});
+    },
+    get(target, propertyKey) {
+      if (Reflect.has(target, propertyKey)) {
+        return Reflect.get(target, propertyKey);
+      }
+      return -1;
+    },
+  });
 
 export default BaseProxy;

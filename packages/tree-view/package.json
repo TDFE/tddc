@@ -1,7 +1,7 @@
 {
-  "name": "@tddc/treeview",
+  "name": "@tddc/tree-view",
   "version": "1.0.0",
-  "description": "treeview",
+  "description": "treeView",
   "author": "zj",
   "license": "ISC",
   "main": "lib/index.js",
@@ -9,7 +9,7 @@
     "lib"
   ],
   "peerDependencies": {
-    "@tddc/treeview": ">=1.0.0",
+    "@tddc/tree-view": ">=1.0.0",
     "antd": "^3.26.20",
     "react": ">=16.8.0",
     "react-dom": ">=16.8.0"

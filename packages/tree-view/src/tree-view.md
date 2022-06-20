@@ -10,14 +10,14 @@ nav:
 ### 安装和初始化
 
 ```
-npm install @tddc/treeView --save
+npm install @tddc/tree-view --save
 ```
 
 ### 关联引用概览基本使用
 
 ```jsx
 import React, { useEffect, useRef } from 'react';
-import Tree from '@tddc/treeView';
+import Tree from '@tddc/tree-view';
 
 let treeData = {
   componentType: 'FIELD_SYSTEM',
@@ -137,7 +137,7 @@ const Overview = () => {
       },
       container: container.current,
     };
-    Tree.init(params);
+    Tree().init(params);
   }, []);
 
   return <div ref={container} />;
@@ -150,7 +150,7 @@ export default Overview;
 
 ```jsx
 import React, { useEffect, useRef } from 'react';
-import Tree from '@tddc/treeView';
+import Tree from '@tddc/tree-view';
 import Node from '../Node';
 
 let treeData = {
@@ -253,7 +253,7 @@ let treeData = {
   nodeName: '指标结果',
 };
 
-const Overview = () => {
+const Overview1 = () => {
   let container = useRef();
 
   useEffect(() => {
@@ -286,14 +286,13 @@ const Overview = () => {
       },
       container: container.current,
     };
-
-    Tree.init(params);
+    Tree().init(params);
   }, []);
 
   return <div ref={container} />;
 };
 
-export default Overview;
+export default Overview1;
 ```
 
 ### 入参
