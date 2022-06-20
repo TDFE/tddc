@@ -27,21 +27,21 @@ exports.default = void 0;
 
 var _react = _interopRequireDefault(require('react'));
 
-var _reactDom = _interopRequireDefault(require('react-dom'));
-
 var _lodash = require('lodash');
 
-var _utils = require('./utils');
+var _reactDom = _interopRequireDefault(require('react-dom'));
+
+var _Base2 = _interopRequireDefault(require('./Base'));
 
 var _constants = _interopRequireWildcard(require('./constants'));
 
 var _DefaultNode = _interopRequireDefault(require('./DefaultNode'));
 
-var _WrapNode = _interopRequireDefault(require('./WrapNode'));
-
 var _Link = _interopRequireDefault(require('./Link'));
 
-var _Base2 = _interopRequireDefault(require('./Base'));
+var _utils = require('./utils');
+
+var _WrapNode = _interopRequireDefault(require('./WrapNode'));
 
 function _getRequireWildcardCache(nodeInterop) {
   if (typeof WeakMap !== 'function') return null;
