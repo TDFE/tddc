@@ -75,8 +75,8 @@ class Tree extends Base {
   drawNode() {
     const result = [];
     // 扁平化树
-    this.flattenNodes = this.Nodes.descendants();
-    this.flattenNodes.forEach((node) => {
+    this.flattenNodes = this.Nodes?.descendants() || [];
+    this.flattenNodes?.forEach((node) => {
       let { data, x, y } = node;
       let { key, nodeName } = data;
       let isExceed = getTextPixelWith(nodeName) > this.constant.COMPONENT_WIDTH;
@@ -106,61 +106,62 @@ class Tree extends Base {
           fixed={this.fixed}
         />,
       );
-    });
+    }) || [];
     return result;
   }
 
   drawLine() {
-    this.flattenLinks = this.Nodes.links();
+    this.flattenLinks = this.Nodes?.links() || [];
     let result = [];
-    result = this.flattenLinks.map((link) => {
-      const { source, target } = link;
-      const sourceKey = source.data.key;
-      const targetKey = target.data.key;
+    result =
+      this?.flattenLinks.map((link) => {
+        const { source, target } = link;
+        const sourceKey = source.data.key;
+        const targetKey = target.data.key;
 
-      let x = source.y;
+        let x = source.y;
 
-      let nodeNameWidth = getTextPixelWith(source.data.nodeName || ''); // 组件名称宽度
+        let nodeNameWidth = getTextPixelWith(source.data.nodeName || ''); // 组件名称宽度
 
-      if (!source.parent) {
-        x = source.y + this.constant.COMPONENT_WIDTH;
-      } else {
-        if (this.fixed) {
+        if (!source.parent) {
           x = source.y + this.constant.COMPONENT_WIDTH;
         } else {
-          x =
-            source.y +
-            (nodeNameWidth > this.constant.COMPONENT_WIDTH
-              ? nodeNameWidth
-              : this.constant.COMPONENT_WIDTH);
+          if (this.fixed) {
+            x = source.y + this.constant.COMPONENT_WIDTH;
+          } else {
+            x =
+              source.y +
+              (nodeNameWidth > this.constant.COMPONENT_WIDTH
+                ? nodeNameWidth
+                : this.constant.COMPONENT_WIDTH);
+          }
         }
-      }
 
-      let length = source?.data?.children.length || source?.data?._children.length || 0;
+        let length = source?.data?.children.length || source?.data?._children.length || 0;
 
-      return (
-        <div
-          key={this.getHierarchyId(sourceKey, targetKey) + source.x + source.y}
-          data-key={this.getHierarchyId(sourceKey, targetKey) + source.x + source.y}
-        >
-          <Link
-            root={!source.parent}
-            color={source?.data?.color}
-            length={length}
-            source={{
-              x,
-              y: source.x,
-            }}
-            target={{
-              x: target.y,
-              y: target.x,
-            }}
-            type={this.lineType}
-            linkType={this.linkType}
-          />
-        </div>
-      );
-    });
+        return (
+          <div
+            key={this.getHierarchyId(sourceKey, targetKey) + source.x + source.y}
+            data-key={this.getHierarchyId(sourceKey, targetKey) + source.x + source.y}
+          >
+            <Link
+              root={!source.parent}
+              color={source?.data?.color}
+              length={length}
+              source={{
+                x,
+                y: source.x,
+              }}
+              target={{
+                x: target.y,
+                y: target.x,
+              }}
+              type={this.lineType}
+              linkType={this.linkType}
+            />
+          </div>
+        );
+      }) || [];
 
     return result;
   }
@@ -170,7 +171,7 @@ class Tree extends Base {
     let leafCount = 0;
     let domWidth = 0;
     let domHeight = 0;
-    const Nodes = data.eachAfter((node) => {
+    const Nodes = data?.eachAfter((node) => {
       let exceedWidth = this.calcWidth(node) || 0;
 
       let { children, data, parent } = node;

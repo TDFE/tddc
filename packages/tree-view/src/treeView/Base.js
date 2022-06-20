@@ -8,8 +8,8 @@ class Base {
 
     this.flattenNodes = [];
     this.flattenLinks = [];
-    this.hierarchyData = {};
-    this.finalValue = {};
+    this.hierarchyData = null;
+    this.finalValue = null;
 
     this.keyDefault = 0;
   }

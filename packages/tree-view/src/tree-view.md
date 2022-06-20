@@ -17,7 +17,7 @@ npm install @tddc/tree-view --save
 
 ```jsx
 import React, { useEffect, useRef } from 'react';
-import Tree from '@tddc/tree-view';
+import treeView from '@tddc/tree-view';
 
 let treeData = {
   componentType: 'FIELD_SYSTEM',
@@ -120,9 +120,11 @@ let treeData = {
 };
 
 const Overview = () => {
+  let tree = useRef();
   let container = useRef();
 
   useEffect(() => {
+    tree.current = treeView();
     let params = {
       data: treeData,
       options: {
@@ -137,7 +139,8 @@ const Overview = () => {
       },
       container: container.current,
     };
-    Tree().init(params);
+
+    tree.current.init(params);
   }, []);
 
   return <div ref={container} />;
@@ -150,7 +153,7 @@ export default Overview;
 
 ```jsx
 import React, { useEffect, useRef } from 'react';
-import Tree from '@tddc/tree-view';
+import treeView from '@tddc/tree-view';
 import Node from '../Node';
 
 let treeData = {
@@ -254,9 +257,12 @@ let treeData = {
 };
 
 const Overview1 = () => {
+  let tree = useRef();
   let container = useRef();
 
   useEffect(() => {
+    tree.current = treeView();
+
     let params = {
       data: treeData,
       options: {
@@ -286,7 +292,8 @@ const Overview1 = () => {
       },
       container: container.current,
     };
-    Tree().init(params);
+
+    tree.current.init(params);
   }, []);
 
   return <div ref={container} />;
