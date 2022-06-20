@@ -1,0 +1,21 @@
+{
+  "name": "@tddc/treeview",
+  "version": "1.0.0",
+  "description": "treeview",
+  "author": "zj",
+  "license": "ISC",
+  "main": "lib/index.js",
+  "files": [
+    "lib"
+  ],
+  "peerDependencies": {
+    "@tddc/treeview": ">=1.0.0",
+    "antd": "^3.26.20",
+    "react": ">=16.8.0",
+    "react-dom": ">=16.8.0"
+  },
+  "dependencies": {
+    "d3-hierarchy": "^3.1.1"
+  },
+  "gitHead": "df660e73f096f47aceb71061ab919a2d998c1dcd"
+}
