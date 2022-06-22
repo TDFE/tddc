@@ -1,0 +1,21 @@
+{
+  "name": "@tddc/assignModal",
+  "version": "1.0.0",
+  "description": "机构应用授权",
+  "author": "zj",
+  "license": "ISC",
+  "main": "lib/index.js",
+  "files": [
+    "lib"
+  ],
+  "peerDependencies": {
+    "antd": "^3.26.20",
+    "lib-service": ">=0.2.21",
+    "react": ">=16.8.0",
+    "react-dom": ">=16.8.0",
+    "@tddc/assignModal":">=1.0.0"
+  },
+  "dependencies": {
+    "jsencrypt": "^3.2.1"
+  }
+}
