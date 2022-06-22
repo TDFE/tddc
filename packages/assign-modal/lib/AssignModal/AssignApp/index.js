@@ -441,53 +441,16 @@ var AssignModal = function AssignModal(props) {
       /*#__PURE__*/ _react.default.createElement(
         _tree.default,
         {
+          blockNode: true,
+          className: 'tree-list',
           checkable: true,
-          defaultExpandedKeys: ['0-0-0', '0-0-1'],
-          defaultSelectedKeys: ['0-0-0', '0-0-1'],
-          defaultCheckedKeys: ['0-0-0', '0-0-1'],
+          checkStrictly: true,
+          checkedKeys: checkedKeys,
+          defaultExpandAll: true,
+          onCheck: onCheck,
+          disabled: disabled,
         },
-        /*#__PURE__*/ _react.default.createElement(
-          TreeNode,
-          {
-            title: 'parent 1',
-            key: '0-0',
-          },
-          /*#__PURE__*/ _react.default.createElement(
-            TreeNode,
-            {
-              title: 'parent 1-0',
-              key: '0-0-0',
-              disabled: true,
-            },
-            /*#__PURE__*/ _react.default.createElement(TreeNode, {
-              title: 'leaf',
-              key: '0-0-0-0',
-            }),
-            /*#__PURE__*/ _react.default.createElement(TreeNode, {
-              title: 'leaf',
-              key: '0-0-0-1',
-            }),
-          ),
-          /*#__PURE__*/ _react.default.createElement(
-            TreeNode,
-            {
-              title: 'parent 1-1',
-              key: '0-0-1',
-            },
-            /*#__PURE__*/ _react.default.createElement(TreeNode, {
-              title: /*#__PURE__*/ _react.default.createElement(
-                'span',
-                {
-                  style: {
-                    color: '#1890ff',
-                  },
-                },
-                'sss',
-              ),
-              key: '0-0-1-0',
-            }),
-          ),
-        ),
+        loopTreeNodes(orgList),
       ),
     ),
     /*#__PURE__*/ _react.default.createElement(
