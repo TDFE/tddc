@@ -1,5 +1,5 @@
 {
-  "name": "@tddc/assignModal",
+  "name": "@tddc/assign-modal",
   "version": "1.0.0",
   "description": "机构应用授权",
   "author": "zj",
@@ -9,7 +9,7 @@
     "lib"
   ],
   "peerDependencies": {
-    "@tddc/assignModal": ">=1.0.0",
+    "@tddc/assign-modal": ">=1.0.0",
     "antd": "^3.26.20",
     "lib-service": ">=0.2.21",
     "react": ">=16.8.0",
@@ -18,5 +18,5 @@
   "dependencies": {
     "jsencrypt": "^3.2.1"
   },
-  "gitHead": "82fa4f14b77724b2e14752401d18c0fbaecea703"
+  "gitHead": "d2088ebba24e1e1199d284cd049e987317afd5d3"
 }

@@ -10,7 +10,7 @@ nav:
 ### 安装和初始化
 
 ```
-npm install @tddc/assignModal --save
+npm install @tddc/assign-modal --save
 ```
 
 ### 授权组件在中台中的使用
@@ -18,7 +18,7 @@ npm install @tddc/assignModal --save
 ```jsx
 import React, { useState } from 'react';
 import { Button, message } from 'antd';
-import AssignModal from '@tddc/assignModal';
+import AssignModal from '@tddc/assign-modal';
 
 const Assign = () => {
   let org = [
