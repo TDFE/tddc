@@ -17,6 +17,5 @@
   },
   "dependencies": {
     "jsencrypt": "^3.2.1"
-  },
-  "gitHead": "d2088ebba24e1e1199d284cd049e987317afd5d3"
+  }
 }
