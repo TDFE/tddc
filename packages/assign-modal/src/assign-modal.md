@@ -211,6 +211,7 @@ export default Assign;
 | 参数 | 说明 | 类型 | 默认值 |
 | --- | --- | --- | --- |
 | visible | 弹窗是否可见 | Boo | false |
+| disabled | 是否禁用编辑 | Boo | false |
 | [orgList](#-orglist-决策中台数据结构) | 机构列表 | Object | [] |
 | [appList](#-applist-决策中台数据结构) | 应用列表 | Object | [] |
 | title | 标题 | String |  |
