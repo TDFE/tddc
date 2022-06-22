@@ -31,17 +31,15 @@ Object.defineProperty(exports, 'AssignApp', {
 });
 exports.default = void 0;
 
-var _react = _interopRequireWildcard(require('react'));
+require('antd/lib/modal/style');
 
-var _antd = require('antd');
+var _modal = _interopRequireDefault(require('antd/lib/modal'));
+
+var _react = _interopRequireWildcard(require('react'));
 
 var _AssignApp = _interopRequireDefault(require('./AssignApp'));
 
 require('./index.less');
-
-function _interopRequireDefault(obj) {
-  return obj && obj.__esModule ? obj : { default: obj };
-}
 
 function _getRequireWildcardCache(nodeInterop) {
   if (typeof WeakMap !== 'function') return null;
@@ -80,6 +78,10 @@ function _interopRequireWildcard(obj, nodeInterop) {
     cache.set(obj, newObj);
   }
   return newObj;
+}
+
+function _interopRequireDefault(obj) {
+  return obj && obj.__esModule ? obj : { default: obj };
 }
 
 function _slicedToArray(arr, i) {
@@ -169,7 +171,7 @@ var AssignModal = function AssignModal(props) {
   };
 
   return /*#__PURE__*/ _react.default.createElement(
-    _antd.Modal,
+    _modal.default,
     {
       className: 'modelTool-assign',
       title: title,

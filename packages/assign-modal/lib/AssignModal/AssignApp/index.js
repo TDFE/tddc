@@ -25,9 +25,15 @@ Object.defineProperty(exports, '__esModule', {
 });
 exports.default = void 0;
 
-var _react = _interopRequireWildcard(require('react'));
+require('antd/lib/checkbox/style');
 
-var _antd = require('antd');
+var _checkbox = _interopRequireDefault(require('antd/lib/checkbox'));
+
+require('antd/lib/tree/style');
+
+var _tree = _interopRequireDefault(require('antd/lib/tree'));
+
+var _react = _interopRequireWildcard(require('react'));
 
 var _tntd = require('tntd');
 
@@ -74,6 +80,10 @@ function _interopRequireWildcard(obj, nodeInterop) {
     cache.set(obj, newObj);
   }
   return newObj;
+}
+
+function _interopRequireDefault(obj) {
+  return obj && obj.__esModule ? obj : { default: obj };
 }
 
 function _toConsumableArray(arr) {
@@ -168,7 +178,7 @@ function _arrayWithHoles(arr) {
   if (Array.isArray(arr)) return arr;
 }
 
-var TreeNode = _antd.Tree.TreeNode;
+var TreeNode = _tree.default.TreeNode;
 var path = []; // 上级机构到当前机构的路径
 
 var allOrgList = [];
@@ -418,7 +428,7 @@ var AssignModal = function AssignModal(props) {
             className: 'menu-all-checked',
           },
           /*#__PURE__*/ _react.default.createElement(
-            _antd.Checkbox,
+            _checkbox.default,
             {
               onChange: checkAllOrg,
               checked: allOrgChecked,
@@ -429,18 +439,55 @@ var AssignModal = function AssignModal(props) {
         ),
       ),
       /*#__PURE__*/ _react.default.createElement(
-        _antd.Tree,
+        _tree.default,
         {
-          blockNode: true,
-          className: 'tree-list',
           checkable: true,
-          checkStrictly: true,
-          checkedKeys: checkedKeys,
-          defaultExpandAll: true,
-          onCheck: onCheck,
-          disabled: disabled,
+          defaultExpandedKeys: ['0-0-0', '0-0-1'],
+          defaultSelectedKeys: ['0-0-0', '0-0-1'],
+          defaultCheckedKeys: ['0-0-0', '0-0-1'],
         },
-        loopTreeNodes(orgList),
+        /*#__PURE__*/ _react.default.createElement(
+          TreeNode,
+          {
+            title: 'parent 1',
+            key: '0-0',
+          },
+          /*#__PURE__*/ _react.default.createElement(
+            TreeNode,
+            {
+              title: 'parent 1-0',
+              key: '0-0-0',
+              disabled: true,
+            },
+            /*#__PURE__*/ _react.default.createElement(TreeNode, {
+              title: 'leaf',
+              key: '0-0-0-0',
+            }),
+            /*#__PURE__*/ _react.default.createElement(TreeNode, {
+              title: 'leaf',
+              key: '0-0-0-1',
+            }),
+          ),
+          /*#__PURE__*/ _react.default.createElement(
+            TreeNode,
+            {
+              title: 'parent 1-1',
+              key: '0-0-1',
+            },
+            /*#__PURE__*/ _react.default.createElement(TreeNode, {
+              title: /*#__PURE__*/ _react.default.createElement(
+                'span',
+                {
+                  style: {
+                    color: '#1890ff',
+                  },
+                },
+                'sss',
+              ),
+              key: '0-0-1-0',
+            }),
+          ),
+        ),
       ),
     ),
     /*#__PURE__*/ _react.default.createElement(
@@ -467,7 +514,7 @@ var AssignModal = function AssignModal(props) {
             className: 'menu-all-checked',
           },
           /*#__PURE__*/ _react.default.createElement(
-            _antd.Checkbox,
+            _checkbox.default,
             {
               onChange: checkedAllApp,
               checked: allAppChecked,
@@ -488,7 +535,7 @@ var AssignModal = function AssignModal(props) {
           var isOwnAppCode =
             (dataItem === null || dataItem === void 0 ? void 0 : dataItem.appCode) === item.value;
           return /*#__PURE__*/ _react.default.createElement(
-            _antd.Checkbox,
+            _checkbox.default,
             {
               checked: isCheck,
               disabled: disabled || isOwnAppCode,
