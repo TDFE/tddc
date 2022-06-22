@@ -313,6 +313,7 @@ var AssignModal = function AssignModal(props) {
 
     if (!info.node.isLeaf() && !info.node.checked) {
       var arr = (0, _utils.preorder)(info.node.props.item);
+      arr.splice(0, 1);
       arr.map(function (item) {
         var i = checked.findIndex(function (i) {
           return i === item;
@@ -331,7 +332,7 @@ var AssignModal = function AssignModal(props) {
     onChange &&
       onChange({
         appKeys: appKeys,
-        checkedKeys: keys.checked,
+        checkedKeys: checked,
       });
   };
 

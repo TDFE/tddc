@@ -91,6 +91,7 @@ const AssignModal = (props) => {
 
     if (!info.node.isLeaf() && !info.node.checked) {
       let arr = preorder(info.node.props.item);
+      arr.splice(0, 1);
       arr.map((item) => {
         let i = checked.findIndex((i) => i === item);
         if (i !== -1) checked.splice(i, 1);
@@ -104,7 +105,7 @@ const AssignModal = (props) => {
     onChange &&
       onChange({
         appKeys,
-        checkedKeys: keys.checked,
+        checkedKeys: checked,
       });
   };
 
