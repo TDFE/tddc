@@ -1,9 +1,7 @@
 import { readdirSync } from 'fs';
 import { join } from 'path';
 
-const tailPkgs = readdirSync(join(__dirname, 'packages')).filter(
-  (pkg) => pkg.charAt(0) !== '.'
-);
+const tailPkgs = readdirSync(join(__dirname, 'packages')).filter((pkg) => pkg.charAt(0) !== '.');
 
 const type = process.env.BUILD_TYPE;
 
@@ -13,7 +11,8 @@ if (type === 'lib') {
   config = {
     cjs: { type: 'babel', lazy: true },
     esm: false,
-    pkgs: [ ...tailPkgs],
+    pkgs: [...tailPkgs],
+    extraBabelPlugins: [['babel-plugin-import', { libraryName: 'antd', style: true }, 'antd']],
   };
 }
 
