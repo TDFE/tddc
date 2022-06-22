@@ -31,9 +31,9 @@ var _antd = require('antd');
 
 var _tntd = require('tntd');
 
-require('./index.less');
-
 var _lodash = require('lodash');
+
+require('./index.less');
 
 var _utils = require('./utils');
 

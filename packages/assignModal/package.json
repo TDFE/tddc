@@ -9,13 +9,14 @@
     "lib"
   ],
   "peerDependencies": {
+    "@tddc/assignModal": ">=1.0.0",
     "antd": "^3.26.20",
     "lib-service": ">=0.2.21",
     "react": ">=16.8.0",
-    "react-dom": ">=16.8.0",
-    "@tddc/assignModal":">=1.0.0"
+    "react-dom": ">=16.8.0"
   },
   "dependencies": {
     "jsencrypt": "^3.2.1"
-  }
+  },
+  "gitHead": "82fa4f14b77724b2e14752401d18c0fbaecea703"
 }

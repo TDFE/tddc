@@ -35,9 +35,9 @@ var _react = _interopRequireWildcard(require('react'));
 
 var _antd = require('antd');
 
-require('./index.less');
-
 var _AssignApp = _interopRequireDefault(require('./AssignApp'));
+
+require('./index.less');
 
 function _interopRequireDefault(obj) {
   return obj && obj.__esModule ? obj : { default: obj };
