@@ -14,8 +14,6 @@ import './index.less';
 const layoutEventEmitter = window?.lightBoxActions || new EventEmitter();
 const { HeaderTabs, HeaderActionItem, AuthContext } = Layout;
 
-export { HeaderTabs, AuthContext };
-
 const TGLayout = (props) => {
     const { origin, pathname, search } = window.location || {};
     const {
@@ -267,4 +265,7 @@ const TGLayout = (props) => {
 };
 TGLayout.getLayoutPageTitle = getLayoutPageTitle;
 TGLayout.layoutEventEmitter = layoutEventEmitter;
+TGLayout.HeaderTabs = HeaderTabs;
+TGLayout.AuthContext = AuthContext;
+TGLayout.HeaderActionItem=HeaderActionItem;
 export default TGLayout;

@@ -10,12 +10,12 @@
   ],
   "peerDependencies": {
     "antd": "^3.26.20",
-    "lib-service": ">=0.2.21",
     "react": ">=16.8.0",
     "react-dom": ">=16.8.0",
     "@tddc/layout":">=1.0.0"
   },
   "dependencies": {
-    "jsencrypt": "^3.2.1"
+    "jsencrypt": "^3.2.1",
+    "lib-service": ">=0.2.21"
   }
 }
