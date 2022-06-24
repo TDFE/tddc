@@ -29,8 +29,6 @@ var _tntd = require("tntd");
 
 var _universalCookie = _interopRequireDefault(require("universal-cookie"));
 
-var _eventemitter = _interopRequireDefault(require("eventemitter3"));
-
 var _TNTLayout = _interopRequireDefault(require("../TNTLayout"));
 
 var _reducer = _interopRequireWildcard(require("./reducer"));
@@ -41,9 +39,7 @@ var _index = _interopRequireDefault(require("./service/index"));
 
 require("./index.less");
 
-var _excluded = ["actions", "syncGlobalState", "children", "appListVisible", "orgListVisible", "orgAppListVisible", "onOrgChange", "onLanguageChange", "onAppChange", "onMenuSelect", "isDev"];
-
-var _window;
+var _excluded = ["eventEmitter", "actions", "syncGlobalState", "children", "appListVisible", "orgListVisible", "orgAppListVisible", "onOrgChange", "onLanguageChange", "onAppChange", "onMenuSelect", "isDev"];
 
 function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== "function") return null; var cacheBabelInterop = new WeakMap(); var cacheNodeInterop = new WeakMap(); return (_getRequireWildcardCache = function _getRequireWildcardCache(nodeInterop) { return nodeInterop ? cacheNodeInterop : cacheBabelInterop; })(nodeInterop); }
 
@@ -81,7 +77,6 @@ function _objectWithoutProperties(source, excluded) { if (source == null) return
 
 function _objectWithoutPropertiesLoose(source, excluded) { if (source == null) return {}; var target = {}; var sourceKeys = Object.keys(source); var key, i; for (i = 0; i < sourceKeys.length; i++) { key = sourceKeys[i]; if (excluded.indexOf(key) >= 0) continue; target[key] = source[key]; } return target; }
 
-var layoutEventEmitter = ((_window = window) === null || _window === void 0 ? void 0 : _window.lightBoxActions) || new _eventemitter.default();
 var HeaderTabs = _TNTLayout.default.HeaderTabs,
     HeaderActionItem = _TNTLayout.default.HeaderActionItem,
     AuthContext = _TNTLayout.default.AuthContext;
@@ -92,7 +87,8 @@ var TGLayout = function TGLayout(props) {
       pathname = _ref.pathname,
       search = _ref.search;
 
-  var actions = props.actions,
+  var eventEmitter = props.eventEmitter,
+      actions = props.actions,
       syncGlobalState = props.syncGlobalState,
       children = props.children,
       appListVisible = props.appListVisible,
@@ -364,14 +360,14 @@ var TGLayout = function TGLayout(props) {
 
   var orgChange = function orgChange(curOrgTree) {
     onOrgChange && onOrgChange(curOrgTree);
-    layoutEventEmitter.emit('appChange', true);
+    eventEmitter === null || eventEmitter === void 0 ? void 0 : eventEmitter.emit('appChange', true);
     getAppByOrgId(curOrgTree);
   }; // 渠道切换
 
 
   var appChange = function appChange(app) {
     onAppChange && onAppChange(app);
-    layoutEventEmitter.emit('appChange', true);
+    eventEmitter === null || eventEmitter === void 0 ? void 0 : eventEmitter.emit('appChange', true);
     dispatch({
       type: 'setCurrentApp',
       payload: {
@@ -428,7 +424,7 @@ var TGLayout = function TGLayout(props) {
       var _data$path;
 
       if (data === null || data === void 0 ? void 0 : (_data$path = data.path) === null || _data$path === void 0 ? void 0 : _data$path.startsWith("/".concat(routerPrefix))) {
-        layoutEventEmitter === null || layoutEventEmitter === void 0 ? void 0 : layoutEventEmitter.emit('menuClick', true);
+        eventEmitter === null || eventEmitter === void 0 ? void 0 : eventEmitter.emit('menuClick', true);
       }
 
       _onMenuSelect && _onMenuSelect(data);
@@ -452,7 +448,6 @@ var TGLayout = function TGLayout(props) {
 };
 
 TGLayout.getLayoutPageTitle = _utils.getLayoutPageTitle;
-TGLayout.layoutEventEmitter = layoutEventEmitter;
 TGLayout.HeaderTabs = HeaderTabs;
 TGLayout.AuthContext = AuthContext;
 TGLayout.HeaderActionItem = HeaderActionItem;

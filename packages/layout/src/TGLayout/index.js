@@ -4,19 +4,18 @@ import zhCN from 'antd/es/locale/zh_CN';
 import enUS from 'antd/es/locale/en_US';
 import { DevelopmentLogin } from 'tntd';
 import Cookies from 'universal-cookie';
-import EventEmitter from 'eventemitter3';
 import Layout from '../TNTLayout';
 import reducer, { initState } from './reducer';
 import { rsaPwd, formatOrgApp, getLayoutPageTitle } from './utils';
 import service from './service/index';
 import './index.less';
 
-const layoutEventEmitter = window?.lightBoxActions || new EventEmitter();
 const { HeaderTabs, HeaderActionItem, AuthContext } = Layout;
 
 const TGLayout = (props) => {
     const { origin, pathname, search } = window.location || {};
     const {
+        eventEmitter,
         actions,
         syncGlobalState,
         children,
@@ -184,14 +183,14 @@ const TGLayout = (props) => {
     // 监听机构变更
     const orgChange = (curOrgTree) => {
         onOrgChange && onOrgChange(curOrgTree);
-        layoutEventEmitter.emit('appChange', true);
+        eventEmitter?.emit('appChange', true);
         getAppByOrgId(curOrgTree);
     };
 
     // 渠道切换
     const appChange = (app) => {
         onAppChange && onAppChange(app);
-        layoutEventEmitter.emit('appChange', true);
+        eventEmitter?.emit('appChange', true);
         dispatch({
             type: 'setCurrentApp',
             payload: { currentApp: app }
@@ -237,7 +236,7 @@ const TGLayout = (props) => {
                 onLanguageChange={languageChange}
                 onMenuSelect={(data) => {
                     if (data?.path?.startsWith(`/${routerPrefix}`)) {
-                        layoutEventEmitter?.emit('menuClick', true);
+                        eventEmitter?.emit('menuClick', true);
                     }
                     onMenuSelect && onMenuSelect(data);
                 }}
@@ -264,7 +263,6 @@ const TGLayout = (props) => {
     );
 };
 TGLayout.getLayoutPageTitle = getLayoutPageTitle;
-TGLayout.layoutEventEmitter = layoutEventEmitter;
 TGLayout.HeaderTabs = HeaderTabs;
 TGLayout.AuthContext = AuthContext;
 TGLayout.HeaderActionItem=HeaderActionItem;
