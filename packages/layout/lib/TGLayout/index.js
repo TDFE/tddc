@@ -39,7 +39,7 @@ var _index = _interopRequireDefault(require("./service/index"));
 
 require("./index.less");
 
-var _excluded = ["eventEmitter", "actions", "syncGlobalState", "children", "appListVisible", "orgListVisible", "orgAppListVisible", "onOrgChange", "onLanguageChange", "onAppChange", "onMenuSelect", "isDev"];
+var _excluded = ["eventEmitter", "actions", "syncGlobalState", "children", "appListVisible", "orgListVisible", "orgAppListVisible", "onOrgChange", "onLanguageChange", "onAppChange", "onMenuSelect", "isDev", "onMenuLevelChange"];
 
 function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== "function") return null; var cacheBabelInterop = new WeakMap(); var cacheNodeInterop = new WeakMap(); return (_getRequireWildcardCache = function _getRequireWildcardCache(nodeInterop) { return nodeInterop ? cacheNodeInterop : cacheBabelInterop; })(nodeInterop); }
 
@@ -99,6 +99,7 @@ var TGLayout = function TGLayout(props) {
       onAppChange = props.onAppChange,
       _onMenuSelect = props.onMenuSelect,
       isDev = props.isDev,
+      onMenuLevelChange = props.onMenuLevelChange,
       rest = _objectWithoutProperties(props, _excluded);
 
   var _useState = (0, _react.useState)(_zh_CN.default),
@@ -263,7 +264,12 @@ var TGLayout = function TGLayout(props) {
                       orgCodeMap: orgCodeMap,
                       currentApp: currentApp,
                       appList: appList,
-                      appMap: appMap
+                      appMap: appMap,
+                      currentOrg: {
+                        key: orgGroup.uuid,
+                        name: orgGroup.name,
+                        code: orgGroup.code
+                      }
                     }
                   });
 
@@ -387,11 +393,24 @@ var TGLayout = function TGLayout(props) {
           lang: language
         })
       }
-    });
-    localStorage.setItem('lang', language);
+    }); // localStorage.setItem('lang', language);
+
     var cookies = new _universalCookie.default();
     cookies.set('lang', language, {
       path: '/'
+    });
+  }; // 菜单级别切换
+
+
+  var menuLevelChange = function menuLevelChange(menuLevel) {
+    onMenuLevelChange && onMenuLevelChange(menuLevel);
+    dispatch({
+      type: 'personalMode',
+      payload: {
+        personalMode: _objectSpread(_objectSpread({}, personalMode), {}, {
+          menuLevel: menuLevel
+        })
+      }
     });
   };
 
@@ -417,6 +436,7 @@ var TGLayout = function TGLayout(props) {
     onAppChange: appChange,
     orgList: orgListVisible && orgUuidTree[0],
     onOrgChange: orgChange,
+    onMenuLevelChange: menuLevelChange,
     orgAppShow: orgAppListVisible,
     orgAppList: orgAppList,
     onLanguageChange: languageChange,

@@ -28,8 +28,8 @@ export default (props) => {
                 return (
                     <Row
                         type="flex"
-                        align="center"
-                        justify="middle"
+                        align="middle"
+                        justify="center"
                         className={`menu menu-${value} ${isChecked ? 'checked' : ''}`}
                         key={value}
                         onClick={changeMenuLevel.bind(this, value)}>

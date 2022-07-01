@@ -9,7 +9,6 @@ import reducer, { initState } from './reducer';
 import { rsaPwd, formatOrgApp, getLayoutPageTitle } from './utils';
 import service from './service/index';
 import './index.less';
-
 const { HeaderTabs, HeaderActionItem, AuthContext } = Layout;
 
 const TGLayout = (props) => {
@@ -27,6 +26,7 @@ const TGLayout = (props) => {
         onAppChange,
         onMenuSelect,
         isDev,
+        onMenuLevelChange,
         ...rest
     } = props;
     const [locale, setLocale] = useState(zhCN);
@@ -122,7 +122,12 @@ const TGLayout = (props) => {
                             orgCodeMap,
                             currentApp,
                             appList,
-                            appMap
+                            appMap,
+                            currentOrg: {
+                                key: orgGroup.uuid,
+                                name: orgGroup.name,
+                                code: orgGroup.code
+                            }
                         }
                     });
                 })
@@ -210,11 +215,24 @@ const TGLayout = (props) => {
                 }
             }
         });
-        localStorage.setItem('lang', language);
+        // localStorage.setItem('lang', language);
         const cookies = new Cookies();
         cookies.set('lang', language, { path: '/' });
     };
 
+    // 菜单级别切换
+    const menuLevelChange = (menuLevel) => {
+        onMenuLevelChange && onMenuLevelChange(menuLevel);
+        dispatch({
+            type: 'personalMode',
+            payload: {
+                personalMode: {
+                    ...personalMode,
+                    menuLevel
+                }
+            }
+        });
+    };
     return (
         <ConfigProvider locale={locale}>
             <Layout
@@ -231,6 +249,7 @@ const TGLayout = (props) => {
                 onAppChange={appChange}
                 orgList={orgListVisible && orgUuidTree[0]}
                 onOrgChange={orgChange}
+                onMenuLevelChange={menuLevelChange}
                 orgAppShow={orgAppListVisible}
                 orgAppList={orgAppList}
                 onLanguageChange={languageChange}
@@ -265,5 +284,5 @@ const TGLayout = (props) => {
 TGLayout.getLayoutPageTitle = getLayoutPageTitle;
 TGLayout.HeaderTabs = HeaderTabs;
 TGLayout.AuthContext = AuthContext;
-TGLayout.HeaderActionItem=HeaderActionItem;
+TGLayout.HeaderActionItem = HeaderActionItem;
 export default TGLayout;

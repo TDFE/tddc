@@ -4,7 +4,6 @@ export const initState = () => ({
     menuInfo: {},
     subApps: [],
     menuTreeReady: false,
-    multiUserModal: false,
     userReady: false,
     orgList: [],
     orgUuidTree: [],
@@ -20,7 +19,8 @@ export const initState = () => ({
     personalMode: {
         lang: 'cn',
         theme: 'themeS1',
-        layout: 'default'
+        layout: 'default',
+        menuLevel: ''
     }
 });
 
@@ -29,7 +29,8 @@ export default (state, action) => {
         case 'init':
             return initState();
         case 'initUserInfo': {
-            const { userInfo, orgList, orgUuidTree, orgUuidMap, orgCodeMap, currentApp, appList, appMap } = action.payload || {};
+            const { userInfo, orgList, orgUuidTree, orgUuidMap, orgCodeMap, currentApp, appList, appMap, currentOrg } =
+                action.payload || {};
             const { userName, account, uuid, avatar } = userInfo || {};
             return {
                 ...state,
@@ -47,6 +48,7 @@ export default (state, action) => {
                 currentApp,
                 appList,
                 appMap,
+                currentOrg,
                 userReady: true
             };
         }

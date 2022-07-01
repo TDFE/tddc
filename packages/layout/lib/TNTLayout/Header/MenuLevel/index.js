@@ -57,8 +57,8 @@ var _default = function _default(props) {
     var isChecked = menuLevel === value;
     return /*#__PURE__*/_react.default.createElement(_row.default, {
       type: "flex",
-      align: "center",
-      justify: "middle",
+      align: "middle",
+      justify: "center",
       className: "menu menu-".concat(value, " ").concat(isChecked ? 'checked' : ''),
       key: value,
       onClick: changeMenuLevel.bind(_this, value)

@@ -19,7 +19,6 @@ var initState = function initState() {
     menuInfo: {},
     subApps: [],
     menuTreeReady: false,
-    multiUserModal: false,
     userReady: false,
     orgList: [],
     orgUuidTree: [],
@@ -35,7 +34,8 @@ var initState = function initState() {
     personalMode: {
       lang: 'cn',
       theme: 'themeS1',
-      layout: 'default'
+      layout: 'default',
+      menuLevel: ''
     }
   };
 };
@@ -57,7 +57,8 @@ var _default = function _default(state, action) {
             orgCodeMap = _ref.orgCodeMap,
             currentApp = _ref.currentApp,
             appList = _ref.appList,
-            appMap = _ref.appMap;
+            appMap = _ref.appMap,
+            currentOrg = _ref.currentOrg;
 
         var _ref2 = userInfo || {},
             userName = _ref2.userName,
@@ -80,6 +81,7 @@ var _default = function _default(state, action) {
           currentApp: currentApp,
           appList: appList,
           appMap: appMap,
+          currentOrg: currentOrg,
           userReady: true
         });
       }
