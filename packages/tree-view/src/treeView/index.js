@@ -40,7 +40,7 @@ class Tree extends Base {
 
   init(props) {
     let { data, options, styleOptions, container } = props;
-    let { initType, onChange, customPosition, fixed, nodeDom } = options || {};
+    let { initType, onChange, customPosition, fixed, nodeDom, lineType } = options || {};
     let { nodeWidth, nodeHeight, spaceVertical, spaceHorizontal, rootWidth } = styleOptions || {};
 
     this.initType = initType || false;
@@ -48,7 +48,7 @@ class Tree extends Base {
     this.onChange = onChange;
     this.customPosition = customPosition;
     this.fixed = fixed;
-    this.lineType = 2;
+    this.lineType = lineType || 2;
     this.linkType = 'dashed';
     this.dom = container;
     this.domHeight = 0;
