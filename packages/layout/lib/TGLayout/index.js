@@ -403,7 +403,7 @@ var TGLayout = function TGLayout(props) {
 
   var languageChange = function languageChange(language) {
     onLanguageChange && onLanguageChange(language);
-    setLocale(language === 'cn' ? _zh_CN.default : _en_US.default);
+    setLocale(language === 'en' ? _en_US.default : _zh_CN.default);
     dispatch({
       type: 'personalMode',
       payload: {

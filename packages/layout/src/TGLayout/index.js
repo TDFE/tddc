@@ -217,7 +217,7 @@ const TGLayout = (props) => {
     // 语言切换
     const languageChange = (language) => {
         onLanguageChange && onLanguageChange(language);
-        setLocale(language === 'cn' ? zhCN : enUS);
+        setLocale(language === 'en' ? enUS : zhCN);
         dispatch({
             type: 'personalMode',
             payload: {
