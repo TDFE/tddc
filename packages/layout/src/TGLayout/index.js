@@ -25,8 +25,8 @@ const TGLayout = (props) => {
         onLanguageChange,
         onAppChange,
         onMenuSelect,
-        isDev,
         onMenuLevelChange,
+        isDev,
         ...rest
     } = props;
     const [locale, setLocale] = useState(zhCN);
@@ -51,7 +51,7 @@ const TGLayout = (props) => {
     // 根据机构获取渠道
     const getAppByOrgId = async (org) => {
         const orgAppList = await service.getAppByOrgId({ orgUuid: org?.uuid });
-        dispatch({
+        await dispatch({
             type: 'setOrgInfo',
             payload: {
                 currentOrgCode: org?.code,
@@ -84,6 +84,21 @@ const TGLayout = (props) => {
     }, [state]);
 
     useEffect(() => {
+        if (state.currentApp?.name) {
+            actions?.setCurrentApp(state.currentApp);
+        }
+    }, [state.currentApp?.name]);
+
+    useEffect(() => {
+        if (state.currentOrg?.name) {
+            actions?.setCurrentOrg({
+                ...state.currentOrg,
+                uuid: state.currentOrg.key
+            });
+        }
+    }, [state.currentOrg?.name]);
+
+    useEffect(() => {
         if (needAuth) {
             // 如果没有csrf则默认跳转到登录页面
             if (!sessionStorage.getItem('_csrf_') && process.env.NODE_ENV !== 'development' && !isDev) {
@@ -102,9 +117,9 @@ const TGLayout = (props) => {
                     const { orgGroup = {}, apps } = data || {};
                     const { orgList, orgUuidTree, orgUuidMap, orgCodeMap, currentApp, appList, appMap } = formatOrgApp(orgGroup, apps);
                     let { uuid, code } = orgGroup || {};
-                    if (localStorage.hasOwnProperty('currentOrg') && orgGroup) {
+                    if (localStorage.hasOwnProperty('currentOrg_new') && orgGroup) {
                         try {
-                            const currentOrg = JSON.parse(localStorage.getItem('currentOrg'));
+                            const currentOrg = JSON.parse(localStorage.getItem('currentOrg_new'));
                             if (orgCodeMap[currentOrg.code]) {
                                 uuid = currentOrg.key;
                                 code = currentOrg.code;
@@ -123,6 +138,7 @@ const TGLayout = (props) => {
                             currentApp,
                             appList,
                             appMap,
+                            userReady: true,
                             currentOrg: {
                                 key: orgGroup.uuid,
                                 name: orgGroup.name,
@@ -131,12 +147,10 @@ const TGLayout = (props) => {
                         }
                     });
                 })
-                .finally(() => {
+                .catch((e) => {
                     dispatch({
                         type: 'initUserReady'
                     });
-                })
-                .catch((e) => {
                     setErrorMsg(e.message || '加载用户失败');
                 });
             // 获取菜单信息
@@ -149,12 +163,10 @@ const TGLayout = (props) => {
                         payload: data
                     });
                 })
-                .finally(() => {
+                .catch((e) => {
                     dispatch({
                         type: 'initMenuTreeReady'
                     });
-                })
-                .catch((e) => {
                     setErrorMsg(e.message || '加载用户失败');
                 });
         }
@@ -215,7 +227,6 @@ const TGLayout = (props) => {
                 }
             }
         });
-        // localStorage.setItem('lang', language);
         const cookies = new Cookies();
         cookies.set('lang', language, { path: '/' });
     };
@@ -251,7 +262,7 @@ const TGLayout = (props) => {
                 onOrgChange={orgChange}
                 onMenuLevelChange={menuLevelChange}
                 orgAppShow={orgAppListVisible}
-                orgAppList={orgAppList}
+                orgAppList={orgAppListVisible && orgAppList}
                 onLanguageChange={languageChange}
                 onMenuSelect={(data) => {
                     if (data?.path?.startsWith(`/${routerPrefix}`)) {

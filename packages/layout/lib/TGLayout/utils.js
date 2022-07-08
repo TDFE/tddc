@@ -172,9 +172,9 @@ var formatOrgApp = function formatOrgApp(orgGroup) {
   };
   var currentApp = allTempObj;
 
-  if (localStorage.hasOwnProperty('currentApp')) {
+  if (localStorage.hasOwnProperty('currentApp_new')) {
     // 缓存中是否存在currentApp
-    var currentAppObjStr = localStorage.getItem('currentApp');
+    var currentAppObjStr = localStorage.getItem('currentApp_new');
 
     if (currentAppObjStr && isJSON(currentAppObjStr)) {
       // 存在的currentApp是否是标准JSON

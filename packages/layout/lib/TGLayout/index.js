@@ -39,7 +39,7 @@ var _index = _interopRequireDefault(require("./service/index"));
 
 require("./index.less");
 
-var _excluded = ["eventEmitter", "actions", "syncGlobalState", "children", "appListVisible", "orgListVisible", "orgAppListVisible", "onOrgChange", "onLanguageChange", "onAppChange", "onMenuSelect", "isDev", "onMenuLevelChange"];
+var _excluded = ["eventEmitter", "actions", "syncGlobalState", "children", "appListVisible", "orgListVisible", "orgAppListVisible", "onOrgChange", "onLanguageChange", "onAppChange", "onMenuSelect", "onMenuLevelChange", "isDev"];
 
 function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== "function") return null; var cacheBabelInterop = new WeakMap(); var cacheNodeInterop = new WeakMap(); return (_getRequireWildcardCache = function _getRequireWildcardCache(nodeInterop) { return nodeInterop ? cacheNodeInterop : cacheBabelInterop; })(nodeInterop); }
 
@@ -82,6 +82,8 @@ var HeaderTabs = _TNTLayout.default.HeaderTabs,
     AuthContext = _TNTLayout.default.AuthContext;
 
 var TGLayout = function TGLayout(props) {
+  var _state$currentApp2, _state$currentOrg2;
+
   var _ref = window.location || {},
       origin = _ref.origin,
       pathname = _ref.pathname,
@@ -98,8 +100,8 @@ var TGLayout = function TGLayout(props) {
       onLanguageChange = props.onLanguageChange,
       onAppChange = props.onAppChange,
       _onMenuSelect = props.onMenuSelect,
-      isDev = props.isDev,
       onMenuLevelChange = props.onMenuLevelChange,
+      isDev = props.isDev,
       rest = _objectWithoutProperties(props, _excluded);
 
   var _useState = (0, _react.useState)(_zh_CN.default),
@@ -166,7 +168,8 @@ var TGLayout = function TGLayout(props) {
 
             case 2:
               orgAppList = _context.sent;
-              dispatch({
+              _context.next = 5;
+              return dispatch({
                 type: 'setOrgInfo',
                 payload: {
                   currentOrgCode: org === null || org === void 0 ? void 0 : org.code,
@@ -174,7 +177,7 @@ var TGLayout = function TGLayout(props) {
                 }
               });
 
-            case 4:
+            case 5:
             case "end":
               return _context.stop();
           }
@@ -211,6 +214,22 @@ var TGLayout = function TGLayout(props) {
     }
   }, [state]);
   (0, _react.useEffect)(function () {
+    var _state$currentApp;
+
+    if ((_state$currentApp = state.currentApp) === null || _state$currentApp === void 0 ? void 0 : _state$currentApp.name) {
+      actions === null || actions === void 0 ? void 0 : actions.setCurrentApp(state.currentApp);
+    }
+  }, [(_state$currentApp2 = state.currentApp) === null || _state$currentApp2 === void 0 ? void 0 : _state$currentApp2.name]);
+  (0, _react.useEffect)(function () {
+    var _state$currentOrg;
+
+    if ((_state$currentOrg = state.currentOrg) === null || _state$currentOrg === void 0 ? void 0 : _state$currentOrg.name) {
+      actions === null || actions === void 0 ? void 0 : actions.setCurrentOrg(_objectSpread(_objectSpread({}, state.currentOrg), {}, {
+        uuid: state.currentOrg.key
+      }));
+    }
+  }, [(_state$currentOrg2 = state.currentOrg) === null || _state$currentOrg2 === void 0 ? void 0 : _state$currentOrg2.name]);
+  (0, _react.useEffect)(function () {
     if (needAuth) {
       // 如果没有csrf则默认跳转到登录页面
       if (!sessionStorage.getItem('_csrf_') && process.env.NODE_ENV !== 'development' && !isDev) {
@@ -236,9 +255,9 @@ var TGLayout = function TGLayout(props) {
                   _formatOrgApp = (0, _utils.formatOrgApp)(orgGroup, apps), orgList = _formatOrgApp.orgList, orgUuidTree = _formatOrgApp.orgUuidTree, orgUuidMap = _formatOrgApp.orgUuidMap, orgCodeMap = _formatOrgApp.orgCodeMap, currentApp = _formatOrgApp.currentApp, appList = _formatOrgApp.appList, appMap = _formatOrgApp.appMap;
                   _ref7 = orgGroup || {}, uuid = _ref7.uuid, code = _ref7.code;
 
-                  if (localStorage.hasOwnProperty('currentOrg') && orgGroup) {
+                  if (localStorage.hasOwnProperty('currentOrg_new') && orgGroup) {
                     try {
-                      currentOrg = JSON.parse(localStorage.getItem('currentOrg'));
+                      currentOrg = JSON.parse(localStorage.getItem('currentOrg_new'));
 
                       if (orgCodeMap[currentOrg.code]) {
                         uuid = currentOrg.key;
@@ -265,6 +284,7 @@ var TGLayout = function TGLayout(props) {
                       currentApp: currentApp,
                       appList: appList,
                       appMap: appMap,
+                      userReady: true,
                       currentOrg: {
                         key: orgGroup.uuid,
                         name: orgGroup.name,
@@ -284,11 +304,10 @@ var TGLayout = function TGLayout(props) {
         return function (_x2) {
           return _ref5.apply(this, arguments);
         };
-      }()).finally(function () {
+      }()).catch(function (e) {
         dispatch({
           type: 'initUserReady'
         });
-      }).catch(function (e) {
         setErrorMsg(e.message || '加载用户失败');
       }); // 获取菜单信息
 
@@ -299,11 +318,10 @@ var TGLayout = function TGLayout(props) {
           type: 'initMenuTree',
           payload: data
         });
-      }).finally(function () {
+      }).catch(function (e) {
         dispatch({
           type: 'initMenuTreeReady'
         });
-      }).catch(function (e) {
         setErrorMsg(e.message || '加载用户失败');
       });
     }
@@ -393,8 +411,7 @@ var TGLayout = function TGLayout(props) {
           lang: language
         })
       }
-    }); // localStorage.setItem('lang', language);
-
+    });
     var cookies = new _universalCookie.default();
     cookies.set('lang', language, {
       path: '/'
@@ -438,7 +455,7 @@ var TGLayout = function TGLayout(props) {
     onOrgChange: orgChange,
     onMenuLevelChange: menuLevelChange,
     orgAppShow: orgAppListVisible,
-    orgAppList: orgAppList,
+    orgAppList: orgAppListVisible && orgAppList,
     onLanguageChange: languageChange,
     onMenuSelect: function onMenuSelect(data) {
       var _data$path;

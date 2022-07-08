@@ -122,7 +122,14 @@ var _default = function _default(props) {
   };
 
   (0, _react.useEffect)(function () {
-    if (orgAppList.length) {
+    var _Object$keys;
+
+    if (orgList && ((_Object$keys = Object.keys(orgList)) === null || _Object$keys === void 0 ? void 0 : _Object$keys.length)) {
+      setSelectedOrg(getInitialSelectedOrg());
+    }
+  }, [orgList]);
+  (0, _react.useEffect)(function () {
+    if (orgAppList === null || orgAppList === void 0 ? void 0 : orgAppList.length) {
       setSelectedApp(getInitialSelectedApp());
     }
   }, [orgAppList]);

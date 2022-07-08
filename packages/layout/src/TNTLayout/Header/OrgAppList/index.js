@@ -70,9 +70,14 @@ export default (props) => {
         }
         return temp;
     };
+    useEffect(() => {
+        if (orgList && Object.keys(orgList)?.length) {
+            setSelectedOrg(getInitialSelectedOrg());
+        }
+    }, [orgList]);
 
     useEffect(() => {
-        if (orgAppList.length) {
+        if (orgAppList?.length) {
             setSelectedApp(getInitialSelectedApp());
         }
     }, [orgAppList]);

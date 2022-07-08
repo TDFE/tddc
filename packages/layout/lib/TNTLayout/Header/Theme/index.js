@@ -60,7 +60,8 @@ var _default = function _default(props) {
         label = _ref.label;
     return /*#__PURE__*/_react.default.createElement("div", {
       className: value,
-      onClick: changeTheme.bind(_this, value)
+      onClick: changeTheme.bind(_this, value),
+      key: value
     }, label, theme === value && /*#__PURE__*/_react.default.createElement("span", {
       className: "icon-checked-wrap"
     }));

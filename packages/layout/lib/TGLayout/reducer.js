@@ -50,15 +50,7 @@ var _default = function _default(state, action) {
     case 'initUserInfo':
       {
         var _ref = action.payload || {},
-            userInfo = _ref.userInfo,
-            orgList = _ref.orgList,
-            orgUuidTree = _ref.orgUuidTree,
-            orgUuidMap = _ref.orgUuidMap,
-            orgCodeMap = _ref.orgCodeMap,
-            currentApp = _ref.currentApp,
-            appList = _ref.appList,
-            appMap = _ref.appMap,
-            currentOrg = _ref.currentOrg;
+            userInfo = _ref.userInfo;
 
         var _ref2 = userInfo || {},
             userName = _ref2.userName,
@@ -72,18 +64,8 @@ var _default = function _default(state, action) {
             account: account,
             uuid: uuid,
             avatar: avatar
-          },
-          userInfo: userInfo,
-          orgList: orgList,
-          orgUuidTree: orgUuidTree,
-          orgUuidMap: orgUuidMap,
-          orgCodeMap: orgCodeMap,
-          currentApp: currentApp,
-          appList: appList,
-          appMap: appMap,
-          currentOrg: currentOrg,
-          userReady: true
-        });
+          }
+        }, action.payload);
       }
 
     case 'initMenuTree':
