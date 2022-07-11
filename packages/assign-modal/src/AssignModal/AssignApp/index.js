@@ -32,6 +32,12 @@ const AssignModal = (props) => {
     let initKeys = Array.from(new Set([...(dataItem?.orgCodes || []), ...path]));
     setCheckedKeys(initKeys);
     setAppKeys(dataItem?.appCodes || []);
+
+    onChange &&
+      onChange({
+        appKeys: dataItem?.appCodes || [],
+        checkedKeys: dataItem?.orgCodes || [],
+      });
   }, [dataItem]);
 
   useEffect(() => {
