@@ -15,7 +15,7 @@ const AssignModal = (props) => {
   const { orgList = [], dataItem = {}, disabled, appList, onChange } = props;
 
   const [checkedKeys, setCheckedKeys] = useState([]);
-  const [appKeys, setAppKeys] = useState(dataItem?.appCodes?.split(',') || []);
+  const [appKeys, setAppKeys] = useState(dataItem?.appCodes || []);
 
   const [allOrgChecked, setAllOrgChecked] = useState(false);
   const [allAppChecked, setAllAppChecked] = useState(false);
@@ -29,9 +29,9 @@ const AssignModal = (props) => {
     path = findSameCodePath(orgList[0], dataItem.orgCode);
     allOrgList = preorder(orgList[0]);
 
-    let initKeys = Array.from(new Set([...(dataItem?.orgCodes?.split(',') || []), ...path]));
+    let initKeys = Array.from(new Set([...(dataItem?.orgCodes || []), ...path]));
     setCheckedKeys(initKeys);
-    setAppKeys(dataItem?.appCodes?.split(',') || []);
+    setAppKeys(dataItem?.appCodes || []);
   }, [dataItem]);
 
   useEffect(() => {
