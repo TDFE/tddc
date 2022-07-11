@@ -1,5 +1,5 @@
 import { useState, useEffect, useReducer } from 'react';
-import { ConfigProvider, Spin, Empty } from 'antd';
+import { Spin, Empty, message, ConfigProvider } from 'antd';
 import zhCN from 'antd/es/locale/zh_CN';
 import enUS from 'antd/es/locale/en_US';
 import { DevelopmentLogin } from 'tntd';
@@ -25,15 +25,14 @@ const TGLayout = (props) => {
         onLanguageChange,
         onAppChange,
         onMenuSelect,
-        isDev,
         onMenuLevelChange,
+        isDev,
         ...rest
     } = props;
-    const [locale, setLocale] = useState(zhCN);
     const [errorMsg, setErrorMsg] = useState('');
     const [state, dispatch] = useReducer(reducer, initState());
     const [routerPrefix, setRouterPrefix] = useState(pathname?.split('/')[1]);
-    const needAuth = !(['/user/login', '/user/startup'].includes(pathname)) ;
+    const needAuth = !(['/user/login', '/user/startup'].includes(pathname));
     const {
         userReady,
         menuTreeReady,
@@ -51,7 +50,7 @@ const TGLayout = (props) => {
     // 根据机构获取渠道
     const getAppByOrgId = async (org) => {
         const orgAppList = await service.getAppByOrgId({ orgUuid: org?.uuid });
-        dispatch({
+        await dispatch({
             type: 'setOrgInfo',
             payload: {
                 currentOrgCode: org?.code,
@@ -84,6 +83,21 @@ const TGLayout = (props) => {
     }, [state]);
 
     useEffect(() => {
+        if (state.currentApp?.name) {
+            actions?.setCurrentApp(state.currentApp);
+        }
+    }, [state.currentApp?.name]);
+
+    useEffect(() => {
+        if (state.currentOrg?.name) {
+            actions?.setCurrentOrg({
+                ...state.currentOrg,
+                uuid: state.currentOrg.key
+            });
+        }
+    }, [state.currentOrg?.name]);
+
+    useEffect(() => {
         if (needAuth) {
             // 如果没有csrf则默认跳转到登录页面
             if (!sessionStorage.getItem('_csrf_') && process.env.NODE_ENV !== 'development' && !isDev) {
@@ -102,9 +116,9 @@ const TGLayout = (props) => {
                     const { orgGroup = {}, apps } = data || {};
                     const { orgList, orgUuidTree, orgUuidMap, orgCodeMap, currentApp, appList, appMap } = formatOrgApp(orgGroup, apps);
                     let { uuid, code } = orgGroup || {};
-                    if (localStorage.hasOwnProperty('currentOrg') && orgGroup) {
+                    if (localStorage.hasOwnProperty('currentOrg_new') && orgGroup) {
                         try {
-                            const currentOrg = JSON.parse(localStorage.getItem('currentOrg'));
+                            const currentOrg = JSON.parse(localStorage.getItem('currentOrg_new'));
                             if (orgCodeMap[currentOrg.code]) {
                                 uuid = currentOrg.key;
                                 code = currentOrg.code;
@@ -123,6 +137,7 @@ const TGLayout = (props) => {
                             currentApp,
                             appList,
                             appMap,
+                            userReady: true,
                             currentOrg: {
                                 key: orgGroup.uuid,
                                 name: orgGroup.name,
@@ -131,12 +146,10 @@ const TGLayout = (props) => {
                         }
                     });
                 })
-                .finally(() => {
+                .catch((e) => {
                     dispatch({
                         type: 'initUserReady'
                     });
-                })
-                .catch((e) => {
                     setErrorMsg(e.message || '加载用户失败');
                 });
             // 获取菜单信息
@@ -149,12 +162,10 @@ const TGLayout = (props) => {
                         payload: data
                     });
                 })
-                .finally(() => {
+                .catch((e) => {
                     dispatch({
                         type: 'initMenuTreeReady'
                     });
-                })
-                .catch((e) => {
                     setErrorMsg(e.message || '加载用户失败');
                 });
         }
@@ -172,17 +183,27 @@ const TGLayout = (props) => {
     const mockLogin = async (p) => {
         const { account, password } = p || {};
         const params = { account, password: rsaPwd(password) };
+        let { tempRandom, authMessage } = ['', false, ''];
         // 获取加盐随机数
-        const tempRandom = await service.getAuthCode(params);
+        const authResult = await service.getAuthCode(params);
+        tempRandom = authResult;
+        authMessage = authResult?.message;
         if (tempRandom) {
-            service.userLogin({ ...params, tempRandom }).then((data) => {
-                const csrfToken = data.csrfToken;
+            const res = await service.userLogin({ ...params, tempRandom });
+            if (res) {
+                const csrfToken = res.csrfToken;
                 sessionStorage.setItem('_csrf_', csrfToken);
                 localStorage.setItem('_sync_qjt_csrf_', csrfToken); // 新的csrf同步到其他页面
                 localStorage.setItem('developmentLoginData', JSON.stringify(params));
-                window.location.reload();
-            });
+                location.reload();
+            } else {
+                message.error(res.message);
+                return Promise.reject(res.message);
+            }
+            return;
         }
+        message.error(authMessage || '账号或者密码错误');
+        return Promise.reject(authMessage || '账号或者密码错误');
     };
 
     // 监听机构变更
@@ -205,7 +226,6 @@ const TGLayout = (props) => {
     // 语言切换
     const languageChange = (language) => {
         onLanguageChange && onLanguageChange(language);
-        setLocale(language === 'cn' ? zhCN : enUS);
         dispatch({
             type: 'personalMode',
             payload: {
@@ -215,7 +235,6 @@ const TGLayout = (props) => {
                 }
             }
         });
-        // localStorage.setItem('lang', language);
         const cookies = new Cookies();
         cookies.set('lang', language, { path: '/' });
     };
@@ -234,7 +253,7 @@ const TGLayout = (props) => {
         });
     };
     return (
-        <ConfigProvider locale={locale}>
+        <ConfigProvider locale={personalMode?.lang === 'en' ? enUS : zhCN}>
             <Layout
                 key={!actions && `${currentOrgCode}_${currentApp.name}`}
                 type="enterprise"
@@ -251,7 +270,7 @@ const TGLayout = (props) => {
                 onOrgChange={orgChange}
                 onMenuLevelChange={menuLevelChange}
                 orgAppShow={orgAppListVisible}
-                orgAppList={orgAppList}
+                orgAppList={orgAppListVisible && orgAppList}
                 onLanguageChange={languageChange}
                 onMenuSelect={(data) => {
                     if (data?.path?.startsWith(`/${routerPrefix}`)) {
@@ -263,7 +282,7 @@ const TGLayout = (props) => {
                 // 开发模式增加登录
                 extraHeaderActions={[
                     process.env.NODE_ENV === 'development' && !actions && (
-                        <HeaderActionItem key="help" onClick={() => {}}>
+                        <HeaderActionItem key="help">
                             <DevelopmentLogin signIn={mockLogin} />
                         </HeaderActionItem>
                     )

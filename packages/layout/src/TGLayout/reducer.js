@@ -29,8 +29,7 @@ export default (state, action) => {
         case 'init':
             return initState();
         case 'initUserInfo': {
-            const { userInfo, orgList, orgUuidTree, orgUuidMap, orgCodeMap, currentApp, appList, appMap, currentOrg } =
-                action.payload || {};
+            const { userInfo } = action.payload || {};
             const { userName, account, uuid, avatar } = userInfo || {};
             return {
                 ...state,
@@ -40,16 +39,7 @@ export default (state, action) => {
                     uuid,
                     avatar
                 },
-                userInfo,
-                orgList,
-                orgUuidTree,
-                orgUuidMap,
-                orgCodeMap,
-                currentApp,
-                appList,
-                appMap,
-                currentOrg,
-                userReady: true
+                ...action.payload
             };
         }
         case 'initMenuTree': {

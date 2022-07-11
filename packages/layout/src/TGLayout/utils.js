@@ -109,9 +109,9 @@ export const formatOrgApp = (orgGroup, apps = []) => {
         key: ''
     };
     let currentApp = allTempObj;
-    if (localStorage.hasOwnProperty('currentApp')) {
+    if (localStorage.hasOwnProperty('currentApp_new')) {
         // 缓存中是否存在currentApp
-        let currentAppObjStr = localStorage.getItem('currentApp');
+        let currentAppObjStr = localStorage.getItem('currentApp_new');
         if (currentAppObjStr && isJSON(currentAppObjStr)) {
             // 存在的currentApp是否是标准JSON
             let currentAppJson = JSON.parse(currentAppObjStr);

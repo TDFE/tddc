@@ -15,8 +15,6 @@ var _react = _interopRequireWildcard(require("react"));
 
 require("./index.less");
 
-var _Icon = _interopRequireDefault(require("../Icon"));
-
 var _Actions = _interopRequireDefault(require("./Actions"));
 
 var _AppList = _interopRequireDefault(require("./AppList"));

@@ -12,12 +12,12 @@ const themes = [
     { value: 'themeS1', label: '极致白' }
 ];
 
-export default props => {
+export default (props) => {
     const { onThemeChange } = props;
 
     const { theme, handleTheme } = useContext(ThemeContext);
 
-    const changeTheme = theme => {
+    const changeTheme = (theme) => {
         handleTheme(theme);
         setThemeStore(theme);
         onThemeChange && onThemeChange(theme);
@@ -25,17 +25,12 @@ export default props => {
 
     return (
         <Row type="flex" justify="space-between" className="user-info-body-theme-row">
-            {
-                themes.map(({ value, label }) => (
-                    <div className={value} onClick={changeTheme.bind(this, value)}>
-                        {label}
-                        {
-                            theme === value &&
-                            <span className="icon-checked-wrap"></span>
-                        }
-                    </div>
-                ))
-            }
+            {themes.map(({ value, label }) => (
+                <div className={value} onClick={changeTheme.bind(this, value)} key={value}>
+                    {label}
+                    {theme === value && <span className="icon-checked-wrap" />}
+                </div>
+            ))}
         </Row>
     );
 };
