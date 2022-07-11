@@ -1,6 +1,6 @@
 {
   "name": "@tddc/layout",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "description": "Layout",
   "author": "zefei.zhou <zefei.zhou@tongdun.net>",
   "license": "ISC",
@@ -11,11 +11,10 @@
   "peerDependencies": {
     "antd": "^3.26.20",
     "react": ">=16.8.0",
-    "react-dom": ">=16.8.0",
-    "@tddc/layout":">=1.0.0"
+    "react-dom": ">=16.8.0"
   },
   "dependencies": {
     "jsencrypt": "^3.2.1",
-    "lib-service": ">=0.2.21"
+    "lib-service": "0.2.13"
   }
 }

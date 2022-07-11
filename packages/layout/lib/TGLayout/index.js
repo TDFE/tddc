@@ -19,6 +19,10 @@ require("antd/lib/empty/style");
 
 var _empty = _interopRequireDefault(require("antd/lib/empty"));
 
+require("antd/lib/message/style");
+
+var _message2 = _interopRequireDefault(require("antd/lib/message"));
+
 var _react = _interopRequireWildcard(require("react"));
 
 var _zh_CN = _interopRequireDefault(require("antd/es/locale/zh_CN"));
@@ -104,25 +108,20 @@ var TGLayout = function TGLayout(props) {
       isDev = props.isDev,
       rest = _objectWithoutProperties(props, _excluded);
 
-  var _useState = (0, _react.useState)(_zh_CN.default),
+  var _useState = (0, _react.useState)(''),
       _useState2 = _slicedToArray(_useState, 2),
-      locale = _useState2[0],
-      setLocale = _useState2[1];
-
-  var _useState3 = (0, _react.useState)(''),
-      _useState4 = _slicedToArray(_useState3, 2),
-      errorMsg = _useState4[0],
-      setErrorMsg = _useState4[1];
+      errorMsg = _useState2[0],
+      setErrorMsg = _useState2[1];
 
   var _useReducer = (0, _react.useReducer)(_reducer.default, (0, _reducer.initState)()),
       _useReducer2 = _slicedToArray(_useReducer, 2),
       state = _useReducer2[0],
       dispatch = _useReducer2[1];
 
-  var _useState5 = (0, _react.useState)(pathname === null || pathname === void 0 ? void 0 : pathname.split('/')[1]),
-      _useState6 = _slicedToArray(_useState5, 2),
-      routerPrefix = _useState6[0],
-      setRouterPrefix = _useState6[1];
+  var _useState3 = (0, _react.useState)(pathname === null || pathname === void 0 ? void 0 : pathname.split('/')[1]),
+      _useState4 = _slicedToArray(_useState3, 2),
+      routerPrefix = _useState4[0],
+      setRouterPrefix = _useState4[1];
 
   var needAuth = !['/user/login', '/user/startup'].includes(pathname);
 
@@ -337,7 +336,7 @@ var TGLayout = function TGLayout(props) {
 
   var mockLogin = /*#__PURE__*/function () {
     var _ref8 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee3(p) {
-      var _ref9, account, password, params, tempRandom;
+      var _ref9, account, password, params, _ref10, tempRandom, authMessage, authResult, res, csrfToken;
 
       return _regeneratorRuntime().wrap(function _callee3$(_context3) {
         while (1) {
@@ -347,28 +346,58 @@ var TGLayout = function TGLayout(props) {
               params = {
                 account: account,
                 password: (0, _utils.rsaPwd)(password)
-              }; // 获取加盐随机数
+              };
+              _ref10 = ['', false, ''], tempRandom = _ref10.tempRandom, authMessage = _ref10.authMessage; // 获取加盐随机数
 
-              _context3.next = 4;
+              _context3.next = 5;
               return _index.default.getAuthCode(params);
 
-            case 4:
-              tempRandom = _context3.sent;
+            case 5:
+              authResult = _context3.sent;
+              tempRandom = authResult;
+              authMessage = authResult === null || authResult === void 0 ? void 0 : authResult.message;
 
-              if (tempRandom) {
-                _index.default.userLogin(_objectSpread(_objectSpread({}, params), {}, {
-                  tempRandom: tempRandom
-                })).then(function (data) {
-                  var csrfToken = data.csrfToken;
-                  sessionStorage.setItem('_csrf_', csrfToken);
-                  localStorage.setItem('_sync_qjt_csrf_', csrfToken); // 新的csrf同步到其他页面
-
-                  localStorage.setItem('developmentLoginData', JSON.stringify(params));
-                  window.location.reload();
-                });
+              if (!tempRandom) {
+                _context3.next = 23;
+                break;
               }
 
-            case 6:
+              _context3.next = 11;
+              return _index.default.userLogin(_objectSpread(_objectSpread({}, params), {}, {
+                tempRandom: tempRandom
+              }));
+
+            case 11:
+              res = _context3.sent;
+
+              if (!res) {
+                _context3.next = 20;
+                break;
+              }
+
+              csrfToken = res.csrfToken;
+              sessionStorage.setItem('_csrf_', csrfToken);
+              localStorage.setItem('_sync_qjt_csrf_', csrfToken); // 新的csrf同步到其他页面
+
+              localStorage.setItem('developmentLoginData', JSON.stringify(params));
+              location.reload();
+              _context3.next = 22;
+              break;
+
+            case 20:
+              _message2.default.error(res.message);
+
+              return _context3.abrupt("return", Promise.reject(res.message));
+
+            case 22:
+              return _context3.abrupt("return");
+
+            case 23:
+              _message2.default.error(authMessage || '账号或者密码错误');
+
+              return _context3.abrupt("return", Promise.reject(authMessage || '账号或者密码错误'));
+
+            case 25:
             case "end":
               return _context3.stop();
           }
@@ -403,7 +432,6 @@ var TGLayout = function TGLayout(props) {
 
   var languageChange = function languageChange(language) {
     onLanguageChange && onLanguageChange(language);
-    setLocale(language === 'en' ? _en_US.default : _zh_CN.default);
     dispatch({
       type: 'personalMode',
       payload: {
@@ -432,7 +460,7 @@ var TGLayout = function TGLayout(props) {
   };
 
   return /*#__PURE__*/_react.default.createElement(_configProvider.default, {
-    locale: locale
+    locale: (personalMode === null || personalMode === void 0 ? void 0 : personalMode.lang) === 'en' ? _en_US.default : _zh_CN.default
   }, /*#__PURE__*/_react.default.createElement(_TNTLayout.default, _extends({
     key: !actions && "".concat(currentOrgCode, "_").concat(currentApp.name),
     type: "enterprise",
@@ -469,8 +497,7 @@ var TGLayout = function TGLayout(props) {
   }, rest, {
     // 开发模式增加登录
     extraHeaderActions: [process.env.NODE_ENV === 'development' && !actions && /*#__PURE__*/_react.default.createElement(HeaderActionItem, {
-      key: "help",
-      onClick: function onClick() {}
+      key: "help"
     }, /*#__PURE__*/_react.default.createElement(_tntd.DevelopmentLogin, {
       signIn: mockLogin
     }))]

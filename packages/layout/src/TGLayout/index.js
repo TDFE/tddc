@@ -1,5 +1,5 @@
 import { useState, useEffect, useReducer } from 'react';
-import { ConfigProvider, Spin, Empty } from 'antd';
+import { Spin, Empty, message, ConfigProvider } from 'antd';
 import zhCN from 'antd/es/locale/zh_CN';
 import enUS from 'antd/es/locale/en_US';
 import { DevelopmentLogin } from 'tntd';
@@ -29,11 +29,10 @@ const TGLayout = (props) => {
         isDev,
         ...rest
     } = props;
-    const [locale, setLocale] = useState(zhCN);
     const [errorMsg, setErrorMsg] = useState('');
     const [state, dispatch] = useReducer(reducer, initState());
     const [routerPrefix, setRouterPrefix] = useState(pathname?.split('/')[1]);
-    const needAuth = !(['/user/login', '/user/startup'].includes(pathname)) ;
+    const needAuth = !(['/user/login', '/user/startup'].includes(pathname));
     const {
         userReady,
         menuTreeReady,
@@ -184,17 +183,27 @@ const TGLayout = (props) => {
     const mockLogin = async (p) => {
         const { account, password } = p || {};
         const params = { account, password: rsaPwd(password) };
+        let { tempRandom, authMessage } = ['', false, ''];
         // 获取加盐随机数
-        const tempRandom = await service.getAuthCode(params);
+        const authResult = await service.getAuthCode(params);
+        tempRandom = authResult;
+        authMessage = authResult?.message;
         if (tempRandom) {
-            service.userLogin({ ...params, tempRandom }).then((data) => {
-                const csrfToken = data.csrfToken;
+            const res = await service.userLogin({ ...params, tempRandom });
+            if (res) {
+                const csrfToken = res.csrfToken;
                 sessionStorage.setItem('_csrf_', csrfToken);
                 localStorage.setItem('_sync_qjt_csrf_', csrfToken); // 新的csrf同步到其他页面
                 localStorage.setItem('developmentLoginData', JSON.stringify(params));
-                window.location.reload();
-            });
+                location.reload();
+            } else {
+                message.error(res.message);
+                return Promise.reject(res.message);
+            }
+            return;
         }
+        message.error(authMessage || '账号或者密码错误');
+        return Promise.reject(authMessage || '账号或者密码错误');
     };
 
     // 监听机构变更
@@ -217,7 +226,6 @@ const TGLayout = (props) => {
     // 语言切换
     const languageChange = (language) => {
         onLanguageChange && onLanguageChange(language);
-        setLocale(language === 'en' ? enUS : zhCN);
         dispatch({
             type: 'personalMode',
             payload: {
@@ -245,7 +253,7 @@ const TGLayout = (props) => {
         });
     };
     return (
-        <ConfigProvider locale={locale}>
+        <ConfigProvider locale={personalMode?.lang === 'en' ? enUS : zhCN}>
             <Layout
                 key={!actions && `${currentOrgCode}_${currentApp.name}`}
                 type="enterprise"
@@ -274,7 +282,7 @@ const TGLayout = (props) => {
                 // 开发模式增加登录
                 extraHeaderActions={[
                     process.env.NODE_ENV === 'development' && !actions && (
-                        <HeaderActionItem key="help" onClick={() => {}}>
+                        <HeaderActionItem key="help">
                             <DevelopmentLogin signIn={mockLogin} />
                         </HeaderActionItem>
                     )
