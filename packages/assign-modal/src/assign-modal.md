@@ -375,6 +375,6 @@ export default Assign;
         appCode: 'app1', // 所属应用
         appCodes: 'app1,app2', // 具有权限的应用
         orgCode: 'TongDun', // 所属机构
-        appCodes: 'TongDun, JiGou1', // 具有权限的机构
+        orgCodes: 'TongDun, JiGou1', // 具有权限的机构
     }
 ```

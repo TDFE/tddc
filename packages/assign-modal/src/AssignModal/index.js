@@ -17,7 +17,7 @@ const AssignModal = (props) => {
       className="modelTool-assign"
       title={title}
       visible={visible}
-      width={'60%'}
+      width={'65%'}
       onCancel={close}
       onOk={submit}
       maskClosable={false}

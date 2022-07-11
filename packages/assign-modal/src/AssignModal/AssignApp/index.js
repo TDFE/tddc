@@ -15,7 +15,7 @@ const AssignModal = (props) => {
   const { orgList = [], dataItem = {}, disabled, appList, onChange } = props;
 
   const [checkedKeys, setCheckedKeys] = useState([]);
-  const [appKeys, setAppKeys] = useState(dataItem?.appCodes || []);
+  const [appKeys, setAppKeys] = useState(dataItem?.appCodes?.split(',') || []);
 
   const [allOrgChecked, setAllOrgChecked] = useState(false);
   const [allAppChecked, setAllAppChecked] = useState(false);
@@ -29,9 +29,10 @@ const AssignModal = (props) => {
     path = findSameCodePath(orgList[0], dataItem.orgCode);
     allOrgList = preorder(orgList[0]);
 
-    let initKeys = Array.from(new Set([...(dataItem?.orgCodes || []), ...path]));
+    let initKeys = Array.from(new Set([...(dataItem?.orgCodes?.split(',') || []), ...path]));
     setCheckedKeys(initKeys);
-  }, [dataItem.orgCode]);
+    setAppKeys(dataItem?.appCodes?.split(',') || []);
+  }, [dataItem]);
 
   useEffect(() => {
     // 机构和应用 全选
@@ -170,9 +171,8 @@ const AssignModal = (props) => {
   return (
     <div className="assign-box-container">
       <div className="left">
-        <div className="menu-header">授权可用机构</div>
         <div className="menu-header">
-          机构列表
+          授权可用机构列表
           <div className="menu-all-checked">
             <Checkbox onChange={checkAllOrg} checked={allOrgChecked} disabled={disabled}>
               全选
@@ -193,9 +193,8 @@ const AssignModal = (props) => {
         </Tree>
       </div>
       <div className="right">
-        <div className="menu-header">授权可用渠道</div>
         <div className="menu-header">
-          渠道列表
+          授权可用渠道列表
           <div className="menu-all-checked">
             <Checkbox onChange={checkedAllApp} checked={allAppChecked} disabled={disabled}>
               全选
