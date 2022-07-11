@@ -11,7 +11,8 @@
   "peerDependencies": {
     "antd": "^3.26.20",
     "react": ">=16.8.0",
-    "react-dom": ">=16.8.0"
+    "react-dom": ">=16.8.0",
+    "@tddc/layout":">=1.0.0"
   },
   "dependencies": {
     "jsencrypt": "^3.2.1",
