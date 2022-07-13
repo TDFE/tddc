@@ -9,13 +9,13 @@ import { addPath, findSameCodePath, preorder } from './utils';
 const { TreeNode } = Tree;
 
 let path = []; // 上级机构到当前机构的路径
-let allOrgList = [];
 
 const AssignModal = (props) => {
   const { orgList = [], dataItem = {}, disabled, appList, onChange } = props;
+  let { appCodes = [], orgCodes = [], orgCode, appCode } = dataItem;
 
   const [checkedKeys, setCheckedKeys] = useState([]);
-  const [appKeys, setAppKeys] = useState(dataItem?.appCodes || []);
+  const [appKeys, setAppKeys] = useState(appCodes || []);
 
   const [allOrgChecked, setAllOrgChecked] = useState(false);
   const [allAppChecked, setAllAppChecked] = useState(false);
@@ -26,30 +26,51 @@ const AssignModal = (props) => {
 
   useEffect(() => {
     // path 和 allOrgList 赋值
-    path = findSameCodePath(orgList[0], dataItem.orgCode);
-    allOrgList = preorder(orgList[0]);
+    path = findSameCodePath(orgList[0], orgCode);
+    let allOrg = preorder(orgList[0]);
+    let allApp = appList.map((item) => item.name) || [];
+    let initOrgs = [];
+    let initApps = [];
+    if (orgCodes.includes('all')) {
+      initOrgs = allOrg;
+    } else {
+      initOrgs = Array.from(new Set([...(orgCodes || []), ...path]));
+    }
+    if (appCodes.includes('all')) {
+      initApps = allApp;
+    } else {
+      initApps = appCodes;
+    }
 
-    let initKeys = Array.from(new Set([...(dataItem?.orgCodes || []), ...path]));
-    setCheckedKeys(initKeys);
-    setAppKeys(dataItem?.appCodes || []);
+    setCheckedKeys(initOrgs);
+    setAppKeys(initApps || []);
 
     onChange &&
       onChange({
-        appKeys: dataItem?.appCodes || [],
-        checkedKeys: dataItem?.orgCodes || [],
+        appKeys: appCodes.includes('all') ? 'all' : appCodes || [],
+        checkedKeys: appCodes.includes('all') ? 'all' : orgCodes || [],
       });
   }, [dataItem]);
 
   useEffect(() => {
     // 机构和应用 全选
+    let allOrg = preorder(orgList[0]);
     if (appList.length > 0) {
       let allApp = appList.map((item) => item.value);
       // 判断当前用户是否具有 该机构或应用 权限
       let app = appKeys.filter((item) => allApp.includes(item));
-      let org = checkedKeys.filter((item) => allOrgList.includes(item));
+      let org = checkedKeys.filter((item) => allOrg.includes(item));
+
+      if (app.length === appList.length || org.length === allOrg.length) {
+        onChange &&
+          onChange({
+            appKeys: app.length === appList.length ? ['all'] : appKeys,
+            checkedKeys: org.length === allOrg.length ? ['all'] : checkedKeys,
+          });
+      }
 
       setAllAppChecked(app.length === appList.length);
-      setAllOrgChecked(org.length === allOrgList.length);
+      setAllOrgChecked(org.length === allOrg.length);
     }
   }, [checkedKeys, appKeys, appList]);
 
@@ -146,16 +167,18 @@ const AssignModal = (props) => {
     if (e.target.checked) {
       orgKeys = preorder(orgList[0]);
       setCheckedKeys(orgKeys);
+      onChange({
+        appKeys,
+        checkedKeys: ['all'],
+      });
     } else {
       orgKeys = [...path];
       setCheckedKeys(orgKeys);
-    }
-
-    onChange &&
       onChange({
         appKeys,
         checkedKeys: orgKeys,
       });
+    }
   };
 
   const checkedAllApp = (e) => {
@@ -163,16 +186,18 @@ const AssignModal = (props) => {
     if (e.target.checked) {
       appKeys = appList.map((item) => item.value);
       setAppKeys(appKeys);
+      onChange({
+        appKeys: ['all'],
+        checkedKeys,
+      });
     } else {
-      appKeys = [dataItem?.appCode];
+      appKeys = [appCode];
       setAppKeys(appKeys);
-    }
-
-    onChange &&
       onChange({
         appKeys,
         checkedKeys,
       });
+    }
   };
   return (
     <div className="assign-box-container">
@@ -181,7 +206,7 @@ const AssignModal = (props) => {
           授权可用机构列表
           <div className="menu-all-checked">
             <Checkbox onChange={checkAllOrg} checked={allOrgChecked} disabled={disabled}>
-              全选
+              全局
             </Checkbox>
           </div>
         </div>
@@ -203,14 +228,14 @@ const AssignModal = (props) => {
           授权可用渠道列表
           <div className="menu-all-checked">
             <Checkbox onChange={checkedAllApp} checked={allAppChecked} disabled={disabled}>
-              全选
+              全局
             </Checkbox>
           </div>
         </div>
         <div className="menu-body">
           {appList.map((item, index) => {
             const isCheck = appKeys?.includes(item.value);
-            const isOwnAppCode = dataItem?.appCode === item.value;
+            const isOwnAppCode = appCode === item.value;
             return (
               <Checkbox
                 checked={isCheck}

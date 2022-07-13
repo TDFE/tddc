@@ -170,10 +170,6 @@ const Assign = () => {
     appCodes: ['TG01'],
     orgCode: 'TongDun',
     orgCodes: ['TongDun'],
-    appName: '天策_交易',
-    appNames: ['天策_交易'],
-    id: 345,
-    uuid: '0cad067d50f34a458fc4745694ceac53',
   };
   let title = 'XX授权';
 
