@@ -44,12 +44,6 @@ const AssignModal = (props) => {
 
     setCheckedKeys(initOrgs);
     setAppKeys(initApps || []);
-
-    onChange &&
-      onChange({
-        appKeys: appCodes.includes('all') ? 'all' : appCodes || [],
-        checkedKeys: appCodes.includes('all') ? 'all' : orgCodes || [],
-      });
   }, [dataItem]);
 
   useEffect(() => {
@@ -62,12 +56,18 @@ const AssignModal = (props) => {
       let org = checkedKeys.filter((item) => allOrg.includes(item));
 
       if (app.length === appList.length || org.length === allOrg.length) {
-        onChange &&
-          onChange({
-            appKeys: app.length === appList.length ? ['all'] : appKeys,
-            checkedKeys: org.length === allOrg.length ? ['all'] : checkedKeys,
-          });
       }
+      onChange &&
+        onChange({
+          appKeys: app.length === appList.length ? ['all'] : appKeys,
+          checkedKeys: org.length === allOrg.length ? ['all'] : checkedKeys,
+          appCheckAll: app.length === allApp.length,
+          orgCheckAll: org.length === allOrg.length,
+          checkData: {
+            apps: app.length === allApp.length ? allApp : appKeys,
+            orgs: org.length === allOrg.length ? allOrg : checkedKeys,
+          },
+        });
 
       setAllAppChecked(app.length === appList.length);
       setAllOrgChecked(org.length === allOrg.length);
@@ -130,11 +130,6 @@ const AssignModal = (props) => {
     }
 
     setCheckedKeys(checked);
-    onChange &&
-      onChange({
-        appKeys,
-        checkedKeys: checked,
-      });
   };
 
   const assignApp = (e) => {
@@ -154,12 +149,6 @@ const AssignModal = (props) => {
       });
       setAppKeys(newAppKeys);
     }
-
-    onChange &&
-      onChange({
-        checkedKeys,
-        appKeys: newAppKeys,
-      });
   };
 
   const checkAllOrg = (e) => {
@@ -167,17 +156,9 @@ const AssignModal = (props) => {
     if (e.target.checked) {
       orgKeys = preorder(orgList[0]);
       setCheckedKeys(orgKeys);
-      onChange({
-        appKeys,
-        checkedKeys: ['all'],
-      });
     } else {
       orgKeys = [...path];
       setCheckedKeys(orgKeys);
-      onChange({
-        appKeys,
-        checkedKeys: orgKeys,
-      });
     }
   };
 
@@ -186,17 +167,9 @@ const AssignModal = (props) => {
     if (e.target.checked) {
       appKeys = appList.map((item) => item.value);
       setAppKeys(appKeys);
-      onChange({
-        appKeys: ['all'],
-        checkedKeys,
-      });
     } else {
       appKeys = [appCode];
       setAppKeys(appKeys);
-      onChange({
-        appKeys,
-        checkedKeys,
-      });
     }
   };
   return (
