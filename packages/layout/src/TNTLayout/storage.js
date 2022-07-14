@@ -12,14 +12,16 @@ export const setSideMenuStore = (params = {}) => {
 };
 
 export const setCurrentAppStore = (currentApp = {}) => {
+    localStorage.setItem('currentApp_new', JSON.stringify(currentApp));
     localStorage.setItem('currentApp', JSON.stringify(currentApp));
 };
-export const getCurrentAppStore = () => safeParseJSON(localStorage.getItem('currentApp'), {});
+export const getCurrentAppStore = () => safeParseJSON(localStorage.getItem('currentApp_new'), {});
 
 export const setCurrentOrgStore = (currentOrg = {}) => {
+    localStorage.setItem('currentOrg_new', JSON.stringify(currentOrg));
     localStorage.setItem('currentOrg', JSON.stringify(currentOrg));
 };
-export const getCurrentOrgStore = () => safeParseJSON(localStorage.getItem('currentOrg'), {});
+export const getCurrentOrgStore = () => safeParseJSON(localStorage.getItem('currentOrg_new'), {});
 
 export const setLanguageStore = (lang) => localStorage.setItem('lang', lang);
 export const getLanguageStore = () => localStorage.getItem('lang');

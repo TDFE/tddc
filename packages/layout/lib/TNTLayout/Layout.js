@@ -66,10 +66,14 @@ var _default = function _default(props) {
       _props$siderWidth = props.siderWidth,
       siderWidth = _props$siderWidth === void 0 ? 240 : _props$siderWidth,
       isEmptyLayout = props.isEmptyLayout,
-      headerTabs = props.headerTabs;
+      headerTabs = props.headerTabs,
+      onLanguageChange = props.onLanguageChange,
+      onMenuLevelChange = props.onMenuLevelChange;
 
   var _useContext = (0, _react.useContext)(_Context.ThemeContext),
-      theme = _useContext.theme;
+      theme = _useContext.theme,
+      language = _useContext.language,
+      menuLevel = _useContext.menuLevel;
 
   var _getSideMenuStore = (0, _storage.getSideMenuStore)(),
       storeCollapsed = _getSideMenuStore.collapsed,
@@ -116,7 +120,7 @@ var _default = function _default(props) {
         enName: '其它',
         groupIcon: 'system',
         groupName: '其它',
-        id: +new Date(),
+        id: Number(new Date()),
         children: []
       }];
       cloneMenus.forEach(function (element) {
@@ -177,6 +181,7 @@ var _default = function _default(props) {
           return m.code === parents[0];
         }) || {};
         _siderMenu = selectedMainMenu ? selectedMainMenu.children : [];
+        onMenuLevelChange && onMenuLevelChange(menuLevel);
       } else {
         _siderMenu = mainMenu;
       }
@@ -212,6 +217,9 @@ var _default = function _default(props) {
     setCollapsed(newCollapsed);
   };
 
+  (0, _react.useEffect)(function () {
+    onLanguageChange && onLanguageChange(language);
+  }, []);
   return /*#__PURE__*/_react.default.createElement(_layout.default, {
     className: (0, _classnames.default)('tnt-layout', "tnt-".concat(theme), {
       'large-size': size === 'large',
