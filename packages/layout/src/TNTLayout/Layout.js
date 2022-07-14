@@ -14,13 +14,22 @@ import { formatter, getActiveMenu, getParents, hasLevel2, hasLevel3 } from './ut
 
 const { Content, Sider, Header: AntdHeader } = Layout;
 
-export default props => {
-    const { className, menus = [], collapseIconPlacement = 'bottom', location: { pathname }, size, siderWidth = 240, isEmptyLayout, headerTabs } = props;
-    const { theme } = useContext(ThemeContext);
-    let {
-        collapsed: storeCollapsed,
-        openKeys = []
-    } = getSideMenuStore();
+export default (props) => {
+    const {
+        className,
+        menus = [],
+        collapseIconPlacement = 'bottom',
+        location: { pathname },
+        size,
+        siderWidth = 240,
+        isEmptyLayout,
+        headerTabs,
+        onLanguageChange,
+        onMenuLevelChange
+    } = props;
+
+    const { theme, language, menuLevel } = useContext(ThemeContext);
+    let { collapsed: storeCollapsed, openKeys = [] } = getSideMenuStore();
 
     const [collapsed, setCollapsed] = useState(isUndefined(storeCollapsed) ? false : storeCollapsed);
     const [openMenuKeys, setOpenMenuKeys] = useState(openKeys);
@@ -33,16 +42,18 @@ export default props => {
         const cloneMenus = cloneDeep(menus);
         let mainMenu = cloneMenus;
         if (isLevel3) {
-            mainMenu = [{
-                code: 'other',
-                enName: '其它',
-                groupIcon: 'system',
-                groupName: '其它',
-                id: +new Date(),
-                children: []
-            }];
+            mainMenu = [
+                {
+                    code: 'other',
+                    enName: '其它',
+                    groupIcon: 'system',
+                    groupName: '其它',
+                    id: Number(new Date()),
+                    children: []
+                }
+            ];
 
-            cloneMenus.forEach(element => {
+            cloneMenus.forEach((element) => {
                 const isLevel2 = hasLevel2(element);
                 if (isLevel2) {
                     mainMenu.push(element);
@@ -72,10 +83,10 @@ export default props => {
             if (activeMenu) {
                 parents = getParents(activeMenu);
             } else {
-                parents = [mainMenu[0].code]
+                parents = [mainMenu[0].code];
             }
 
-            setIsHasLevel3(isLevel3)
+            setIsHasLevel3(isLevel3);
             setMainMenu(mainMenu);
         }
     }, [menus]);
@@ -87,12 +98,14 @@ export default props => {
             if (activeMenu) {
                 parents = getParents(activeMenu);
             } else {
-                parents = [mainMenu[0].code]
+                parents = [mainMenu[0].code];
             }
-            let siderMenu = []
+            let siderMenu = [];
             if (isHasLevel3) {
-                const selectedMainMenu = mainMenu.find(m => m.code === parents[0]) || {};
+                const selectedMainMenu = mainMenu.find((m) => m.code === parents[0]) || {};
                 siderMenu = selectedMainMenu ? selectedMainMenu.children : [];
+
+                onMenuLevelChange && onMenuLevelChange(menuLevel);
             } else {
                 siderMenu = mainMenu;
             }
@@ -113,7 +126,8 @@ export default props => {
                 beforeOpenKeys: openMenuKeys
             });
             setOpenMenuKeys([]);
-        } else { // 菜单展开：恢复子菜单展开项，并更新到store
+        } else {
+            // 菜单展开：恢复子菜单展开项，并更新到store
             setSideMenuStore({
                 collapsed: newCollapsed,
                 openKeys: beforeOpenKeys
@@ -124,14 +138,22 @@ export default props => {
         setCollapsed(newCollapsed);
     };
 
+    useEffect(() => {
+        onLanguageChange && onLanguageChange(language);
+    }, []);
     return (
-        <Layout className={cn('tnt-layout', `tnt-${theme}`,
-            {
-                'large-size': size === 'large',
-                isNoHasLevel3: !isHasLevel3,
-                isEmptyLayout,
-                hasHeaderTabs: !!headerTabs,
-            }, className)}>
+        <Layout
+            className={cn(
+                'tnt-layout',
+                `tnt-${theme}`,
+                {
+                    'large-size': size === 'large',
+                    isNoHasLevel3: !isHasLevel3,
+                    isEmptyLayout,
+                    hasHeaderTabs: !!headerTabs
+                },
+                className
+            )}>
             <Sider
                 collapsible
                 breakpoint="md"
@@ -139,13 +161,8 @@ export default props => {
                 collapsed={collapsed}
                 collapsedWidth={collapsed && isHasLevel3 ? 110 : 80}
                 width={siderWidth}
-                trigger={null}
-            >
-                <Logo
-                    siderWidth={siderWidth}
-                    collapsed={collapsed}
-                    {...props}
-                />
+                trigger={null}>
+                <Logo siderWidth={siderWidth} collapsed={collapsed} {...props} />
                 <SideMenu
                     {...props}
                     collapsed={collapsed}
@@ -154,10 +171,10 @@ export default props => {
                     mainMenu={mainMenu}
                     siderMenu={siderMenu}
                     selectedKeys={selectedKeys}
-                    handleMainMenu={item => {
+                    handleMainMenu={(item) => {
                         setSiderMenu(item.children);
                     }}
-                    onOpenChange={keys => {
+                    onOpenChange={(keys) => {
                         if (!collapsed) {
                             setSideMenuStore({
                                 openKeys: keys,
@@ -167,16 +184,11 @@ export default props => {
                         setOpenMenuKeys(keys);
                     }}
                 />
-                {
-                    collapseIconPlacement === 'bottom' && !isHasLevel3 && (
-                        <div
-                            className="tnt-layout-menu-collapse"
-                            onClick={collapseChangeHandle}
-                        >
-                            <Icon type={`menu-${collapsed ? 'unfold' : 'fold'}`} />
-                        </div>
-                    )
-                }
+                {collapseIconPlacement === 'bottom' && !isHasLevel3 && (
+                    <div className="tnt-layout-menu-collapse" onClick={collapseChangeHandle}>
+                        <Icon type={`menu-${collapsed ? 'unfold' : 'fold'}`} />
+                    </div>
+                )}
             </Sider>
             <Layout>
                 <Header

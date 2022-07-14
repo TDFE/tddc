@@ -28,26 +28,28 @@ exports.setSideMenuStore = setSideMenuStore;
 
 var setCurrentAppStore = function setCurrentAppStore() {
   var currentApp = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+  localStorage.setItem('currentApp_new', JSON.stringify(currentApp));
   localStorage.setItem('currentApp', JSON.stringify(currentApp));
 };
 
 exports.setCurrentAppStore = setCurrentAppStore;
 
 var getCurrentAppStore = function getCurrentAppStore() {
-  return (0, _utils.safeParseJSON)(localStorage.getItem('currentApp'), {});
+  return (0, _utils.safeParseJSON)(localStorage.getItem('currentApp_new'), {});
 };
 
 exports.getCurrentAppStore = getCurrentAppStore;
 
 var setCurrentOrgStore = function setCurrentOrgStore() {
   var currentOrg = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+  localStorage.setItem('currentOrg_new', JSON.stringify(currentOrg));
   localStorage.setItem('currentOrg', JSON.stringify(currentOrg));
 };
 
 exports.setCurrentOrgStore = setCurrentOrgStore;
 
 var getCurrentOrgStore = function getCurrentOrgStore() {
-  return (0, _utils.safeParseJSON)(localStorage.getItem('currentOrg'), {});
+  return (0, _utils.safeParseJSON)(localStorage.getItem('currentOrg_new'), {});
 };
 
 exports.getCurrentOrgStore = getCurrentOrgStore;

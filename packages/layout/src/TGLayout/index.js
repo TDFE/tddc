@@ -1,7 +1,7 @@
 import { useState, useEffect, useReducer } from 'react';
 import { Spin, Empty, message, ConfigProvider } from 'antd';
-import zhCN from 'antd/es/locale/zh_CN';
-import enUS from 'antd/es/locale/en_US';
+// import zhCN from 'antd/es/locale/zh_CN';
+// import enUS from 'antd/es/locale/en_US';
 import { DevelopmentLogin } from 'tntd';
 import Cookies from 'universal-cookie';
 import Layout from '../TNTLayout';
@@ -253,7 +253,7 @@ const TGLayout = (props) => {
         });
     };
     return (
-        <ConfigProvider locale={personalMode?.lang === 'en' ? enUS : zhCN}>
+        // <ConfigProvider locale={personalMode?.lang === 'en' ? enUS : zhCN}>
             <Layout
                 key={!actions && `${currentOrgCode}_${currentApp.name}`}
                 type="enterprise"
@@ -297,7 +297,7 @@ const TGLayout = (props) => {
                     <Spin className="subapp-loading" />
                 )}
             </Layout>
-        </ConfigProvider>
+        // </ConfigProvider>
     );
 };
 TGLayout.getLayoutPageTitle = getLayoutPageTitle;

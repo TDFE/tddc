@@ -7,10 +7,6 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.default = void 0;
 
-require("antd/lib/config-provider/style");
-
-var _configProvider = _interopRequireDefault(require("antd/lib/config-provider"));
-
 require("antd/lib/spin/style");
 
 var _spin = _interopRequireDefault(require("antd/lib/spin"));
@@ -24,10 +20,6 @@ require("antd/lib/message/style");
 var _message2 = _interopRequireDefault(require("antd/lib/message"));
 
 var _react = _interopRequireWildcard(require("react"));
-
-var _zh_CN = _interopRequireDefault(require("antd/es/locale/zh_CN"));
-
-var _en_US = _interopRequireDefault(require("antd/es/locale/en_US"));
 
 var _tntd = require("tntd");
 
@@ -459,56 +451,59 @@ var TGLayout = function TGLayout(props) {
     });
   };
 
-  return /*#__PURE__*/_react.default.createElement(_configProvider.default, {
-    locale: (personalMode === null || personalMode === void 0 ? void 0 : personalMode.lang) === 'en' ? _en_US.default : _zh_CN.default
-  }, /*#__PURE__*/_react.default.createElement(_TNTLayout.default, _extends({
-    key: !actions && "".concat(currentOrgCode, "_").concat(currentApp.name),
-    type: "enterprise",
-    logo: logo && /*#__PURE__*/_react.default.createElement("img", {
-      className: "logo",
-      style: {
-        opacity: logo && logo.indexOf('white') ? 0.85 : 1
-      },
-      src: logo
-    }),
-    name: name,
-    enName: enName,
-    userInfo: userInfo,
-    menus: menuTree,
-    extendMap: extendMap,
-    onLogout: onLogout,
-    appList: appListVisible && appList,
-    onAppChange: appChange,
-    orgList: orgListVisible && orgUuidTree[0],
-    onOrgChange: orgChange,
-    onMenuLevelChange: menuLevelChange,
-    orgAppShow: orgAppListVisible,
-    orgAppList: orgAppListVisible && orgAppList,
-    onLanguageChange: languageChange,
-    onMenuSelect: function onMenuSelect(data) {
-      var _data$path;
+  return (
+    /*#__PURE__*/
+    // <ConfigProvider locale={personalMode?.lang === 'en' ? enUS : zhCN}>
+    _react.default.createElement(_TNTLayout.default, _extends({
+      key: !actions && "".concat(currentOrgCode, "_").concat(currentApp.name),
+      type: "enterprise",
+      logo: logo && /*#__PURE__*/_react.default.createElement("img", {
+        className: "logo",
+        style: {
+          opacity: logo && logo.indexOf('white') ? 0.85 : 1
+        },
+        src: logo
+      }),
+      name: name,
+      enName: enName,
+      userInfo: userInfo,
+      menus: menuTree,
+      extendMap: extendMap,
+      onLogout: onLogout,
+      appList: appListVisible && appList,
+      onAppChange: appChange,
+      orgList: orgListVisible && orgUuidTree[0],
+      onOrgChange: orgChange,
+      onMenuLevelChange: menuLevelChange,
+      orgAppShow: orgAppListVisible,
+      orgAppList: orgAppListVisible && orgAppList,
+      onLanguageChange: languageChange,
+      onMenuSelect: function onMenuSelect(data) {
+        var _data$path;
 
-      if (data === null || data === void 0 ? void 0 : (_data$path = data.path) === null || _data$path === void 0 ? void 0 : _data$path.startsWith("/".concat(routerPrefix))) {
-        eventEmitter === null || eventEmitter === void 0 ? void 0 : eventEmitter.emit('menuClick', true);
+        if (data === null || data === void 0 ? void 0 : (_data$path = data.path) === null || _data$path === void 0 ? void 0 : _data$path.startsWith("/".concat(routerPrefix))) {
+          eventEmitter === null || eventEmitter === void 0 ? void 0 : eventEmitter.emit('menuClick', true);
+        }
+
+        _onMenuSelect && _onMenuSelect(data);
       }
+    }, rest, {
+      // 开发模式增加登录
+      extraHeaderActions: [process.env.NODE_ENV === 'development' && !actions && /*#__PURE__*/_react.default.createElement(HeaderActionItem, {
+        key: "help"
+      }, /*#__PURE__*/_react.default.createElement(_tntd.DevelopmentLogin, {
+        signIn: mockLogin
+      }))]
+    }), userReady && menuTreeReady ? errorMsg ? /*#__PURE__*/_react.default.createElement(_empty.default, {
+      description: errorMsg,
+      imageStyle: {
+        marginTop: '150px'
+      }
+    }) : children : /*#__PURE__*/_react.default.createElement(_spin.default, {
+      className: "subapp-loading"
+    })) // </ConfigProvider>
 
-      _onMenuSelect && _onMenuSelect(data);
-    }
-  }, rest, {
-    // 开发模式增加登录
-    extraHeaderActions: [process.env.NODE_ENV === 'development' && !actions && /*#__PURE__*/_react.default.createElement(HeaderActionItem, {
-      key: "help"
-    }, /*#__PURE__*/_react.default.createElement(_tntd.DevelopmentLogin, {
-      signIn: mockLogin
-    }))]
-  }), userReady && menuTreeReady ? errorMsg ? /*#__PURE__*/_react.default.createElement(_empty.default, {
-    description: errorMsg,
-    imageStyle: {
-      marginTop: '150px'
-    }
-  }) : children : /*#__PURE__*/_react.default.createElement(_spin.default, {
-    className: "subapp-loading"
-  })));
+  );
 };
 
 TGLayout.getLayoutPageTitle = _utils.getLayoutPageTitle;
