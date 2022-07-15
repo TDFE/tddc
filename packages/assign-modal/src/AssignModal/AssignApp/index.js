@@ -64,7 +64,7 @@ const AssignModal = (props) => {
             key={item.code}
             title={<NodeTitle node={item} />}
             item={item}
-            disabled={orgDisabled || disabled}
+            disabled={orgDisabled || disabled || allOrgChecked}
           >
             {loopTreeNodes(item.children, level + 1)}
           </TreeNode>
@@ -157,7 +157,7 @@ const AssignModal = (props) => {
       onChange({
         appKeys: allAppChecked ? ['all'] : appKeys,
         checkedKeys: ['all'],
-        appCheckAll: allOrgChecked,
+        appCheckAll: allAppChecked,
         orgCheckAll: true,
         checkData: {
           apps: appKeys,
@@ -166,14 +166,14 @@ const AssignModal = (props) => {
       });
     } else {
       setAllOrgChecked(false);
-
-      orgChecks = Array.from(new Set([...(orgCodes || []), ...path]));
+      let arr = orgCodes.includes('all') ? allApp : orgCodes;
+      orgChecks = Array.from(new Set([...(arr || []), ...path]));
 
       setCheckedKeys(orgChecks);
       onChange({
         appKeys: allAppChecked ? ['all'] : appKeys,
         checkedKeys: orgChecks,
-        appCheckAll: allOrgChecked,
+        appCheckAll: allAppChecked,
         orgCheckAll: false,
         checkData: {
           apps: appKeys,
@@ -202,8 +202,8 @@ const AssignModal = (props) => {
       });
     } else {
       setAllAppChecked(false);
-
-      appChecks = Array.from(new Set([...(appCodes || []), appCode]));
+      let arr = appCodes.includes('all') ? allApp : appCodes;
+      appChecks = Array.from(new Set([...(arr || []), appCode]));
 
       setAppKeys(appChecks);
       onChange({
@@ -238,9 +238,9 @@ const AssignModal = (props) => {
           checkedKeys={checkedKeys}
           defaultExpandAll
           onCheck={onCheck}
-          disabled={disabled || allOrgChecked}
+          disabled={true}
         >
-          {loopTreeNodes(orgList)}
+          {loopTreeNodes(orgList, 0)}
         </Tree>
       </div>
       <div className="right">

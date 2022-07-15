@@ -169,7 +169,7 @@ const Assign = () => {
     appCode: 'TG01',
     appCodes: ['all'],
     orgCode: 'TongDun',
-    orgCodes: ['TongDun', 'wujijigou'],
+    orgCodes: ['TongDun', 'secondB'],
   };
   let title = 'XX授权';
 
