@@ -14,6 +14,9 @@ const AssignModal = (props) => {
   const { orgList = [], dataItem = {}, disabled, appList, onChange } = props;
   let { appCodes = [], orgCodes = [], orgCode, appCode } = dataItem;
 
+  let allOrg = preorder(orgList[0]);
+  let allApp = appList.map((item) => item.value);
+
   const [checkedKeys, setCheckedKeys] = useState([]);
   const [appKeys, setAppKeys] = useState(appCodes || []);
 
@@ -27,16 +30,17 @@ const AssignModal = (props) => {
   useEffect(() => {
     // path 和 allOrgList 赋值
     path = findSameCodePath(orgList[0], orgCode);
-    let allOrg = preorder(orgList[0]);
-    let allApp = appList.map((item) => item.name) || [];
+
     let initOrgs = [];
     let initApps = [];
     if (orgCodes.includes('all')) {
+      setAllOrgChecked(orgCodes.includes('all'));
       initOrgs = allOrg;
     } else {
       initOrgs = Array.from(new Set([...(orgCodes || []), ...path]));
     }
     if (appCodes.includes('all')) {
+      setAllAppChecked(appCodes.includes('all'));
       initApps = allApp;
     } else {
       initApps = appCodes;
@@ -45,34 +49,6 @@ const AssignModal = (props) => {
     setCheckedKeys(initOrgs);
     setAppKeys(initApps || []);
   }, [dataItem]);
-
-  useEffect(() => {
-    // 机构和应用 全选
-    let allOrg = preorder(orgList[0]);
-    if (appList.length > 0) {
-      let allApp = appList.map((item) => item.value);
-      // 判断当前用户是否具有 该机构或应用 权限
-      let app = appKeys.filter((item) => allApp.includes(item));
-      let org = checkedKeys.filter((item) => allOrg.includes(item));
-
-      if (app.length === appList.length || org.length === allOrg.length) {
-      }
-      onChange &&
-        onChange({
-          appKeys: app.length === appList.length ? ['all'] : appKeys,
-          checkedKeys: org.length === allOrg.length ? ['all'] : checkedKeys,
-          appCheckAll: app.length === allApp.length,
-          orgCheckAll: org.length === allOrg.length,
-          checkData: {
-            apps: app.length === allApp.length ? allApp : appKeys,
-            orgs: org.length === allOrg.length ? allOrg : checkedKeys,
-          },
-        });
-
-      setAllAppChecked(app.length === appList.length);
-      setAllOrgChecked(org.length === allOrg.length);
-    }
-  }, [checkedKeys, appKeys, appList]);
 
   const loopTreeNodes = (data, level = 0) => {
     const NodeTitle = ({ node }) => {
@@ -130,6 +106,17 @@ const AssignModal = (props) => {
     }
 
     setCheckedKeys(checked);
+
+    onChange({
+      appKeys,
+      checkedKeys: checked,
+      appCheckAll: appKeys.length === allApp.length,
+      orgCheckAll: checked.length === allOrg.length,
+      checkData: {
+        apps: appKeys,
+        orgs: checked,
+      },
+    });
   };
 
   const assignApp = (e) => {
@@ -138,7 +125,6 @@ const AssignModal = (props) => {
     if (e.target.checked) {
       value = e.target.value;
       newAppKeys = [...appKeys, value];
-      setAppKeys(newAppKeys);
     } else {
       value = e.target.value;
       newAppKeys = cloneDeep(appKeys);
@@ -147,29 +133,83 @@ const AssignModal = (props) => {
           newAppKeys.splice(index, 1);
         }
       });
-      setAppKeys(newAppKeys);
     }
+    setAppKeys(newAppKeys);
+    onChange({
+      appKeys: newAppKeys,
+      checkedKeys,
+      appCheckAll: newAppKeys.length === allApp.length,
+      orgCheckAll: checkedKeys.length === allOrg.length,
+      checkData: {
+        apps: appKeys,
+        orgs: newAppKeys,
+      },
+    });
   };
 
+  // org全局授权
   const checkAllOrg = (e) => {
-    let orgKeys = [];
+    let orgChecks = [];
     if (e.target.checked) {
-      orgKeys = preorder(orgList[0]);
-      setCheckedKeys(orgKeys);
+      setAllOrgChecked(true);
+      orgChecks = preorder(orgList[0]);
+      setCheckedKeys(orgChecks);
+      onChange({
+        appKeys,
+        checkedKeys: ['all'],
+        appCheckAll: appKeys.length === allApp.length,
+        orgCheckAll: true,
+        checkData: {
+          apps: appKeys,
+          orgs: orgChecks,
+        },
+      });
     } else {
-      orgKeys = [...path];
-      setCheckedKeys(orgKeys);
+      setAllOrgChecked(false);
+      orgChecks = [...path];
+      setCheckedKeys(orgChecks);
+      onChange({
+        appKeys,
+        checkedKeys: orgChecks,
+        appCheckAll: checkedKeys.length === allOrg.length,
+        orgCheckAll: false,
+        checkData: {
+          apps: appKeys,
+          orgs: orgChecks,
+        },
+      });
     }
   };
 
+  // app全局授权
   const checkedAllApp = (e) => {
-    let appKeys = [];
+    let appChecks = [];
     if (e.target.checked) {
-      appKeys = appList.map((item) => item.value);
-      setAppKeys(appKeys);
+      setAllAppChecked(true);
+      appChecks = appList.map((item) => item.value);
+      setAppKeys(appChecks);
+      onChange({
+        appKeys: ['all'],
+        checkedKeys,
+        appCheckAll: true,
+        orgCheckAll: checkedKeys.length === allOrg.length,
+        checkData: {
+          apps: appChecks,
+          orgs: checkedKeys,
+        },
+      });
     } else {
-      appKeys = [appCode];
-      setAppKeys(appKeys);
+      setAllAppChecked(false);
+      onChange({
+        appKeys: appChecks,
+        checkedKeys,
+        appCheckAll: false,
+        orgCheckAll: checkedKeys.length === allOrg.length,
+        checkData: {
+          apps: appChecks,
+          orgs: checkedKeys,
+        },
+      });
     }
   };
   return (
