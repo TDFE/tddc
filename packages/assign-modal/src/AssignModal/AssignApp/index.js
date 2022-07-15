@@ -108,10 +108,10 @@ const AssignModal = (props) => {
     setCheckedKeys(checked);
 
     onChange({
-      appKeys,
+      appKeys: allAppChecked ? ['all'] : appKeys,
       checkedKeys: checked,
-      appCheckAll: appKeys.length === allApp.length,
-      orgCheckAll: checked.length === allOrg.length,
+      appCheckAll: allAppChecked,
+      orgCheckAll: allOrgChecked,
       checkData: {
         apps: appKeys,
         orgs: checked,
@@ -137,12 +137,12 @@ const AssignModal = (props) => {
     setAppKeys(newAppKeys);
     onChange({
       appKeys: newAppKeys,
-      checkedKeys,
-      appCheckAll: newAppKeys.length === allApp.length,
-      orgCheckAll: checkedKeys.length === allOrg.length,
+      checkedKeys: allOrgChecked ? ['all'] : checkedKeys,
+      appCheckAll: allAppChecked,
+      orgCheckAll: allOrgChecked,
       checkData: {
-        apps: appKeys,
-        orgs: newAppKeys,
+        apps: newAppKeys,
+        orgs: checkedKeys,
       },
     });
   };
@@ -155,23 +155,25 @@ const AssignModal = (props) => {
       orgChecks = preorder(orgList[0]);
       setCheckedKeys(orgChecks);
       onChange({
-        appKeys,
+        appKeys: allAppChecked ? ['all'] : appKeys,
         checkedKeys: ['all'],
-        appCheckAll: appKeys.length === allApp.length,
+        appCheckAll: allOrgChecked,
         orgCheckAll: true,
         checkData: {
           apps: appKeys,
-          orgs: orgChecks,
+          orgs: checkedKeys,
         },
       });
     } else {
       setAllOrgChecked(false);
-      orgChecks = [...path];
+
+      orgChecks = Array.from(new Set([...(orgCodes || []), ...path]));
+
       setCheckedKeys(orgChecks);
       onChange({
-        appKeys,
+        appKeys: allAppChecked ? ['all'] : appKeys,
         checkedKeys: orgChecks,
-        appCheckAll: checkedKeys.length === allOrg.length,
+        appCheckAll: allOrgChecked,
         orgCheckAll: false,
         checkData: {
           apps: appKeys,
@@ -190,9 +192,9 @@ const AssignModal = (props) => {
       setAppKeys(appChecks);
       onChange({
         appKeys: ['all'],
-        checkedKeys,
+        checkedKeys: allOrgChecked ? ['all'] : checkedKeys,
         appCheckAll: true,
-        orgCheckAll: checkedKeys.length === allOrg.length,
+        orgCheckAll: allOrgChecked,
         checkData: {
           apps: appChecks,
           orgs: checkedKeys,
@@ -200,11 +202,15 @@ const AssignModal = (props) => {
       });
     } else {
       setAllAppChecked(false);
+
+      appChecks = Array.from(new Set([...(appCodes || []), appCode]));
+
+      setAppKeys(appChecks);
       onChange({
         appKeys: appChecks,
-        checkedKeys,
+        checkedKeys: allOrgChecked ? ['all'] : checkedKeys,
         appCheckAll: false,
-        orgCheckAll: checkedKeys.length === allOrg.length,
+        orgCheckAll: allOrgChecked,
         checkData: {
           apps: appChecks,
           orgs: checkedKeys,
@@ -212,6 +218,7 @@ const AssignModal = (props) => {
       });
     }
   };
+
   return (
     <div className="assign-box-container">
       <div className="left">
@@ -231,7 +238,7 @@ const AssignModal = (props) => {
           checkedKeys={checkedKeys}
           defaultExpandAll
           onCheck={onCheck}
-          disabled={disabled}
+          disabled={disabled || allOrgChecked}
         >
           {loopTreeNodes(orgList)}
         </Tree>
@@ -252,7 +259,7 @@ const AssignModal = (props) => {
             return (
               <Checkbox
                 checked={isCheck}
-                disabled={disabled || isOwnAppCode}
+                disabled={disabled || isOwnAppCode || allAppChecked}
                 onChange={assignApp}
                 value={item.value}
                 key={index}

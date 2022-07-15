@@ -167,9 +167,9 @@ const Assign = () => {
 
   let dataItem = {
     appCode: 'TG01',
-    appCodes: ['TG01'],
+    appCodes: ['all'],
     orgCode: 'TongDun',
-    orgCodes: ['TongDun'],
+    orgCodes: ['TongDun', 'wujijigou'],
   };
   let title = 'XX授权';
 
