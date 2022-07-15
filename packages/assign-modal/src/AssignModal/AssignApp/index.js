@@ -43,7 +43,7 @@ const AssignModal = (props) => {
       setAllAppChecked(appCodes.includes('all'));
       initApps = allApp;
     } else {
-      initApps = appCodes;
+      initApps = Array.from(new Set([...(appCodes || []), appCode]));
     }
 
     setCheckedKeys(initOrgs);
