@@ -48,6 +48,18 @@ const AssignModal = (props) => {
 
     setCheckedKeys(initOrgs);
     setAppKeys(initApps || []);
+
+    onChange &&
+      onChange({
+        appKeys: appCodes.includes('all') ? ['all'] : initApps,
+        checkedKeys: orgCodes.includes('all') ? ['all'] : initOrgs,
+        appCheckAll: appCodes.includes('all'),
+        orgCheckAll: orgCodes.includes('all'),
+        checkData: {
+          apps: initApps,
+          orgs: initOrgs,
+        },
+      });
   }, [dataItem]);
 
   const loopTreeNodes = (data, level = 0) => {
@@ -166,7 +178,7 @@ const AssignModal = (props) => {
       });
     } else {
       setAllOrgChecked(false);
-      let arr = orgCodes.includes('all') ? allApp : orgCodes;
+      let arr = orgCodes.includes('all') ? allOrg : orgCodes;
       orgChecks = Array.from(new Set([...(arr || []), ...path]));
 
       setCheckedKeys(orgChecks);

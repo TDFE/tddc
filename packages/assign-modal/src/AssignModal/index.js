@@ -9,7 +9,6 @@ const AssignModal = (props) => {
   const [assignData, setAssignData] = useState({});
 
   const submit = () => {
-    console.log(assignData);
     onSubmit(assignData);
   };
 
