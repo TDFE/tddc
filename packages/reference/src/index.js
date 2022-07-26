@@ -1,5 +1,5 @@
 import { ReferenceDrawer } from './ReferenceDrawer';
 import { ReferenceCheck } from './ReferenceCheck';
-import { ReferenceOnlineCheck } from './ReferenceOnlineCheck';
+import { ReferenceBatchCheck } from './ReferenceBatchCheck';
 import { ReferenceInfo } from './ReferenceInfo';
-export { ReferenceDrawer, ReferenceCheck, ReferenceInfo, ReferenceOnlineCheck };
+export { ReferenceDrawer, ReferenceCheck, ReferenceInfo, ReferenceBatchCheck, ReferenceBatchCheck as ReferenceOnlineCheck };

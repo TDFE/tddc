@@ -6,7 +6,7 @@ import './index.less';
 
 const { Panel } = Collapse;
 
-const ReferenceOnlineCheck = (props) => {
+const ReferenceBatchCheck = (props) => {
   const {
     title = (
       <>
@@ -71,7 +71,7 @@ const ReferenceOnlineCheck = (props) => {
                   key={i}
                 >
                   <ReferenceInfo
-                    from="ReferenceOnlineCheck"
+                    from="ReferenceBatchCheck"
                     unmountHandle={removeModal}
                     referenceData={d?.result || []}
                     orgMap={orgMap}
@@ -106,4 +106,4 @@ const ReferenceOnlineCheck = (props) => {
     message.error('请提供一个可靠的查询请求!!!');
   }
 };
-export { ReferenceOnlineCheck };
+export { ReferenceBatchCheck };

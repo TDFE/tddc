@@ -3,6 +3,12 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
+Object.defineProperty(exports, "ReferenceBatchCheck", {
+  enumerable: true,
+  get: function get() {
+    return _ReferenceBatchCheck.ReferenceBatchCheck;
+  }
+});
 Object.defineProperty(exports, "ReferenceCheck", {
   enumerable: true,
   get: function get() {
@@ -24,7 +30,7 @@ Object.defineProperty(exports, "ReferenceInfo", {
 Object.defineProperty(exports, "ReferenceOnlineCheck", {
   enumerable: true,
   get: function get() {
-    return _ReferenceOnlineCheck.ReferenceOnlineCheck;
+    return _ReferenceBatchCheck.ReferenceBatchCheck;
   }
 });
 
@@ -32,6 +38,6 @@ var _ReferenceDrawer = require("./ReferenceDrawer");
 
 var _ReferenceCheck = require("./ReferenceCheck");
 
-var _ReferenceOnlineCheck = require("./ReferenceOnlineCheck");
+var _ReferenceBatchCheck = require("./ReferenceBatchCheck");
 
 var _ReferenceInfo = require("./ReferenceInfo");

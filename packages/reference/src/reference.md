@@ -82,7 +82,7 @@ export default () => {
 };
 ```
 
-### 下线删除操作时查看是否有强弱引用
+### 单个检查是否有强弱引用
 ```jsx 
 import React from "react";
 import { Button } from "antd";
@@ -144,18 +144,18 @@ export default () => {
         console.log(e)
       });
   };
-  return <Button onClick={confirmClick}>下线校验</Button>;
+  return <Button onClick={confirmClick}>单个强弱校验</Button>;
 }
 ```
 
-### 上线时检查是否有缺失项
+### 批量检查不通过弹窗
 ```jsx
 import React from "react";
 import { Button } from "antd";
-import { ReferenceOnlineCheck } from "@tddc/reference";
+import { ReferenceBatchCheck } from "@tddc/reference";
 export default () => {
    const confirmClick = () => {
-    ReferenceOnlineCheck({
+    ReferenceBatchCheck({
       rq: () => {
         return new Promise((resolve) => {
           resolve({
@@ -217,7 +217,7 @@ export default () => {
       },
     });
   };
-  return <Button onClick={confirmClick}>上线校验</Button>;
+  return <Button onClick={confirmClick}>批量校验</Button>;
 };
 ```
 
@@ -253,9 +253,9 @@ ReferenceCheck({
 | orgMap | 机构树 | Object | {}|
 
 
-#### 🚀 `ReferenceOnlineCheck` 为Promise函数，若检测通过将下一步之行操作写入回调中，否则将默认弹窗
+#### 🚀 `ReferenceBatchCheck` 为Promise函数，若检测通过将下一步之行操作写入回调中，否则将默认弹窗
 ```javascript
-ReferenceOnlineCheck({
+ReferenceBatchCheck({
   rq:()=>{
     api.onlineValidate({
       id:"1"
