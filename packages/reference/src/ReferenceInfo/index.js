@@ -100,7 +100,7 @@ export const ReferenceInfo = (props) => {
           });
         }
         return (
-          <div className="reference-body-item">
+          <div className="reference-body-item" key={dIndex}>
             <Row className="reference-body-title" type="flex" align="middle">
               <span className="body-title-content">
                 <Tooltip title={d?.title} placement="topLeft">

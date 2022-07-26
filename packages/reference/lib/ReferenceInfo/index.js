@@ -168,7 +168,8 @@ var ReferenceInfo = function ReferenceInfo(props) {
     }
 
     return /*#__PURE__*/_react.default.createElement("div", {
-      className: "reference-body-item"
+      className: "reference-body-item",
+      key: dIndex
     }, /*#__PURE__*/_react.default.createElement(_row.default, {
       className: "reference-body-title",
       type: "flex",

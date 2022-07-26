@@ -133,6 +133,42 @@ export default () => {
                     ],
                     tips: '注意流模式策略判断体现在过程判断的适配的字段',
                     title: '被应用策略【运行区】',
+                  },{
+                    columns: [
+                      {
+                        title: '策略名称',
+                        dataIndex: 'name',
+                      },
+                      {
+                        title: '策略标识',
+                        dataIndex: 'code',
+                      },
+                      {
+                        title: '策略名称',
+                        dataIndex: 'org',
+                      },
+                      {
+                        title: '所属机构',
+                        dataIndex: 'app',
+                      },
+                      {
+                        title: '所属应用',
+                        dataIndex: 'version',
+                      },
+                    ],
+                    goName: 'code',
+                    rows: [
+                      {
+                        name: '策略A策略A策略A策略A策略A策略A策略A策略A策略A策略A策略A策略A策略A',
+                        version: 'policy_phonepolicy_phonepolicy_phonepolicy_phonepolicy_phonepolicy_phone',
+                        code: 'v2',
+                        org: 'TongDun',
+                        app: 'TEST',
+                        goLink: 'noah/policyManage?currentTab=2&uuid=policy_phone',
+                      },
+                    ],
+                    tips: '注意流模式策略判断体现在过程判断的适配的字段',
+                    title: '被应用策略【运行区】',
                   },
                 ],
               },
@@ -148,7 +184,7 @@ export default () => {
 }
 ```
 
-### 批量检查不通过弹窗
+### 批量检查支持数组以及对象
 ```jsx
 import React from "react";
 import { Button } from "antd";
@@ -160,7 +196,9 @@ export default () => {
         return new Promise((resolve) => {
           resolve({
             success: true,
-            data: [
+            data: {
+              type:"STRONG",
+              result:[
               {
                 componentId: 'fafdasfa',
                 componentCode: '123',
@@ -207,7 +245,8 @@ export default () => {
                   },
                 ],
               }
-            ],
+            ]
+            },
           });
         });
       },
