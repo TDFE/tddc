@@ -238,7 +238,7 @@ const AssignModal = (props) => {
           授权可用机构列表
           <div className="menu-all-checked">
             <Checkbox onChange={checkAllOrg} checked={allOrgChecked} disabled={disabled}>
-              全局
+              全部机构可用
             </Checkbox>
           </div>
         </div>
@@ -260,7 +260,7 @@ const AssignModal = (props) => {
           授权可用渠道列表
           <div className="menu-all-checked">
             <Checkbox onChange={checkedAllApp} checked={allAppChecked} disabled={disabled}>
-              全局
+              全部渠道可用
             </Checkbox>
           </div>
         </div>
