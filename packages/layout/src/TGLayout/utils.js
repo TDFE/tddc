@@ -176,7 +176,7 @@ export const getLayoutPageTitle = (menuTree) => {
                 taskList.shift();
 
                 if (item.path) {
-                    if (item.path.includes(pathname)) {
+                    if (pathname.includes(item.path)) {
                         title = item['menuName'];
                     }
                 }
