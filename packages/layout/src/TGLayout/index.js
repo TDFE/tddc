@@ -270,7 +270,7 @@ const TGLayout = (props) => {
                 onOrgChange={orgChange}
                 onMenuLevelChange={menuLevelChange}
                 orgAppShow={orgAppListVisible}
-                orgAppList={orgAppListVisible && orgAppList}
+                orgAppList={orgAppList}
                 onLanguageChange={languageChange}
                 onMenuSelect={(data) => {
                     if (data?.path?.startsWith(`/${routerPrefix}`)) {

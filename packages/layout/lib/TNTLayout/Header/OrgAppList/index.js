@@ -152,7 +152,7 @@ var _default = function _default(props) {
       appKey = _ref2$key === void 0 ? '' : _ref2$key;
 
   var handleChangeApp = function handleChangeApp(app) {
-    if (appKey !== app.key) {
+    if (appKey !== (app === null || app === void 0 ? void 0 : app.key)) {
       setSelectedApp(app);
       (0, _storage.setCurrentAppStore)(app);
       onAppChange && onAppChange(app);

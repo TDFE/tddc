@@ -89,7 +89,7 @@ export default (props) => {
     const { key: appKey = '' } = selectedApp || {};
 
     const handleChangeApp = (app) => {
-        if (appKey !== app.key) {
+        if (appKey !== app?.key) {
             setSelectedApp(app);
             setCurrentAppStore(app);
             onAppChange && onAppChange(app);

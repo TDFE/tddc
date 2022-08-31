@@ -476,7 +476,7 @@ var TGLayout = function TGLayout(props) {
       onOrgChange: orgChange,
       onMenuLevelChange: menuLevelChange,
       orgAppShow: orgAppListVisible,
-      orgAppList: orgAppListVisible && orgAppList,
+      orgAppList: orgAppList,
       onLanguageChange: languageChange,
       onMenuSelect: function onMenuSelect(data) {
         var _data$path;
