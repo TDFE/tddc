@@ -13,7 +13,7 @@
     "install": "lerna bootstrap --hoist",
     "publish-packages": "lerna publish from-package"
   },
-  "homepage":"https://github.com/TDFE/tddc/",
+  "homepage": "https://github.com/TDFE/tddc/",
   "module": "es/index.js",
   "typings": "es/index.d.ts",
   "gitHooks": {
@@ -28,8 +28,6 @@
     ]
   },
   "dependencies": {
-    "antd": "^3.26.20",
-    "react": "^16.12.0 || ^17.0.0",
     "tntd": "^1.4.9",
     "universal-cookie": "^4.0.4"
   },

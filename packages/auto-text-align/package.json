@@ -1,0 +1,16 @@
+{
+  "name": "@tddc/auto-text-align",
+  "version": "1.0.0",
+  "description": "文本自适应",
+  "author": "zyj",
+  "license": "ISC",
+  "main": "lib/index.js",
+  "files": [
+    "lib"
+  ],
+  "peerDependencies": {
+    "antd": "^3.26.20",
+    "react": ">=16.8.0",
+    "react-dom": ">=16.8.0"
+  }
+}
