@@ -12,5 +12,8 @@
     "antd": "^3.26.20",
     "react": ">=16.8.0",
     "react-dom": ">=16.8.0"
+  },
+  "publishConfig": {
+    "access": "public"
   }
 }
