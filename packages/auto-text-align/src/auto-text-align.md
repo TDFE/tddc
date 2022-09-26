@@ -150,10 +150,3 @@ export default TextAlign;
 | valueFontSize | 值的font-size | String | 14px |
 | itemSpace | 每一项之间自定义调整的宽度 | Number | 8 |
 | maxColumn | 最多有几列 | Number | 10 |
-
-
-#### 🚀 `文本自适应对其数据结构`
-
-```javascript
-
-```
