@@ -1,0 +1,50 @@
+.set-columns-wrapper {
+
+    .set-columns-body {
+        max-height: 300px;
+        overflow: auto;
+        margin-bottom: 20px;
+
+        .set-col-head {
+            padding-top: 20px;
+
+            .table-item {
+                display: flex;
+                align-items: center;
+                margin-bottom: 6px;
+
+                .left {
+                    width: 80%;
+                }
+
+                .right {
+                    font-size: 20px;
+                    color: #999;
+
+                    .anticon {
+                        margin-left: 5px;
+                    }
+
+                    i.add:hover,
+                    i.edit:hover {
+                        color: #2E81F7;
+                    }
+
+                    i.delete:hover {
+                        color: #f00;
+                    }
+                }
+
+                .table-item-select {
+                    position: relative;
+                    left: 10%;
+                    width: 90%;
+                }
+            }
+        }
+    }
+
+    .modal-footer {
+        margin: 0 -20px -20px;
+    }
+}
