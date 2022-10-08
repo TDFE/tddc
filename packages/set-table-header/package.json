@@ -1,0 +1,20 @@
+{
+  "name": "@tddc/set-table-header",
+  "version": "1.0.0",
+  "description": "自定义表头",
+  "author": "zyj",
+  "license": "ISC",
+  "main": "lib/index.js",
+  "files": [
+    "lib"
+  ],
+  "peerDependencies": {
+    "antd": "^3.26.20",
+    "react": ">=16.8.0",
+    "react-dom": ">=16.8.0",
+    "react-sortablejs": "^1.5.1"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}
