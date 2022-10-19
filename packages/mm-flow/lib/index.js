@@ -29,6 +29,21 @@ var _DialogHandle = _interopRequireDefault(require('./DialogHandle'));
 
 require('./index.less');
 
+var _excluded = [
+  'type',
+  'graphData',
+  'flowNodesDict',
+  'auditedNodes',
+  'className',
+  'showMiniMap',
+  'DataConvert',
+  'toolTipNameHandle',
+  'dialogHide',
+  'showType',
+  'dialogDom',
+  'editorStyle',
+];
+
 function _getRequireWildcardCache(nodeInterop) {
   if (typeof WeakMap !== 'function') return null;
   var cacheBabelInterop = new WeakMap();
@@ -611,6 +626,35 @@ function _asyncToGenerator(fn) {
   };
 }
 
+function _objectWithoutProperties(source, excluded) {
+  if (source == null) return {};
+  var target = _objectWithoutPropertiesLoose(source, excluded);
+  var key, i;
+  if (Object.getOwnPropertySymbols) {
+    var sourceSymbolKeys = Object.getOwnPropertySymbols(source);
+    for (i = 0; i < sourceSymbolKeys.length; i++) {
+      key = sourceSymbolKeys[i];
+      if (excluded.indexOf(key) >= 0) continue;
+      if (!Object.prototype.propertyIsEnumerable.call(source, key)) continue;
+      target[key] = source[key];
+    }
+  }
+  return target;
+}
+
+function _objectWithoutPropertiesLoose(source, excluded) {
+  if (source == null) return {};
+  var target = {};
+  var sourceKeys = Object.keys(source);
+  var key, i;
+  for (i = 0; i < sourceKeys.length; i++) {
+    key = sourceKeys[i];
+    if (excluded.indexOf(key) >= 0) continue;
+    target[key] = source[key];
+  }
+  return target;
+}
+
 function _slicedToArray(arr, i) {
   return (
     _arrayWithHoles(arr) ||
@@ -696,10 +740,6 @@ var _default = function _default(props) {
   var _ref = (editorRef === null || editorRef === void 0 ? void 0 : editorRef.current) || {},
     graph = _ref.graph;
 
-  var _ref2 = graph || {},
-    node = _ref2.node,
-    line = _ref2.line;
-
   var type = props.type,
     graphData = props.graphData,
     _props$flowNodesDict = props.flowNodesDict,
@@ -714,15 +754,29 @@ var _default = function _default(props) {
     dialogHide = props.dialogHide,
     showType = props.showType,
     _props$dialogDom = props.dialogDom,
-    dialogDom = _props$dialogDom === void 0 ? [] : _props$dialogDom;
+    dialogDom = _props$dialogDom === void 0 ? [] : _props$dialogDom,
+    editorStyle = props.editorStyle,
+    rest = _objectWithoutProperties(props, _excluded);
+
   var previewMode = type === 'view';
   (0, _react.useEffect)(function () {
     dialogHandleRef.current = new _DialogHandle.default(showType);
+
+    var _document$querySelect = document.querySelector('.job-editor').getBoundingClientRect(),
+      jobEditorHei = _document$querySelect.height,
+      jobEditorWid = _document$querySelect.width;
+
+    if (jobEditorHei && editorDomRef) {
+      editorDomRef.current.style.height = jobEditorHei - (!previewMode ? 48 : 0) + 'px';
+      editorDomRef.current.style.width = jobEditorWid - (!previewMode ? 140 : 0) + 'px';
+    }
+
     editorRef.current = new _mmeditor.default({
       dom: editorDomRef.current,
       showMiniMap: showMiniMap,
       mode: previewMode ? 'view' : 'edit', // 只读模式设置 mode:"view"
-    }); // 注册节点
+    });
+    window.mm = editorRef.current; // 注册节点
 
     (0, _initShapes.default)(editorRef.current, flowNodesDict);
 
@@ -734,7 +788,7 @@ var _default = function _default(props) {
   }, []);
 
   var setGraphData = /*#__PURE__*/ (function () {
-    var _ref3 = _asyncToGenerator(
+    var _ref2 = _asyncToGenerator(
       /*#__PURE__*/ _regeneratorRuntime().mark(function _callee(data) {
         var _convertFun, dataFormatted, convertFun;
 
@@ -760,7 +814,7 @@ var _default = function _default(props) {
 
                 case 6:
                   _context.next = 8;
-                  return editorRef.current.controller.autoFit(true, true, true);
+                  return editorRef.current.controller.autoFit();
 
                 case 8:
                   runFlow();
@@ -792,7 +846,7 @@ var _default = function _default(props) {
     );
 
     return function setGraphData(_x) {
-      return _ref3.apply(this, arguments);
+      return _ref2.apply(this, arguments);
     };
   })(); // 初始化编辑器事件
 
@@ -801,10 +855,10 @@ var _default = function _default(props) {
 
     editorRef === null || editorRef === void 0
       ? void 0
-      : editorRef.current.graph.on('node:click', function (_ref4) {
+      : editorRef.current.graph.on('node:click', function (_ref3) {
           var _document$getElements, _document$getElements2;
 
-          var node = _ref4.node;
+          var node = _ref3.node;
           (_document$getElements = document.getElementsByClassName('lb-workflow-header')[0]) ===
             null || _document$getElements === void 0
             ? void 0
@@ -832,8 +886,8 @@ var _default = function _default(props) {
 
     editorRef === null || editorRef === void 0
       ? void 0
-      : editorRef.current.graph.on('node:mouseenter', function (_ref5) {
-          var node = _ref5.node;
+      : editorRef.current.graph.on('node:mouseenter', function (_ref4) {
+          var node = _ref4.node;
           var bbox = node.node.getBoundingClientRect();
           setToolTipInfo({
             nowTextNode: toolTipNameHandle ? toolTipNameHandle(node.data) : node.data,
@@ -856,19 +910,19 @@ var _default = function _default(props) {
   }; // 动画效果
 
   var runFlow = /*#__PURE__*/ (function () {
-    var _ref6 = _asyncToGenerator(
+    var _ref5 = _asyncToGenerator(
       /*#__PURE__*/ _regeneratorRuntime().mark(function _callee2() {
-        var _ref7,
+        var _ref6,
           graph,
-          _ref8,
+          _ref7,
           nodes,
           lines,
           hasAuditedNodeUuids,
           auditedLine,
           key,
-          _node,
+          node,
           _key,
-          _line2;
+          line;
 
         return _regeneratorRuntime().wrap(function _callee2$(_context2) {
           while (1) {
@@ -884,17 +938,17 @@ var _default = function _default(props) {
                 return _context2.abrupt('return');
 
               case 2:
-                (_ref7 =
+                (_ref6 =
                   (editorRef === null || editorRef === void 0 ? void 0 : editorRef.current) || {}),
-                  (graph = _ref7.graph);
-                (_ref8 = graph || {}), (nodes = _ref8.node.nodes), (lines = _ref8.line.lines);
+                  (graph = _ref6.graph);
+                (_ref7 = graph || {}), (nodes = _ref7.node.nodes), (lines = _ref7.line.lines);
                 (hasAuditedNodeUuids = []), (auditedLine = []);
                 auditedNodes.forEach(function (node) {
                   hasAuditedNodeUuids.push(node === null || node === void 0 ? void 0 : node.uuid);
                 });
                 auditedNodes.forEach(function (hasAudited) {
-                  var _ref9 = hasAudited || {},
-                    uuid = _ref9.uuid;
+                  var _ref8 = hasAudited || {},
+                    uuid = _ref8.uuid;
 
                   var status = 'instance '.concat(hasAudited.status || '');
                   Object.values(nodes).forEach(function (node) {
@@ -907,38 +961,31 @@ var _default = function _default(props) {
                   });
 
                   for (var key in lines) {
-                    var _line = lines[key];
+                    var line = lines[key];
 
-                    if (
-                      uuid === _line.data.to &&
-                      hasAuditedNodeUuids.indexOf(_line.data.from) > -1
-                    ) {
-                      _line.data.className = ''
-                        .concat(_line.data.className || '', '  ')
+                    if (uuid === line.data.to && hasAuditedNodeUuids.indexOf(line.data.from) > -1) {
+                      line.data.className = ''
+                        .concat(line.data.className || '', '  ')
                         .concat(status);
-
-                      _line.addClass(status);
-
-                      auditedLine.push(_line.data.uuid);
+                      line.addClass(status);
+                      auditedLine.push(line.data.uuid);
                     }
                   }
                 });
 
                 for (key in nodes) {
                   if (!hasAuditedNodeUuids.includes(key)) {
-                    _node = nodes[key];
-                    _node.data.className = ''.concat(_node.data.className || '', ' unrun');
-
-                    _node.addClass('unrun');
+                    node = nodes[key];
+                    node.data.className = ''.concat(node.data.className || '', ' unrun');
+                    node.addClass('unrun');
                   }
                 }
 
                 for (_key in lines) {
                   if (!auditedLine.includes(_key)) {
-                    _line2 = lines[_key];
-                    _line2.data.className = ''.concat(_line2.data.className || '', ' unrun');
-
-                    _line2.addClass('unrun');
+                    line = lines[_key];
+                    line.data.className = ''.concat(line.data.className || '', ' unrun');
+                    line.addClass('unrun');
                   }
                 }
 
@@ -952,7 +999,7 @@ var _default = function _default(props) {
     );
 
     return function runFlow() {
-      return _ref6.apply(this, arguments);
+      return _ref5.apply(this, arguments);
     };
   })(); // 目标放置
 
@@ -970,9 +1017,9 @@ var _default = function _default(props) {
       (item === null || item === void 0 ? void 0 : item.initName) ||
       (item === null || item === void 0 ? void 0 : item.name);
 
-    var _ref10 = item || {},
-      _ref10$size = _ref10.size,
-      size = _ref10$size === void 0 ? [] : _ref10$size;
+    var _ref9 = item || {},
+      _ref9$size = _ref9.size,
+      size = _ref9$size === void 0 ? [] : _ref9$size;
 
     var transform =
       editorRef === null || editorRef === void 0 ? void 0 : editorRef.current.paper.transform();
@@ -998,9 +1045,12 @@ var _default = function _default(props) {
 
   return /*#__PURE__*/ _react.default.createElement(
     'div',
-    {
-      className: 'job-editor '.concat(className || ''),
-    },
+    _extends(
+      {
+        className: 'job-editor '.concat(className || ''),
+      },
+      editorStyle,
+    ),
     !previewMode &&
       (editorRef === null || editorRef === void 0 ? void 0 : editorRef.current) &&
       /*#__PURE__*/ _react.default.createElement(

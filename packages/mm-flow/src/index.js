@@ -15,7 +15,6 @@ export default (props) => {
   const [toolTipInfo, setToolTipInfo] = useState();
   const [dialogShowInfo, setDialogShowInfo] = useState(null);
   const { graph } = editorRef?.current || {};
-  const { node, line } = graph || {};
   const {
     type,
     graphData,
@@ -28,16 +27,26 @@ export default (props) => {
     dialogHide,
     showType,
     dialogDom = [],
+    editorStyle,
+    ...rest
   } = props;
   const previewMode = type === 'view';
 
   useEffect(() => {
     dialogHandleRef.current = new DialogHandle(showType);
+    const { height: jobEditorHei, width: jobEditorWid } = document
+      .querySelector('.job-editor')
+      .getBoundingClientRect();
+    if (jobEditorHei && editorDomRef) {
+      editorDomRef.current.style.height = jobEditorHei - (!previewMode ? 48 : 0) + 'px';
+      editorDomRef.current.style.width = jobEditorWid - (!previewMode ? 140 : 0) + 'px';
+    }
     editorRef.current = new MMEditor({
       dom: editorDomRef.current,
       showMiniMap: showMiniMap,
       mode: previewMode ? 'view' : 'edit', // 只读模式设置 mode:"view"
     });
+    window.mm = editorRef.current;
     // 注册节点
     initShapes(editorRef.current, flowNodesDict);
     if (graphData) {
@@ -57,7 +66,7 @@ export default (props) => {
       await editorRef.current.schema.setInitData(
         convertFun?.convert(dataFormatted, editorRef.current),
       );
-      await editorRef.current.controller.autoFit(true, true, true);
+      await editorRef.current.controller.autoFit();
       runFlow();
     } catch (e) {
       message.error('解析数据错误,' + e?.message);
@@ -178,7 +187,7 @@ export default (props) => {
   };
 
   return (
-    <div className={`job-editor ${className || ''}`}>
+    <div className={`job-editor ${className || ''}`} {...editorStyle}>
       {!previewMode && editorRef?.current && (
         <LeftBar {...props} editor={editorRef.current} onDrop={onDrop} />
       )}
