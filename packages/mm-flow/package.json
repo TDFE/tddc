@@ -1,0 +1,19 @@
+{
+  "name": "@tddc/mm-flow",
+  "version": "1.0.0",
+  "description": "基于mmeditor的流",
+  "author": "zefei.zhou <zefei.zhou@tongdun.net>",
+  "license": "ISC",
+  "main": "lib/index.js",
+  "files": [
+    "lib"
+  ],
+  "peerDependencies": {
+    "antd": "^3.26.20",
+    "react": ">=16.8.0",
+    "react-dom": ">=16.8.0"
+  },
+  "dependencies": {
+    "mmeditor": "^3.1.5"
+  }
+}
