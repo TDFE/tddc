@@ -4,51 +4,65 @@ Object.defineProperty(exports, '__esModule', {
   value: true,
 });
 exports.default = initShapes;
+exports.sliceName = exports.getTextPixelWith = void 0;
 
-var _flowExclusivity = _interopRequireDefault(require('../images/flow-exclusivity.svg'));
+var _flowExclusivity = _interopRequireDefault(require('../Images/flow-exclusivity.svg'));
 
-var _flowParallel = _interopRequireDefault(require('../images/flow-parallel.svg'));
+var _flowParallel = _interopRequireDefault(require('../Images/flow-parallel.svg'));
 
 function _interopRequireDefault(obj) {
   return obj && obj.__esModule ? obj : { default: obj };
 }
 
-function initShapes(editor, flowNodes) {
-  // JS判断字符串长度（英文占1个字符，中文汉字占2个字符）
-  var getStrLen = function getStrLen(str, max) {
-    var len = [];
+// 获取单行文本的像素宽度
+var getTextPixelWith = function getTextPixelWith(text) {
+  var fontStyle =
+    arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 'normal 12px Robot';
+  var canvas = document.createElement('canvas'); // 创建 canvas 画布
 
-    for (var i = 0; i < str.length; i++) {
-      var c = str.charCodeAt(i);
+  var context = canvas.getContext('2d'); // 获取 canvas 绘图上下文环境
 
-      if (i < max) {
-        // 单字节加1
-        if ((c >= 0x0001 && c <= 0x007e) || (c >= 0xff60 && c <= 0xff9f)) {
-          len.push('0.5', '0.5');
-        } else {
-          len.push('1');
-        }
+  context.font = fontStyle; // 设置字体样式，使用前设置好对应的 font 样式才能准确获取文字的像素长度
+
+  var dimension = context.measureText(text); // 测量文字
+
+  return dimension.width;
+}; // JS判断字符串长度（英文占1个字符，中文汉字占2个字符）
+
+exports.getTextPixelWith = getTextPixelWith;
+
+var sliceName = function sliceName(str) {
+  var defaultWidth = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 80;
+  var sliceIndex = '';
+
+  if (str && (str === null || str === void 0 ? void 0 : str.length) > 6) {
+    for (var i = 6; i < (str === null || str === void 0 ? void 0 : str.length); i++) {
+      var sumWid = getTextPixelWith(str.slice(0, i + 1));
+
+      if (sumWid > defaultWidth) {
+        sliceIndex = i;
+        break;
       }
     }
+  }
 
-    return len;
-  }; // 渲染策略类节点
+  if (sliceIndex) {
+    return str.slice(0, sliceIndex) + '...';
+  }
 
+  return str;
+};
+
+exports.sliceName = sliceName;
+
+function initShapes(editor, flowNodes) {
+  // 渲染策略类节点
   var renderNode = function renderNode(data, snapPaper, opt) {
     var namePre = data.name;
     var name = namePre;
 
     if (name) {
-      var _getStrLen;
-
-      console.log('getStrLen(name) ', getStrLen(name, 6));
-      name =
-        name.slice(
-          0,
-          (_getStrLen = getStrLen(name, 6)) === null || _getStrLen === void 0
-            ? void 0
-            : _getStrLen.length,
-        ) + '...';
+      name = sliceName(name);
     }
 
     var text1 = snapPaper.text(15, 15, opt.iconText);
@@ -181,7 +195,7 @@ function initShapes(editor, flowNodes) {
       } else if (typeLow.startsWith('parallel')) {
         // 并行
         editor.graph.node.registeNode(
-          'ParallelGateway',
+          nodeType,
           {
             render: function render(data, snapPaper) {
               var _text$node;
@@ -224,7 +238,7 @@ function initShapes(editor, flowNodes) {
       } else if (typeLow.startsWith('exclusive')) {
         // 判断
         editor.graph.node.registeNode(
-          'ExclusiveGateway',
+          nodeType,
           {
             render: function render(data, snapPaper) {
               var _text$node2;

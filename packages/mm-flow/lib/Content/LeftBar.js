@@ -210,19 +210,23 @@ var _default = function _default(props) {
           var lowNodeType = nodeType.toLowerCase();
           var shape = item.shape;
 
-          if (['circle'].includes(shape)) {
+          if (['circle'].includes(shape) || ['开始', '结束'].includes(item.name)) {
             ItemMap.push({
               type: nodeType,
               name: item.name,
-              shape: shape,
+              shape: shape || 'circle',
               iconColor: item.iconColor,
               size: [50, 50],
             });
-          } else if (['rhombus'].includes(shape)) {
+          } else if (
+            ['rhombus'].includes(shape) ||
+            lowNodeType.includes('parallel') ||
+            lowNodeType.includes('exclusive')
+          ) {
             ItemMap.push({
               type: nodeType,
               name: item.name,
-              shape: shape,
+              shape: shape || 'rhombus',
               size: [60, 56],
             });
           } else {

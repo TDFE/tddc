@@ -31,6 +31,8 @@ var _icon = _interopRequireDefault(require('antd/lib/icon'));
 
 var _react = _interopRequireWildcard(require('react'));
 
+var _DefaultDataConvert = _interopRequireDefault(require('../DefaultDataConvert'));
+
 function _getRequireWildcardCache(nodeInterop) {
   if (typeof WeakMap !== 'function') return null;
   var cacheBabelInterop = new WeakMap();
@@ -178,7 +180,8 @@ var _default = function _default(props) {
   var _ref = props || {},
     editor = _ref.editor,
     previewMode = _ref.previewMode,
-    operateGroup = _ref.operateGroup;
+    operateGroup = _ref.operateGroup,
+    DataConvert = _ref.DataConvert;
 
   var _useState = (0, _react.useState)(false),
     _useState2 = _slicedToArray(_useState, 2),
@@ -200,6 +203,8 @@ var _default = function _default(props) {
     fullscreen = _useState8[0],
     setFullScreen = _useState8[1];
 
+  var curEditor = (0, _react.useRef)(editor);
+
   var _ref2 = editor || {},
     history = _ref2.schema.history,
     graph = _ref2.graph,
@@ -208,11 +213,12 @@ var _default = function _default(props) {
 
   (0, _react.useEffect)(
     function () {
-      if (props.editor) {
+      if (editor && curEditor.current !== editor) {
+        curEditor.current = editor;
         watchHistory(props);
       }
     },
-    [props.editor],
+    [editor],
   );
 
   var watchHistory = function watchHistory(props) {
@@ -583,9 +589,22 @@ var _default = function _default(props) {
                 return /*#__PURE__*/ _react.default.createElement(
                   _button.default,
                   {
+                    key: v === null || v === void 0 ? void 0 : v.name,
                     loading: v === null || v === void 0 ? void 0 : v.loading,
                     type: v === null || v === void 0 ? void 0 : v.type,
-                    onClick: v === null || v === void 0 ? void 0 : v.click,
+                    onClick: function onClick() {
+                      var convertFun = _DefaultDataConvert.default;
+
+                      if (DataConvert) {
+                        convertFun = DataConvert;
+                      }
+
+                      var _ref5 = editor || {},
+                        schema = _ref5.schema;
+
+                      var data = convertFun.format(schema.getData(), editor);
+                      v === null || v === void 0 ? void 0 : v.click(data);
+                    },
                   },
                   v === null || v === void 0 ? void 0 : v.name,
                 );

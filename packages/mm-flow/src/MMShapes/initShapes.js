@@ -1,30 +1,40 @@
-import FlowExclusivity from '../images/flow-exclusivity.svg';
-import FlowParallel from '../images/flow-parallel.svg';
+import FlowExclusivity from '../Images/flow-exclusivity.svg';
+import FlowParallel from '../Images/flow-parallel.svg';
 
-export default function initShapes(editor, flowNodes) {
-  // JS判断字符串长度（英文占1个字符，中文汉字占2个字符）
-  const getStrLen = (str, max) => {
-    let len = [];
-    for (let i = 0; i < str.length; i++) {
-      let c = str.charCodeAt(i);
-      if (i < max) {
-        // 单字节加1
-        if ((c >= 0x0001 && c <= 0x007e) || (c >= 0xff60 && c <= 0xff9f)) {
-          len.push('0.5', '0.5');
-        } else {
-          len.push('1');
-        }
+// 获取单行文本的像素宽度
+export const getTextPixelWith = (text, fontStyle = 'normal 12px Robot') => {
+  const canvas = document.createElement('canvas'); // 创建 canvas 画布
+  const context = canvas.getContext('2d'); // 获取 canvas 绘图上下文环境
+  context.font = fontStyle; // 设置字体样式，使用前设置好对应的 font 样式才能准确获取文字的像素长度
+  const dimension = context.measureText(text); // 测量文字
+  return dimension.width;
+};
+
+// JS判断字符串长度（英文占1个字符，中文汉字占2个字符）
+export const sliceName = (str, defaultWidth = 80) => {
+  let sliceIndex = '';
+  if (str && str?.length > 6) {
+    for (let i = 6; i < str?.length; i++) {
+      const sumWid = getTextPixelWith(str.slice(0, i + 1));
+      if (sumWid > defaultWidth) {
+        sliceIndex = i;
+        break;
       }
     }
-    return len;
-  };
+  }
+
+  if (sliceIndex) {
+    return str.slice(0, sliceIndex) + '...';
+  }
+  return str;
+};
+export default function initShapes(editor, flowNodes) {
   // 渲染策略类节点
   const renderNode = (data, snapPaper, opt) => {
     const { name: namePre } = data;
     let name = namePre;
     if (name) {
-      console.log('getStrLen(name) ', getStrLen(name, 6));
-      name = name.slice(0, getStrLen(name, 6)?.length) + '...';
+      name = sliceName(name);
     }
     const text1 = snapPaper.text(15, 15, opt.iconText);
     const circle = snapPaper.circle(15, 14, 11);
@@ -131,7 +141,7 @@ export default function initShapes(editor, flowNodes) {
       } else if (typeLow.startsWith('parallel')) {
         // 并行
         editor.graph.node.registeNode(
-          'ParallelGateway',
+          nodeType,
           {
             render: (data, snapPaper) => {
               const image = snapPaper.image(FlowParallel, 0, 0, 60, 56);
@@ -156,7 +166,7 @@ export default function initShapes(editor, flowNodes) {
       } else if (typeLow.startsWith('exclusive')) {
         // 判断
         editor.graph.node.registeNode(
-          'ExclusiveGateway',
+          nodeType,
           {
             render: (data, snapPaper) => {
               const image = snapPaper.image(FlowExclusivity, 0, 0, 60, 56);

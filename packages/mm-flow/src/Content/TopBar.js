@@ -1,5 +1,6 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { Row, Button, Icon, Menu, Dropdown, Tooltip } from 'antd';
+import DefaultDataConvert from '../DefaultDataConvert';
 export const toolBarTypeNameMap = {
   redo: '重做',
   undo: '撤销',
@@ -12,11 +13,12 @@ export const toolBarTypeNameMap = {
   copy: '拷贝规则流',
 };
 export default (props) => {
-  const { editor, previewMode, operateGroup } = props || {};
+  const { editor, previewMode, operateGroup, DataConvert } = props || {};
   const [canRedo, setCanRedo] = useState(false);
   const [canUndo, setCanUndo] = useState(false);
   const [canDelete, setCanDelete] = useState(false);
   const [fullscreen, setFullScreen] = useState(false);
+  const curEditor = useRef(editor);
   const {
     schema: { history },
     graph,
@@ -25,10 +27,11 @@ export default (props) => {
   } = editor || {};
 
   useEffect(() => {
-    if (props.editor) {
+    if (editor && curEditor.current !== editor) {
+      curEditor.current = editor;
       watchHistory(props);
     }
-  }, [props.editor]);
+  }, [editor]);
 
   const watchHistory = (props) => {
     if (!editor) return;
@@ -290,7 +293,20 @@ export default (props) => {
             <div>{getCommandChild(commandActions)}</div>
             {operateGroup?.map((v) => {
               return (
-                <Button loading={v?.loading} type={v?.type} onClick={v?.click}>
+                <Button
+                  key={v?.name}
+                  loading={v?.loading}
+                  type={v?.type}
+                  onClick={() => {
+                    let convertFun = DefaultDataConvert;
+                    if (DataConvert) {
+                      convertFun = DataConvert;
+                    }
+                    const { schema } = editor || {};
+                    const data = convertFun.format(schema.getData(), editor);
+                    v?.click(data);
+                  }}
+                >
                   {v?.name}
                 </Button>
               );

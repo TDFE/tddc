@@ -13,6 +13,7 @@
   user-select: none;
   svg text {
     font-size: 12px;
+    font-family: Robot;
     text-anchor: middle;
     dominant-baseline: middle;
   }
@@ -80,75 +81,75 @@
           }
         }
       }
-      & + .job-mm-editor {
-        flex-grow: 1;
-        width: 100%;
-        height: calc(100% - 48px);
-        .mm-minimap {
-          top: auto;
-          bottom: 10px;
-          height: 127px;
-          border: 1px solid #e9edf3;
-          border-radius: 0;
-        }
-        .mm-node {
-          position: relative;
-          &.error {
-            .flow-icon-node {
-              fill: #fff;
-              stroke: red;
-            }
-          }
-          &.success {
-            .flow-icon-node {
-              stroke: #4ee192;
-            }
-          }
-          &.unrun {
-            .mm-node-shape {
-              .flow-txt-node {
-                fill: #999;
-              }
-              circle {
-                fill: #babdc5;
-                & + .flow-txt-node {
-                  fill: #fff;
-                }
-              }
-            }
+    }
+    .job-mm-editor {
+      flex-grow: 1;
+      width: 100%;
+      height: calc(100% - 48px);
+      .mm-minimap {
+        top: auto;
+        bottom: 10px;
+        height: 127px;
+        border: 1px solid #e9edf3;
+        border-radius: 0;
+      }
+      .mm-node {
+        position: relative;
+        &.error {
+          .flow-icon-node {
+            fill: #fff;
+            stroke: red;
           }
         }
-        .mm-line {
+        &.success {
+          .flow-icon-node {
+            stroke: #4ee192;
+          }
+        }
+        &.unrun {
+          .mm-node-shape {
+            .flow-txt-node {
+              fill: #999;
+            }
+            circle {
+              fill: #babdc5;
+              & + .flow-txt-node {
+                fill: #fff;
+              }
+            }
+          }
+        }
+      }
+      .mm-line {
+        path {
+          pointer-events: visibleStroke !important;
+        }
+        .mm-line-shape path {
+          stroke: #b2becd;
+        }
+        &.success {
           path {
-            pointer-events: visibleStroke !important;
+            stroke: #4ee192 !important;
           }
+          path.mm-line-arrow {
+            fill: #4ee192 !important;
+            stroke: #4ee192 !important;
+          }
+        }
+        &.unrun {
           .mm-line-shape path {
-            stroke: #b2becd;
+            color: inherit;
+            animation: dashing 5s linear infinite !important;
+            stroke-dasharray: 5 !important;
           }
-          &.success {
-            path {
-              stroke: #4ee192 !important;
-            }
-            path.mm-line-arrow {
-              fill: #4ee192 !important;
-              stroke: #4ee192 !important;
-            }
+          path {
+            stroke: #cdd6e1 !important;
           }
-          &.unrun {
-            .mm-line-shape path {
-              color: inherit;
-              animation: dashing 5s linear infinite !important;
-              stroke-dasharray: 5 !important;
-            }
-            path {
-              stroke: #cdd6e1 !important;
-            }
-          }
-          &.running {
-            .mm-line-shape path {
-              animation: dashing 5s linear infinite;
-              stroke-dasharray: 5 !important;
-            }
+        }
+        &.running {
+          .mm-line-shape path {
+            animation: dashing 5s linear infinite;
+            stroke-dasharray: 5 !important;
           }
         }
       }

@@ -4,6 +4,12 @@ Object.defineProperty(exports, '__esModule', {
   value: true,
 });
 exports.default = void 0;
+Object.defineProperty(exports, 'sliceName', {
+  enumerable: true,
+  get: function get() {
+    return _initShapes.sliceName;
+  },
+});
 
 require('antd/lib/tooltip/style');
 
@@ -21,7 +27,7 @@ var _TopBar = _interopRequireDefault(require('./Content/TopBar'));
 
 var _LeftBar = _interopRequireDefault(require('./Content/LeftBar'));
 
-var _initShapes = _interopRequireDefault(require('./MMShapes/initShapes'));
+var _initShapes = _interopRequireWildcard(require('./MMShapes/initShapes'));
 
 var _DefaultDataConvert = _interopRequireDefault(require('./DefaultDataConvert'));
 
@@ -29,20 +35,7 @@ var _DialogHandle = _interopRequireDefault(require('./DialogHandle'));
 
 require('./index.less');
 
-var _excluded = [
-  'type',
-  'graphData',
-  'flowNodesDict',
-  'auditedNodes',
-  'className',
-  'showMiniMap',
-  'DataConvert',
-  'toolTipNameHandle',
-  'dialogHide',
-  'showType',
-  'dialogDom',
-  'editorStyle',
-];
+var _this = void 0;
 
 function _getRequireWildcardCache(nodeInterop) {
   if (typeof WeakMap !== 'function') return null;
@@ -145,6 +138,26 @@ function _extends() {
         return target;
       };
   return _extends.apply(this, arguments);
+}
+
+function _typeof(obj) {
+  '@babel/helpers - typeof';
+  return (
+    (_typeof =
+      'function' == typeof Symbol && 'symbol' == typeof Symbol.iterator
+        ? function (obj) {
+            return typeof obj;
+          }
+        : function (obj) {
+            return obj &&
+              'function' == typeof Symbol &&
+              obj.constructor === Symbol &&
+              obj !== Symbol.prototype
+              ? 'symbol'
+              : typeof obj;
+          }),
+    _typeof(obj)
+  );
 }
 
 function _regeneratorRuntime() {
@@ -574,26 +587,6 @@ function _regeneratorRuntime() {
   );
 }
 
-function _typeof(obj) {
-  '@babel/helpers - typeof';
-  return (
-    (_typeof =
-      'function' == typeof Symbol && 'symbol' == typeof Symbol.iterator
-        ? function (obj) {
-            return typeof obj;
-          }
-        : function (obj) {
-            return obj &&
-              'function' == typeof Symbol &&
-              obj.constructor === Symbol &&
-              obj !== Symbol.prototype
-              ? 'symbol'
-              : typeof obj;
-          }),
-    _typeof(obj)
-  );
-}
-
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) {
   try {
     var info = gen[key](arg);
@@ -624,35 +617,6 @@ function _asyncToGenerator(fn) {
       _next(undefined);
     });
   };
-}
-
-function _objectWithoutProperties(source, excluded) {
-  if (source == null) return {};
-  var target = _objectWithoutPropertiesLoose(source, excluded);
-  var key, i;
-  if (Object.getOwnPropertySymbols) {
-    var sourceSymbolKeys = Object.getOwnPropertySymbols(source);
-    for (i = 0; i < sourceSymbolKeys.length; i++) {
-      key = sourceSymbolKeys[i];
-      if (excluded.indexOf(key) >= 0) continue;
-      if (!Object.prototype.propertyIsEnumerable.call(source, key)) continue;
-      target[key] = source[key];
-    }
-  }
-  return target;
-}
-
-function _objectWithoutPropertiesLoose(source, excluded) {
-  if (source == null) return {};
-  var target = {};
-  var sourceKeys = Object.keys(source);
-  var key, i;
-  for (i = 0; i < sourceKeys.length; i++) {
-    key = sourceKeys[i];
-    if (excluded.indexOf(key) >= 0) continue;
-    target[key] = source[key];
-  }
-  return target;
 }
 
 function _slicedToArray(arr, i) {
@@ -737,8 +701,10 @@ var _default = function _default(props) {
     dialogShowInfo = _useState4[0],
     setDialogShowInfo = _useState4[1];
 
-  var _ref = (editorRef === null || editorRef === void 0 ? void 0 : editorRef.current) || {},
-    graph = _ref.graph;
+  var _useState5 = (0, _react.useState)(false),
+    _useState6 = _slicedToArray(_useState5, 2),
+    initReady = _useState6[0],
+    setInitReady = _useState6[1];
 
   var type = props.type,
     graphData = props.graphData,
@@ -756,48 +722,138 @@ var _default = function _default(props) {
     _props$dialogDom = props.dialogDom,
     dialogDom = _props$dialogDom === void 0 ? [] : _props$dialogDom,
     editorStyle = props.editorStyle,
-    rest = _objectWithoutProperties(props, _excluded);
-
+    onRef = props.onRef,
+    checkLineExtendFn = props.checkLineExtendFn;
   var previewMode = type === 'view';
-  (0, _react.useEffect)(function () {
-    dialogHandleRef.current = new _DialogHandle.default(showType);
 
-    var _document$querySelect = document.querySelector('.job-editor').getBoundingClientRect(),
-      jobEditorHei = _document$querySelect.height,
-      jobEditorWid = _document$querySelect.width;
+  var checkNewLine = function checkNewLine(data, editor) {
+    var nodes = editor.graph.node.nodes;
+    var from = data.from,
+      to = data.to; // 通组件输入输出不能连接
 
-    if (jobEditorHei && editorDomRef) {
-      editorDomRef.current.style.height = jobEditorHei - (!previewMode ? 48 : 0) + 'px';
-      editorDomRef.current.style.width = jobEditorWid - (!previewMode ? 140 : 0) + 'px';
+    if (from === to) return false;
+    var fromNode = nodes[from];
+    var toNode = nodes[to];
+
+    var _ref = fromNode || {},
+      _ref$data = _ref.data,
+      fromType = _ref$data.type,
+      fromName = _ref$data.name,
+      sourceFromLines = _ref.fromLines;
+
+    var _ref2 = toNode || {},
+      _ref2$data = _ref2.data,
+      toType = _ref2$data.type,
+      toName = _ref2$data.name,
+      targetToLines = _ref2.toLines;
+
+    if (['start'].includes(toType) && targetToLines && targetToLines.size) {
+      _message2.default.error(toName + '不能设置输入流');
+
+      return false;
+    } // 不能设置输出流
+
+    if (['end'].includes(fromType) && sourceFromLines && sourceFromLines.size) {
+      _message2.default.error(fromName + '不能设置输出流');
+
+      return false;
     }
 
-    editorRef.current = new _mmeditor.default({
-      dom: editorDomRef.current,
-      showMiniMap: showMiniMap,
-      mode: previewMode ? 'view' : 'edit', // 只读模式设置 mode:"view"
-    });
-    window.mm = editorRef.current; // 注册节点
+    checkLineExtendFn &&
+      checkLineExtendFn({
+        data: data,
+        editor: editor,
+      });
+    return true;
+  };
 
-    (0, _initShapes.default)(editorRef.current, flowNodesDict);
+  (0, _react.useEffect)(function () {
+    var init = /*#__PURE__*/ (function () {
+      var _ref3 = _asyncToGenerator(
+        /*#__PURE__*/ _regeneratorRuntime().mark(function _callee() {
+          var _document$querySelect, jobEditorHei, jobEditorWid;
 
-    if (graphData) {
-      setGraphData(graphData);
-    } // 注册节点⌚️
-
-    addEditorEvent();
-  }, []);
-
-  var setGraphData = /*#__PURE__*/ (function () {
-    var _ref2 = _asyncToGenerator(
-      /*#__PURE__*/ _regeneratorRuntime().mark(function _callee(data) {
-        var _convertFun, dataFormatted, convertFun;
-
-        return _regeneratorRuntime().wrap(
-          function _callee$(_context) {
+          return _regeneratorRuntime().wrap(function _callee$(_context) {
             while (1) {
               switch ((_context.prev = _context.next)) {
                 case 0:
-                  _context.prev = 0;
+                  dialogHandleRef.current = new _DialogHandle.default(showType);
+                  (_document$querySelect = document
+                    .querySelector('.job-editor')
+                    .getBoundingClientRect()),
+                    (jobEditorHei = _document$querySelect.height),
+                    (jobEditorWid = _document$querySelect.width);
+
+                  if (jobEditorHei && editorDomRef) {
+                    editorDomRef.current.style.height =
+                      jobEditorHei - (!previewMode ? 48 : 0) + 'px';
+                    editorDomRef.current.style.width =
+                      jobEditorWid - (!previewMode ? 140 : 0) + 'px';
+                  }
+
+                  editorRef.current = new _mmeditor.default({
+                    dom: editorDomRef.current,
+                    showMiniMap: showMiniMap,
+                    mode: previewMode ? 'view' : 'edit', // 只读模式设置 mode:"view"
+                  }); // 注册节点
+
+                  (0, _initShapes.default)(editorRef.current, flowNodesDict);
+
+                  if (!graphData) {
+                    _context.next = 8;
+                    break;
+                  }
+
+                  _context.next = 8;
+                  return setGraphData(graphData);
+
+                case 8:
+                  // 连线时校验
+                  if (editorRef.current.graph.line.shapes['default']) {
+                    editorRef.current.graph.line.shapes['default'].checkNewLine = checkNewLine;
+                  } // 注册节点⌚️
+
+                  addEditorEvent();
+                  onRef && onRef(_this);
+                  setInitReady(true);
+
+                case 12:
+                case 'end':
+                  return _context.stop();
+              }
+            }
+          }, _callee);
+        }),
+      );
+
+      return function init() {
+        return _ref3.apply(this, arguments);
+      };
+    })();
+
+    init();
+    return function () {
+      if (editorRef.current) {
+        editorRef.current.graph.clearGraph();
+        editorRef.current.destroy();
+        editorRef.current = null;
+      }
+
+      setInitReady(false);
+    };
+  }, []);
+
+  var setGraphData = /*#__PURE__*/ (function () {
+    var _ref4 = _asyncToGenerator(
+      /*#__PURE__*/ _regeneratorRuntime().mark(function _callee2(data) {
+        var _convertFun, dataFormatted, convertFun;
+
+        return _regeneratorRuntime().wrap(
+          function _callee2$(_context2) {
+            while (1) {
+              switch ((_context2.prev = _context2.next)) {
+                case 0:
+                  _context2.prev = 0;
                   dataFormatted = _typeof(data) === 'object' ? data : JSON.parse(data || '{}');
                   convertFun = _DefaultDataConvert.default;
 
@@ -805,7 +861,7 @@ var _default = function _default(props) {
                     convertFun = DataConvert;
                   }
 
-                  _context.next = 6;
+                  _context2.next = 6;
                   return editorRef.current.schema.setInitData(
                     (_convertFun = convertFun) === null || _convertFun === void 0
                       ? void 0
@@ -813,32 +869,32 @@ var _default = function _default(props) {
                   );
 
                 case 6:
-                  _context.next = 8;
+                  _context2.next = 8;
                   return editorRef.current.controller.autoFit();
 
                 case 8:
                   runFlow();
-                  _context.next = 14;
+                  _context2.next = 14;
                   break;
 
                 case 11:
-                  _context.prev = 11;
-                  _context.t0 = _context['catch'](0);
+                  _context2.prev = 11;
+                  _context2.t0 = _context2['catch'](0);
 
                   _message2.default.error(
                     '解析数据错误,' +
-                      (_context.t0 === null || _context.t0 === void 0
+                      (_context2.t0 === null || _context2.t0 === void 0
                         ? void 0
-                        : _context.t0.message),
+                        : _context2.t0.message),
                   );
 
                 case 14:
                 case 'end':
-                  return _context.stop();
+                  return _context2.stop();
               }
             }
           },
-          _callee,
+          _callee2,
           null,
           [[0, 11]],
         );
@@ -846,19 +902,28 @@ var _default = function _default(props) {
     );
 
     return function setGraphData(_x) {
-      return _ref2.apply(this, arguments);
+      return _ref4.apply(this, arguments);
     };
-  })(); // 初始化编辑器事件
+  })();
+
+  (0, _react.useEffect)(
+    function () {
+      if (editorRef.current && initReady) {
+        setGraphData(graphData);
+      }
+    },
+    [graphData, initReady],
+  ); // 初始化编辑器事件
 
   var addEditorEvent = function addEditorEvent() {
     var timeStamp; // 选中
 
     editorRef === null || editorRef === void 0
       ? void 0
-      : editorRef.current.graph.on('node:click', function (_ref3) {
+      : editorRef.current.graph.on('node:click', function (_ref5) {
           var _document$getElements, _document$getElements2;
 
-          var node = _ref3.node;
+          var node = _ref5.node;
           (_document$getElements = document.getElementsByClassName('lb-workflow-header')[0]) ===
             null || _document$getElements === void 0
             ? void 0
@@ -886,8 +951,8 @@ var _default = function _default(props) {
 
     editorRef === null || editorRef === void 0
       ? void 0
-      : editorRef.current.graph.on('node:mouseenter', function (_ref4) {
-          var node = _ref4.node;
+      : editorRef.current.graph.on('node:mouseenter', function (_ref6) {
+          var node = _ref6.node;
           var bbox = node.node.getBoundingClientRect();
           setToolTipInfo({
             nowTextNode: toolTipNameHandle ? toolTipNameHandle(node.data) : node.data,
@@ -910,11 +975,11 @@ var _default = function _default(props) {
   }; // 动画效果
 
   var runFlow = /*#__PURE__*/ (function () {
-    var _ref5 = _asyncToGenerator(
-      /*#__PURE__*/ _regeneratorRuntime().mark(function _callee2() {
-        var _ref6,
+    var _ref7 = _asyncToGenerator(
+      /*#__PURE__*/ _regeneratorRuntime().mark(function _callee3() {
+        var _ref8,
           graph,
-          _ref7,
+          _ref9,
           nodes,
           lines,
           hasAuditedNodeUuids,
@@ -924,31 +989,31 @@ var _default = function _default(props) {
           _key,
           line;
 
-        return _regeneratorRuntime().wrap(function _callee2$(_context2) {
+        return _regeneratorRuntime().wrap(function _callee3$(_context3) {
           while (1) {
-            switch ((_context2.prev = _context2.next)) {
+            switch ((_context3.prev = _context3.next)) {
               case 0:
                 if (
                   auditedNodes === null || auditedNodes === void 0 ? void 0 : auditedNodes.length
                 ) {
-                  _context2.next = 2;
+                  _context3.next = 2;
                   break;
                 }
 
-                return _context2.abrupt('return');
+                return _context3.abrupt('return');
 
               case 2:
-                (_ref6 =
+                (_ref8 =
                   (editorRef === null || editorRef === void 0 ? void 0 : editorRef.current) || {}),
-                  (graph = _ref6.graph);
-                (_ref7 = graph || {}), (nodes = _ref7.node.nodes), (lines = _ref7.line.lines);
+                  (graph = _ref8.graph);
+                (_ref9 = graph || {}), (nodes = _ref9.node.nodes), (lines = _ref9.line.lines);
                 (hasAuditedNodeUuids = []), (auditedLine = []);
                 auditedNodes.forEach(function (node) {
                   hasAuditedNodeUuids.push(node === null || node === void 0 ? void 0 : node.uuid);
                 });
                 auditedNodes.forEach(function (hasAudited) {
-                  var _ref8 = hasAudited || {},
-                    uuid = _ref8.uuid;
+                  var _ref10 = hasAudited || {},
+                    uuid = _ref10.uuid;
 
                   var status = 'instance '.concat(hasAudited.status || '');
                   Object.values(nodes).forEach(function (node) {
@@ -991,15 +1056,15 @@ var _default = function _default(props) {
 
               case 9:
               case 'end':
-                return _context2.stop();
+                return _context3.stop();
             }
           }
-        }, _callee2);
+        }, _callee3);
       }),
     );
 
     return function runFlow() {
-      return _ref5.apply(this, arguments);
+      return _ref7.apply(this, arguments);
     };
   })(); // 目标放置
 
@@ -1017,9 +1082,9 @@ var _default = function _default(props) {
       (item === null || item === void 0 ? void 0 : item.initName) ||
       (item === null || item === void 0 ? void 0 : item.name);
 
-    var _ref9 = item || {},
-      _ref9$size = _ref9.size,
-      size = _ref9$size === void 0 ? [] : _ref9$size;
+    var _ref11 = item || {},
+      _ref11$size = _ref11.size,
+      size = _ref11$size === void 0 ? [] : _ref11$size;
 
     var transform =
       editorRef === null || editorRef === void 0 ? void 0 : editorRef.current.paper.transform();
@@ -1052,6 +1117,7 @@ var _default = function _default(props) {
       editorStyle,
     ),
     !previewMode &&
+      initReady &&
       (editorRef === null || editorRef === void 0 ? void 0 : editorRef.current) &&
       /*#__PURE__*/ _react.default.createElement(
         _LeftBar.default,
@@ -1065,7 +1131,8 @@ var _default = function _default(props) {
       {
         className: 'job-content flow-editor-content',
       },
-      !!(editorRef === null || editorRef === void 0 ? void 0 : editorRef.current) &&
+      initReady &&
+        !!(editorRef === null || editorRef === void 0 ? void 0 : editorRef.current) &&
         /*#__PURE__*/ _react.default.createElement(
           _TopBar.default,
           _extends({}, props, {

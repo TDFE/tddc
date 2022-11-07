@@ -3,18 +3,19 @@ import { Tooltip, message } from 'antd';
 import MMEditor from 'mmeditor';
 import TopBar from './Content/TopBar';
 import LeftBar from './Content/LeftBar';
-import initShapes from './MMShapes/initShapes';
-import DefaultConvert from './DefaultDataConvert';
+import initShapes, { sliceName } from './MMShapes/initShapes';
+import DefaultDataConvert from './DefaultDataConvert';
 import DialogHandle from './DialogHandle';
 import './index.less';
 
+export { sliceName };
 export default (props) => {
   const editorDomRef = useRef();
   const editorRef = useRef();
   const dialogHandleRef = useRef();
   const [toolTipInfo, setToolTipInfo] = useState();
   const [dialogShowInfo, setDialogShowInfo] = useState(null);
-  const { graph } = editorRef?.current || {};
+  const [initReady, setInitReady] = useState(false);
   const {
     type,
     graphData,
@@ -28,38 +29,92 @@ export default (props) => {
     showType,
     dialogDom = [],
     editorStyle,
-    ...rest
+    onRef,
+    checkLineExtendFn,
   } = props;
   const previewMode = type === 'view';
 
+  const checkNewLine = (data, editor) => {
+    const {
+      graph: {
+        node: { nodes },
+      },
+    } = editor;
+    const { from, to } = data;
+    // 通组件输入输出不能连接
+    if (from === to) return false;
+    const fromNode = nodes[from];
+    const toNode = nodes[to];
+    const {
+      data: { type: fromType, name: fromName },
+      fromLines: sourceFromLines,
+    } = fromNode || {};
+    const {
+      data: { type: toType, name: toName },
+      toLines: targetToLines,
+    } = toNode || {};
+
+    if (['start'].includes(toType) && targetToLines && targetToLines.size) {
+      message.error(toName + '不能设置输入流');
+      return false;
+    }
+    // 不能设置输出流
+    if (['end'].includes(fromType) && sourceFromLines && sourceFromLines.size) {
+      message.error(fromName + '不能设置输出流');
+      return false;
+    }
+    checkLineExtendFn && checkLineExtendFn({ data, editor });
+    return true;
+  };
+
   useEffect(() => {
-    dialogHandleRef.current = new DialogHandle(showType);
-    const { height: jobEditorHei, width: jobEditorWid } = document
-      .querySelector('.job-editor')
-      .getBoundingClientRect();
-    if (jobEditorHei && editorDomRef) {
-      editorDomRef.current.style.height = jobEditorHei - (!previewMode ? 48 : 0) + 'px';
-      editorDomRef.current.style.width = jobEditorWid - (!previewMode ? 140 : 0) + 'px';
-    }
-    editorRef.current = new MMEditor({
-      dom: editorDomRef.current,
-      showMiniMap: showMiniMap,
-      mode: previewMode ? 'view' : 'edit', // 只读模式设置 mode:"view"
-    });
-    window.mm = editorRef.current;
-    // 注册节点
-    initShapes(editorRef.current, flowNodesDict);
-    if (graphData) {
-      setGraphData(graphData);
-    }
-    // 注册节点⌚️
-    addEditorEvent();
+    const init = async () => {
+      dialogHandleRef.current = new DialogHandle(showType);
+      const { height: jobEditorHei, width: jobEditorWid } = document
+        .querySelector('.job-editor')
+        .getBoundingClientRect();
+      if (jobEditorHei && editorDomRef) {
+        editorDomRef.current.style.height = jobEditorHei - (!previewMode ? 48 : 0) + 'px';
+        editorDomRef.current.style.width = jobEditorWid - (!previewMode ? 140 : 0) + 'px';
+      }
+      editorRef.current = new MMEditor({
+        dom: editorDomRef.current,
+        showMiniMap,
+        mode: previewMode ? 'view' : 'edit', // 只读模式设置 mode:"view"
+      });
+      // 注册节点
+      initShapes(editorRef.current, flowNodesDict);
+      if (graphData) {
+        await setGraphData(graphData);
+      }
+
+      // 连线时校验
+      if (editorRef.current.graph.line.shapes['default']) {
+        editorRef.current.graph.line.shapes['default'].checkNewLine = checkNewLine;
+      }
+
+      // 注册节点⌚️
+      addEditorEvent();
+
+      onRef && onRef(this);
+
+      setInitReady(true);
+    };
+    init();
+    return () => {
+      if (editorRef.current) {
+        editorRef.current.graph.clearGraph();
+        editorRef.current.destroy();
+        editorRef.current = null;
+      }
+      setInitReady(false);
+    };
   }, []);
 
   const setGraphData = async (data) => {
     try {
       const dataFormatted = typeof data === 'object' ? data : JSON.parse(data || '{}');
-      let convertFun = DefaultConvert;
+      let convertFun = DefaultDataConvert;
       if (DataConvert) {
         convertFun = DataConvert;
       }
@@ -72,6 +127,12 @@ export default (props) => {
       message.error('解析数据错误,' + e?.message);
     }
   };
+
+  useEffect(() => {
+    if (editorRef.current && initReady) {
+      setGraphData(graphData);
+    }
+  }, [graphData, initReady]);
 
   // 初始化编辑器事件
   const addEditorEvent = () => {
@@ -188,11 +249,11 @@ export default (props) => {
 
   return (
     <div className={`job-editor ${className || ''}`} {...editorStyle}>
-      {!previewMode && editorRef?.current && (
+      {!previewMode && initReady && editorRef?.current && (
         <LeftBar {...props} editor={editorRef.current} onDrop={onDrop} />
       )}
       <div className="job-content flow-editor-content">
-        {!!editorRef?.current && (
+        {initReady && !!editorRef?.current && (
           <TopBar {...props} previewMode={previewMode} editor={editorRef.current} />
         )}
         <div className="job-mm-editor" ref={editorDomRef} />
