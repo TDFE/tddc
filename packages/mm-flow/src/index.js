@@ -1,5 +1,5 @@
 import React, { useRef, useEffect, useState } from 'react';
-import { Tooltip, message } from 'antd';
+import { Tooltip, message, Row } from 'antd';
 import MMEditor from 'mmeditor';
 import TopBar from './Content/TopBar';
 import LeftBar from './Content/LeftBar';
@@ -31,6 +31,8 @@ export default (props) => {
     editorStyle,
     onRef,
     checkLineExtendFn,
+    showLengend,
+    LengendDom,
   } = props;
   const previewMode = type === 'view';
 
@@ -68,8 +70,7 @@ export default (props) => {
   };
 
   useEffect(() => {
-    const init = async () => {
-      dialogHandleRef.current = new DialogHandle(showType);
+    const resizeBound = () => {
       const { height: jobEditorHei, width: jobEditorWid } = document
         .querySelector('.job-editor')
         .getBoundingClientRect();
@@ -77,6 +78,13 @@ export default (props) => {
         editorDomRef.current.style.height = jobEditorHei - (!previewMode ? 48 : 0) + 'px';
         editorDomRef.current.style.width = jobEditorWid - (!previewMode ? 140 : 0) + 'px';
       }
+      if (editorRef.current) {
+        editorRef.current.controller.autoFit();
+      }
+    };
+    const init = async () => {
+      dialogHandleRef.current = new DialogHandle(showType);
+      resizeBound();
       editorRef.current = new MMEditor({
         dom: editorDomRef.current,
         showMiniMap,
@@ -101,6 +109,7 @@ export default (props) => {
       setInitReady(true);
     };
     init();
+    window.addEventListener('resize', resizeBound);
     return () => {
       if (editorRef.current) {
         editorRef.current.graph.clearGraph();
@@ -108,6 +117,7 @@ export default (props) => {
         editorRef.current = null;
       }
       setInitReady(false);
+      window.removeEventListener('resize', resizeBound);
     };
   }, []);
 
@@ -257,6 +267,23 @@ export default (props) => {
           <TopBar {...props} previewMode={previewMode} editor={editorRef.current} />
         )}
         <div className="job-mm-editor" ref={editorDomRef} />
+        {!!showLengend &&
+          (LengendDom || (
+            <Row type="flex" className="mm-lengend">
+              <span className="success">
+                <i />
+                运行完成
+              </span>
+              <span className="running">
+                <i />
+                运行中
+              </span>
+              <span className="fail">
+                <i />
+                运行失败
+              </span>
+            </Row>
+          ))}
       </div>
 
       {/* 节点hover展示 */}

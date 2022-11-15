@@ -134,6 +134,8 @@ const MMFlowComponent = () => {
           },
         ]}
         dialogDom={[<DialogTest />]}
+        showMiniMap={false}
+        showLengend={true}
         // commandAction={{
         //   fullscreen: ()=>{
         //     console.log("zzz")

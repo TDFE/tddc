@@ -119,6 +119,28 @@
             }
           }
         }
+
+        .task-status {
+          display: block;
+          width: 14px;
+          height: 14px;
+          border-radius: 100%;
+        }
+        &.success {
+          .task-status {
+            background-image: url(./Images/success.svg);
+          }
+        }
+        &.fail {
+          .task-status {
+            background-image: url(./Images/fail.svg);
+          }
+        }
+        &.running {
+          .task-status {
+            background-image: url(./Images/running.svg);
+          }
+        }
       }
       .mm-line {
         path {
@@ -151,6 +173,40 @@
             animation: dashing 5s linear infinite;
             stroke-dasharray: 5 !important;
           }
+        }
+      }
+    }
+    .mm-lengend {
+      position: absolute;
+      right: 16px;
+      bottom: 20px;
+      span {
+        display: flex;
+        align-items: center;
+        margin-left: 16px;
+        color: #454f64;
+        font-size: 12px;
+        i {
+          display: inline-block;
+          width: 14px;
+          height: 14px;
+          margin-right: 4px;
+          background-repeat: no-repeat;
+        }
+      }
+      .success {
+        i {
+          background-image: url(./Images/success.svg);
+        }
+      }
+      .running {
+        i {
+          background-image: url(./Images/running.svg);
+        }
+      }
+      .fail {
+        i {
+          background-image: url(./Images/fail.svg);
         }
       }
     }

@@ -15,6 +15,10 @@ require('antd/lib/tooltip/style');
 
 var _tooltip = _interopRequireDefault(require('antd/lib/tooltip'));
 
+require('antd/lib/row/style');
+
+var _row = _interopRequireDefault(require('antd/lib/row'));
+
 require('antd/lib/message/style');
 
 var _message2 = _interopRequireDefault(require('antd/lib/message'));
@@ -723,7 +727,9 @@ var _default = function _default(props) {
     dialogDom = _props$dialogDom === void 0 ? [] : _props$dialogDom,
     editorStyle = props.editorStyle,
     onRef = props.onRef,
-    checkLineExtendFn = props.checkLineExtendFn;
+    checkLineExtendFn = props.checkLineExtendFn,
+    showLengend = props.showLengend,
+    LengendDom = props.LengendDom;
   var previewMode = type === 'view';
 
   var checkNewLine = function checkNewLine(data, editor) {
@@ -768,29 +774,30 @@ var _default = function _default(props) {
   };
 
   (0, _react.useEffect)(function () {
+    var resizeBound = function resizeBound() {
+      var _document$querySelect = document.querySelector('.job-editor').getBoundingClientRect(),
+        jobEditorHei = _document$querySelect.height,
+        jobEditorWid = _document$querySelect.width;
+
+      if (jobEditorHei && editorDomRef) {
+        editorDomRef.current.style.height = jobEditorHei - (!previewMode ? 48 : 0) + 'px';
+        editorDomRef.current.style.width = jobEditorWid - (!previewMode ? 140 : 0) + 'px';
+      }
+
+      if (editorRef.current) {
+        editorRef.current.controller.autoFit();
+      }
+    };
+
     var init = /*#__PURE__*/ (function () {
       var _ref3 = _asyncToGenerator(
         /*#__PURE__*/ _regeneratorRuntime().mark(function _callee() {
-          var _document$querySelect, jobEditorHei, jobEditorWid;
-
           return _regeneratorRuntime().wrap(function _callee$(_context) {
             while (1) {
               switch ((_context.prev = _context.next)) {
                 case 0:
                   dialogHandleRef.current = new _DialogHandle.default(showType);
-                  (_document$querySelect = document
-                    .querySelector('.job-editor')
-                    .getBoundingClientRect()),
-                    (jobEditorHei = _document$querySelect.height),
-                    (jobEditorWid = _document$querySelect.width);
-
-                  if (jobEditorHei && editorDomRef) {
-                    editorDomRef.current.style.height =
-                      jobEditorHei - (!previewMode ? 48 : 0) + 'px';
-                    editorDomRef.current.style.width =
-                      jobEditorWid - (!previewMode ? 140 : 0) + 'px';
-                  }
-
+                  resizeBound();
                   editorRef.current = new _mmeditor.default({
                     dom: editorDomRef.current,
                     showMiniMap: showMiniMap,
@@ -800,14 +807,14 @@ var _default = function _default(props) {
                   (0, _initShapes.default)(editorRef.current, flowNodesDict);
 
                   if (!graphData) {
-                    _context.next = 8;
+                    _context.next = 7;
                     break;
                   }
 
-                  _context.next = 8;
+                  _context.next = 7;
                   return setGraphData(graphData);
 
-                case 8:
+                case 7:
                   // 连线时校验
                   if (editorRef.current.graph.line.shapes['default']) {
                     editorRef.current.graph.line.shapes['default'].checkNewLine = checkNewLine;
@@ -817,7 +824,7 @@ var _default = function _default(props) {
                   onRef && onRef(_this);
                   setInitReady(true);
 
-                case 12:
+                case 11:
                 case 'end':
                   return _context.stop();
               }
@@ -832,6 +839,7 @@ var _default = function _default(props) {
     })();
 
     init();
+    window.addEventListener('resize', resizeBound);
     return function () {
       if (editorRef.current) {
         editorRef.current.graph.clearGraph();
@@ -840,6 +848,7 @@ var _default = function _default(props) {
       }
 
       setInitReady(false);
+      window.removeEventListener('resize', resizeBound);
     };
   }, []);
 
@@ -1144,6 +1153,39 @@ var _default = function _default(props) {
         className: 'job-mm-editor',
         ref: editorDomRef,
       }),
+      !!showLengend &&
+        (LengendDom ||
+          /*#__PURE__*/ _react.default.createElement(
+            _row.default,
+            {
+              type: 'flex',
+              className: 'mm-lengend',
+            },
+            /*#__PURE__*/ _react.default.createElement(
+              'span',
+              {
+                className: 'success',
+              },
+              /*#__PURE__*/ _react.default.createElement('i', null),
+              '\u8FD0\u884C\u5B8C\u6210',
+            ),
+            /*#__PURE__*/ _react.default.createElement(
+              'span',
+              {
+                className: 'running',
+              },
+              /*#__PURE__*/ _react.default.createElement('i', null),
+              '\u8FD0\u884C\u4E2D',
+            ),
+            /*#__PURE__*/ _react.default.createElement(
+              'span',
+              {
+                className: 'fail',
+              },
+              /*#__PURE__*/ _react.default.createElement('i', null),
+              '\u8FD0\u884C\u5931\u8D25',
+            ),
+          )),
     ),
     /*#__PURE__*/ _react.default.createElement(
       'div',
