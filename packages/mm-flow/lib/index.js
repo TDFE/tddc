@@ -921,7 +921,7 @@ var _default = function _default(props) {
         setGraphData(graphData);
       }
     },
-    [graphData, initReady],
+    [graphData, initReady, auditedNodes],
   ); // 初始化编辑器事件
 
   var addEditorEvent = function addEditorEvent() {

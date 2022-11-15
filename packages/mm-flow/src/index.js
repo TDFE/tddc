@@ -142,7 +142,7 @@ export default (props) => {
     if (editorRef.current && initReady) {
       setGraphData(graphData);
     }
-  }, [graphData, initReady]);
+  }, [graphData, initReady, auditedNodes]);
 
   // 初始化编辑器事件
   const addEditorEvent = () => {

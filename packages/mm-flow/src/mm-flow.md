@@ -16,18 +16,42 @@ npm install @tddc/mm-flow --save
 ### 流在决策流/任务流/审批流中的使用
 
 ```jsx
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Button, message } from 'antd';
 import MMFlow from '@tddc/mm-flow';
 import DialogTest from './DialogTest';
 const MMFlowComponent = () => {
   const [saveLoading, setSaveLoading] = useState(false);
+  const [auditedNodes, setAuditedNodes] = useState([
+    {
+      uuid: '3e9bf4004ad911eda9df3f68e8b34c19',
+      status: 'success',
+    },
+    {
+      uuid: '3f8012704ad911eda9df3f68e8b34c19',
+      status: 'error',
+    },
+  ]);
   const save = () => {
     setSaveLoading(true);
     setTimeout(() => {
       setSaveLoading(false);
     }, 400);
   };
+  useEffect(() => {
+    setTimeout(() => {
+      setAuditedNodes([
+        {
+          uuid: '3e9bf4004ad911eda9df3f68e8b34c19',
+          status: 'success',
+        },
+        {
+          uuid: '3f8012704ad911eda9df3f68e8b34c19',
+          status: 'success',
+        },
+      ]);
+    }, 1000);
+  }, []);
   return (
     <>
       <MMFlow
@@ -123,16 +147,7 @@ const MMFlowComponent = () => {
             click: save,
           },
         ]}
-        auditedNodes={[
-          {
-            uuid: '3e9bf4004ad911eda9df3f68e8b34c19',
-            status: 'success',
-          },
-          {
-            uuid: '3f8012704ad911eda9df3f68e8b34c19',
-            status: 'success',
-          },
-        ]}
+        auditedNodes={auditedNodes}
         dialogDom={[<DialogTest />]}
         showMiniMap={false}
         showLengend={true}
