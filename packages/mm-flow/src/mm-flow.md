@@ -114,6 +114,7 @@ const MMFlowComponent = () => {
             iconColor: '#8390DB',
           },
         ]}
+        type="view"
         operateGroup={[
           {
             name: '保存',
@@ -133,6 +134,11 @@ const MMFlowComponent = () => {
           },
         ]}
         dialogDom={[<DialogTest />]}
+        // commandAction={{
+        //   fullscreen: ()=>{
+        //     console.log("zzz")
+        //   }
+        // }}
       />
     </>
   );

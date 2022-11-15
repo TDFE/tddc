@@ -33,6 +33,8 @@ var _react = _interopRequireWildcard(require('react'));
 
 var _DefaultDataConvert = _interopRequireDefault(require('../DefaultDataConvert'));
 
+require('./TopBar.less');
+
 function _getRequireWildcardCache(nodeInterop) {
   if (typeof WeakMap !== 'function') return null;
   var cacheBabelInterop = new WeakMap();
@@ -166,11 +168,11 @@ var toolBarTypeNameMap = {
   undo: '撤销',
   'zoom-in': '放大',
   'zoom-out': '缩小',
-  fullscreen: '适应画布',
+  fullscreen: '最大化',
   delete: '删除',
-  'fullscreen-exit': '实际尺寸',
   'deployment-unit': '排序',
   copy: '拷贝规则流',
+  autoFit: '适应画布',
 };
 exports.toolBarTypeNameMap = toolBarTypeNameMap;
 
@@ -181,7 +183,8 @@ var _default = function _default(props) {
     editor = _ref.editor,
     previewMode = _ref.previewMode,
     operateGroup = _ref.operateGroup,
-    DataConvert = _ref.DataConvert;
+    DataConvert = _ref.DataConvert,
+    commandAction = _ref.commandAction;
 
   var _useState = (0, _react.useState)(false),
     _useState2 = _slicedToArray(_useState, 2),
@@ -197,11 +200,6 @@ var _default = function _default(props) {
     _useState6 = _slicedToArray(_useState5, 2),
     canDelete = _useState6[0],
     setCanDelete = _useState6[1];
-
-  var _useState7 = (0, _react.useState)(false),
-    _useState8 = _slicedToArray(_useState7, 2),
-    fullscreen = _useState8[0],
-    setFullScreen = _useState8[1];
 
   var curEditor = (0, _react.useRef)(editor);
 
@@ -335,49 +333,6 @@ var _default = function _default(props) {
     editor.controller.autoFit();
   };
 
-  var onPrint = function onPrint() {
-    var div = document.createElement('div');
-    div.className = 'print-window job-editor ';
-    div.innerHTML = props.editor.svg.outerSVG();
-    document.body.appendChild(div);
-    window.print();
-    document.body.removeChild(div);
-  };
-
-  var handleScreen = function handleScreen() {
-    if (fullscreen) {
-      return exitFullscreen();
-    }
-
-    setFullScreen(true); // eslint-disable-next-line vars-on-top
-
-    var element = document.documentElement;
-
-    if (element.requestFullscreen) {
-      element.requestFullscreen();
-    } else if (element.msRequestFullscreen) {
-      element.msRequestFullscreen();
-    } else if (element.mozRequestFullScreen) {
-      element.mozRequestFullScreen();
-    } else if (element.webkitRequestFullscreen) {
-      element.webkitRequestFullscreen();
-    }
-  }; // 退出全屏
-
-  var exitFullscreen = function exitFullscreen() {
-    setFullScreen(false);
-
-    if (document.exitFullscreen) {
-      document.exitFullscreen();
-    } else if (document.msExitFullscreen) {
-      document.msExitFullscreen();
-    } else if (document.mozCancelFullScreen) {
-      document.mozCancelFullScreen();
-    } else if (document.webkitExitFullscreen) {
-      document.webkitExitFullscreen();
-    }
-  };
-
   var clickEvent = function clickEvent(type) {
     switch (type) {
       case 'redo':
@@ -396,20 +351,13 @@ var _default = function _default(props) {
           controller.zoom(0.95);
         };
 
+      case 'autoFit':
+        return function () {
+          controller.autoFit(true, true, true);
+        };
+
       case 'fullscreen':
-        return function () {
-          controller.autoFit();
-        };
-
-      case 'fullscreen-exit':
-        return function () {
-          var transform = paper.transform();
-
-          var _transform$localMatri = transform.localMatrix.split(),
-            scalex = _transform$localMatri.scalex;
-
-          controller.zoom(1 / scalex);
-        };
+        return commandAction['fullscreen'] || void 0;
 
       case 'delete':
         return function () {
@@ -468,9 +416,14 @@ var _default = function _default(props) {
                   className: ''.concat(getClassName(type), ' command-item'),
                   onClick: click || clickEvent(type),
                 },
-                /*#__PURE__*/ _react.default.createElement(_icon.default, {
-                  type: type,
-                }),
+                !['autoFit'].includes(type) &&
+                  /*#__PURE__*/ _react.default.createElement(_icon.default, {
+                    type: type,
+                  }),
+                type === 'autoFit' &&
+                  /*#__PURE__*/ _react.default.createElement('span', {
+                    className: 'edit-flow-icon-auto-fit',
+                  }),
                 toolBarTypeNameMap[type],
               ),
             );
@@ -525,15 +478,13 @@ var _default = function _default(props) {
   var commandActions = ['zoom-out', 'zoom-in'];
 
   if (!previewMode) {
-    commandActions = commandActions.concat([
-      'fullscreen',
-      'fullscreen-exit',
-      'redo',
-      'undo',
-      'delete',
-    ]);
+    commandActions = commandActions.concat(['autoFit', 'redo', 'undo', 'delete']);
   } else {
-    commandActions = commandActions.concat(['fullscreen']);
+    commandActions = commandActions.concat(['autoFit']);
+
+    if (commandAction && commandAction['fullscreen']) {
+      commandActions = commandActions.concat(['fullscreen']);
+    }
   }
 
   if (!editor) return null;
@@ -550,6 +501,7 @@ var _default = function _default(props) {
         (_commandActions = commandActions) === null || _commandActions === void 0
           ? void 0
           : _commandActions.map(function (type) {
+              console.log('type', type);
               return /*#__PURE__*/ _react.default.createElement(
                 _tooltip.default,
                 {
@@ -561,9 +513,14 @@ var _default = function _default(props) {
                   {
                     onClick: clickEvent(type),
                   },
-                  /*#__PURE__*/ _react.default.createElement(_icon.default, {
-                    type: type,
-                  }),
+                  !['autoFit'].includes(type) &&
+                    /*#__PURE__*/ _react.default.createElement(_icon.default, {
+                      type: type,
+                    }),
+                  type === 'autoFit' &&
+                    /*#__PURE__*/ _react.default.createElement('span', {
+                      className: 'flow-icon-auto-fit',
+                    }),
                 ),
               );
             }),

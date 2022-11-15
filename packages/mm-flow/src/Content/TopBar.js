@@ -1,23 +1,23 @@
 import { useState, useEffect, useRef } from 'react';
 import { Row, Button, Icon, Menu, Dropdown, Tooltip } from 'antd';
 import DefaultDataConvert from '../DefaultDataConvert';
+import './TopBar.less';
 export const toolBarTypeNameMap = {
   redo: '重做',
   undo: '撤销',
   'zoom-in': '放大',
   'zoom-out': '缩小',
-  fullscreen: '适应画布',
+  fullscreen: '最大化',
   delete: '删除',
-  'fullscreen-exit': '实际尺寸',
   'deployment-unit': '排序',
   copy: '拷贝规则流',
+  autoFit: '适应画布',
 };
 export default (props) => {
-  const { editor, previewMode, operateGroup, DataConvert } = props || {};
+  const { editor, previewMode, operateGroup, DataConvert, commandAction } = props || {};
   const [canRedo, setCanRedo] = useState(false);
   const [canUndo, setCanUndo] = useState(false);
   const [canDelete, setCanDelete] = useState(false);
-  const [fullscreen, setFullScreen] = useState(false);
   const curEditor = useRef(editor);
   const {
     schema: { history },
@@ -126,48 +126,6 @@ export default (props) => {
     editor.controller.autoFit();
   };
 
-  const onPrint = () => {
-    const div = document.createElement('div');
-    div.className = 'print-window job-editor ';
-    div.innerHTML = props.editor.svg.outerSVG();
-    document.body.appendChild(div);
-    window.print();
-    document.body.removeChild(div);
-  };
-
-  const handleScreen = () => {
-    if (fullscreen) {
-      return exitFullscreen();
-    }
-    setFullScreen(true);
-
-    // eslint-disable-next-line vars-on-top
-    var element = document.documentElement;
-    if (element.requestFullscreen) {
-      element.requestFullscreen();
-    } else if (element.msRequestFullscreen) {
-      element.msRequestFullscreen();
-    } else if (element.mozRequestFullScreen) {
-      element.mozRequestFullScreen();
-    } else if (element.webkitRequestFullscreen) {
-      element.webkitRequestFullscreen();
-    }
-  };
-
-  // 退出全屏
-  const exitFullscreen = () => {
-    setFullScreen(false);
-    if (document.exitFullscreen) {
-      document.exitFullscreen();
-    } else if (document.msExitFullscreen) {
-      document.msExitFullscreen();
-    } else if (document.mozCancelFullScreen) {
-      document.mozCancelFullScreen();
-    } else if (document.webkitExitFullscreen) {
-      document.webkitExitFullscreen();
-    }
-  };
-
   const clickEvent = (type) => {
     switch (type) {
       case 'redo':
@@ -182,16 +140,12 @@ export default (props) => {
         return () => {
           controller.zoom(0.95);
         };
+      case 'autoFit':
+        return () => {
+          controller.autoFit(true, true, true);
+        };
       case 'fullscreen':
-        return () => {
-          controller.autoFit();
-        };
-      case 'fullscreen-exit':
-        return () => {
-          const transform = paper.transform();
-          const { scalex } = transform.localMatrix.split();
-          controller.zoom(1 / scalex);
-        };
+        return commandAction['fullscreen'] || void 0;
       case 'delete':
         return () => {
           canDelete && deleteFun();
@@ -235,7 +189,8 @@ export default (props) => {
             className={`${getClassName(type)} command-item`}
             onClick={click || clickEvent(type)}
           >
-            <Icon type={type} />
+            {!['autoFit'].includes(type) && <Icon type={type} />}
+            {type === 'autoFit' && <span className="edit-flow-icon-auto-fit" />}
             {toolBarTypeNameMap[type]}
           </span>,
         );
@@ -260,15 +215,12 @@ export default (props) => {
 
   let commandActions = ['zoom-out', 'zoom-in'];
   if (!previewMode) {
-    commandActions = commandActions.concat([
-      'fullscreen',
-      'fullscreen-exit',
-      'redo',
-      'undo',
-      'delete',
-    ]);
+    commandActions = commandActions.concat(['autoFit', 'redo', 'undo', 'delete']);
   } else {
-    commandActions = commandActions.concat(['fullscreen']);
+    commandActions = commandActions.concat(['autoFit']);
+    if (commandAction && commandAction['fullscreen']) {
+      commandActions = commandActions.concat(['fullscreen']);
+    }
   }
 
   if (!editor) return null;
@@ -277,10 +229,12 @@ export default (props) => {
       {previewMode && (
         <Button.Group className="flow-btn-wrap" size="small">
           {commandActions?.map((type) => {
+            console.log('type', type);
             return (
               <Tooltip title={toolBarTypeNameMap[type]} key={type}>
                 <Button onClick={clickEvent(type)}>
-                  <Icon type={type} />
+                  {!['autoFit'].includes(type) && <Icon type={type} />}
+                  {type === 'autoFit' && <span className="flow-icon-auto-fit" />}
                 </Button>
               </Tooltip>
             );
