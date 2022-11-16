@@ -1,0 +1,23 @@
+{
+  "id": "",
+  "name": "",
+  "font_family": "iconfont",
+  "css_prefix_text": "icon-",
+  "description": "",
+  "glyphs": [
+    {
+      "icon_id": "105171696",
+      "name": "all-screen",
+      "font_class": "all-screen",
+      "unicode": "e7a3",
+      "unicode_decimal": 59299
+    },
+    {
+      "icon_id": "105171736",
+      "name": "reset",
+      "font_class": "reset",
+      "unicode": "e7cb",
+      "unicode_decimal": 59339
+    }
+  ]
+}

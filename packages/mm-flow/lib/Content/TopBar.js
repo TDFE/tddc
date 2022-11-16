@@ -168,11 +168,12 @@ var toolBarTypeNameMap = {
   undo: '撤销',
   'zoom-in': '放大',
   'zoom-out': '缩小',
-  fullscreen: '最大化',
   delete: '删除',
   'deployment-unit': '排序',
   copy: '拷贝规则流',
-  autoFit: '适应画布',
+  reset: '原比例',
+  'auto-fit': '适应画布',
+  'full-screen': '最大化',
 };
 exports.toolBarTypeNameMap = toolBarTypeNameMap;
 
@@ -351,12 +352,23 @@ var _default = function _default(props) {
           controller.zoom(0.95);
         };
 
-      case 'autoFit':
+      case 'reset':
+        return function () {
+          var transform = paper.transform();
+
+          var _transform$localMatri = transform.localMatrix.split(),
+            scalex = _transform$localMatri.scalex;
+
+          controller.zoom(1 / scalex);
+          controller.autoFit(true, true, true);
+        };
+
+      case 'auto-fit':
         return function () {
           controller.autoFit(true, true, true);
         };
 
-      case 'fullscreen':
+      case 'full-screen':
         return commandAction['fullscreen'] || void 0;
 
       case 'delete':
@@ -416,13 +428,13 @@ var _default = function _default(props) {
                   className: ''.concat(getClassName(type), ' command-item'),
                   onClick: click || clickEvent(type),
                 },
-                !['autoFit'].includes(type) &&
+                !['auto-fit', 'reset'].includes(type) &&
                   /*#__PURE__*/ _react.default.createElement(_icon.default, {
                     type: type,
                   }),
-                type === 'autoFit' &&
+                ['auto-fit', 'reset'].includes(type) &&
                   /*#__PURE__*/ _react.default.createElement('span', {
-                    className: 'edit-flow-icon-auto-fit',
+                    className: 'flow-iconfont icon-'.concat(type),
                   }),
                 toolBarTypeNameMap[type],
               ),
@@ -478,9 +490,9 @@ var _default = function _default(props) {
   var commandActions = ['zoom-out', 'zoom-in'];
 
   if (!previewMode) {
-    commandActions = commandActions.concat(['autoFit', 'redo', 'undo', 'delete']);
+    commandActions = commandActions.concat(['reset', 'auto-fit', 'redo', 'undo', 'delete']);
   } else {
-    commandActions = commandActions.concat(['autoFit']);
+    commandActions = commandActions.concat(['reset', 'auto-fit']);
 
     if (commandAction && commandAction['fullscreen']) {
       commandActions = commandActions.concat(['fullscreen']);
@@ -501,7 +513,6 @@ var _default = function _default(props) {
         (_commandActions = commandActions) === null || _commandActions === void 0
           ? void 0
           : _commandActions.map(function (type) {
-              console.log('type', type);
               return /*#__PURE__*/ _react.default.createElement(
                 _tooltip.default,
                 {
@@ -513,13 +524,13 @@ var _default = function _default(props) {
                   {
                     onClick: clickEvent(type),
                   },
-                  !['autoFit'].includes(type) &&
+                  !['auto-fit', 'reset'].includes(type) &&
                     /*#__PURE__*/ _react.default.createElement(_icon.default, {
                       type: type,
                     }),
-                  type === 'autoFit' &&
+                  ['auto-fit', 'reset'].includes(type) &&
                     /*#__PURE__*/ _react.default.createElement('span', {
-                      className: 'flow-icon-auto-fit',
+                      className: 'flow-iconfont icon-'.concat(type),
                     }),
                 ),
               );
