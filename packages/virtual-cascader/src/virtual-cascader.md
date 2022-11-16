@@ -27,7 +27,7 @@ import 'antd/dist/antd.css';
 
 const getChildren = (key) => {
   const children = [];
-  for (let i = 0; i < 200; i++) {
+  for (let i = 0; i < 20000; i++) {
     children.push({
       name: key + String(i),
       dName: key + String(i),
