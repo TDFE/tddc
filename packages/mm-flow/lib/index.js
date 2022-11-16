@@ -688,7 +688,7 @@ function _arrayWithHoles(arr) {
   if (Array.isArray(arr)) return arr;
 }
 
-var _default = function _default(props) {
+var _default = /*#__PURE__*/ (0, _react.forwardRef)(function (props, ref) {
   var _toolTipInfo$nowTextN;
 
   var editorDomRef = (0, _react.useRef)();
@@ -729,8 +729,16 @@ var _default = function _default(props) {
     onRef = props.onRef,
     checkLineExtendFn = props.checkLineExtendFn,
     showLengend = props.showLengend,
-    LengendDom = props.LengendDom;
+    LengendDom = props.LengendDom,
+    _props$autoDiffAuditN = props.autoDiffAuditNodes,
+    autoDiffAuditNodes = _props$autoDiffAuditN === void 0 ? true : _props$autoDiffAuditN;
   var previewMode = type === 'view';
+  var auditedNodesPre = (0, _react.useRef)(auditedNodes);
+  (0, _react.useImperativeHandle)(ref, function () {
+    return {
+      updateGraph: setGraphData,
+    };
+  });
 
   var checkNewLine = function checkNewLine(data, editor) {
     var nodes = editor.graph.node.nodes;
@@ -921,7 +929,26 @@ var _default = function _default(props) {
         setGraphData(graphData);
       }
     },
-    [graphData, initReady, auditedNodes],
+    [graphData, initReady],
+  );
+  (0, _react.useEffect)(
+    function () {
+      if (
+        autoDiffAuditNodes &&
+        editorRef.current &&
+        initReady &&
+        JSON.stringify(auditedNodes) !==
+          JSON.stringify(
+            auditedNodesPre === null || auditedNodesPre === void 0
+              ? void 0
+              : auditedNodesPre.current,
+          )
+      ) {
+        setGraphData(graphData);
+        auditedNodesPre.current = auditedNodes;
+      }
+    },
+    [graphData, auditedNodes, autoDiffAuditNodes],
   ); // 初始化编辑器事件
 
   var addEditorEvent = function addEditorEvent() {
@@ -1233,6 +1260,6 @@ var _default = function _default(props) {
           );
         }),
   );
-};
+});
 
 exports.default = _default;

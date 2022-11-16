@@ -9,9 +9,7 @@ Object.defineProperty(exports, 'default', {
     return _AssignModal.default;
   },
 });
-
 var _AssignModal = _interopRequireDefault(require('./AssignModal'));
-
 function _interopRequireDefault(obj) {
   return obj && obj.__esModule ? obj : { default: obj };
 }

@@ -19,30 +19,19 @@ function _typeof(obj) {
     _typeof(obj)
   );
 }
-
 Object.defineProperty(exports, '__esModule', {
   value: true,
 });
 exports.default = void 0;
-
 require('antd/lib/checkbox/style');
-
 var _checkbox = _interopRequireDefault(require('antd/lib/checkbox'));
-
 require('antd/lib/tree/style');
-
 var _tree = _interopRequireDefault(require('antd/lib/tree'));
-
 var _react = _interopRequireWildcard(require('react'));
-
 var _tntd = require('tntd');
-
 var _lodash = require('lodash');
-
 require('./index.less');
-
 var _utils = require('./utils');
-
 function _getRequireWildcardCache(nodeInterop) {
   if (typeof WeakMap !== 'function') return null;
   var cacheBabelInterop = new WeakMap();
@@ -51,7 +40,6 @@ function _getRequireWildcardCache(nodeInterop) {
     return nodeInterop ? cacheNodeInterop : cacheBabelInterop;
   })(nodeInterop);
 }
-
 function _interopRequireWildcard(obj, nodeInterop) {
   if (!nodeInterop && obj && obj.__esModule) {
     return obj;
@@ -81,11 +69,9 @@ function _interopRequireWildcard(obj, nodeInterop) {
   }
   return newObj;
 }
-
 function _interopRequireDefault(obj) {
   return obj && obj.__esModule ? obj : { default: obj };
 }
-
 function _toConsumableArray(arr) {
   return (
     _arrayWithoutHoles(arr) ||
@@ -94,13 +80,11 @@ function _toConsumableArray(arr) {
     _nonIterableSpread()
   );
 }
-
 function _nonIterableSpread() {
   throw new TypeError(
     'Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.',
   );
 }
-
 function _iterableToArray(iter) {
   if (
     (typeof Symbol !== 'undefined' && iter[Symbol.iterator] != null) ||
@@ -108,11 +92,9 @@ function _iterableToArray(iter) {
   )
     return Array.from(iter);
 }
-
 function _arrayWithoutHoles(arr) {
   if (Array.isArray(arr)) return _arrayLikeToArray(arr);
 }
-
 function _slicedToArray(arr, i) {
   return (
     _arrayWithHoles(arr) ||
@@ -121,13 +103,11 @@ function _slicedToArray(arr, i) {
     _nonIterableRest()
   );
 }
-
 function _nonIterableRest() {
   throw new TypeError(
     'Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.',
   );
 }
-
 function _unsupportedIterableToArray(o, minLen) {
   if (!o) return;
   if (typeof o === 'string') return _arrayLikeToArray(o, minLen);
@@ -137,7 +117,6 @@ function _unsupportedIterableToArray(o, minLen) {
   if (n === 'Arguments' || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n))
     return _arrayLikeToArray(o, minLen);
 }
-
 function _arrayLikeToArray(arr, len) {
   if (len == null || len > arr.length) len = arr.length;
   for (var i = 0, arr2 = new Array(len); i < len; i++) {
@@ -145,7 +124,6 @@ function _arrayLikeToArray(arr, len) {
   }
   return arr2;
 }
-
 function _iterableToArrayLimit(arr, i) {
   var _i =
     arr == null
@@ -173,15 +151,11 @@ function _iterableToArrayLimit(arr, i) {
   }
   return _arr;
 }
-
 function _arrayWithHoles(arr) {
   if (Array.isArray(arr)) return arr;
 }
-
 var TreeNode = _tree.default.TreeNode;
 var path = []; // 上级机构到当前机构的路径
-
-var allOrgList = [];
 
 var AssignModal = function AssignModal(props) {
   var _props$orgList = props.orgList,
@@ -191,29 +165,32 @@ var AssignModal = function AssignModal(props) {
     disabled = props.disabled,
     appList = props.appList,
     onChange = props.onChange;
-
+  var _dataItem$appCodes = dataItem.appCodes,
+    appCodes = _dataItem$appCodes === void 0 ? [] : _dataItem$appCodes,
+    _dataItem$orgCodes = dataItem.orgCodes,
+    orgCodes = _dataItem$orgCodes === void 0 ? [] : _dataItem$orgCodes,
+    orgCode = dataItem.orgCode,
+    appCode = dataItem.appCode;
+  var allOrg = (0, _utils.preorder)(orgList[0]);
+  var allApp = appList.map(function (item) {
+    return item.value;
+  });
   var _useState = (0, _react.useState)([]),
     _useState2 = _slicedToArray(_useState, 2),
     checkedKeys = _useState2[0],
     setCheckedKeys = _useState2[1];
-
-  var _useState3 = (0, _react.useState)(
-      (dataItem === null || dataItem === void 0 ? void 0 : dataItem.appCodes) || [],
-    ),
+  var _useState3 = (0, _react.useState)(appCodes || []),
     _useState4 = _slicedToArray(_useState3, 2),
     appKeys = _useState4[0],
     setAppKeys = _useState4[1];
-
   var _useState5 = (0, _react.useState)(false),
     _useState6 = _slicedToArray(_useState5, 2),
     allOrgChecked = _useState6[0],
     setAllOrgChecked = _useState6[1];
-
   var _useState7 = (0, _react.useState)(false),
     _useState8 = _slicedToArray(_useState7, 2),
     allAppChecked = _useState8[0],
     setAllAppChecked = _useState8[1];
-
   if (!orgList[0].path) {
     (0, _utils.addPath)(orgList[0], []); // 添加 上级机构到子机构的路径
   }
@@ -221,46 +198,41 @@ var AssignModal = function AssignModal(props) {
   (0, _react.useEffect)(
     function () {
       // path 和 allOrgList 赋值
-      path = (0, _utils.findSameCodePath)(orgList[0], dataItem.orgCode);
-      allOrgList = (0, _utils.preorder)(orgList[0]);
-      var initKeys = Array.from(
-        new Set(
-          [].concat(
-            _toConsumableArray(
-              (dataItem === null || dataItem === void 0 ? void 0 : dataItem.orgCodes) || [],
-            ),
-            _toConsumableArray(path),
-          ),
-        ),
-      );
-      setCheckedKeys(initKeys);
-    },
-    [dataItem.orgCode],
-  );
-  (0, _react.useEffect)(
-    function () {
-      // 机构和应用 全选
-      if (appList.length > 0) {
-        var allApp = appList.map(function (item) {
-          return item.value;
-        }); // 判断当前用户是否具有 该机构或应用 权限
-
-        var app = appKeys.filter(function (item) {
-          return allApp.includes(item);
-        });
-        var org = checkedKeys.filter(function (item) {
-          return allOrgList.includes(item);
-        });
-        setAllAppChecked(app.length === appList.length);
-        setAllOrgChecked(org.length === allOrgList.length);
+      path = (0, _utils.findSameCodePath)(orgList[0], orgCode);
+      var initOrgs = [];
+      var initApps = [];
+      if (orgCodes.includes('all')) {
+        setAllOrgChecked(orgCodes.includes('all'));
+        initOrgs = allOrg;
+      } else {
+        initOrgs = Array.from(
+          new Set([].concat(_toConsumableArray(orgCodes || []), _toConsumableArray(path))),
+        );
       }
+      if (appCodes.includes('all')) {
+        setAllAppChecked(appCodes.includes('all'));
+        initApps = allApp;
+      } else {
+        initApps = Array.from(new Set([].concat(_toConsumableArray(appCodes || []), [appCode])));
+      }
+      setCheckedKeys(initOrgs);
+      setAppKeys(initApps || []);
+      onChange &&
+        onChange({
+          appKeys: appCodes.includes('all') ? ['all'] : initApps,
+          checkedKeys: orgCodes.includes('all') ? ['all'] : initOrgs,
+          appCheckAll: appCodes.includes('all'),
+          orgCheckAll: orgCodes.includes('all'),
+          checkData: {
+            apps: initApps,
+            orgs: initOrgs,
+          },
+        });
     },
-    [checkedKeys, appKeys, appList],
+    [dataItem],
   );
-
   var loopTreeNodes = function loopTreeNodes(data) {
     var level = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 0;
-
     var NodeTitle = function NodeTitle(_ref) {
       var node = _ref.node;
       return /*#__PURE__*/ _react.default.createElement(
@@ -271,10 +243,8 @@ var AssignModal = function AssignModal(props) {
         node.title,
       );
     };
-
     return data.map(function (item) {
       var orgDisabled = path.includes(item.code);
-
       if (item.children) {
         return /*#__PURE__*/ _react.default.createElement(
           TreeNode,
@@ -284,12 +254,11 @@ var AssignModal = function AssignModal(props) {
               node: item,
             }),
             item: item,
-            disabled: orgDisabled || disabled,
+            disabled: orgDisabled || disabled || allOrgChecked,
           },
           loopTreeNodes(item.children, level + 1),
         );
       }
-
       return /*#__PURE__*/ _react.default.createElement(TreeNode, {
         style: {
           paddingLeft: ''.concat((level + 1) * 14, 'px'),
@@ -304,13 +273,11 @@ var AssignModal = function AssignModal(props) {
       });
     });
   };
-
   var onCheck = function onCheck(keys, info) {
     var props = info.node.props;
     var item = props.item;
     var path = item.path;
     var checked = keys.checked;
-
     if (!info.node.isLeaf() && !info.node.checked) {
       var arr = (0, _utils.preorder)(info.node.props.item);
       arr.splice(0, 1);
@@ -321,29 +288,29 @@ var AssignModal = function AssignModal(props) {
         if (i !== -1) checked.splice(i, 1);
       });
     }
-
     if (info.checked) {
       checked = Array.from(
         new Set([].concat(_toConsumableArray(checked), _toConsumableArray(path))),
       );
     }
-
     setCheckedKeys(checked);
-    onChange &&
-      onChange({
-        appKeys: appKeys,
-        checkedKeys: checked,
-      });
+    onChange({
+      appKeys: allAppChecked ? ['all'] : appKeys,
+      checkedKeys: checked,
+      appCheckAll: allAppChecked,
+      orgCheckAll: allOrgChecked,
+      checkData: {
+        apps: appKeys,
+        orgs: checked,
+      },
+    });
   };
-
   var assignApp = function assignApp(e) {
     var value = '';
     var newAppKeys = [];
-
     if (e.target.checked) {
       value = e.target.value;
       newAppKeys = [].concat(_toConsumableArray(appKeys), [value]);
-      setAppKeys(newAppKeys);
     } else {
       value = e.target.value;
       newAppKeys = (0, _lodash.cloneDeep)(appKeys);
@@ -352,54 +319,93 @@ var AssignModal = function AssignModal(props) {
           newAppKeys.splice(index, 1);
         }
       });
-      setAppKeys(newAppKeys);
     }
-
-    onChange &&
-      onChange({
-        checkedKeys: checkedKeys,
-        appKeys: newAppKeys,
-      });
+    setAppKeys(newAppKeys);
+    onChange({
+      appKeys: newAppKeys,
+      checkedKeys: allOrgChecked ? ['all'] : checkedKeys,
+      appCheckAll: allAppChecked,
+      orgCheckAll: allOrgChecked,
+      checkData: {
+        apps: newAppKeys,
+        orgs: checkedKeys,
+      },
+    });
   };
 
+  // org全局授权
   var checkAllOrg = function checkAllOrg(e) {
-    var orgKeys = [];
-
+    var orgChecks = [];
     if (e.target.checked) {
-      orgKeys = (0, _utils.preorder)(orgList[0]);
-      setCheckedKeys(orgKeys);
-    } else {
-      orgKeys = _toConsumableArray(path);
-      setCheckedKeys(orgKeys);
-    }
-
-    onChange &&
+      setAllOrgChecked(true);
+      orgChecks = (0, _utils.preorder)(orgList[0]);
+      setCheckedKeys(orgChecks);
       onChange({
-        appKeys: appKeys,
-        checkedKeys: orgKeys,
+        appKeys: allAppChecked ? ['all'] : appKeys,
+        checkedKeys: ['all'],
+        appCheckAll: allAppChecked,
+        orgCheckAll: true,
+        checkData: {
+          apps: appKeys,
+          orgs: checkedKeys,
+        },
       });
+    } else {
+      setAllOrgChecked(false);
+      var arr = orgCodes.includes('all') ? allOrg : orgCodes;
+      orgChecks = Array.from(
+        new Set([].concat(_toConsumableArray(arr || []), _toConsumableArray(path))),
+      );
+      setCheckedKeys(orgChecks);
+      onChange({
+        appKeys: allAppChecked ? ['all'] : appKeys,
+        checkedKeys: orgChecks,
+        appCheckAll: allAppChecked,
+        orgCheckAll: false,
+        checkData: {
+          apps: appKeys,
+          orgs: orgChecks,
+        },
+      });
+    }
   };
 
+  // app全局授权
   var checkedAllApp = function checkedAllApp(e) {
-    var appKeys = [];
-
+    var appChecks = [];
     if (e.target.checked) {
-      appKeys = appList.map(function (item) {
+      setAllAppChecked(true);
+      appChecks = appList.map(function (item) {
         return item.value;
       });
-      setAppKeys(appKeys);
-    } else {
-      appKeys = [dataItem === null || dataItem === void 0 ? void 0 : dataItem.appCode];
-      setAppKeys(appKeys);
-    }
-
-    onChange &&
+      setAppKeys(appChecks);
       onChange({
-        appKeys: appKeys,
-        checkedKeys: checkedKeys,
+        appKeys: ['all'],
+        checkedKeys: allOrgChecked ? ['all'] : checkedKeys,
+        appCheckAll: true,
+        orgCheckAll: allOrgChecked,
+        checkData: {
+          apps: appChecks,
+          orgs: checkedKeys,
+        },
       });
+    } else {
+      setAllAppChecked(false);
+      var arr = appCodes.includes('all') ? allApp : appCodes;
+      appChecks = Array.from(new Set([].concat(_toConsumableArray(arr || []), [appCode])));
+      setAppKeys(appChecks);
+      onChange({
+        appKeys: appChecks,
+        checkedKeys: allOrgChecked ? ['all'] : checkedKeys,
+        appCheckAll: false,
+        orgCheckAll: allOrgChecked,
+        checkData: {
+          apps: appChecks,
+          orgs: checkedKeys,
+        },
+      });
+    }
   };
-
   return /*#__PURE__*/ _react.default.createElement(
     'div',
     {
@@ -415,14 +421,7 @@ var AssignModal = function AssignModal(props) {
         {
           className: 'menu-header',
         },
-        '\u6388\u6743\u53EF\u7528\u673A\u6784',
-      ),
-      /*#__PURE__*/ _react.default.createElement(
-        'div',
-        {
-          className: 'menu-header',
-        },
-        '\u673A\u6784\u5217\u8868',
+        '\u6388\u6743\u53EF\u7528\u673A\u6784\u5217\u8868',
         /*#__PURE__*/ _react.default.createElement(
           'div',
           {
@@ -435,7 +434,7 @@ var AssignModal = function AssignModal(props) {
               checked: allOrgChecked,
               disabled: disabled,
             },
-            '\u5168\u9009',
+            '\u5168\u90E8\u673A\u6784\u53EF\u7528',
           ),
         ),
       ),
@@ -449,9 +448,9 @@ var AssignModal = function AssignModal(props) {
           checkedKeys: checkedKeys,
           defaultExpandAll: true,
           onCheck: onCheck,
-          disabled: disabled,
+          disabled: true,
         },
-        loopTreeNodes(orgList),
+        loopTreeNodes(orgList, 0),
       ),
     ),
     /*#__PURE__*/ _react.default.createElement(
@@ -464,14 +463,7 @@ var AssignModal = function AssignModal(props) {
         {
           className: 'menu-header',
         },
-        '\u6388\u6743\u53EF\u7528\u6E20\u9053',
-      ),
-      /*#__PURE__*/ _react.default.createElement(
-        'div',
-        {
-          className: 'menu-header',
-        },
-        '\u6E20\u9053\u5217\u8868',
+        '\u6388\u6743\u53EF\u7528\u6E20\u9053\u5217\u8868',
         /*#__PURE__*/ _react.default.createElement(
           'div',
           {
@@ -484,7 +476,7 @@ var AssignModal = function AssignModal(props) {
               checked: allAppChecked,
               disabled: disabled,
             },
-            '\u5168\u9009',
+            '\u5168\u90E8\u6E20\u9053\u53EF\u7528',
           ),
         ),
       ),
@@ -496,13 +488,12 @@ var AssignModal = function AssignModal(props) {
         appList.map(function (item, index) {
           var isCheck =
             appKeys === null || appKeys === void 0 ? void 0 : appKeys.includes(item.value);
-          var isOwnAppCode =
-            (dataItem === null || dataItem === void 0 ? void 0 : dataItem.appCode) === item.value;
+          var isOwnAppCode = appCode === item.value;
           return /*#__PURE__*/ _react.default.createElement(
             _checkbox.default,
             {
               checked: isCheck,
-              disabled: disabled || isOwnAppCode,
+              disabled: disabled || isOwnAppCode || allAppChecked,
               onChange: assignApp,
               value: item.value,
               key: index,
@@ -525,6 +516,5 @@ var AssignModal = function AssignModal(props) {
     ),
   );
 };
-
 var _default = AssignModal;
 exports.default = _default;

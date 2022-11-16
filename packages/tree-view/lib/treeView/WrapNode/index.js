@@ -4,15 +4,11 @@ Object.defineProperty(exports, '__esModule', {
   value: true,
 });
 exports.default = void 0;
-
 var _react = _interopRequireDefault(require('react'));
-
 require('./index.less');
-
 function _interopRequireDefault(obj) {
   return obj && obj.__esModule ? obj : { default: obj };
 }
-
 function ownKeys(object, enumerableOnly) {
   var keys = Object.keys(object);
   if (Object.getOwnPropertySymbols) {
@@ -25,7 +21,6 @@ function ownKeys(object, enumerableOnly) {
   }
   return keys;
 }
-
 function _objectSpread(target) {
   for (var i = 1; i < arguments.length; i++) {
     var source = null != arguments[i] ? arguments[i] : {};
@@ -41,7 +36,6 @@ function _objectSpread(target) {
   }
   return target;
 }
-
 function _defineProperty(obj, key, value) {
   if (key in obj) {
     Object.defineProperty(obj, key, {
@@ -55,7 +49,6 @@ function _defineProperty(obj, key, value) {
   }
   return obj;
 }
-
 // 返回一个无状态的函数组件
 function WrapNode(WrappedComponent) {
   return function (props) {
@@ -66,7 +59,6 @@ function WrapNode(WrappedComponent) {
       minWidth = props.minWidth,
       minHeight = props.minHeight;
     var s = {};
-
     if (fixed) {
       s = {
         width: minWidth,
@@ -76,7 +68,6 @@ function WrapNode(WrappedComponent) {
         width: width,
       };
     }
-
     var style = _objectSpread(
       {
         position: 'absolute',
@@ -90,7 +81,6 @@ function WrapNode(WrappedComponent) {
       },
       s,
     );
-
     return /*#__PURE__*/ _react.default.createElement(
       'div',
       {
@@ -101,6 +91,5 @@ function WrapNode(WrappedComponent) {
     );
   };
 }
-
 var _default = WrapNode;
 exports.default = _default;
