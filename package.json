@@ -29,9 +29,9 @@
   },
   "dependencies": {
     "antd": "^3.26.20",
+    "react-sortablejs": "^1.5.1",
     "tntd": "^1.4.9",
-    "universal-cookie": "^4.0.4",
-    "react-sortablejs": "^1.5.1"
+    "universal-cookie": "^4.0.4"
   },
   "devDependencies": {
     "@testing-library/jest-dom": "^5.15.1",

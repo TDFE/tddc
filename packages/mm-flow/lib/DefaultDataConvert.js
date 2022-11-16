@@ -4,21 +4,14 @@ Object.defineProperty(exports, '__esModule', {
   value: true,
 });
 exports.default = void 0;
-
 require('antd/lib/message/style');
-
 var _message2 = _interopRequireDefault(require('antd/lib/message'));
-
 require('antd/lib/modal/style');
-
 var _modal = _interopRequireDefault(require('antd/lib/modal'));
-
 var _react = _interopRequireDefault(require('react'));
-
 function _interopRequireDefault(obj) {
   return obj && obj.__esModule ? obj : { default: obj };
 }
-
 function ownKeys(object, enumerableOnly) {
   var keys = Object.keys(object);
   if (Object.getOwnPropertySymbols) {
@@ -31,7 +24,6 @@ function ownKeys(object, enumerableOnly) {
   }
   return keys;
 }
-
 function _objectSpread(target) {
   for (var i = 1; i < arguments.length; i++) {
     var source = null != arguments[i] ? arguments[i] : {};
@@ -47,7 +39,6 @@ function _objectSpread(target) {
   }
   return target;
 }
-
 function _defineProperty(obj, key, value) {
   if (key in obj) {
     Object.defineProperty(obj, key, {
@@ -61,7 +52,6 @@ function _defineProperty(obj, key, value) {
   }
   return obj;
 }
-
 var DefaultConvert = {
   // 解析数据
   convert: function convert(data) {
@@ -131,7 +121,6 @@ var DefaultConvert = {
         incomingFields: [],
         outgoingFields: [],
       };
-
       switch (item.type) {
         case 'start':
           if (toLines.size < 1) {
@@ -145,7 +134,6 @@ var DefaultConvert = {
               ),
             );
           }
-
           if (nodesTypeMap['start']) {
             errorMsgList.push(
               /*#__PURE__*/ _react.default.createElement(
@@ -157,10 +145,8 @@ var DefaultConvert = {
               ),
             );
           }
-
           nodesTypeMap['start'] = true;
           break;
-
         case 'end':
           if (fromLines.size < 1) {
             errorMsgList.push(
@@ -173,13 +159,10 @@ var DefaultConvert = {
               ),
             );
           }
-
           nodesTypeMap['end'] = true;
           break;
-
         default:
       }
-
       res.flowNodeDefinitions.push(data);
     });
     res.flowLineDefinitions = lines.map(function (item) {
@@ -193,45 +176,35 @@ var DefaultConvert = {
         sourceNodeId: item.from,
         targetNodeId: item.to,
       };
-
       switch (fromNode.type) {
         case 'ExclusiveGateway':
           break;
-
         default:
           break;
       }
-
       return data;
     });
-
     if (!noMessage && errorMsgList.length > 0) {
       var errorMsgListMap = {};
       errorMsgList = errorMsgList.filter(function (item) {
         if (errorMsgListMap[item.props.children]) {
           return false;
         }
-
         errorMsgListMap[item.props.children] = true;
         return true;
       });
-
       _modal.default.warning({
         zIndex: 1100,
         title: '配置不合法，原因如下：',
         //
         content: /*#__PURE__*/ _react.default.createElement('div', null, errorMsgList),
       });
-
       return false;
     }
-
     if (!noMessage && res.flowNodeDefinitions.length === 0) {
       _message2.default.warn('配置不能为空');
-
       return false;
     }
-
     this.res = res;
     return res;
   },
