@@ -16,11 +16,12 @@ npm install @tddc/mm-flow --save
 ### 流在决策流/任务流/审批流中的使用
 
 ```jsx
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Button, message } from 'antd';
 import MMFlow from '@tddc/mm-flow';
 import DialogTest from './DialogTest';
 const MMFlowComponent = () => {
+  const mmFlow = useRef();
   const [saveLoading, setSaveLoading] = useState(false);
   const [auditedNodes, setAuditedNodes] = useState([
     {
@@ -32,14 +33,30 @@ const MMFlowComponent = () => {
       status: 'error',
     },
   ]);
+
   const save = () => {
     setSaveLoading(true);
+    setAuditedNodes([
+      {
+        uuid: '3e9bf4004ad911eda9df3f68e8b34c19',
+        status: 'success',
+      },
+      {
+        uuid: '3f8012704ad911eda9df3f68e8b34c19',
+        status: 'success',
+      },
+    ]);
+
     setTimeout(() => {
+      mmFlow.current.updateGraph(
+        '{"code":"23","flowLineDefinitions":[{"attributes":{},"fromPoint":"1","id":"415372e0-4ad9-11ed-a9df-3f68e8b34c19","sourceNodeId":"3e9bf4004ad911eda9df3f68e8b34c19","targetNodeId":"3f8012704ad911eda9df3f68e8b34c19","toPoint":"3"},{"attributes":{},"fromPoint":"1","id":"42afce90-4ad9-11ed-a9df-3f68e8b34c19","sourceNodeId":"3f8012704ad911eda9df3f68e8b34c19","targetNodeId":"404fbe804ad911eda9df3f68e8b34c19","toPoint":"2"}],"flowNodeDefinitions":[{"attributes":{},"id":"3e9bf4004ad911eda9df3f68e8b34c19","incomingFields":[],"name":"开始","nodeType":"StartFlowNode","outgoingFields":[],"x":"489","y":"-280"},{"attributes":{"code":"TREE22092811250675234","decisionType":"D_TREE","decisionName":"tree_index_yctest","decisionUuid":"TREE22092811250675234","version":11},"id":"3f8012704ad911eda9df3f68e8b34c19","incomingFields":[{"fieldName":"salaxyzb_d259lvdteo","fieldType":"index"}],"name":"tree_index_yctest","nodeType":"DecisionToolServiceNode","outgoingFields":[{"fieldName":"S_S_DETOOLRESULT","fieldType":"field","mappingName":"dealType"}],"x":"689","y":"-287"},{"attributes":{},"id":"404fbe804ad911eda9df3f68e8b34c19","incomingFields":[],"name":"结束","nodeType":"EndFlowNode","outgoingFields":[],"x":"981","y":"-287"}],"id":"5fa3cef2404d480b96734c2ffbe5785a","name":"232","version":1}',
+      );
       setSaveLoading(false);
     }, 400);
   };
+
   useEffect(() => {
-    setTimeout(() => {
+    setInterval(() => {
       setAuditedNodes([
         {
           uuid: '3e9bf4004ad911eda9df3f68e8b34c19',
@@ -51,10 +68,11 @@ const MMFlowComponent = () => {
         },
       ]);
     }, 1000);
-  }, []);
+  });
   return (
     <>
       <MMFlow
+        ref={mmFlow}
         className="test"
         // editorStyle={{
         //    style:{
@@ -138,7 +156,7 @@ const MMFlowComponent = () => {
             iconColor: '#8390DB',
           },
         ]}
-        type="view"
+        // type="view"
         operateGroup={[
           {
             name: '保存',
@@ -151,6 +169,7 @@ const MMFlowComponent = () => {
         dialogDom={[<DialogTest />]}
         showMiniMap={false}
         showLengend={true}
+        autoDiffAuditNodes={false}
         // commandAction={{
         //   fullscreen: ()=>{
         //     console.log("zzz")

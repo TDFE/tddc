@@ -1,4 +1,4 @@
-import React, { useRef, useEffect, useState } from 'react';
+import React, { useRef, useEffect, useState, useImperativeHandle, forwardRef } from 'react';
 import { Tooltip, message, Row } from 'antd';
 import MMEditor from 'mmeditor';
 import TopBar from './Content/TopBar';
@@ -9,7 +9,7 @@ import DialogHandle from './DialogHandle';
 import './index.less';
 
 export { sliceName };
-export default (props) => {
+export default forwardRef((props, ref) => {
   const editorDomRef = useRef();
   const editorRef = useRef();
   const dialogHandleRef = useRef();
@@ -33,8 +33,15 @@ export default (props) => {
     checkLineExtendFn,
     showLengend,
     LengendDom,
+    autoDiffAuditNodes = true,
   } = props;
   const previewMode = type === 'view';
+
+  const auditedNodesPre = useRef(auditedNodes);
+
+  useImperativeHandle(ref, () => ({
+    updateGraph: setGraphData,
+  }));
 
   const checkNewLine = (data, editor) => {
     const {
@@ -142,7 +149,19 @@ export default (props) => {
     if (editorRef.current && initReady) {
       setGraphData(graphData);
     }
-  }, [graphData, initReady, auditedNodes]);
+  }, [graphData, initReady]);
+
+  useEffect(() => {
+    if (
+      autoDiffAuditNodes &&
+      editorRef.current &&
+      initReady &&
+      JSON.stringify(auditedNodes) !== JSON.stringify(auditedNodesPre?.current)
+    ) {
+      setGraphData(graphData);
+      auditedNodesPre.current = auditedNodes;
+    }
+  }, [graphData, auditedNodes, autoDiffAuditNodes]);
 
   // 初始化编辑器事件
   const addEditorEvent = () => {
@@ -311,4 +330,4 @@ export default (props) => {
       })}
     </div>
   );
-};
+});

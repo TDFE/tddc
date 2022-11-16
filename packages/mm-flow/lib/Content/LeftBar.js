@@ -19,14 +19,20 @@ function _typeof(obj) {
     _typeof(obj)
   );
 }
+
 Object.defineProperty(exports, '__esModule', {
   value: true,
 });
 exports.default = void 0;
+
 require('antd/lib/tooltip/style');
+
 var _tooltip = _interopRequireDefault(require('antd/lib/tooltip'));
+
 var _react = _interopRequireWildcard(require('react'));
+
 require('./LeftBar.less');
+
 function _getRequireWildcardCache(nodeInterop) {
   if (typeof WeakMap !== 'function') return null;
   var cacheBabelInterop = new WeakMap();
@@ -35,6 +41,7 @@ function _getRequireWildcardCache(nodeInterop) {
     return nodeInterop ? cacheNodeInterop : cacheBabelInterop;
   })(nodeInterop);
 }
+
 function _interopRequireWildcard(obj, nodeInterop) {
   if (!nodeInterop && obj && obj.__esModule) {
     return obj;
@@ -64,9 +71,11 @@ function _interopRequireWildcard(obj, nodeInterop) {
   }
   return newObj;
 }
+
 function _interopRequireDefault(obj) {
   return obj && obj.__esModule ? obj : { default: obj };
 }
+
 function _slicedToArray(arr, i) {
   return (
     _arrayWithHoles(arr) ||
@@ -75,11 +84,13 @@ function _slicedToArray(arr, i) {
     _nonIterableRest()
   );
 }
+
 function _nonIterableRest() {
   throw new TypeError(
     'Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.',
   );
 }
+
 function _unsupportedIterableToArray(o, minLen) {
   if (!o) return;
   if (typeof o === 'string') return _arrayLikeToArray(o, minLen);
@@ -89,6 +100,7 @@ function _unsupportedIterableToArray(o, minLen) {
   if (n === 'Arguments' || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n))
     return _arrayLikeToArray(o, minLen);
 }
+
 function _arrayLikeToArray(arr, len) {
   if (len == null || len > arr.length) len = arr.length;
   for (var i = 0, arr2 = new Array(len); i < len; i++) {
@@ -96,6 +108,7 @@ function _arrayLikeToArray(arr, len) {
   }
   return arr2;
 }
+
 function _iterableToArrayLimit(arr, i) {
   var _i =
     arr == null
@@ -123,47 +136,50 @@ function _iterableToArrayLimit(arr, i) {
   }
   return _arr;
 }
+
 function _arrayWithHoles(arr) {
   if (Array.isArray(arr)) return arr;
 }
+
 var _default = function _default(props) {
   var _ref = props || {},
     onDrop = _ref.onDrop,
     flowNodesDict = _ref.flowNodesDict,
     showType = _ref.showType;
+
   var _useState = (0, _react.useState)(null),
     _useState2 = _slicedToArray(_useState, 2),
     dragItem = _useState2[0],
     setDargItem = _useState2[1];
+
   var _useState3 = (0, _react.useState)(-990),
     _useState4 = _slicedToArray(_useState3, 2),
     pageX = _useState4[0],
     setPageX = _useState4[1];
+
   var _useState5 = (0, _react.useState)(-990),
     _useState6 = _slicedToArray(_useState5, 2),
     pageY = _useState6[0],
     setPageY = _useState6[1];
+
   var _ref2 = dragItem || {},
     _ref2$size = _ref2.size,
-    size = _ref2$size === void 0 ? [] : _ref2$size;
+    size = _ref2$size === void 0 ? [] : _ref2$size; // mouseDown设置目标对象
 
-  // mouseDown设置目标对象
   var onDrag = function onDrag(item) {
     setDargItem(item);
     setPageX(-9990);
     setPageY(-9990);
-  };
+  }; // 开始移动
 
-  // 开始移动
   var mousemove = (0, _react.useCallback)(
     function (e) {
       setPageX(e.pageX);
       setPageY(e.pageY + (document.body.getBoundingClientRect().top || 0));
     },
     [dragItem],
-  );
+  ); // 释放
 
-  // 释放
   var mouseup = (0, _react.useCallback)(
     function (e) {
       // 有额外的drops事件用户自定义
@@ -173,9 +189,8 @@ var _default = function _default(props) {
       window.document.removeEventListener('mouseup', mouseup);
     },
     [dragItem],
-  );
+  ); // 有目标对象 监听事件
 
-  // 有目标对象 监听事件
   (0, _react.useEffect)(
     function () {
       if (dragItem) {
@@ -185,6 +200,7 @@ var _default = function _default(props) {
     },
     [dragItem],
   );
+
   var renderItems = function renderItems() {
     var ItemMap = [];
     flowNodesDict === null || flowNodesDict === void 0
@@ -193,6 +209,7 @@ var _default = function _default(props) {
           var nodeType = item.type || item.code;
           var lowNodeType = nodeType.toLowerCase();
           var shape = item.shape;
+
           if (['circle'].includes(shape) || ['开始', '结束'].includes(item.name)) {
             ItemMap.push({
               type: nodeType,
@@ -227,9 +244,11 @@ var _default = function _default(props) {
       if (showType === 'subflow' && ['SubDecisionFlowNode'].indexOf(item.type) > -1) {
         return null;
       }
+
       var _ref3 = item || {},
         type = _ref3.type,
         help = _ref3.help;
+
       return /*#__PURE__*/ _react.default.createElement(
         _tooltip.default,
         {
@@ -254,29 +273,36 @@ var _default = function _default(props) {
       );
     });
   };
+
   var getShapeClass = function getShapeClass(_ref4) {
     var type = _ref4.type,
       shape = _ref4.shape;
     var shapeClassName = shape ? 'flow-'.concat(shape) : '';
     var lowNodeType = type.toLowerCase();
+
     if (lowNodeType === null || lowNodeType === void 0 ? void 0 : lowNodeType.startsWith('start')) {
       shapeClassName += ' start';
     }
+
     if (lowNodeType === null || lowNodeType === void 0 ? void 0 : lowNodeType.startsWith('end')) {
       shapeClassName += ' end';
     }
+
     if (
       lowNodeType === null || lowNodeType === void 0 ? void 0 : lowNodeType.startsWith('exclusive')
     ) {
       shapeClassName += ' exclusive';
     }
+
     if (
       lowNodeType === null || lowNodeType === void 0 ? void 0 : lowNodeType.startsWith('parallel')
     ) {
       shapeClassName += ' parallel';
     }
+
     return shapeClassName;
   };
+
   var itemDom = function itemDom(item) {
     return /*#__PURE__*/ _react.default.createElement(
       _react.default.Fragment,
@@ -295,6 +321,7 @@ var _default = function _default(props) {
       item === null || item === void 0 ? void 0 : item.name,
     );
   };
+
   return /*#__PURE__*/ _react.default.createElement(
     'div',
     {
@@ -328,4 +355,5 @@ var _default = function _default(props) {
     ),
   );
 };
+
 exports.default = _default;
