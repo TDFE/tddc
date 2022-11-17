@@ -143,11 +143,13 @@ function _arrayWithHoles(arr) {
 
 var NoSearchDrapper = function NoSearchDrapper(_ref) {
   var options = _ref.options,
+    maxWidth = _ref.maxWidth,
     prefixCls = _ref.prefixCls,
     fieldNames = _ref.fieldNames,
     defaultValue = _ref.defaultValue,
     activeValueCells = _ref.activeValueCells,
     onChoosed = _ref.onChoosed,
+    customeRender = _ref.customeRender,
     level = _ref.level;
   var containerRef = (0, _react.useRef)(null);
   var wrapperRef = (0, _react.useRef)(null);
@@ -236,7 +238,10 @@ var NoSearchDrapper = function NoSearchDrapper(_ref) {
                       : '',
                     ' ',
                   ),
-                key: index,
+                key: data === null || data === void 0 ? void 0 : data[fieldNames.value],
+                style: {
+                  width: maxWidth || 'auto',
+                },
                 value: data === null || data === void 0 ? void 0 : data[fieldNames.value],
                 onClick: function onClick() {
                   if (!(data === null || data === void 0 ? void 0 : data.disabled)) {
@@ -248,18 +253,24 @@ var NoSearchDrapper = function NoSearchDrapper(_ref) {
                   }
                 },
               },
-              data === null || data === void 0 ? void 0 : data[fieldNames.label],
-              !isLast
-                ? /*#__PURE__*/ _react.default.createElement(
+              customeRender
+                ? customeRender(data, isLast)
+                : /*#__PURE__*/ _react.default.createElement(
                     'span',
-                    {
-                      className: ''.concat(prefixCls, '-menu-item-expand-icon'),
-                    },
-                    /*#__PURE__*/ _react.default.createElement(_icon.default, {
-                      type: 'right',
-                    }),
-                  )
-                : '',
+                    null,
+                    data === null || data === void 0 ? void 0 : data[fieldNames.label],
+                    !isLast
+                      ? /*#__PURE__*/ _react.default.createElement(
+                          'span',
+                          {
+                            className: ''.concat(prefixCls, '-menu-item-expand-icon'),
+                          },
+                          /*#__PURE__*/ _react.default.createElement(_icon.default, {
+                            type: 'right',
+                          }),
+                        )
+                      : '',
+                  ),
             );
           }),
     ),

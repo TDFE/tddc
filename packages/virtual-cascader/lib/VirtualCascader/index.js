@@ -33,6 +33,10 @@ var _SearchDrapper = _interopRequireDefault(require('./components/SearchDrapper'
 
 var _NoSearchDrapper = _interopRequireDefault(require('./components/NoSearchDrapper'));
 
+var _utils = require('./utils');
+
+require('antd/lib/cascader/style/index.css');
+
 require('./index.less');
 
 var _excluded = [
@@ -45,6 +49,7 @@ var _excluded = [
   'onChange',
   'showSearch',
   'notFoundContent',
+  'customeRender',
 ];
 
 function _interopRequireDefault(obj) {
@@ -247,6 +252,7 @@ var VirtualCascader = function VirtualCascader(_ref) {
     onChange = _ref.onChange,
     showSearch = _ref.showSearch,
     notFoundContent = _ref.notFoundContent,
+    customeRender = _ref.customeRender,
     rest = _objectWithoutProperties(_ref, _excluded);
 
   var ref = (0, _react.useRef)();
@@ -282,8 +288,19 @@ var VirtualCascader = function VirtualCascader(_ref) {
         }
 
         currentList = subOptions;
+        var maxWidth = void 0;
+        subOptions === null || subOptions === void 0
+          ? void 0
+          : subOptions.forEach(function (i) {
+              var width = (0, _utils.getTextWidth)(i[fieldNames.label]);
+
+              if (width > maxWidth) {
+                maxWidth = width;
+              }
+            });
         optionList.push({
           options: subOptions,
+          maxWidth: maxWidth,
         });
       };
 
@@ -327,13 +344,28 @@ var VirtualCascader = function VirtualCascader(_ref) {
     setActiveValueCells(tempActiveValueCells);
 
     if (isLast) {
-      onChange(tempActiveValueCells);
+      if (onChange) {
+        onChange(tempActiveValueCells);
+      } else {
+        defaultOnChange(tempActiveValueCells);
+      }
+
       ref.current.handlePopupVisibleChange(false);
     }
 
     if (changeOnSelect) {
-      onChange(tempActiveValueCells);
+      if (onChange) {
+        onChange(tempActiveValueCells);
+      } else {
+        defaultOnChange(tempActiveValueCells);
+      }
     }
+  };
+  /** 默认onChange事件 */
+
+  var defaultOnChange = function defaultOnChange(value) {
+    setActiveValueCells(value);
+    ref.current.handlePopupVisibleChange(false);
   };
   /** 模糊搜索的时候选中某一项 */
 
@@ -412,7 +444,8 @@ var VirtualCascader = function VirtualCascader(_ref) {
                 : optionColumns.map(function () {
                     var _ref2 =
                         arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {},
-                      options = _ref2.options;
+                      options = _ref2.options,
+                      maxWidth = _ref2.maxWidth;
 
                     var level = arguments.length > 1 ? arguments[1] : undefined;
                     return /*#__PURE__*/ _react.default.createElement(
@@ -423,6 +456,7 @@ var VirtualCascader = function VirtualCascader(_ref) {
                       },
                       /*#__PURE__*/ _react.default.createElement(_NoSearchDrapper.default, {
                         options: options,
+                        maxWidth: maxWidth,
                         prefixCls: prefixCls,
                         fieldNames: fieldNames,
                         defaultValue:
@@ -433,6 +467,7 @@ var VirtualCascader = function VirtualCascader(_ref) {
                         activeValueCells: activeValueCells,
                         level: level,
                         onChoosed: handleClick,
+                        customeRender: customeRender,
                       }),
                     );
                   }),
@@ -451,7 +486,7 @@ var VirtualCascader = function VirtualCascader(_ref) {
       notFoundContent: notFoundContent,
       ref: ref,
       value: value,
-      onChange: onChange,
+      onChange: onChange || defaultOnChange,
       defaultValue: defaultValue,
       options: options,
       dropdownRender: handleDropdownRender,

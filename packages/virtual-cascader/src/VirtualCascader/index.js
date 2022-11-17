@@ -3,12 +3,14 @@
  * @Author: 郑泳健
  * @Date: 2022-11-14 15:18:00
  * @LastEditors: 郑泳健
- * @LastEditTime: 2022-11-16 15:04:54
+ * @LastEditTime: 2022-11-17 14:20:50
  */
 import React, { memo, useState, useMemo, useRef, useEffect } from 'react';
 import AntCascader from './components/AntCascader';
 import SearchDrapper from './components/SearchDrapper';
 import NoSearchDrapper from './components/NoSearchDrapper';
+import { getTextWidth } from './utils';
+import 'antd/lib/cascader/style/index.css';
 import './index.less';
 
 const VirtualCascader = ({
@@ -21,6 +23,7 @@ const VirtualCascader = ({
   onChange,
   showSearch,
   notFoundContent,
+  customeRender,
   ...rest
 }) => {
   const ref = useRef();
@@ -44,7 +47,15 @@ const VirtualCascader = ({
       }
 
       currentList = subOptions;
-      optionList.push({ options: subOptions });
+      let maxWidth;
+
+      subOptions?.forEach((i) => {
+        const width = getTextWidth(i[fieldNames.label]);
+        if (width > maxWidth) {
+          maxWidth = width;
+        }
+      });
+      optionList.push({ options: subOptions, maxWidth });
     }
 
     return optionList;
@@ -72,13 +83,28 @@ const VirtualCascader = ({
 
     setActiveValueCells(tempActiveValueCells);
     if (isLast) {
-      onChange(tempActiveValueCells);
+      if (onChange) {
+        onChange(tempActiveValueCells);
+      } else {
+        defaultOnChange(tempActiveValueCells);
+      }
+
       ref.current.handlePopupVisibleChange(false);
     }
 
     if (changeOnSelect) {
-      onChange(tempActiveValueCells);
+      if (onChange) {
+        onChange(tempActiveValueCells);
+      } else {
+        defaultOnChange(tempActiveValueCells);
+      }
     }
+  };
+
+  /** 默认onChange事件 */
+  const defaultOnChange = (value) => {
+    setActiveValueCells(value);
+    ref.current.handlePopupVisibleChange(false);
   };
 
   /** 模糊搜索的时候选中某一项 */
@@ -123,18 +149,20 @@ const VirtualCascader = ({
             />
           ) : (
             <div>
-              {optionColumns?.map(({ options } = {}, level) => {
+              {optionColumns?.map(({ options, maxWidth } = {}, level) => {
                 return (
                   <div key={options} className={`${prefixCls}-menu`}>
                     <NoSearchDrapper
                       {...{
                         options,
+                        maxWidth,
                         prefixCls,
                         fieldNames,
                         defaultValue: defaultValue?.[level] || value?.[level],
                         activeValueCells,
                         level,
                         onChoosed: handleClick,
+                        customeRender,
                       }}
                     />
                   </div>
@@ -157,7 +185,7 @@ const VirtualCascader = ({
       notFoundContent={notFoundContent}
       ref={ref}
       value={value}
-      onChange={onChange}
+      onChange={onChange || defaultOnChange}
       defaultValue={defaultValue}
       options={options}
       dropdownRender={handleDropdownRender}

@@ -3,7 +3,7 @@
  * @Author: 郑泳健
  * @Date: 2022-11-15 17:32:40
  * @LastEditors: 郑泳健
- * @LastEditTime: 2022-11-16 14:50:27
+ * @LastEditTime: 2022-11-17 14:21:41
  */
 import React, { useRef, memo, useEffect, useState } from 'react';
 import { Icon } from 'antd';
@@ -11,11 +11,13 @@ import useVirtualList from '../hooks/useVirtualList';
 
 const NoSearchDrapper = ({
   options,
+  maxWidth,
   prefixCls,
   fieldNames,
   defaultValue,
   activeValueCells,
   onChoosed,
+  customeRender,
   level,
 }) => {
   const containerRef = useRef(null);
@@ -61,7 +63,8 @@ const NoSearchDrapper = ({
                   ? `${prefixCls}-menu-item-active`
                   : ''
               } `}
-              key={index}
+              key={data?.[fieldNames.value]}
+              style={{ width: maxWidth || 'auto' }}
               value={data?.[fieldNames.value]}
               onClick={() => {
                 if (!data?.disabled) {
@@ -69,13 +72,19 @@ const NoSearchDrapper = ({
                 }
               }}
             >
-              {data?.[fieldNames.label]}
-              {!isLast ? (
-                <span className={`${prefixCls}-menu-item-expand-icon`}>
-                  <Icon type="right" />
-                </span>
+              {customeRender ? (
+                customeRender(data, isLast)
               ) : (
-                ''
+                <span>
+                  {data?.[fieldNames.label]}
+                  {!isLast ? (
+                    <span className={`${prefixCls}-menu-item-expand-icon`}>
+                      <Icon type="right" />
+                    </span>
+                  ) : (
+                    ''
+                  )}
+                </span>
               )}
             </div>
           );
