@@ -1,6 +1,6 @@
 {
   "name": "@tddc/virtual-cascader",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "基于antd3级联的虚拟滚动",
   "author": "zyj",
   "license": "ISC",
