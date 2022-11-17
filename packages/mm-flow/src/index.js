@@ -10,6 +10,7 @@ import './index.less';
 
 export { sliceName };
 export default forwardRef((props, ref) => {
+  const editorWrapRef = useRef();
   const editorDomRef = useRef();
   const editorRef = useRef();
   const dialogHandleRef = useRef();
@@ -78,9 +79,9 @@ export default forwardRef((props, ref) => {
 
   useEffect(() => {
     const resizeBound = () => {
-      const { height: jobEditorHei, width: jobEditorWid } = document
-        .querySelector('.job-editor')
-        .getBoundingClientRect();
+      const { height: jobEditorHei, width: jobEditorWid } =
+        (editorWrapRef && editorWrapRef.current && editorWrapRef.current.getBoundingClientRect()) ||
+        {};
       if (jobEditorHei && editorDomRef) {
         editorDomRef.current.style.height = jobEditorHei - (!previewMode ? 48 : 0) + 'px';
         editorDomRef.current.style.width = jobEditorWid - (!previewMode ? 140 : 0) + 'px';
@@ -277,7 +278,7 @@ export default forwardRef((props, ref) => {
   };
 
   return (
-    <div className={`job-editor ${className || ''}`} {...editorStyle}>
+    <div ref={editorWrapRef} className={`job-editor ${className || ''}`} {...editorStyle}>
       {!previewMode && initReady && editorRef?.current && (
         <LeftBar {...props} editor={editorRef.current} onDrop={onDrop} />
       )}

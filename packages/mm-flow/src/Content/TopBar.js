@@ -7,17 +7,19 @@ export const toolBarTypeNameMap = {
   undo: '撤销',
   'zoom-in': '放大',
   'zoom-out': '缩小',
-  fullscreen: '最大化',
   delete: '删除',
   'deployment-unit': '排序',
   copy: '拷贝规则流',
-  autoFit: '适应画布',
+  reset: '原比例',
+  'auto-fit': '适应画布',
+  fullscreen: '最大化',
 };
 export default (props) => {
   const { editor, previewMode, operateGroup, DataConvert, commandAction } = props || {};
   const [canRedo, setCanRedo] = useState(false);
   const [canUndo, setCanUndo] = useState(false);
   const [canDelete, setCanDelete] = useState(false);
+  const [load, setLoad] = useState({});
   const curEditor = useRef(editor);
   const {
     schema: { history },
@@ -140,7 +142,14 @@ export default (props) => {
         return () => {
           controller.zoom(0.95);
         };
-      case 'autoFit':
+      case 'reset':
+        return () => {
+          const transform = paper.transform();
+          const { scalex } = transform.localMatrix.split();
+          controller.zoom(1 / scalex);
+          controller.autoFit(true, true, true);
+        };
+      case 'auto-fit':
         return () => {
           controller.autoFit(true, true, true);
         };
@@ -189,8 +198,10 @@ export default (props) => {
             className={`${getClassName(type)} command-item`}
             onClick={click || clickEvent(type)}
           >
-            {!['autoFit'].includes(type) && <Icon type={type} />}
-            {type === 'autoFit' && <span className="edit-flow-icon-auto-fit" />}
+            {!['auto-fit', 'reset'].includes(type) && <Icon type={type} />}
+            {['auto-fit', 'reset'].includes(type) && (
+              <span className={`flow-iconfont icon-${type}`} />
+            )}
             {toolBarTypeNameMap[type]}
           </span>,
         );
@@ -215,9 +226,9 @@ export default (props) => {
 
   let commandActions = ['zoom-out', 'zoom-in'];
   if (!previewMode) {
-    commandActions = commandActions.concat(['autoFit', 'redo', 'undo', 'delete']);
+    commandActions = commandActions.concat(['reset', 'auto-fit', 'redo', 'undo', 'delete']);
   } else {
-    commandActions = commandActions.concat(['autoFit']);
+    commandActions = commandActions.concat(['reset', 'auto-fit']);
     if (commandAction && commandAction['fullscreen']) {
       commandActions = commandActions.concat(['fullscreen']);
     }
@@ -229,12 +240,13 @@ export default (props) => {
       {previewMode && (
         <Button.Group className="flow-btn-wrap" size="small">
           {commandActions?.map((type) => {
-            console.log('type', type);
             return (
               <Tooltip title={toolBarTypeNameMap[type]} key={type}>
                 <Button onClick={clickEvent(type)}>
-                  {!['autoFit'].includes(type) && <Icon type={type} />}
-                  {type === 'autoFit' && <span className="flow-icon-auto-fit" />}
+                  {!['auto-fit', 'reset'].includes(type) && <Icon type={type} />}
+                  {['auto-fit', 'reset'].includes(type) && (
+                    <span className={`flow-iconfont icon-${type}`} />
+                  )}
                 </Button>
               </Tooltip>
             );
@@ -249,7 +261,7 @@ export default (props) => {
               return (
                 <Button
                   key={v?.name}
-                  loading={v?.loading}
+                  loading={load[v?.key]}
                   type={v?.type}
                   onClick={() => {
                     let convertFun = DefaultDataConvert;
@@ -258,7 +270,21 @@ export default (props) => {
                     }
                     const { schema } = editor || {};
                     const data = convertFun.format(schema.getData(), editor);
-                    v?.click(data);
+                    if (v?.clickType === 'async') {
+                      setLoad({
+                        ...load,
+                        [v?.key]: true,
+                      });
+                    }
+                    const vFun = v?.click(data);
+                    if (v?.clickType === 'async') {
+                      vFun?.finally(() => {
+                        setLoad({
+                          ...load,
+                          [v?.key]: false,
+                        });
+                      });
+                    }
                   }}
                 >
                   {v?.name}

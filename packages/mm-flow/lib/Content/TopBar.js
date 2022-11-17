@@ -78,6 +78,49 @@ function _interopRequireDefault(obj) {
   return obj && obj.__esModule ? obj : { default: obj };
 }
 
+function ownKeys(object, enumerableOnly) {
+  var keys = Object.keys(object);
+  if (Object.getOwnPropertySymbols) {
+    var symbols = Object.getOwnPropertySymbols(object);
+    enumerableOnly &&
+      (symbols = symbols.filter(function (sym) {
+        return Object.getOwnPropertyDescriptor(object, sym).enumerable;
+      })),
+      keys.push.apply(keys, symbols);
+  }
+  return keys;
+}
+
+function _objectSpread(target) {
+  for (var i = 1; i < arguments.length; i++) {
+    var source = null != arguments[i] ? arguments[i] : {};
+    i % 2
+      ? ownKeys(Object(source), !0).forEach(function (key) {
+          _defineProperty(target, key, source[key]);
+        })
+      : Object.getOwnPropertyDescriptors
+      ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source))
+      : ownKeys(Object(source)).forEach(function (key) {
+          Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key));
+        });
+  }
+  return target;
+}
+
+function _defineProperty(obj, key, value) {
+  if (key in obj) {
+    Object.defineProperty(obj, key, {
+      value: value,
+      enumerable: true,
+      configurable: true,
+      writable: true,
+    });
+  } else {
+    obj[key] = value;
+  }
+  return obj;
+}
+
 function _typeof(obj) {
   '@babel/helpers - typeof';
   return (
@@ -168,11 +211,12 @@ var toolBarTypeNameMap = {
   undo: '撤销',
   'zoom-in': '放大',
   'zoom-out': '缩小',
-  fullscreen: '最大化',
   delete: '删除',
   'deployment-unit': '排序',
   copy: '拷贝规则流',
-  autoFit: '适应画布',
+  reset: '原比例',
+  'auto-fit': '适应画布',
+  fullscreen: '最大化',
 };
 exports.toolBarTypeNameMap = toolBarTypeNameMap;
 
@@ -200,6 +244,11 @@ var _default = function _default(props) {
     _useState6 = _slicedToArray(_useState5, 2),
     canDelete = _useState6[0],
     setCanDelete = _useState6[1];
+
+  var _useState7 = (0, _react.useState)({}),
+    _useState8 = _slicedToArray(_useState7, 2),
+    load = _useState8[0],
+    setLoad = _useState8[1];
 
   var curEditor = (0, _react.useRef)(editor);
 
@@ -351,7 +400,18 @@ var _default = function _default(props) {
           controller.zoom(0.95);
         };
 
-      case 'autoFit':
+      case 'reset':
+        return function () {
+          var transform = paper.transform();
+
+          var _transform$localMatri = transform.localMatrix.split(),
+            scalex = _transform$localMatri.scalex;
+
+          controller.zoom(1 / scalex);
+          controller.autoFit(true, true, true);
+        };
+
+      case 'auto-fit':
         return function () {
           controller.autoFit(true, true, true);
         };
@@ -416,13 +476,13 @@ var _default = function _default(props) {
                   className: ''.concat(getClassName(type), ' command-item'),
                   onClick: click || clickEvent(type),
                 },
-                !['autoFit'].includes(type) &&
+                !['auto-fit', 'reset'].includes(type) &&
                   /*#__PURE__*/ _react.default.createElement(_icon.default, {
                     type: type,
                   }),
-                type === 'autoFit' &&
+                ['auto-fit', 'reset'].includes(type) &&
                   /*#__PURE__*/ _react.default.createElement('span', {
-                    className: 'edit-flow-icon-auto-fit',
+                    className: 'flow-iconfont icon-'.concat(type),
                   }),
                 toolBarTypeNameMap[type],
               ),
@@ -478,9 +538,9 @@ var _default = function _default(props) {
   var commandActions = ['zoom-out', 'zoom-in'];
 
   if (!previewMode) {
-    commandActions = commandActions.concat(['autoFit', 'redo', 'undo', 'delete']);
+    commandActions = commandActions.concat(['reset', 'auto-fit', 'redo', 'undo', 'delete']);
   } else {
-    commandActions = commandActions.concat(['autoFit']);
+    commandActions = commandActions.concat(['reset', 'auto-fit']);
 
     if (commandAction && commandAction['fullscreen']) {
       commandActions = commandActions.concat(['fullscreen']);
@@ -501,7 +561,6 @@ var _default = function _default(props) {
         (_commandActions = commandActions) === null || _commandActions === void 0
           ? void 0
           : _commandActions.map(function (type) {
-              console.log('type', type);
               return /*#__PURE__*/ _react.default.createElement(
                 _tooltip.default,
                 {
@@ -513,13 +572,13 @@ var _default = function _default(props) {
                   {
                     onClick: clickEvent(type),
                   },
-                  !['autoFit'].includes(type) &&
+                  !['auto-fit', 'reset'].includes(type) &&
                     /*#__PURE__*/ _react.default.createElement(_icon.default, {
                       type: type,
                     }),
-                  type === 'autoFit' &&
+                  ['auto-fit', 'reset'].includes(type) &&
                     /*#__PURE__*/ _react.default.createElement('span', {
-                      className: 'flow-icon-auto-fit',
+                      className: 'flow-iconfont icon-'.concat(type),
                     }),
                 ),
               );
@@ -547,7 +606,7 @@ var _default = function _default(props) {
                   _button.default,
                   {
                     key: v === null || v === void 0 ? void 0 : v.name,
-                    loading: v === null || v === void 0 ? void 0 : v.loading,
+                    loading: load[v === null || v === void 0 ? void 0 : v.key],
                     type: v === null || v === void 0 ? void 0 : v.type,
                     onClick: function onClick() {
                       var convertFun = _DefaultDataConvert.default;
@@ -560,7 +619,36 @@ var _default = function _default(props) {
                         schema = _ref5.schema;
 
                       var data = convertFun.format(schema.getData(), editor);
-                      v === null || v === void 0 ? void 0 : v.click(data);
+
+                      if ((v === null || v === void 0 ? void 0 : v.clickType) === 'async') {
+                        setLoad(
+                          _objectSpread(
+                            _objectSpread({}, load),
+                            {},
+                            _defineProperty({}, v === null || v === void 0 ? void 0 : v.key, true),
+                          ),
+                        );
+                      }
+
+                      var vFun = v === null || v === void 0 ? void 0 : v.click(data);
+
+                      if ((v === null || v === void 0 ? void 0 : v.clickType) === 'async') {
+                        vFun === null || vFun === void 0
+                          ? void 0
+                          : vFun.finally(function () {
+                              setLoad(
+                                _objectSpread(
+                                  _objectSpread({}, load),
+                                  {},
+                                  _defineProperty(
+                                    {},
+                                    v === null || v === void 0 ? void 0 : v.key,
+                                    false,
+                                  ),
+                                ),
+                              );
+                            });
+                      }
                     },
                   },
                   v === null || v === void 0 ? void 0 : v.name,

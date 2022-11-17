@@ -691,6 +691,7 @@ function _arrayWithHoles(arr) {
 var _default = /*#__PURE__*/ (0, _react.forwardRef)(function (props, ref) {
   var _toolTipInfo$nowTextN;
 
+  var editorWrapRef = (0, _react.useRef)();
   var editorDomRef = (0, _react.useRef)();
   var editorRef = (0, _react.useRef)();
   var dialogHandleRef = (0, _react.useRef)();
@@ -783,9 +784,13 @@ var _default = /*#__PURE__*/ (0, _react.forwardRef)(function (props, ref) {
 
   (0, _react.useEffect)(function () {
     var resizeBound = function resizeBound() {
-      var _document$querySelect = document.querySelector('.job-editor').getBoundingClientRect(),
-        jobEditorHei = _document$querySelect.height,
-        jobEditorWid = _document$querySelect.width;
+      var _ref3 =
+          (editorWrapRef &&
+            editorWrapRef.current &&
+            editorWrapRef.current.getBoundingClientRect()) ||
+          {},
+        jobEditorHei = _ref3.height,
+        jobEditorWid = _ref3.width;
 
       if (jobEditorHei && editorDomRef) {
         editorDomRef.current.style.height = jobEditorHei - (!previewMode ? 48 : 0) + 'px';
@@ -798,7 +803,7 @@ var _default = /*#__PURE__*/ (0, _react.forwardRef)(function (props, ref) {
     };
 
     var init = /*#__PURE__*/ (function () {
-      var _ref3 = _asyncToGenerator(
+      var _ref4 = _asyncToGenerator(
         /*#__PURE__*/ _regeneratorRuntime().mark(function _callee() {
           return _regeneratorRuntime().wrap(function _callee$(_context) {
             while (1) {
@@ -842,7 +847,7 @@ var _default = /*#__PURE__*/ (0, _react.forwardRef)(function (props, ref) {
       );
 
       return function init() {
-        return _ref3.apply(this, arguments);
+        return _ref4.apply(this, arguments);
       };
     })();
 
@@ -861,7 +866,7 @@ var _default = /*#__PURE__*/ (0, _react.forwardRef)(function (props, ref) {
   }, []);
 
   var setGraphData = /*#__PURE__*/ (function () {
-    var _ref4 = _asyncToGenerator(
+    var _ref5 = _asyncToGenerator(
       /*#__PURE__*/ _regeneratorRuntime().mark(function _callee2(data) {
         var _convertFun, dataFormatted, convertFun;
 
@@ -919,7 +924,7 @@ var _default = /*#__PURE__*/ (0, _react.forwardRef)(function (props, ref) {
     );
 
     return function setGraphData(_x) {
-      return _ref4.apply(this, arguments);
+      return _ref5.apply(this, arguments);
     };
   })();
 
@@ -956,10 +961,10 @@ var _default = /*#__PURE__*/ (0, _react.forwardRef)(function (props, ref) {
 
     editorRef === null || editorRef === void 0
       ? void 0
-      : editorRef.current.graph.on('node:click', function (_ref5) {
+      : editorRef.current.graph.on('node:click', function (_ref6) {
           var _document$getElements, _document$getElements2;
 
-          var node = _ref5.node;
+          var node = _ref6.node;
           (_document$getElements = document.getElementsByClassName('lb-workflow-header')[0]) ===
             null || _document$getElements === void 0
             ? void 0
@@ -987,8 +992,8 @@ var _default = /*#__PURE__*/ (0, _react.forwardRef)(function (props, ref) {
 
     editorRef === null || editorRef === void 0
       ? void 0
-      : editorRef.current.graph.on('node:mouseenter', function (_ref6) {
-          var node = _ref6.node;
+      : editorRef.current.graph.on('node:mouseenter', function (_ref7) {
+          var node = _ref7.node;
           var bbox = node.node.getBoundingClientRect();
           setToolTipInfo({
             nowTextNode: toolTipNameHandle ? toolTipNameHandle(node.data) : node.data,
@@ -1011,11 +1016,11 @@ var _default = /*#__PURE__*/ (0, _react.forwardRef)(function (props, ref) {
   }; // 动画效果
 
   var runFlow = /*#__PURE__*/ (function () {
-    var _ref7 = _asyncToGenerator(
+    var _ref8 = _asyncToGenerator(
       /*#__PURE__*/ _regeneratorRuntime().mark(function _callee3() {
-        var _ref8,
+        var _ref9,
           graph,
-          _ref9,
+          _ref10,
           nodes,
           lines,
           hasAuditedNodeUuids,
@@ -1039,17 +1044,17 @@ var _default = /*#__PURE__*/ (0, _react.forwardRef)(function (props, ref) {
                 return _context3.abrupt('return');
 
               case 2:
-                (_ref8 =
+                (_ref9 =
                   (editorRef === null || editorRef === void 0 ? void 0 : editorRef.current) || {}),
-                  (graph = _ref8.graph);
-                (_ref9 = graph || {}), (nodes = _ref9.node.nodes), (lines = _ref9.line.lines);
+                  (graph = _ref9.graph);
+                (_ref10 = graph || {}), (nodes = _ref10.node.nodes), (lines = _ref10.line.lines);
                 (hasAuditedNodeUuids = []), (auditedLine = []);
                 auditedNodes.forEach(function (node) {
                   hasAuditedNodeUuids.push(node === null || node === void 0 ? void 0 : node.uuid);
                 });
                 auditedNodes.forEach(function (hasAudited) {
-                  var _ref10 = hasAudited || {},
-                    uuid = _ref10.uuid;
+                  var _ref11 = hasAudited || {},
+                    uuid = _ref11.uuid;
 
                   var status = 'instance '.concat(hasAudited.status || '');
                   Object.values(nodes).forEach(function (node) {
@@ -1100,7 +1105,7 @@ var _default = /*#__PURE__*/ (0, _react.forwardRef)(function (props, ref) {
     );
 
     return function runFlow() {
-      return _ref7.apply(this, arguments);
+      return _ref8.apply(this, arguments);
     };
   })(); // 目标放置
 
@@ -1118,9 +1123,9 @@ var _default = /*#__PURE__*/ (0, _react.forwardRef)(function (props, ref) {
       (item === null || item === void 0 ? void 0 : item.initName) ||
       (item === null || item === void 0 ? void 0 : item.name);
 
-    var _ref11 = item || {},
-      _ref11$size = _ref11.size,
-      size = _ref11$size === void 0 ? [] : _ref11$size;
+    var _ref12 = item || {},
+      _ref12$size = _ref12.size,
+      size = _ref12$size === void 0 ? [] : _ref12$size;
 
     var transform =
       editorRef === null || editorRef === void 0 ? void 0 : editorRef.current.paper.transform();
@@ -1148,6 +1153,7 @@ var _default = /*#__PURE__*/ (0, _react.forwardRef)(function (props, ref) {
     'div',
     _extends(
       {
+        ref: editorWrapRef,
         className: 'job-editor '.concat(className || ''),
       },
       editorStyle,
