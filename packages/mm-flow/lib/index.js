@@ -691,6 +691,7 @@ function _arrayWithHoles(arr) {
 var _default = /*#__PURE__*/ (0, _react.forwardRef)(function (props, ref) {
   var _toolTipInfo$nowTextN;
 
+  var editorWrapRef = (0, _react.useRef)();
   var editorDomRef = (0, _react.useRef)();
   var editorRef = (0, _react.useRef)();
   var dialogHandleRef = (0, _react.useRef)();
@@ -783,9 +784,17 @@ var _default = /*#__PURE__*/ (0, _react.forwardRef)(function (props, ref) {
 
   (0, _react.useEffect)(function () {
     var resizeBound = function resizeBound() {
-      var _document$querySelect = document.querySelector('.job-editor').getBoundingClientRect(),
-        jobEditorHei = _document$querySelect.height,
-        jobEditorWid = _document$querySelect.width;
+      var _editorWrapRef$curren2;
+
+      var _editorWrapRef$curren =
+          editorWrapRef === null || editorWrapRef === void 0
+            ? void 0
+            : (_editorWrapRef$curren2 = editorWrapRef.current) === null ||
+              _editorWrapRef$curren2 === void 0
+            ? void 0
+            : _editorWrapRef$curren2.getBoundingClientRect(),
+        jobEditorHei = _editorWrapRef$curren.height,
+        jobEditorWid = _editorWrapRef$curren.width;
 
       if (jobEditorHei && editorDomRef) {
         editorDomRef.current.style.height = jobEditorHei - (!previewMode ? 48 : 0) + 'px';
@@ -1148,6 +1157,7 @@ var _default = /*#__PURE__*/ (0, _react.forwardRef)(function (props, ref) {
     'div',
     _extends(
       {
+        ref: editorWrapRef,
         className: 'job-editor '.concat(className || ''),
       },
       editorStyle,

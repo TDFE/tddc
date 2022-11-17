@@ -173,7 +173,7 @@ var toolBarTypeNameMap = {
   copy: '拷贝规则流',
   reset: '原比例',
   'auto-fit': '适应画布',
-  'full-screen': '最大化',
+  fullscreen: '最大化',
 };
 exports.toolBarTypeNameMap = toolBarTypeNameMap;
 
@@ -368,7 +368,7 @@ var _default = function _default(props) {
           controller.autoFit(true, true, true);
         };
 
-      case 'full-screen':
+      case 'fullscreen':
         return commandAction['fullscreen'] || void 0;
 
       case 'delete':

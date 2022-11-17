@@ -30,7 +30,7 @@ const MMFlowComponent = () => {
     },
     {
       uuid: '3f8012704ad911eda9df3f68e8b34c19',
-      status: 'error',
+      status: 'fail',
     },
   ]);
 
