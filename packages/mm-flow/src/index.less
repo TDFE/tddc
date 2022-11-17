@@ -96,7 +96,8 @@
       }
       .mm-node {
         position: relative;
-        &.error {
+        &.error,
+        &.fail {
           .flow-icon-node {
             fill: #fff;
             stroke: red;
@@ -132,7 +133,8 @@
             background-image: url(./Images/success.svg);
           }
         }
-        &.fail {
+        &.fail,
+        &.error {
           .task-status {
             background-image: url(./Images/fail.svg);
           }
