@@ -19,6 +19,7 @@ export default (props) => {
   const [canRedo, setCanRedo] = useState(false);
   const [canUndo, setCanUndo] = useState(false);
   const [canDelete, setCanDelete] = useState(false);
+  const [load, setLoad] = useState({});
   const curEditor = useRef(editor);
   const {
     schema: { history },
@@ -260,7 +261,7 @@ export default (props) => {
               return (
                 <Button
                   key={v?.name}
-                  loading={v?.loading}
+                  loading={load[v?.key]}
                   type={v?.type}
                   onClick={() => {
                     let convertFun = DefaultDataConvert;
@@ -269,7 +270,21 @@ export default (props) => {
                     }
                     const { schema } = editor || {};
                     const data = convertFun.format(schema.getData(), editor);
-                    v?.click(data);
+                    if (v?.clickType === 'async') {
+                      setLoad({
+                        ...load,
+                        [v?.key]: true,
+                      });
+                    }
+                    const vFun = v?.click(data);
+                    if (v?.clickType === 'async') {
+                      vFun?.finally(() => {
+                        setLoad({
+                          ...load,
+                          [v?.key]: false,
+                        });
+                      });
+                    }
                   }}
                 >
                   {v?.name}

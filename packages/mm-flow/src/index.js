@@ -80,7 +80,8 @@ export default forwardRef((props, ref) => {
   useEffect(() => {
     const resizeBound = () => {
       const { height: jobEditorHei, width: jobEditorWid } =
-        editorWrapRef?.current?.getBoundingClientRect();
+        (editorWrapRef && editorWrapRef.current && editorWrapRef.current.getBoundingClientRect()) ||
+        {};
       if (jobEditorHei && editorDomRef) {
         editorDomRef.current.style.height = jobEditorHei - (!previewMode ? 48 : 0) + 'px';
         editorDomRef.current.style.width = jobEditorWid - (!previewMode ? 140 : 0) + 'px';
