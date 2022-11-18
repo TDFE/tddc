@@ -213,8 +213,7 @@ var NoSearchDrapper = function NoSearchDrapper(_ref) {
         ? void 0
         : list.map(function () {
             var _ref2 = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {},
-              data = _ref2.data,
-              index = _ref2.index;
+              data = _ref2.data;
 
             var isLast =
               !Array.isArray(
@@ -239,9 +238,9 @@ var NoSearchDrapper = function NoSearchDrapper(_ref) {
                     '\n               ',
                   )
                   .concat(
-                    index !== 0
-                      ? ''.concat($prefixCls, '-not-fist-level')
-                      : ''.concat($prefixCls, '-fist-level'),
+                    level !== 0
+                      ? ''.concat(prefixCls, '-not-fist-level')
+                      : ''.concat(prefixCls, '-fist-level'),
                     '\n              ',
                   ),
                 key: data === null || data === void 0 ? void 0 : data[fieldNames.value],
@@ -260,7 +259,7 @@ var NoSearchDrapper = function NoSearchDrapper(_ref) {
                 },
               },
               customRender
-                ? customRender(data, isLast, index)
+                ? customRender(data, isLast, level)
                 : /*#__PURE__*/ _react.default.createElement(
                     'span',
                     null,

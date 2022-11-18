@@ -3,7 +3,7 @@
  * @Author: 郑泳健
  * @Date: 2022-11-15 17:32:40
  * @LastEditors: 郑泳健
- * @LastEditTime: 2022-11-18 10:27:18
+ * @LastEditTime: 2022-11-18 10:54:30
  */
 import React, { useRef, memo, useEffect, useState } from 'react';
 import { Icon } from 'antd';
@@ -51,7 +51,7 @@ const NoSearchDrapper = ({
   return (
     <div ref={containerRef} style={{ height: 180, overflow: 'auto' }}>
       <div ref={wrapperRef}>
-        {list?.map(({ data, index } = {}) => {
+        {list?.map(({ data } = {}) => {
           const isLast =
             !Array.isArray(data?.[fieldNames.children]) || !data[fieldNames.children].length;
           return (
@@ -66,7 +66,7 @@ const NoSearchDrapper = ({
                    ? `${prefixCls}-menu-item-active`
                    : ''
                }
-               ${index !== 0 ? `${$prefixCls}-not-fist-level` : `${$prefixCls}-fist-level`}
+               ${level !== 0 ? `${prefixCls}-not-fist-level` : `${prefixCls}-fist-level`}
               `}
               key={data?.[fieldNames.value]}
               style={{ width: maxWidth || 'auto' }}
@@ -78,7 +78,7 @@ const NoSearchDrapper = ({
               }}
             >
               {customRender ? (
-                customRender(data, isLast, index)
+                customRender(data, isLast, level)
               ) : (
                 <span>
                   {data?.[fieldNames.label]}
