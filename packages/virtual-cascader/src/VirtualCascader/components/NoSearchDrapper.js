@@ -3,7 +3,7 @@
  * @Author: 郑泳健
  * @Date: 2022-11-15 17:32:40
  * @LastEditors: 郑泳健
- * @LastEditTime: 2022-11-17 14:21:41
+ * @LastEditTime: 2022-11-18 10:27:18
  */
 import React, { useRef, memo, useEffect, useState } from 'react';
 import { Icon } from 'antd';
@@ -17,7 +17,7 @@ const NoSearchDrapper = ({
   defaultValue,
   activeValueCells,
   onChoosed,
-  customeRender,
+  customRender,
   level,
 }) => {
   const containerRef = useRef(null);
@@ -56,13 +56,18 @@ const NoSearchDrapper = ({
             !Array.isArray(data?.[fieldNames.children]) || !data[fieldNames.children].length;
           return (
             <div
-              className={`${prefixCls}-menu-item ${isLast ? '' : `${prefixCls}-menu-item-expand`} ${
+              className={`
+               ${prefixCls}-menu-item
+               ${isLast ? '' : `${prefixCls}-menu-item-expand`} ${
                 data?.disabled ? `${prefixCls}-menu-item-disabled` : ''
-              } ${
-                activeValueCells.includes(data[fieldNames.value])
-                  ? `${prefixCls}-menu-item-active`
-                  : ''
-              } `}
+              }
+               ${
+                 activeValueCells.includes(data[fieldNames.value])
+                   ? `${prefixCls}-menu-item-active`
+                   : ''
+               }
+               ${index !== 0 ? `${$prefixCls}-not-fist-level` : `${$prefixCls}-fist-level`}
+              `}
               key={data?.[fieldNames.value]}
               style={{ width: maxWidth || 'auto' }}
               value={data?.[fieldNames.value]}
@@ -72,8 +77,8 @@ const NoSearchDrapper = ({
                 }
               }}
             >
-              {customeRender ? (
-                customeRender(data, isLast)
+              {customRender ? (
+                customRender(data, isLast, index)
               ) : (
                 <span>
                   {data?.[fieldNames.label]}

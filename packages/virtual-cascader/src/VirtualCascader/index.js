@@ -3,7 +3,7 @@
  * @Author: 郑泳健
  * @Date: 2022-11-14 15:18:00
  * @LastEditors: 郑泳健
- * @LastEditTime: 2022-11-17 14:20:50
+ * @LastEditTime: 2022-11-18 09:53:25
  */
 import React, { memo, useState, useMemo, useRef, useEffect } from 'react';
 import AntCascader from './components/AntCascader';
@@ -23,7 +23,7 @@ const VirtualCascader = ({
   onChange,
   showSearch,
   notFoundContent,
-  customeRender,
+  customRender,
   ...rest
 }) => {
   const ref = useRef();
@@ -162,7 +162,7 @@ const VirtualCascader = ({
                         activeValueCells,
                         level,
                         onChoosed: handleClick,
-                        customeRender,
+                        customRender,
                       }}
                     />
                   </div>

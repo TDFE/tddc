@@ -49,7 +49,7 @@ var _excluded = [
   'onChange',
   'showSearch',
   'notFoundContent',
-  'customeRender',
+  'customRender',
 ];
 
 function _interopRequireDefault(obj) {
@@ -252,7 +252,7 @@ var VirtualCascader = function VirtualCascader(_ref) {
     onChange = _ref.onChange,
     showSearch = _ref.showSearch,
     notFoundContent = _ref.notFoundContent,
-    customeRender = _ref.customeRender,
+    customRender = _ref.customRender,
     rest = _objectWithoutProperties(_ref, _excluded);
 
   var ref = (0, _react.useRef)();
@@ -467,7 +467,7 @@ var VirtualCascader = function VirtualCascader(_ref) {
                         activeValueCells: activeValueCells,
                         level: level,
                         onChoosed: handleClick,
-                        customeRender: customeRender,
+                        customRender: customRender,
                       }),
                     );
                   }),

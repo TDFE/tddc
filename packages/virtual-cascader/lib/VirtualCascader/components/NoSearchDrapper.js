@@ -149,7 +149,7 @@ var NoSearchDrapper = function NoSearchDrapper(_ref) {
     defaultValue = _ref.defaultValue,
     activeValueCells = _ref.activeValueCells,
     onChoosed = _ref.onChoosed,
-    customeRender = _ref.customeRender,
+    customRender = _ref.customRender,
     level = _ref.level;
   var containerRef = (0, _react.useRef)(null);
   var wrapperRef = (0, _react.useRef)(null);
@@ -223,20 +223,26 @@ var NoSearchDrapper = function NoSearchDrapper(_ref) {
             return /*#__PURE__*/ _react.default.createElement(
               'div',
               {
-                className: ''
-                  .concat(prefixCls, '-menu-item ')
+                className: '\n               '
+                  .concat(prefixCls, '-menu-item\n               ')
                   .concat(isLast ? '' : ''.concat(prefixCls, '-menu-item-expand'), ' ')
                   .concat(
                     (data === null || data === void 0 ? void 0 : data.disabled)
                       ? ''.concat(prefixCls, '-menu-item-disabled')
                       : '',
-                    ' ',
+                    '\n               ',
                   )
                   .concat(
                     activeValueCells.includes(data[fieldNames.value])
                       ? ''.concat(prefixCls, '-menu-item-active')
                       : '',
-                    ' ',
+                    '\n               ',
+                  )
+                  .concat(
+                    index !== 0
+                      ? ''.concat($prefixCls, '-not-fist-level')
+                      : ''.concat($prefixCls, '-fist-level'),
+                    '\n              ',
                   ),
                 key: data === null || data === void 0 ? void 0 : data[fieldNames.value],
                 style: {
@@ -253,8 +259,8 @@ var NoSearchDrapper = function NoSearchDrapper(_ref) {
                   }
                 },
               },
-              customeRender
-                ? customeRender(data, isLast)
+              customRender
+                ? customRender(data, isLast, index)
                 : /*#__PURE__*/ _react.default.createElement(
                     'span',
                     null,
