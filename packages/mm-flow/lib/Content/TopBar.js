@@ -260,21 +260,30 @@ var _default = function _default(props) {
 
   (0, _react.useEffect)(
     function () {
-      if (editor && curEditor.current !== editor) {
-        curEditor.current = editor;
+      if (editor) {
+        if (curEditor.current !== editor) {
+          curEditor.current = editor;
+          offEvent();
+        }
+
         watchHistory(props);
       }
     },
     [editor],
   );
 
+  var offEvent = function offEvent() {
+    if (editor) {
+      editor.off('change');
+      editor.off('node:click');
+      editor.off('node:unactive');
+      editor.off('paper:click');
+      editor.off('node:remove');
+    }
+  };
+
   var watchHistory = function watchHistory(props) {
     if (!editor) return;
-    editor.off('change');
-    editor.off('node:click');
-    editor.off('node:unactive');
-    editor.off('paper:click');
-    editor.off('node:remove');
     editor.on('change', function () {
       var canRedo = history.index < history.schemaList.length - 1;
       var canUndo = history.index > 0;

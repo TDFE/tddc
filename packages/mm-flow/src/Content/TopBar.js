@@ -27,22 +27,27 @@ export default (props) => {
     controller,
     paper,
   } = editor || {};
-
   useEffect(() => {
-    if (editor && curEditor.current !== editor) {
-      curEditor.current = editor;
+    if (editor) {
+      if (curEditor.current !== editor) {
+        curEditor.current = editor;
+        offEvent();
+      }
       watchHistory(props);
     }
   }, [editor]);
 
+  const offEvent = () => {
+    if (editor) {
+      editor.off('change');
+      editor.off('node:click');
+      editor.off('node:unactive');
+      editor.off('paper:click');
+      editor.off('node:remove');
+    }
+  };
   const watchHistory = (props) => {
     if (!editor) return;
-    editor.off('change');
-    editor.off('node:click');
-    editor.off('node:unactive');
-    editor.off('paper:click');
-    editor.off('node:remove');
-
     editor.on('change', () => {
       const canRedo = history.index < history.schemaList.length - 1;
       const canUndo = history.index > 0;
