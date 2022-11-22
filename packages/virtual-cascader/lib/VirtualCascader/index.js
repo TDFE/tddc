@@ -418,7 +418,7 @@ var VirtualCascader = function VirtualCascader(_ref) {
                             ? void 0
                             : defaultValue[level]) ||
                           (value === null || value === void 0 ? void 0 : value[level]),
-                        activeValueCells: activeValueCells,
+                        value: value,
                         level: level,
                         onChoosed: handleClick,
                         customRender: customRender,

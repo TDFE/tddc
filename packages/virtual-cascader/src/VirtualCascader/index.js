@@ -3,7 +3,7 @@
  * @Author: 郑泳健
  * @Date: 2022-11-14 15:18:00
  * @LastEditors: 郑泳健
- * @LastEditTime: 2022-11-18 09:53:25
+ * @LastEditTime: 2022-11-22 15:40:41
  */
 import React, { memo, useState, useMemo, useRef, useEffect } from 'react';
 import AntCascader from './components/AntCascader';
@@ -159,7 +159,7 @@ const VirtualCascader = ({
                         prefixCls,
                         fieldNames,
                         defaultValue: defaultValue?.[level] || value?.[level],
-                        activeValueCells,
+                        value,
                         level,
                         onChoosed: handleClick,
                         customRender,
