@@ -3,7 +3,7 @@
  * @Author: 郑泳健
  * @Date: 2022-11-15 17:32:40
  * @LastEditors: 郑泳健
- * @LastEditTime: 2022-11-22 15:40:13
+ * @LastEditTime: 2022-11-22 17:26:40
  */
 import React, { useRef, memo, useEffect, useState } from 'react';
 import { Icon } from 'antd';
@@ -15,7 +15,7 @@ const NoSearchDrapper = ({
   prefixCls,
   fieldNames,
   defaultValue,
-  value,
+  activeValueCells,
   onChoosed,
   customRender,
   level,
@@ -47,7 +47,6 @@ const NoSearchDrapper = ({
       clearTimeout(timer);
     };
   }, [defaultValue, options, init, scrollTo]);
-  console.log(value, 'value');
   return (
     <div ref={containerRef} style={{ height: 180, overflow: 'auto' }}>
       <div ref={wrapperRef}>
@@ -61,7 +60,11 @@ const NoSearchDrapper = ({
                ${isLast ? '' : `${prefixCls}-menu-item-expand`} ${
                 data?.disabled ? `${prefixCls}-menu-item-disabled` : ''
               }
-               ${value?.includes(data[fieldNames.value]) ? `${prefixCls}-menu-item-active` : ''}
+               ${
+                 activeValueCells?.includes(data[fieldNames.value])
+                   ? `${prefixCls}-menu-item-active`
+                   : ''
+               }
                ${level !== 0 ? `${prefixCls}-not-fist-level` : `${prefixCls}-fist-level`}
               `}
               key={data?.[fieldNames.value]}

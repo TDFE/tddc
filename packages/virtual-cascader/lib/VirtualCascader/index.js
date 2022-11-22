@@ -300,6 +300,13 @@ var VirtualCascader = function VirtualCascader(_ref) {
     [value],
   );
 
+  /** 弹窗关闭时候需要重新设置值 */
+  var handleDropdownVisibleChange = function handleDropdownVisibleChange(visible) {
+    if (!visible) {
+      setActiveValueCells(value);
+    }
+  };
+
   /** 选中某一项 */
   var handleClick = function handleClick(value, index, isLast) {
     var tempActiveValueCells = _toConsumableArray(activeValueCells);
@@ -418,7 +425,7 @@ var VirtualCascader = function VirtualCascader(_ref) {
                             ? void 0
                             : defaultValue[level]) ||
                           (value === null || value === void 0 ? void 0 : value[level]),
-                        value: value,
+                        activeValueCells: activeValueCells,
                         level: level,
                         onChoosed: handleClick,
                         customRender: customRender,
@@ -443,6 +450,7 @@ var VirtualCascader = function VirtualCascader(_ref) {
       defaultValue: defaultValue,
       options: options,
       dropdownRender: handleDropdownRender,
+      onDropdownVisibleChange: handleDropdownVisibleChange,
     }),
   );
 };

@@ -3,7 +3,7 @@
  * @Author: 郑泳健
  * @Date: 2022-11-14 15:18:00
  * @LastEditors: 郑泳健
- * @LastEditTime: 2022-11-22 15:40:41
+ * @LastEditTime: 2022-11-22 17:26:23
  */
 import React, { memo, useState, useMemo, useRef, useEffect } from 'react';
 import AntCascader from './components/AntCascader';
@@ -74,6 +74,13 @@ const VirtualCascader = ({
       setActiveValueCells(value);
     }
   }, [value]);
+
+  /** 弹窗关闭时候需要重新设置值 */
+  const handleDropdownVisibleChange = (visible) => {
+    if (!visible) {
+      setActiveValueCells(value);
+    }
+  };
 
   /** 选中某一项 */
   const handleClick = (value, index, isLast) => {
@@ -159,7 +166,7 @@ const VirtualCascader = ({
                         prefixCls,
                         fieldNames,
                         defaultValue: defaultValue?.[level] || value?.[level],
-                        value,
+                        activeValueCells,
                         level,
                         onChoosed: handleClick,
                         customRender,
@@ -189,6 +196,7 @@ const VirtualCascader = ({
       defaultValue={defaultValue}
       options={options}
       dropdownRender={handleDropdownRender}
+      onDropdownVisibleChange={handleDropdownVisibleChange}
     />
   );
 };

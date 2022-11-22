@@ -132,7 +132,7 @@ var NoSearchDrapper = function NoSearchDrapper(_ref) {
     prefixCls = _ref.prefixCls,
     fieldNames = _ref.fieldNames,
     defaultValue = _ref.defaultValue,
-    value = _ref.value,
+    activeValueCells = _ref.activeValueCells,
     onChoosed = _ref.onChoosed,
     customRender = _ref.customRender,
     level = _ref.level;
@@ -176,7 +176,6 @@ var NoSearchDrapper = function NoSearchDrapper(_ref) {
     },
     [defaultValue, options, init, scrollTo],
   );
-  console.log(value, 'value');
   return /*#__PURE__*/ _react.default.createElement(
     'div',
     {
@@ -214,9 +213,9 @@ var NoSearchDrapper = function NoSearchDrapper(_ref) {
                   )
                   .concat(
                     (
-                      value === null || value === void 0
+                      activeValueCells === null || activeValueCells === void 0
                         ? void 0
-                        : value.includes(data[fieldNames.value])
+                        : activeValueCells.includes(data[fieldNames.value])
                     )
                       ? ''.concat(prefixCls, '-menu-item-active')
                       : '',
