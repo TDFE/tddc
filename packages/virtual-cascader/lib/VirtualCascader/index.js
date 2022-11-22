@@ -19,26 +19,17 @@ function _typeof(obj) {
     _typeof(obj)
   );
 }
-
 Object.defineProperty(exports, '__esModule', {
   value: true,
 });
 exports.default = void 0;
-
 var _react = _interopRequireWildcard(require('react'));
-
 var _AntCascader = _interopRequireDefault(require('./components/AntCascader'));
-
 var _SearchDrapper = _interopRequireDefault(require('./components/SearchDrapper'));
-
 var _NoSearchDrapper = _interopRequireDefault(require('./components/NoSearchDrapper'));
-
 var _utils = require('./utils');
-
 require('antd/lib/cascader/style/index.css');
-
 require('./index.less');
-
 var _excluded = [
   'prefixCls',
   'options',
@@ -51,11 +42,9 @@ var _excluded = [
   'notFoundContent',
   'customRender',
 ];
-
 function _interopRequireDefault(obj) {
   return obj && obj.__esModule ? obj : { default: obj };
 }
-
 function _getRequireWildcardCache(nodeInterop) {
   if (typeof WeakMap !== 'function') return null;
   var cacheBabelInterop = new WeakMap();
@@ -64,7 +53,6 @@ function _getRequireWildcardCache(nodeInterop) {
     return nodeInterop ? cacheNodeInterop : cacheBabelInterop;
   })(nodeInterop);
 }
-
 function _interopRequireWildcard(obj, nodeInterop) {
   if (!nodeInterop && obj && obj.__esModule) {
     return obj;
@@ -94,7 +82,6 @@ function _interopRequireWildcard(obj, nodeInterop) {
   }
   return newObj;
 }
-
 function _extends() {
   _extends = Object.assign
     ? Object.assign.bind()
@@ -111,7 +98,6 @@ function _extends() {
       };
   return _extends.apply(this, arguments);
 }
-
 function _toConsumableArray(arr) {
   return (
     _arrayWithoutHoles(arr) ||
@@ -120,13 +106,11 @@ function _toConsumableArray(arr) {
     _nonIterableSpread()
   );
 }
-
 function _nonIterableSpread() {
   throw new TypeError(
     'Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.',
   );
 }
-
 function _iterableToArray(iter) {
   if (
     (typeof Symbol !== 'undefined' && iter[Symbol.iterator] != null) ||
@@ -134,11 +118,9 @@ function _iterableToArray(iter) {
   )
     return Array.from(iter);
 }
-
 function _arrayWithoutHoles(arr) {
   if (Array.isArray(arr)) return _arrayLikeToArray(arr);
 }
-
 function _slicedToArray(arr, i) {
   return (
     _arrayWithHoles(arr) ||
@@ -147,13 +129,11 @@ function _slicedToArray(arr, i) {
     _nonIterableRest()
   );
 }
-
 function _nonIterableRest() {
   throw new TypeError(
     'Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.',
   );
 }
-
 function _unsupportedIterableToArray(o, minLen) {
   if (!o) return;
   if (typeof o === 'string') return _arrayLikeToArray(o, minLen);
@@ -163,7 +143,6 @@ function _unsupportedIterableToArray(o, minLen) {
   if (n === 'Arguments' || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n))
     return _arrayLikeToArray(o, minLen);
 }
-
 function _arrayLikeToArray(arr, len) {
   if (len == null || len > arr.length) len = arr.length;
   for (var i = 0, arr2 = new Array(len); i < len; i++) {
@@ -171,7 +150,6 @@ function _arrayLikeToArray(arr, len) {
   }
   return arr2;
 }
-
 function _iterableToArrayLimit(arr, i) {
   var _i =
     arr == null
@@ -199,11 +177,9 @@ function _iterableToArrayLimit(arr, i) {
   }
   return _arr;
 }
-
 function _arrayWithHoles(arr) {
   if (Array.isArray(arr)) return arr;
 }
-
 function _objectWithoutProperties(source, excluded) {
   if (source == null) return {};
   var target = _objectWithoutPropertiesLoose(source, excluded);
@@ -219,7 +195,6 @@ function _objectWithoutProperties(source, excluded) {
   }
   return target;
 }
-
 function _objectWithoutPropertiesLoose(source, excluded) {
   if (source == null) return {};
   var target = {};
@@ -232,7 +207,6 @@ function _objectWithoutPropertiesLoose(source, excluded) {
   }
   return target;
 }
-
 var VirtualCascader = function VirtualCascader(_ref) {
   var _ref$prefixCls = _ref.prefixCls,
     prefixCls = _ref$prefixCls === void 0 ? 'ant-cascader' : _ref$prefixCls,
@@ -254,16 +228,14 @@ var VirtualCascader = function VirtualCascader(_ref) {
     notFoundContent = _ref.notFoundContent,
     customRender = _ref.customRender,
     rest = _objectWithoutProperties(_ref, _excluded);
-
   var ref = (0, _react.useRef)();
   /** 选中的路径 */
-
   var _useState = (0, _react.useState)([]),
     _useState2 = _slicedToArray(_useState, 2),
     activeValueCells = _useState2[0],
     setActiveValueCells = _useState2[1];
-  /** 根据选中路径获取每一个路径下的list */
 
+  /** 根据选中路径获取每一个路径下的list */
   var optionColumns = (0, _react.useMemo)(
     function () {
       var optionList = [
@@ -272,7 +244,6 @@ var VirtualCascader = function VirtualCascader(_ref) {
         },
       ];
       var currentList = options;
-
       var _loop = function _loop(i) {
         var activeValueCell = activeValueCells[i];
         var currentOption = currentList.find(function (option) {
@@ -282,18 +253,15 @@ var VirtualCascader = function VirtualCascader(_ref) {
           currentOption === null || currentOption === void 0
             ? void 0
             : currentOption[fieldNames.children];
-
         if (!(subOptions === null || subOptions === void 0 ? void 0 : subOptions.length)) {
           return 'break';
         }
-
         currentList = subOptions;
         var maxWidth = void 0;
         subOptions === null || subOptions === void 0
           ? void 0
           : subOptions.forEach(function (i) {
               var width = (0, _utils.getTextWidth)(i[fieldNames.label]);
-
               if (width > maxWidth) {
                 maxWidth = width;
               }
@@ -303,19 +271,16 @@ var VirtualCascader = function VirtualCascader(_ref) {
           maxWidth: maxWidth,
         });
       };
-
       for (var i = 0; i < activeValueCells.length; i += 1) {
         var _ret = _loop(i);
-
         if (_ret === 'break') break;
       }
-
       return optionList;
     },
     [options, activeValueCells, fieldNames],
   );
-  /** 设置默认选中的路径 */
 
+  /** 设置默认选中的路径 */
   (0, _react.useEffect)(
     function () {
       if (Array.isArray(defaultValue)) {
@@ -324,8 +289,8 @@ var VirtualCascader = function VirtualCascader(_ref) {
     },
     [defaultValue],
   );
-  /** 设置选中的路径,用于回显 */
 
+  /** 设置选中的路径,用于回显 */
   (0, _react.useEffect)(
     function () {
       if (Array.isArray(value)) {
@@ -334,25 +299,21 @@ var VirtualCascader = function VirtualCascader(_ref) {
     },
     [value],
   );
-  /** 选中某一项 */
 
+  /** 选中某一项 */
   var handleClick = function handleClick(value, index, isLast) {
     var tempActiveValueCells = _toConsumableArray(activeValueCells);
-
     tempActiveValueCells.splice(index);
     tempActiveValueCells.push(value);
     setActiveValueCells(tempActiveValueCells);
-
     if (isLast) {
       if (onChange) {
         onChange(tempActiveValueCells);
       } else {
         defaultOnChange(tempActiveValueCells);
       }
-
       ref.current.handlePopupVisibleChange(false);
     }
-
     if (changeOnSelect) {
       if (onChange) {
         onChange(tempActiveValueCells);
@@ -361,26 +322,24 @@ var VirtualCascader = function VirtualCascader(_ref) {
       }
     }
   };
-  /** 默认onChange事件 */
 
+  /** 默认onChange事件 */
   var defaultOnChange = function defaultOnChange(value) {
     setActiveValueCells(value);
     ref.current.handlePopupVisibleChange(false);
   };
-  /** 模糊搜索的时候选中某一项 */
 
+  /** 模糊搜索的时候选中某一项 */
   var handleChoosed = function handleChoosed(value) {
     setActiveValueCells(value);
     onChange(value);
     ref.current.handlePopupVisibleChange(false);
   };
-  /** 自定义渲染弹窗 */
 
+  /** 自定义渲染弹窗 */
   var handleDropdownRender = function handleDropdownRender(inputValue, filterOptions) {
     var _ref$current, _ref$current$state;
-
     var positionLeft = undefined;
-
     if (
       (_ref$current = ref.current) === null || _ref$current === void 0
         ? void 0
@@ -389,7 +348,6 @@ var VirtualCascader = function VirtualCascader(_ref) {
         : _ref$current$state.popupVisible
     ) {
       var _ref$current2, _ref$current2$input, _ref$current2$input$i, _ref$current2$input$i2;
-
       var left =
         ref === null || ref === void 0
           ? void 0
@@ -404,16 +362,13 @@ var VirtualCascader = function VirtualCascader(_ref) {
             _ref$current2$input$i2 === void 0
           ? void 0
           : _ref$current2$input$i2.left;
-
       if (!isNaN(left)) {
         positionLeft = left;
       }
     }
-
     if (isNaN(positionLeft)) {
       return null;
     }
-
     return /*#__PURE__*/ _react.default.createElement(
       'div',
       {
@@ -446,7 +401,6 @@ var VirtualCascader = function VirtualCascader(_ref) {
                         arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {},
                       options = _ref2.options,
                       maxWidth = _ref2.maxWidth;
-
                     var level = arguments.length > 1 ? arguments[1] : undefined;
                     return /*#__PURE__*/ _react.default.createElement(
                       'div',
@@ -475,7 +429,6 @@ var VirtualCascader = function VirtualCascader(_ref) {
       ),
     );
   };
-
   return /*#__PURE__*/ _react.default.createElement(
     _AntCascader.default,
     _extends({}, rest, {
@@ -493,7 +446,5 @@ var VirtualCascader = function VirtualCascader(_ref) {
     }),
   );
 };
-
 var _default = /*#__PURE__*/ (0, _react.memo)(VirtualCascader);
-
 exports.default = _default;

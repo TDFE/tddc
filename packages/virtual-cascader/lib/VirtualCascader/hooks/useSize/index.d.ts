@@ -1,5 +1,5 @@
 import type { BasicTarget } from '../utils/domTarget';
-declare type Size = {
+type Size = {
   width: number;
   height: number;
 };

@@ -1,7 +1,7 @@
 import type { BasicTarget } from '../utils/domTarget';
-declare type noop = (...p: any) => void;
-export declare type Target = BasicTarget<HTMLElement | Element | Window | Document>;
-declare type Options<T extends Target = Target> = {
+type noop = (...p: any) => void;
+export type Target = BasicTarget<HTMLElement | Element | Window | Document>;
+type Options<T extends Target = Target> = {
   target?: T;
   capture?: boolean;
   once?: boolean;

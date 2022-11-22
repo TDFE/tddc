@@ -3,7 +3,7 @@
  * @Author: 郑泳健
  * @Date: 2022-11-14 15:18:00
  * @LastEditors: 郑泳健
- * @LastEditTime: 2022-11-16 10:57:04
+ * @LastEditTime: 2022-11-22 12:56:48
  */
 import * as React from 'react';
 import arrayTreeFilter from 'array-tree-filter';
@@ -159,7 +159,7 @@ class CustomCascader extends React.Component {
   getLabel() {
     const { options, displayRender = defaultDisplayRender } = this.props;
     const names = getFilledFieldNames(this.props);
-    const { value } = this.state;
+    const { value, inputValue } = this.state;
     const unwrappedValue = Array.isArray(value[0]) ? value[0] : value;
     const selectedOptions = arrayTreeFilter(
       options,
@@ -167,7 +167,7 @@ class CustomCascader extends React.Component {
       { childrenKeyName: names.children },
     );
     const label = selectedOptions.map((o) => o[names.label]);
-    return displayRender(label, selectedOptions);
+    return displayRender(label, selectedOptions, inputValue);
   }
 
   saveInput = (node) => {

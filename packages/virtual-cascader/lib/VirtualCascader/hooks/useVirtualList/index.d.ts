@@ -1,5 +1,5 @@
 import type { BasicTarget } from '../utils/domTarget';
-declare type ItemHeight<T> = (index: number, data: T) => number;
+type ItemHeight<T> = (index: number, data: T) => number;
 export interface Options<T> {
   containerTarget: BasicTarget;
   wrapperTarget: BasicTarget;
