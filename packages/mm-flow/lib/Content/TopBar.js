@@ -629,34 +629,40 @@ var _default = function _default(props) {
 
                       var data = convertFun.format(schema.getData(), editor);
 
-                      if ((v === null || v === void 0 ? void 0 : v.clickType) === 'async') {
-                        setLoad(
-                          _objectSpread(
-                            _objectSpread({}, load),
-                            {},
-                            _defineProperty({}, v === null || v === void 0 ? void 0 : v.key, true),
-                          ),
-                        );
-                      }
+                      if (data) {
+                        if ((v === null || v === void 0 ? void 0 : v.clickType) === 'async') {
+                          setLoad(
+                            _objectSpread(
+                              _objectSpread({}, load),
+                              {},
+                              _defineProperty(
+                                {},
+                                v === null || v === void 0 ? void 0 : v.key,
+                                true,
+                              ),
+                            ),
+                          );
+                        }
 
-                      var vFun = v === null || v === void 0 ? void 0 : v.click(data);
+                        var vFun = v === null || v === void 0 ? void 0 : v.click(data);
 
-                      if ((v === null || v === void 0 ? void 0 : v.clickType) === 'async') {
-                        vFun === null || vFun === void 0
-                          ? void 0
-                          : vFun.finally(function () {
-                              setLoad(
-                                _objectSpread(
-                                  _objectSpread({}, load),
-                                  {},
-                                  _defineProperty(
+                        if ((v === null || v === void 0 ? void 0 : v.clickType) === 'async') {
+                          vFun === null || vFun === void 0
+                            ? void 0
+                            : vFun.finally(function () {
+                                setLoad(
+                                  _objectSpread(
+                                    _objectSpread({}, load),
                                     {},
-                                    v === null || v === void 0 ? void 0 : v.key,
-                                    false,
+                                    _defineProperty(
+                                      {},
+                                      v === null || v === void 0 ? void 0 : v.key,
+                                      false,
+                                    ),
                                   ),
-                                ),
-                              );
-                            });
+                                );
+                              });
+                        }
                       }
                     },
                   },

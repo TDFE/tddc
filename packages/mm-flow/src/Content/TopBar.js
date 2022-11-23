@@ -275,20 +275,22 @@ export default (props) => {
                     }
                     const { schema } = editor || {};
                     const data = convertFun.format(schema.getData(), editor);
-                    if (v?.clickType === 'async') {
-                      setLoad({
-                        ...load,
-                        [v?.key]: true,
-                      });
-                    }
-                    const vFun = v?.click(data);
-                    if (v?.clickType === 'async') {
-                      vFun?.finally(() => {
+                    if (data) {
+                      if (v?.clickType === 'async') {
                         setLoad({
                           ...load,
-                          [v?.key]: false,
+                          [v?.key]: true,
                         });
-                      });
+                      }
+                      const vFun = v?.click(data);
+                      if (v?.clickType === 'async') {
+                        vFun?.finally(() => {
+                          setLoad({
+                            ...load,
+                            [v?.key]: false,
+                          });
+                        });
+                      }
                     }
                   }}
                 >
