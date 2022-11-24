@@ -12,10 +12,8 @@
     m = function m(l, a) {
       a.parentNode.insertBefore(l, a);
     };
-
   if (i && !l.__iconfont__svg__cssinject__) {
     l.__iconfont__svg__cssinject__ = !0;
-
     try {
       document.write(
         '<style>.svgfont {display: inline-block;width: 1em;height: 1em;fill: currentColor;vertical-align: -0.1em;font-size:16px;}</style>',
@@ -24,21 +22,17 @@
       console && console.log(l);
     }
   }
-
   function v() {
     h || ((h = !0), o());
   }
-
   function n() {
     try {
       t.documentElement.doScroll('left');
     } catch (l) {
       return void setTimeout(n, 50);
     }
-
     v();
   }
-
   (a = function a() {
     var l, a;
     ((a = document.createElement('div')).innerHTML = e),

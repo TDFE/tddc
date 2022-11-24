@@ -4,9 +4,7 @@ Object.defineProperty(exports, '__esModule', {
   value: true,
 });
 exports.default = void 0;
-
 var _lodash = require('lodash');
-
 var _default = function _default(menus) {
   var getAuthMap = function getAuthMap() {
     var menus = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
@@ -16,7 +14,6 @@ var _default = function _default(menus) {
         groupName = _ref.groupName,
         functionList = _ref.functionList,
         children = _ref.children;
-
       if (groupName) {
         return getAuthMap(children, acc);
       } else {
@@ -29,7 +26,6 @@ var _default = function _default(menus) {
       }
     }, authMap);
   };
-
   var authMap = getAuthMap(menus);
   return function (menuCode, funCode) {
     return !!(0, _lodash.get)(
@@ -38,5 +34,4 @@ var _default = function _default(menus) {
     );
   };
 };
-
 exports.default = _default;

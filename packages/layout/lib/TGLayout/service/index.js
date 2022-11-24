@@ -4,13 +4,10 @@ Object.defineProperty(exports, '__esModule', {
   value: true,
 });
 exports.default = void 0;
-
 var _createServices = _interopRequireDefault(require('./createServices'));
-
 function _interopRequireDefault(obj) {
   return obj && obj.__esModule ? obj : { default: obj };
 }
-
 var _default = (0, _createServices.default)({
   getUserInfo: {
     url: '/userCenter/getUserInfo',
@@ -40,5 +37,4 @@ var _default = (0, _createServices.default)({
     dataType: 'x-www-form-urlencoded',
   },
 });
-
 exports.default = _default;

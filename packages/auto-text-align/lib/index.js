@@ -9,9 +9,7 @@ Object.defineProperty(exports, 'default', {
     return _AutoTextAlign.default;
   },
 });
-
 var _AutoTextAlign = _interopRequireDefault(require('./AutoTextAlign'));
-
 function _interopRequireDefault(obj) {
   return obj && obj.__esModule ? obj : { default: obj };
 }

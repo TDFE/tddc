@@ -19,34 +19,22 @@ function _typeof(obj) {
     _typeof(obj)
   );
 }
-
 Object.defineProperty(exports, '__esModule', {
   value: true,
 });
 exports.default = void 0;
-
 var _react = _interopRequireWildcard(require('react'));
-
 var _reactDom = _interopRequireDefault(require('react-dom'));
-
 var _classnames = _interopRequireDefault(require('classnames'));
-
 var _lodash = require('lodash');
-
 require('./index.less');
-
 var _Context = require('../../Context');
-
 var _utils = require('../../utils');
-
 var _Icon = _interopRequireDefault(require('../../Icon'));
-
 var _NavigationPopup = _interopRequireDefault(require('./NavigationPopup'));
-
 function _interopRequireDefault(obj) {
   return obj && obj.__esModule ? obj : { default: obj };
 }
-
 function _getRequireWildcardCache(nodeInterop) {
   if (typeof WeakMap !== 'function') return null;
   var cacheBabelInterop = new WeakMap();
@@ -55,7 +43,6 @@ function _getRequireWildcardCache(nodeInterop) {
     return nodeInterop ? cacheNodeInterop : cacheBabelInterop;
   })(nodeInterop);
 }
-
 function _interopRequireWildcard(obj, nodeInterop) {
   if (!nodeInterop && obj && obj.__esModule) {
     return obj;
@@ -85,7 +72,6 @@ function _interopRequireWildcard(obj, nodeInterop) {
   }
   return newObj;
 }
-
 function _toConsumableArray(arr) {
   return (
     _arrayWithoutHoles(arr) ||
@@ -94,13 +80,11 @@ function _toConsumableArray(arr) {
     _nonIterableSpread()
   );
 }
-
 function _nonIterableSpread() {
   throw new TypeError(
     'Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.',
   );
 }
-
 function _iterableToArray(iter) {
   if (
     (typeof Symbol !== 'undefined' && iter[Symbol.iterator] != null) ||
@@ -108,11 +92,9 @@ function _iterableToArray(iter) {
   )
     return Array.from(iter);
 }
-
 function _arrayWithoutHoles(arr) {
   if (Array.isArray(arr)) return _arrayLikeToArray(arr);
 }
-
 function _extends() {
   _extends = Object.assign
     ? Object.assign.bind()
@@ -129,7 +111,6 @@ function _extends() {
       };
   return _extends.apply(this, arguments);
 }
-
 function _slicedToArray(arr, i) {
   return (
     _arrayWithHoles(arr) ||
@@ -138,13 +119,11 @@ function _slicedToArray(arr, i) {
     _nonIterableRest()
   );
 }
-
 function _nonIterableRest() {
   throw new TypeError(
     'Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.',
   );
 }
-
 function _unsupportedIterableToArray(o, minLen) {
   if (!o) return;
   if (typeof o === 'string') return _arrayLikeToArray(o, minLen);
@@ -154,7 +133,6 @@ function _unsupportedIterableToArray(o, minLen) {
   if (n === 'Arguments' || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n))
     return _arrayLikeToArray(o, minLen);
 }
-
 function _arrayLikeToArray(arr, len) {
   if (len == null || len > arr.length) len = arr.length;
   for (var i = 0, arr2 = new Array(len); i < len; i++) {
@@ -162,7 +140,6 @@ function _arrayLikeToArray(arr, len) {
   }
   return arr2;
 }
-
 function _iterableToArrayLimit(arr, i) {
   var _i =
     arr == null
@@ -190,34 +167,26 @@ function _iterableToArrayLimit(arr, i) {
   }
   return _arr;
 }
-
 function _arrayWithHoles(arr) {
   if (Array.isArray(arr)) return arr;
 }
-
 var createPopupContainer = function createPopupContainer() {
   var div = document.createElement('div');
   div.setAttribute('class', 'tnt-navigation-popup');
   return div;
 };
-
 var _default = function _default(props) {
   var headerRef = props.headerRef,
     menus = props.menus;
-
   var _useState = (0, _react.useState)(false),
     _useState2 = _slicedToArray(_useState, 2),
     visible = _useState2[0],
     setVisible = _useState2[1];
-
   var popupRef = (0, _react.useRef)();
-
   var _useContext = (0, _react.useContext)(_Context.ThemeContext),
     language = _useContext.language;
-
   (0, _react.useEffect)(function () {
     var _headerRef$current;
-
     popupRef.current = createPopupContainer();
     headerRef === null || headerRef === void 0
       ? void 0
@@ -226,7 +195,6 @@ var _default = function _default(props) {
       : _headerRef$current.appendChild(popupRef.current);
     return function () {
       var _headerRef$current2;
-
       headerRef === null || headerRef === void 0
         ? void 0
         : (_headerRef$current2 = headerRef.current) === null || _headerRef$current2 === void 0
@@ -237,7 +205,6 @@ var _default = function _default(props) {
   (0, _react.useEffect)(
     function () {
       var classNames = popupRef.current.getAttribute('class').split(' ');
-
       if (visible) {
         _reactDom.default.render(
           /*#__PURE__*/ _react.default.createElement(
@@ -254,7 +221,6 @@ var _default = function _default(props) {
           ),
           popupRef.current,
         );
-
         popupRef.current.setAttribute(
           'class',
           classNames
@@ -277,7 +243,6 @@ var _default = function _default(props) {
     {
       onClick: function onClick(evt) {
         var _evt$nativeEvent, _evt$nativeEvent2;
-
         evt.stopPropagation();
         (_evt$nativeEvent = evt.nativeEvent) === null || _evt$nativeEvent === void 0
           ? void 0
@@ -297,5 +262,4 @@ var _default = function _default(props) {
     /*#__PURE__*/ _react.default.createElement('span', null, '\u5168\u5C40\u5BFC\u822A'),
   );
 };
-
 exports.default = _default;

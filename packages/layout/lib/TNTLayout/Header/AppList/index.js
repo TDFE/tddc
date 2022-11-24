@@ -19,22 +19,15 @@ function _typeof(obj) {
     _typeof(obj)
   );
 }
-
 Object.defineProperty(exports, '__esModule', {
   value: true,
 });
 exports.default = void 0;
-
 require('antd/lib/select/style');
-
 var _select = _interopRequireDefault(require('antd/lib/select'));
-
 var _react = _interopRequireWildcard(require('react'));
-
 require('./index.less');
-
 var _storage = require('../../storage');
-
 function _getRequireWildcardCache(nodeInterop) {
   if (typeof WeakMap !== 'function') return null;
   var cacheBabelInterop = new WeakMap();
@@ -43,7 +36,6 @@ function _getRequireWildcardCache(nodeInterop) {
     return nodeInterop ? cacheNodeInterop : cacheBabelInterop;
   })(nodeInterop);
 }
-
 function _interopRequireWildcard(obj, nodeInterop) {
   if (!nodeInterop && obj && obj.__esModule) {
     return obj;
@@ -73,11 +65,9 @@ function _interopRequireWildcard(obj, nodeInterop) {
   }
   return newObj;
 }
-
 function _interopRequireDefault(obj) {
   return obj && obj.__esModule ? obj : { default: obj };
 }
-
 function _slicedToArray(arr, i) {
   return (
     _arrayWithHoles(arr) ||
@@ -86,13 +76,11 @@ function _slicedToArray(arr, i) {
     _nonIterableRest()
   );
 }
-
 function _nonIterableRest() {
   throw new TypeError(
     'Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.',
   );
 }
-
 function _unsupportedIterableToArray(o, minLen) {
   if (!o) return;
   if (typeof o === 'string') return _arrayLikeToArray(o, minLen);
@@ -102,7 +90,6 @@ function _unsupportedIterableToArray(o, minLen) {
   if (n === 'Arguments' || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n))
     return _arrayLikeToArray(o, minLen);
 }
-
 function _arrayLikeToArray(arr, len) {
   if (len == null || len > arr.length) len = arr.length;
   for (var i = 0, arr2 = new Array(len); i < len; i++) {
@@ -110,7 +97,6 @@ function _arrayLikeToArray(arr, len) {
   }
   return arr2;
 }
-
 function _iterableToArrayLimit(arr, i) {
   var _i =
     arr == null
@@ -138,58 +124,44 @@ function _iterableToArrayLimit(arr, i) {
   }
   return _arr;
 }
-
 function _arrayWithHoles(arr) {
   if (Array.isArray(arr)) return arr;
 }
-
 var Option = _select.default.Option;
-
 var _default = function _default(props) {
   var _props$appList = props.appList,
     appList = _props$appList === void 0 ? [] : _props$appList,
     onAppChange = props.onAppChange;
-
   var getInitialSelectedApp = function getInitialSelectedApp() {
     var currentAppStore = (0, _storage.getCurrentAppStore)();
     var temp = appList[0];
-
     var findAppByKey = function findAppByKey(selectedKey) {
       var findApp;
-
       for (var index = 0; index < appList.length; index++) {
         var item = appList[index];
-
         if (item.key === selectedKey) {
           findApp = item;
           break;
         }
       }
-
       return findApp;
     };
-
     if (currentAppStore.name) {
       var curApp = findAppByKey(currentAppStore.key);
-
       if (curApp) {
         temp = currentAppStore;
       } else {
         (0, _storage.setCurrentAppStore)(temp);
       }
     }
-
     return temp;
   };
-
   var _useState = (0, _react.useState)({}),
     _useState2 = _slicedToArray(_useState, 2),
     selectedApp = _useState2[0],
     setSelectedApp = _useState2[1];
-
   var _ref = selectedApp || {},
     key = _ref.key;
-
   var handleChangeApp = function handleChangeApp(app) {
     if (key !== app.key) {
       setSelectedApp(app);
@@ -197,7 +169,6 @@ var _default = function _default(props) {
       onAppChange && onAppChange(app);
     }
   };
-
   (0, _react.useEffect)(
     function () {
       if (appList.length > 1) {
@@ -241,5 +212,4 @@ var _default = function _default(props) {
     ),
   );
 };
-
 exports.default = _default;

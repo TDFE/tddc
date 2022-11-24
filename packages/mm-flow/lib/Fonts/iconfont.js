@@ -7,7 +7,6 @@
     var e = (e = document.getElementsByTagName('script'))[e.length - 1],
       t = e.getAttribute('data-injectcss'),
       e = e.getAttribute('data-disable-injectsvg');
-
     if (!e) {
       var a,
         _o,
@@ -17,10 +16,8 @@
         s = function s(e, t) {
           t.parentNode.insertBefore(e, t);
         };
-
       if (t && !n.__iconfont__svg__cssinject__) {
         n.__iconfont__svg__cssinject__ = !0;
-
         try {
           document.write(
             '<style>.svgfont {display: inline-block;width: 1em;height: 1em;fill: currentColor;vertical-align: -0.1em;font-size:16px;}</style>',
@@ -29,7 +26,6 @@
           console && console.log(e);
         }
       }
-
       (a = function a() {
         var e,
           t = document.createElement('div');
@@ -59,18 +55,15 @@
               'complete' == c.readyState && ((c.onreadystatechange = null), l());
             }));
     }
-
     function l() {
       d || ((d = !0), i());
     }
-
     function r() {
       try {
         c.documentElement.doScroll('left');
       } catch (e) {
         return void setTimeout(r, 50);
       }
-
       l();
     }
   })(window);

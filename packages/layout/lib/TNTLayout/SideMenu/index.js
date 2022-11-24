@@ -19,30 +19,19 @@ function _typeof(obj) {
     _typeof(obj)
   );
 }
-
 Object.defineProperty(exports, '__esModule', {
   value: true,
 });
 exports.default = void 0;
-
 require('antd/lib/menu/style');
-
 var _menu = _interopRequireDefault(require('antd/lib/menu'));
-
 var _react = _interopRequireWildcard(require('react'));
-
 require('./index.less');
-
 var _Context = require('../Context');
-
 var _utils = require('../utils');
-
 var _eventEmitter = _interopRequireDefault(require('../eventEmitter'));
-
 var _Icon = _interopRequireDefault(require('../Icon'));
-
 var _Flicon = _interopRequireDefault(require('../Flicon'));
-
 function _getRequireWildcardCache(nodeInterop) {
   if (typeof WeakMap !== 'function') return null;
   var cacheBabelInterop = new WeakMap();
@@ -51,7 +40,6 @@ function _getRequireWildcardCache(nodeInterop) {
     return nodeInterop ? cacheNodeInterop : cacheBabelInterop;
   })(nodeInterop);
 }
-
 function _interopRequireWildcard(obj, nodeInterop) {
   if (!nodeInterop && obj && obj.__esModule) {
     return obj;
@@ -81,11 +69,9 @@ function _interopRequireWildcard(obj, nodeInterop) {
   }
   return newObj;
 }
-
 function _interopRequireDefault(obj) {
   return obj && obj.__esModule ? obj : { default: obj };
 }
-
 function _extends() {
   _extends = Object.assign
     ? Object.assign.bind()
@@ -102,7 +88,6 @@ function _extends() {
       };
   return _extends.apply(this, arguments);
 }
-
 function _slicedToArray(arr, i) {
   return (
     _arrayWithHoles(arr) ||
@@ -111,13 +96,11 @@ function _slicedToArray(arr, i) {
     _nonIterableRest()
   );
 }
-
 function _nonIterableRest() {
   throw new TypeError(
     'Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.',
   );
 }
-
 function _unsupportedIterableToArray(o, minLen) {
   if (!o) return;
   if (typeof o === 'string') return _arrayLikeToArray(o, minLen);
@@ -127,7 +110,6 @@ function _unsupportedIterableToArray(o, minLen) {
   if (n === 'Arguments' || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n))
     return _arrayLikeToArray(o, minLen);
 }
-
 function _arrayLikeToArray(arr, len) {
   if (len == null || len > arr.length) len = arr.length;
   for (var i = 0, arr2 = new Array(len); i < len; i++) {
@@ -135,7 +117,6 @@ function _arrayLikeToArray(arr, len) {
   }
   return arr2;
 }
-
 function _iterableToArrayLimit(arr, i) {
   var _i =
     arr == null
@@ -163,19 +144,15 @@ function _iterableToArrayLimit(arr, i) {
   }
   return _arr;
 }
-
 function _arrayWithHoles(arr) {
   if (Array.isArray(arr)) return arr;
 }
-
 var SubMenu = _menu.default.SubMenu,
   MenuItem = _menu.default.Item;
-
 var hasChild = function hasChild(menu) {
   var hasChild = menu.children && menu.children.length > 0;
   return hasChild;
 };
-
 var SideMenu = function SideMenu(props) {
   var size = props.size,
     _props$openKeys = props.openKeys,
@@ -190,53 +167,41 @@ var SideMenu = function SideMenu(props) {
     onMenuSelect = props.onMenuSelect,
     onOpenChange = props.onOpenChange,
     collapsed = props.collapsed;
-
   var _useContext = (0, _react.useContext)(_Context.ThemeContext),
     language = _useContext.language;
-
   var _useState = (0, _react.useState)([]),
     _useState2 = _slicedToArray(_useState, 2),
     mainCodes = _useState2[0],
     setMainCodes = _useState2[1];
-
   var headerHeight = size === 'large' ? 60 : 50;
-
   var onSelectMenu = function onSelectMenu(params) {
     var curItem;
-
     if (params.item) {
       curItem = params.item.props.curitem;
     } else {
       curItem = params;
     }
-
     var defaultSelect = function defaultSelect(_ref) {
       var _window$location$path;
-
       var data = _ref.data;
-
       var _ref2 = data || {},
         path = _ref2.path;
-
       var formatPath =
         formatMenuPath ||
         function (path) {
           return path;
         };
-
       if ((0, _utils.isNewTabMenu)(data)) {
         (0, _utils.openInNewTab)(
           formatPath(data === null || data === void 0 ? void 0 : data.path, data),
         );
         return;
       }
-
       var routerPrefix =
         (_window$location$path = window.location.pathname.match(/(^\/[^\/]+)/i)) === null ||
         _window$location$path === void 0
           ? void 0
           : _window$location$path[1];
-
       if (path === null || path === void 0 ? void 0 : path.startsWith(routerPrefix)) {
         var forwardPath = formatPath(path, data);
         changeRouter
@@ -250,11 +215,9 @@ var SideMenu = function SideMenu(props) {
         window.location.href = formatPath(path, data);
       }
     };
-
     var finalSelect = onMenuSelect || defaultSelect;
     finalSelect(curItem);
   };
-
   (0, _react.useEffect)(
     function () {
       if (selectedKeys.length) {
@@ -265,24 +228,21 @@ var SideMenu = function SideMenu(props) {
   );
   (0, _react.useEffect)(function () {
     _eventEmitter.default.off('menuSelectPopup', onSelectMenu);
-
     _eventEmitter.default.on('menuSelectPopup', onSelectMenu);
   }, []);
-
   var getExpandIcon = function getExpandIcon(code) {
     return openKeys.includes(code) ? 'up' : 'down';
   };
-
   var onMenuClick = function onMenuClick(key, menuItem) {
     var _menuItem$parent;
-
     var curKey = [key];
     var newOpenKeys = curKey;
     var parentCode =
       ((_menuItem$parent = menuItem.parent) === null || _menuItem$parent === void 0
         ? void 0
-        : _menuItem$parent.code) || ''; // 展开openKey
+        : _menuItem$parent.code) || '';
 
+    // 展开openKey
     if (openKeys.includes(parentCode)) {
       // 父子关系展开
       newOpenKeys = openKeys.includes(key) ? [parentCode] : [parentCode, key];
@@ -290,10 +250,8 @@ var SideMenu = function SideMenu(props) {
       // 收起closeKey
       newOpenKeys = openKeys.includes(key) ? [] : curKey;
     }
-
     onOpenChange && onOpenChange(newOpenKeys);
   };
-
   var MenuLink = function MenuLink(_ref3) {
     var menuName = _ref3.menuName,
       enName = _ref3.enName,
@@ -312,7 +270,6 @@ var SideMenu = function SideMenu(props) {
       }[language],
     );
   };
-
   var getSubMenuProps = function getSubMenuProps(_ref4) {
     var code = _ref4.code,
       groupIcon = _ref4.groupIcon,
@@ -360,7 +317,6 @@ var SideMenu = function SideMenu(props) {
           }),
     };
   };
-
   var renderMenu = function renderMenu(menu) {
     return hasChild(menu)
       ? /*#__PURE__*/ _react.default.createElement(
@@ -388,11 +344,9 @@ var SideMenu = function SideMenu(props) {
           /*#__PURE__*/ _react.default.createElement(MenuLink, menu),
         );
   };
-
   var renderGroupName = function renderGroupName(groupName) {
     var len = (0, _utils.getStrLength)(groupName);
     var listStr = [];
-
     if (len > 6 && len < 12) {
       var startStr = groupName.slice(0, 2);
       var endStr = groupName.slice(2);
@@ -400,15 +354,12 @@ var SideMenu = function SideMenu(props) {
       listStr.push(endStr);
     } else if (len >= 12) {
       var _startStr = groupName.slice(0, 3);
-
       var _endStr = groupName.slice(3, 6);
-
       listStr.push(_startStr);
       listStr.push(_endStr);
     } else {
       listStr.push(groupName);
     }
-
     return listStr.map(function (val, i) {
       return /*#__PURE__*/ _react.default.createElement(
         'div',
@@ -420,7 +371,6 @@ var SideMenu = function SideMenu(props) {
       );
     });
   };
-
   return /*#__PURE__*/ _react.default.createElement(
     'div',
     {
@@ -468,6 +418,5 @@ var SideMenu = function SideMenu(props) {
     ),
   );
 };
-
 var _default = SideMenu;
 exports.default = _default;

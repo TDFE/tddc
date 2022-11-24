@@ -10,21 +10,14 @@ Object.defineProperty(exports, 'iconList', {
     return _iconList.default;
   },
 });
-
 var _react = _interopRequireDefault(require('react'));
-
 require('./fonts/iconfont');
-
 require('./index.less');
-
 var _iconList = _interopRequireDefault(require('./iconList'));
-
 var _excluded = ['type', 'prefix', 'className'];
-
 function _interopRequireDefault(obj) {
   return obj && obj.__esModule ? obj : { default: obj };
 }
-
 function _extends() {
   _extends = Object.assign
     ? Object.assign.bind()
@@ -41,7 +34,6 @@ function _extends() {
       };
   return _extends.apply(this, arguments);
 }
-
 function _objectWithoutProperties(source, excluded) {
   if (source == null) return {};
   var target = _objectWithoutPropertiesLoose(source, excluded);
@@ -57,7 +49,6 @@ function _objectWithoutProperties(source, excluded) {
   }
   return target;
 }
-
 function _objectWithoutPropertiesLoose(source, excluded) {
   if (source == null) return {};
   var target = {};
@@ -70,7 +61,6 @@ function _objectWithoutPropertiesLoose(source, excluded) {
   }
   return target;
 }
-
 var _default = function _default(_ref) {
   var type = _ref.type,
     _ref$prefix = _ref.prefix,
@@ -78,7 +68,6 @@ var _default = function _default(_ref) {
     _ref$className = _ref.className,
     className = _ref$className === void 0 ? '' : _ref$className,
     props = _objectWithoutProperties(_ref, _excluded);
-
   return /*#__PURE__*/ _react.default.createElement(
     'i',
     _extends(
@@ -99,5 +88,4 @@ var _default = function _default(_ref) {
     ),
   );
 };
-
 exports.default = _default;

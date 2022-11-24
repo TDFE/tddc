@@ -19,20 +19,15 @@ function _typeof(obj) {
     _typeof(obj)
   );
 }
-
 Object.defineProperty(exports, '__esModule', {
   value: true,
 });
 exports.default = void 0;
-
 var _react = _interopRequireWildcard(require('react'));
-
 var _useVirtualList3 = _interopRequireDefault(require('../hooks/useVirtualList'));
-
 function _interopRequireDefault(obj) {
   return obj && obj.__esModule ? obj : { default: obj };
 }
-
 function _getRequireWildcardCache(nodeInterop) {
   if (typeof WeakMap !== 'function') return null;
   var cacheBabelInterop = new WeakMap();
@@ -41,7 +36,6 @@ function _getRequireWildcardCache(nodeInterop) {
     return nodeInterop ? cacheNodeInterop : cacheBabelInterop;
   })(nodeInterop);
 }
-
 function _interopRequireWildcard(obj, nodeInterop) {
   if (!nodeInterop && obj && obj.__esModule) {
     return obj;
@@ -71,7 +65,6 @@ function _interopRequireWildcard(obj, nodeInterop) {
   }
   return newObj;
 }
-
 function _slicedToArray(arr, i) {
   return (
     _arrayWithHoles(arr) ||
@@ -80,13 +73,11 @@ function _slicedToArray(arr, i) {
     _nonIterableRest()
   );
 }
-
 function _nonIterableRest() {
   throw new TypeError(
     'Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.',
   );
 }
-
 function _unsupportedIterableToArray(o, minLen) {
   if (!o) return;
   if (typeof o === 'string') return _arrayLikeToArray(o, minLen);
@@ -96,7 +87,6 @@ function _unsupportedIterableToArray(o, minLen) {
   if (n === 'Arguments' || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n))
     return _arrayLikeToArray(o, minLen);
 }
-
 function _arrayLikeToArray(arr, len) {
   if (len == null || len > arr.length) len = arr.length;
   for (var i = 0, arr2 = new Array(len); i < len; i++) {
@@ -104,7 +94,6 @@ function _arrayLikeToArray(arr, len) {
   }
   return arr2;
 }
-
 function _iterableToArrayLimit(arr, i) {
   var _i =
     arr == null
@@ -132,11 +121,9 @@ function _iterableToArrayLimit(arr, i) {
   }
   return _arr;
 }
-
 function _arrayWithHoles(arr) {
   if (Array.isArray(arr)) return arr;
 }
-
 var SearchDrapper = function SearchDrapper(_ref) {
   var inputValue = _ref.inputValue,
     filterOptions = _ref.filterOptions,
@@ -148,7 +135,6 @@ var SearchDrapper = function SearchDrapper(_ref) {
     showSearch = _ref.showSearch;
   var containerRef = (0, _react.useRef)(null);
   var wrapperRef = (0, _react.useRef)(null);
-
   var _useVirtualList = (0, _useVirtualList3.default)(filterOptions, {
       containerTarget: containerRef,
       wrapperTarget: wrapperRef,
@@ -157,8 +143,8 @@ var SearchDrapper = function SearchDrapper(_ref) {
     }),
     _useVirtualList2 = _slicedToArray(_useVirtualList, 1),
     list = _useVirtualList2[0];
-  /** 搜索结果为空 */
 
+  /** 搜索结果为空 */
   var isEntry = (0, _react.useMemo)(
     function () {
       return (
@@ -172,12 +158,10 @@ var SearchDrapper = function SearchDrapper(_ref) {
     },
     [filterOptions],
   );
-
   if (isEntry) {
     if (notFoundContent) {
       return notFoundContent;
     }
-
     return /*#__PURE__*/ _react.default.createElement(
       'div',
       null,
@@ -256,7 +240,6 @@ var SearchDrapper = function SearchDrapper(_ref) {
       ),
     );
   }
-
   return /*#__PURE__*/ _react.default.createElement(
     'div',
     {
@@ -280,10 +263,8 @@ var SearchDrapper = function SearchDrapper(_ref) {
           ? void 0
           : list.map(function () {
               var _path$map, _showSearch$render;
-
               var _ref2 = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {},
                 _ref2$data = _ref2.data;
-
               _ref2$data = _ref2$data === void 0 ? {} : _ref2$data;
               var path = _ref2$data.path,
                 data = _ref2.data;
@@ -331,7 +312,5 @@ var SearchDrapper = function SearchDrapper(_ref) {
     ),
   );
 };
-
 var _default = /*#__PURE__*/ (0, _react.memo)(SearchDrapper);
-
 exports.default = _default;

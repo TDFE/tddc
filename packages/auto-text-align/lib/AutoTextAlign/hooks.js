@@ -4,11 +4,8 @@ Object.defineProperty(exports, '__esModule', {
   value: true,
 });
 exports.default = void 0;
-
 var _react = require('react');
-
 var _utils = require('./utils');
-
 function _slicedToArray(arr, i) {
   return (
     _arrayWithHoles(arr) ||
@@ -17,13 +14,11 @@ function _slicedToArray(arr, i) {
     _nonIterableRest()
   );
 }
-
 function _nonIterableRest() {
   throw new TypeError(
     'Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.',
   );
 }
-
 function _unsupportedIterableToArray(o, minLen) {
   if (!o) return;
   if (typeof o === 'string') return _arrayLikeToArray(o, minLen);
@@ -33,7 +28,6 @@ function _unsupportedIterableToArray(o, minLen) {
   if (n === 'Arguments' || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n))
     return _arrayLikeToArray(o, minLen);
 }
-
 function _arrayLikeToArray(arr, len) {
   if (len == null || len > arr.length) len = arr.length;
   for (var i = 0, arr2 = new Array(len); i < len; i++) {
@@ -41,7 +35,6 @@ function _arrayLikeToArray(arr, len) {
   }
   return arr2;
 }
-
 function _iterableToArrayLimit(arr, i) {
   var _i =
     arr == null
@@ -69,29 +62,24 @@ function _iterableToArrayLimit(arr, i) {
   }
   return _arr;
 }
-
 function _arrayWithHoles(arr) {
   if (Array.isArray(arr)) return arr;
 }
-
 var useAdjustAlign = function useAdjustAlign(widthList, containerRef, initColumnLen) {
   var _useState = (0, _react.useState)([]),
     _useState2 = _slicedToArray(_useState, 2),
     colomns = _useState2[0],
-    setColomns = _useState2[1]; // 容器宽度
-
+    setColomns = _useState2[1];
+  // 容器宽度
   var _useState3 = (0, _react.useState)(0),
     _useState4 = _slicedToArray(_useState3, 2),
     containerWidth = _useState4[0],
     setContainerWidth = _useState4[1];
-
   (0, _react.useEffect)(
     function () {
       var dom = containerRef.current;
-
       var getContainerWidth = function getContainerWidth() {
         var _containerRef$current, _containerRef$current2;
-
         var containerWidth =
           (_containerRef$current = containerRef.current) === null ||
           _containerRef$current === void 0
@@ -102,10 +90,8 @@ var useAdjustAlign = function useAdjustAlign(widthList, containerRef, initColumn
             : _containerRef$current2.width;
         setContainerWidth(containerWidth);
       };
-
       if (dom) {
         var _dom$getBoundingClien;
-
         var _containerWidth =
           dom === null || dom === void 0
             ? void 0
@@ -113,11 +99,9 @@ var useAdjustAlign = function useAdjustAlign(widthList, containerRef, initColumn
               _dom$getBoundingClien === void 0
             ? void 0
             : _dom$getBoundingClien.width;
-
         console.log(_containerWidth, 'containerWidth');
         setContainerWidth(_containerWidth);
       }
-
       window.addEventListener('resize', getContainerWidth, false);
       return function () {
         window.removeEventListener('resize', getContainerWidth, false);
@@ -135,6 +119,5 @@ var useAdjustAlign = function useAdjustAlign(widthList, containerRef, initColumn
   );
   return colomns;
 };
-
 var _default = useAdjustAlign;
 exports.default = _default;

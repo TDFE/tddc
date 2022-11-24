@@ -4,51 +4,29 @@ Object.defineProperty(exports, '__esModule', {
   value: true,
 });
 exports.ReferenceBatchCheck = void 0;
-
 require('antd/lib/message/style');
-
 var _message2 = _interopRequireDefault(require('antd/lib/message'));
-
 require('antd/lib/tag/style');
-
 var _tag = _interopRequireDefault(require('antd/lib/tag'));
-
 require('antd/lib/tooltip/style');
-
 var _tooltip = _interopRequireDefault(require('antd/lib/tooltip'));
-
 require('antd/lib/alert/style');
-
 var _alert = _interopRequireDefault(require('antd/lib/alert'));
-
 require('antd/lib/button/style');
-
 var _button = _interopRequireDefault(require('antd/lib/button'));
-
 require('antd/lib/icon/style');
-
 var _icon = _interopRequireDefault(require('antd/lib/icon'));
-
 require('antd/lib/collapse/style');
-
 var _collapse = _interopRequireDefault(require('antd/lib/collapse'));
-
 var _react = _interopRequireDefault(require('react'));
-
 var _reactDom = _interopRequireDefault(require('react-dom'));
-
 var _tntd = require('tntd');
-
 var _ReferenceInfo = require('../ReferenceInfo');
-
 require('./index.less');
-
 function _interopRequireDefault(obj) {
   return obj && obj.__esModule ? obj : { default: obj };
 }
-
 var Panel = _collapse.default.Panel;
-
 var ReferenceBatchCheck = function ReferenceBatchCheck(props) {
   var _ref = props || {},
     _ref$title = _ref.title,
@@ -87,13 +65,10 @@ var ReferenceBatchCheck = function ReferenceBatchCheck(props) {
       _ref$strongMsg === void 0
         ? '存在强引用（被上线、启用、上下线审批中和指标补数、指标数据准备等相关状态组件引用）关系，禁止操作'
         : _ref$strongMsg;
-
   var appendModal = function appendModal(reject, resolve) {
     var _referenceData, _referenceData4;
-
     var referenceData = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : [];
     var type = '';
-
     if (
       !Array.isArray(referenceData) &&
       ((_referenceData = referenceData) === null || _referenceData === void 0
@@ -101,7 +76,6 @@ var ReferenceBatchCheck = function ReferenceBatchCheck(props) {
         : _referenceData.type)
     ) {
       var _referenceData2, _referenceData3;
-
       type =
         (_referenceData2 = referenceData) === null || _referenceData2 === void 0
           ? void 0
@@ -111,19 +85,14 @@ var ReferenceBatchCheck = function ReferenceBatchCheck(props) {
           ? void 0
           : _referenceData3.result) || [];
     }
-
     var modalWrap = document.createElement('div');
     modalWrap.setAttribute('id', 'tddc-reference-online-check-modal');
-
     var removeModal = function removeModal() {
       var _modalWrap$parentNode;
-
       var tddcModal = document.querySelectorAll('#tddc-reference-online-check-modal');
-
       if (tddcModal) {
         tddcModal.forEach(function (ele) {
           var _ele$parentNode;
-
           return ele === null || ele === void 0
             ? void 0
             : (_ele$parentNode = ele.parentNode) === null || _ele$parentNode === void 0
@@ -131,7 +100,6 @@ var ReferenceBatchCheck = function ReferenceBatchCheck(props) {
             : _ele$parentNode.removeChild(ele);
         });
       }
-
       modalWrap &&
         (modalWrap === null || modalWrap === void 0
           ? void 0
@@ -140,14 +108,11 @@ var ReferenceBatchCheck = function ReferenceBatchCheck(props) {
           ? void 0
           : _modalWrap$parentNode.removeChild(modalWrap));
       !type && reject && reject(referenceData);
-
       if (document.body.getAttribute('style')) {
         document.body.removeAttribute('style');
       }
     };
-
     removeModal();
-
     _reactDom.default.render(
       /*#__PURE__*/ _react.default.createElement(
         _tntd.Modal,
@@ -223,14 +188,12 @@ var ReferenceBatchCheck = function ReferenceBatchCheck(props) {
               ? void 0
               : _referenceData4.map(function (d, i) {
                   var headerTxt = d === null || d === void 0 ? void 0 : d.componentName;
-
                   if (d === null || d === void 0 ? void 0 : d.componentCode) {
                     headerTxt += '['.concat(
                       d === null || d === void 0 ? void 0 : d.componentCode,
                       ']',
                     );
                   }
-
                   return /*#__PURE__*/ _react.default.createElement(
                     Panel,
                     {
@@ -273,17 +236,14 @@ var ReferenceBatchCheck = function ReferenceBatchCheck(props) {
       ),
       modalWrap,
     );
-
     document.body.appendChild(modalWrap);
   };
-
   if (rq && typeof rq === 'function') {
     return new Promise(function (resolve, reject) {
       return rq().then(function (res) {
         var _ref2 = res || {},
           success = _ref2.success,
           data = _ref2.data;
-
         if (success) {
           if (Array.isArray(data) && !!(data === null || data === void 0 ? void 0 : data.length)) {
             appendModal(reject, resolve, data);
@@ -304,5 +264,4 @@ var ReferenceBatchCheck = function ReferenceBatchCheck(props) {
     _message2.default.error('请提供一个可靠的查询请求!!!');
   }
 };
-
 exports.ReferenceBatchCheck = ReferenceBatchCheck;

@@ -19,36 +19,22 @@ function _typeof(obj) {
     _typeof(obj)
   );
 }
-
 Object.defineProperty(exports, '__esModule', {
   value: true,
 });
 exports.default = void 0;
-
 require('antd/lib/layout/style');
-
 var _layout = _interopRequireDefault(require('antd/lib/layout'));
-
 var _react = _interopRequireWildcard(require('react'));
-
 var _classnames = _interopRequireDefault(require('classnames'));
-
 var _lodash = require('lodash');
-
 var _Context = require('./Context');
-
 var _Icon = _interopRequireDefault(require('./Icon'));
-
 var _Header = _interopRequireDefault(require('./Header'));
-
 var _Logo = _interopRequireDefault(require('./Logo'));
-
 var _SideMenu = _interopRequireDefault(require('./SideMenu'));
-
 var _storage = require('./storage');
-
 var _utils = require('./utils');
-
 function _getRequireWildcardCache(nodeInterop) {
   if (typeof WeakMap !== 'function') return null;
   var cacheBabelInterop = new WeakMap();
@@ -57,7 +43,6 @@ function _getRequireWildcardCache(nodeInterop) {
     return nodeInterop ? cacheNodeInterop : cacheBabelInterop;
   })(nodeInterop);
 }
-
 function _interopRequireWildcard(obj, nodeInterop) {
   if (!nodeInterop && obj && obj.__esModule) {
     return obj;
@@ -87,11 +72,9 @@ function _interopRequireWildcard(obj, nodeInterop) {
   }
   return newObj;
 }
-
 function _interopRequireDefault(obj) {
   return obj && obj.__esModule ? obj : { default: obj };
 }
-
 function _extends() {
   _extends = Object.assign
     ? Object.assign.bind()
@@ -108,7 +91,6 @@ function _extends() {
       };
   return _extends.apply(this, arguments);
 }
-
 function _slicedToArray(arr, i) {
   return (
     _arrayWithHoles(arr) ||
@@ -117,13 +99,11 @@ function _slicedToArray(arr, i) {
     _nonIterableRest()
   );
 }
-
 function _nonIterableRest() {
   throw new TypeError(
     'Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.',
   );
 }
-
 function _unsupportedIterableToArray(o, minLen) {
   if (!o) return;
   if (typeof o === 'string') return _arrayLikeToArray(o, minLen);
@@ -133,7 +113,6 @@ function _unsupportedIterableToArray(o, minLen) {
   if (n === 'Arguments' || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n))
     return _arrayLikeToArray(o, minLen);
 }
-
 function _arrayLikeToArray(arr, len) {
   if (len == null || len > arr.length) len = arr.length;
   for (var i = 0, arr2 = new Array(len); i < len; i++) {
@@ -141,7 +120,6 @@ function _arrayLikeToArray(arr, len) {
   }
   return arr2;
 }
-
 function _iterableToArrayLimit(arr, i) {
   var _i =
     arr == null
@@ -169,15 +147,12 @@ function _iterableToArrayLimit(arr, i) {
   }
   return _arr;
 }
-
 function _arrayWithHoles(arr) {
   if (Array.isArray(arr)) return arr;
 }
-
 var Content = _layout.default.Content,
   Sider = _layout.default.Sider,
   AntdHeader = _layout.default.Header;
-
 var _default = function _default(props) {
   var className = props.className,
     _props$menus = props.menus,
@@ -192,53 +167,43 @@ var _default = function _default(props) {
     headerTabs = props.headerTabs,
     onLanguageChange = props.onLanguageChange,
     onMenuLevelChange = props.onMenuLevelChange;
-
   var _useContext = (0, _react.useContext)(_Context.ThemeContext),
     theme = _useContext.theme,
     language = _useContext.language,
     menuLevel = _useContext.menuLevel;
-
   var _getSideMenuStore = (0, _storage.getSideMenuStore)(),
     storeCollapsed = _getSideMenuStore.collapsed,
     _getSideMenuStore$ope = _getSideMenuStore.openKeys,
     openKeys = _getSideMenuStore$ope === void 0 ? [] : _getSideMenuStore$ope;
-
   var _useState = (0, _react.useState)(
       (0, _lodash.isUndefined)(storeCollapsed) ? false : storeCollapsed,
     ),
     _useState2 = _slicedToArray(_useState, 2),
     collapsed = _useState2[0],
     setCollapsed = _useState2[1];
-
   var _useState3 = (0, _react.useState)(openKeys),
     _useState4 = _slicedToArray(_useState3, 2),
     openMenuKeys = _useState4[0],
     setOpenMenuKeys = _useState4[1];
-
   var _useState5 = (0, _react.useState)([]),
     _useState6 = _slicedToArray(_useState5, 2),
     mainMenu = _useState6[0],
     setMainMenu = _useState6[1];
-
   var _useState7 = (0, _react.useState)([]),
     _useState8 = _slicedToArray(_useState7, 2),
     siderMenu = _useState8[0],
     setSiderMenu = _useState8[1];
-
   var _useState9 = (0, _react.useState)([]),
     _useState10 = _slicedToArray(_useState9, 2),
     selectedKeys = _useState10[0],
     setSelectedKeys = _useState10[1];
-
   var _useState11 = (0, _react.useState)(false),
     _useState12 = _slicedToArray(_useState11, 2),
     isHasLevel3 = _useState12[0],
     setIsHasLevel3 = _useState12[1];
-
   var basicMenus = function basicMenus(menus, isLevel3) {
     var cloneMenus = (0, _lodash.cloneDeep)(menus);
     var mainMenu = cloneMenus;
-
     if (isLevel3) {
       mainMenu = [
         {
@@ -252,41 +217,33 @@ var _default = function _default(props) {
       ];
       cloneMenus.forEach(function (element) {
         var isLevel2 = (0, _utils.hasLevel2)(element);
-
         if (isLevel2) {
           mainMenu.push(element);
         } else {
           mainMenu[0].children.push(element);
         }
       });
-
       if (mainMenu[0].children.length) {
         mainMenu.reverse();
       } else {
         mainMenu.splice(0, 1);
       }
     }
-
     (0, _utils.formatter)(mainMenu);
     return mainMenu;
   };
-
   (0, _react.useEffect)(
     function () {
       if (menus.length && pathname) {
         var isLevel3 = (0, _utils.hasLevel3)(menus);
-
         var _mainMenu = basicMenus(menus, isLevel3);
-
         var activeMenu = (0, _utils.getActiveMenu)(_mainMenu, pathname);
         var parents = [];
-
         if (activeMenu) {
           parents = (0, _utils.getParents)(activeMenu);
         } else {
           parents = [_mainMenu[0].code];
         }
-
         setIsHasLevel3(isLevel3);
         setMainMenu(_mainMenu);
       }
@@ -298,15 +255,12 @@ var _default = function _default(props) {
       if (mainMenu.length && pathname) {
         var activeMenu = (0, _utils.getActiveMenu)(mainMenu, pathname);
         var parents = [];
-
         if (activeMenu) {
           parents = (0, _utils.getParents)(activeMenu);
         } else {
           parents = [mainMenu[0].code];
         }
-
         var _siderMenu = [];
-
         if (isHasLevel3) {
           var selectedMainMenu =
             mainMenu.find(function (m) {
@@ -317,7 +271,6 @@ var _default = function _default(props) {
         } else {
           _siderMenu = mainMenu;
         }
-
         setSiderMenu(_siderMenu);
         setOpenMenuKeys(parents);
         setSelectedKeys(parents);
@@ -325,14 +278,13 @@ var _default = function _default(props) {
     },
     [mainMenu, pathname],
   );
-
   var collapseChangeHandle = function collapseChangeHandle() {
     var _getSideMenuStore2 = (0, _storage.getSideMenuStore)(),
       _getSideMenuStore2$be = _getSideMenuStore2.beforeOpenKeys,
       beforeOpenKeys = _getSideMenuStore2$be === void 0 ? [] : _getSideMenuStore2$be;
+    var newCollapsed = !collapsed;
 
-    var newCollapsed = !collapsed; // 菜单收起：记住当前展开子菜单到store，并收起子菜单
-
+    // 菜单收起：记住当前展开子菜单到store，并收起子菜单
     if (newCollapsed) {
       (0, _storage.setSideMenuStore)({
         collapsed: newCollapsed,
@@ -347,10 +299,8 @@ var _default = function _default(props) {
       });
       setOpenMenuKeys(beforeOpenKeys);
     }
-
     setCollapsed(newCollapsed);
   };
-
   (0, _react.useEffect)(function () {
     onLanguageChange && onLanguageChange(language);
   }, []);
@@ -409,7 +359,6 @@ var _default = function _default(props) {
                 beforeOpenKeys: keys,
               });
             }
-
             setOpenMenuKeys(keys);
           },
         }),
@@ -446,5 +395,4 @@ var _default = function _default(props) {
     ),
   );
 };
-
 exports.default = _default;

@@ -19,32 +19,20 @@ function _typeof(obj) {
     _typeof(obj)
   );
 }
-
 Object.defineProperty(exports, '__esModule', {
   value: true,
 });
 exports.default = void 0;
-
 require('antd/lib/tree-select/style');
-
 var _treeSelect = _interopRequireDefault(require('antd/lib/tree-select'));
-
 require('antd/lib/select/style');
-
 var _select = _interopRequireDefault(require('antd/lib/select'));
-
 require('antd/lib/input/style');
-
 var _input = _interopRequireDefault(require('antd/lib/input'));
-
 var _react = _interopRequireWildcard(require('react'));
-
 require('./index.less');
-
 var _storage = require('../../storage');
-
 var _utils = require('../../utils');
-
 function _getRequireWildcardCache(nodeInterop) {
   if (typeof WeakMap !== 'function') return null;
   var cacheBabelInterop = new WeakMap();
@@ -53,7 +41,6 @@ function _getRequireWildcardCache(nodeInterop) {
     return nodeInterop ? cacheNodeInterop : cacheBabelInterop;
   })(nodeInterop);
 }
-
 function _interopRequireWildcard(obj, nodeInterop) {
   if (!nodeInterop && obj && obj.__esModule) {
     return obj;
@@ -83,11 +70,9 @@ function _interopRequireWildcard(obj, nodeInterop) {
   }
   return newObj;
 }
-
 function _interopRequireDefault(obj) {
   return obj && obj.__esModule ? obj : { default: obj };
 }
-
 function _slicedToArray(arr, i) {
   return (
     _arrayWithHoles(arr) ||
@@ -96,13 +81,11 @@ function _slicedToArray(arr, i) {
     _nonIterableRest()
   );
 }
-
 function _nonIterableRest() {
   throw new TypeError(
     'Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.',
   );
 }
-
 function _unsupportedIterableToArray(o, minLen) {
   if (!o) return;
   if (typeof o === 'string') return _arrayLikeToArray(o, minLen);
@@ -112,7 +95,6 @@ function _unsupportedIterableToArray(o, minLen) {
   if (n === 'Arguments' || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n))
     return _arrayLikeToArray(o, minLen);
 }
-
 function _arrayLikeToArray(arr, len) {
   if (len == null || len > arr.length) len = arr.length;
   for (var i = 0, arr2 = new Array(len); i < len; i++) {
@@ -120,7 +102,6 @@ function _arrayLikeToArray(arr, len) {
   }
   return arr2;
 }
-
 function _iterableToArrayLimit(arr, i) {
   var _i =
     arr == null
@@ -148,14 +129,11 @@ function _iterableToArrayLimit(arr, i) {
   }
   return _arr;
 }
-
 function _arrayWithHoles(arr) {
   if (Array.isArray(arr)) return arr;
 }
-
 var InputGroup = _input.default.Group;
 var Option = _select.default.Option;
-
 var _default = function _default(props) {
   var orgAppShow = props.orgAppShow,
     orgList = props.orgList,
@@ -168,11 +146,9 @@ var _default = function _default(props) {
     item.value = item.uuid;
     item.key = item.uuid;
   });
-
   var getInitialSelectedOrg = function getInitialSelectedOrg() {
     var currentOrgStore = (0, _storage.getCurrentOrgStore)();
     var temp = orgListFormatData[0];
-
     var findOrgByKey = function findOrgByKey(selectedKey) {
       var curOrg;
       (0, _utils.traverseTree)(orgListFormatData, function (item) {
@@ -183,56 +159,43 @@ var _default = function _default(props) {
       });
       return curOrg;
     };
-
     if (currentOrgStore.name) {
       var curOrg = findOrgByKey(currentOrgStore.key);
-
       if (curOrg) {
         temp = currentOrgStore;
       } else {
         (0, _storage.setCurrentOrgStore)(temp);
       }
     }
-
     return temp;
   };
-
   var getInitialSelectedApp = function getInitialSelectedApp() {
     var currentAppStore = (0, _storage.getCurrentAppStore)();
     var temp = orgAppList[0];
-
     var findAppByKey = function findAppByKey(selectedKey) {
       var findApp;
-
       for (var index = 0; index < orgAppList.length; index++) {
         var item = orgAppList[index];
-
         if (item.key === selectedKey) {
           findApp = item;
           break;
         }
       }
-
       return findApp;
     };
-
     if (currentAppStore.name) {
       var curApp = findAppByKey(currentAppStore.key);
-
       if (curApp) {
         temp = currentAppStore;
       } else {
         (0, _storage.setCurrentAppStore)(temp);
       }
     }
-
     return temp;
   };
-
   (0, _react.useEffect)(
     function () {
       var _Object$keys;
-
       if (
         orgList &&
         ((_Object$keys = Object.keys(orgList)) === null || _Object$keys === void 0
@@ -252,32 +215,28 @@ var _default = function _default(props) {
     },
     [orgAppList],
   );
-
   var _useState = (0, _react.useState)(getInitialSelectedOrg()),
     _useState2 = _slicedToArray(_useState, 2),
     selectedOrg = _useState2[0],
     setSelectedOrg = _useState2[1];
-
   var _useState3 = (0, _react.useState)({}),
     _useState4 = _slicedToArray(_useState3, 2),
     selectedApp = _useState4[0],
     setSelectedApp = _useState4[1];
-
   var _ref = selectedOrg || {},
     orgKey = _ref.key;
-
   var _ref2 = selectedApp || {},
     _ref2$key = _ref2.key,
     appKey = _ref2$key === void 0 ? '' : _ref2$key;
-
   var handleChangeApp = function handleChangeApp(app) {
     if (appKey !== (app === null || app === void 0 ? void 0 : app.key)) {
       setSelectedApp(app);
       (0, _storage.setCurrentAppStore)(app);
       onAppChange && onAppChange(app);
     }
-  }; // org变化事件
+  };
 
+  // org变化事件
   var handleChangeOrg = function handleChangeOrg() {
     var org = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
     setSelectedOrg(org);
@@ -285,7 +244,6 @@ var _default = function _default(props) {
     handleChangeApp(orgAppList[0]);
     onOrgChange && onOrgChange(org);
   };
-
   return /*#__PURE__*/ _react.default.createElement(
     'div',
     {
@@ -359,5 +317,4 @@ var _default = function _default(props) {
     ),
   );
 };
-
 exports.default = _default;

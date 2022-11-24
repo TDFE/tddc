@@ -19,40 +19,24 @@ function _typeof(obj) {
     _typeof(obj)
   );
 }
-
 Object.defineProperty(exports, '__esModule', {
   value: true,
 });
 exports.default = void 0;
-
 require('antd/lib/spin/style');
-
 var _spin = _interopRequireDefault(require('antd/lib/spin'));
-
 require('antd/lib/empty/style');
-
 var _empty = _interopRequireDefault(require('antd/lib/empty'));
-
 require('antd/lib/message/style');
-
 var _message2 = _interopRequireDefault(require('antd/lib/message'));
-
 var _react = _interopRequireWildcard(require('react'));
-
 var _tntd = require('tntd');
-
 var _universalCookie = _interopRequireDefault(require('universal-cookie'));
-
 var _TNTLayout = _interopRequireDefault(require('../TNTLayout'));
-
 var _reducer = _interopRequireWildcard(require('./reducer'));
-
 var _utils = require('./utils');
-
 var _index = _interopRequireDefault(require('./service/index'));
-
 require('./index.less');
-
 var _excluded = [
   'eventEmitter',
   'actions',
@@ -68,7 +52,6 @@ var _excluded = [
   'onMenuLevelChange',
   'isDev',
 ];
-
 function _getRequireWildcardCache(nodeInterop) {
   if (typeof WeakMap !== 'function') return null;
   var cacheBabelInterop = new WeakMap();
@@ -77,7 +60,6 @@ function _getRequireWildcardCache(nodeInterop) {
     return nodeInterop ? cacheNodeInterop : cacheBabelInterop;
   })(nodeInterop);
 }
-
 function _interopRequireWildcard(obj, nodeInterop) {
   if (!nodeInterop && obj && obj.__esModule) {
     return obj;
@@ -107,11 +89,9 @@ function _interopRequireWildcard(obj, nodeInterop) {
   }
   return newObj;
 }
-
 function _interopRequireDefault(obj) {
   return obj && obj.__esModule ? obj : { default: obj };
 }
-
 function _extends() {
   _extends = Object.assign
     ? Object.assign.bind()
@@ -128,7 +108,6 @@ function _extends() {
       };
   return _extends.apply(this, arguments);
 }
-
 function ownKeys(object, enumerableOnly) {
   var keys = Object.keys(object);
   if (Object.getOwnPropertySymbols) {
@@ -141,7 +120,6 @@ function ownKeys(object, enumerableOnly) {
   }
   return keys;
 }
-
 function _objectSpread(target) {
   for (var i = 1; i < arguments.length; i++) {
     var source = null != arguments[i] ? arguments[i] : {};
@@ -157,7 +135,6 @@ function _objectSpread(target) {
   }
   return target;
 }
-
 function _defineProperty(obj, key, value) {
   if (key in obj) {
     Object.defineProperty(obj, key, {
@@ -171,7 +148,6 @@ function _defineProperty(obj, key, value) {
   }
   return obj;
 }
-
 function _regeneratorRuntime() {
   'use strict';
   /*! regenerator-runtime -- Copyright (c) 2014-present, Facebook, Inc. -- license (MIT): https://github.com/facebook/regenerator/blob/main/LICENSE */ _regeneratorRuntime =
@@ -181,6 +157,11 @@ function _regeneratorRuntime() {
   var exports = {},
     Op = Object.prototype,
     hasOwn = Op.hasOwnProperty,
+    defineProperty =
+      Object.defineProperty ||
+      function (obj, key, desc) {
+        obj[key] = desc.value;
+      },
     $Symbol = 'function' == typeof Symbol ? Symbol : {},
     iteratorSymbol = $Symbol.iterator || '@@iterator',
     asyncIteratorSymbol = $Symbol.asyncIterator || '@@asyncIterator',
@@ -208,43 +189,7 @@ function _regeneratorRuntime() {
       generator = Object.create(protoGenerator.prototype),
       context = new Context(tryLocsList || []);
     return (
-      (generator._invoke = (function (innerFn, self, context) {
-        var state = 'suspendedStart';
-        return function (method, arg) {
-          if ('executing' === state) throw new Error('Generator is already running');
-          if ('completed' === state) {
-            if ('throw' === method) throw arg;
-            return doneResult();
-          }
-          for (context.method = method, context.arg = arg; ; ) {
-            var delegate = context.delegate;
-            if (delegate) {
-              var delegateResult = maybeInvokeDelegate(delegate, context);
-              if (delegateResult) {
-                if (delegateResult === ContinueSentinel) continue;
-                return delegateResult;
-              }
-            }
-            if ('next' === context.method) context.sent = context._sent = context.arg;
-            else if ('throw' === context.method) {
-              if ('suspendedStart' === state) throw ((state = 'completed'), context.arg);
-              context.dispatchException(context.arg);
-            } else 'return' === context.method && context.abrupt('return', context.arg);
-            state = 'executing';
-            var record = tryCatch(innerFn, self, context);
-            if ('normal' === record.type) {
-              if (
-                ((state = context.done ? 'completed' : 'suspendedYield'),
-                record.arg === ContinueSentinel)
-              )
-                continue;
-              return { value: record.arg, done: context.done };
-            }
-            'throw' === record.type &&
-              ((state = 'completed'), (context.method = 'throw'), (context.arg = record.arg));
-          }
-        };
-      })(innerFn, self, context)),
+      defineProperty(generator, '_invoke', { value: makeInvokeMethod(innerFn, self, context) }),
       generator
     );
   }
@@ -308,15 +253,54 @@ function _regeneratorRuntime() {
       reject(record.arg);
     }
     var previousPromise;
-    this._invoke = function (method, arg) {
-      function callInvokeWithMethodAndArg() {
-        return new PromiseImpl(function (resolve, reject) {
-          invoke(method, arg, resolve, reject);
-        });
+    defineProperty(this, '_invoke', {
+      value: function value(method, arg) {
+        function callInvokeWithMethodAndArg() {
+          return new PromiseImpl(function (resolve, reject) {
+            invoke(method, arg, resolve, reject);
+          });
+        }
+        return (previousPromise = previousPromise
+          ? previousPromise.then(callInvokeWithMethodAndArg, callInvokeWithMethodAndArg)
+          : callInvokeWithMethodAndArg());
+      },
+    });
+  }
+  function makeInvokeMethod(innerFn, self, context) {
+    var state = 'suspendedStart';
+    return function (method, arg) {
+      if ('executing' === state) throw new Error('Generator is already running');
+      if ('completed' === state) {
+        if ('throw' === method) throw arg;
+        return doneResult();
       }
-      return (previousPromise = previousPromise
-        ? previousPromise.then(callInvokeWithMethodAndArg, callInvokeWithMethodAndArg)
-        : callInvokeWithMethodAndArg());
+      for (context.method = method, context.arg = arg; ; ) {
+        var delegate = context.delegate;
+        if (delegate) {
+          var delegateResult = maybeInvokeDelegate(delegate, context);
+          if (delegateResult) {
+            if (delegateResult === ContinueSentinel) continue;
+            return delegateResult;
+          }
+        }
+        if ('next' === context.method) context.sent = context._sent = context.arg;
+        else if ('throw' === context.method) {
+          if ('suspendedStart' === state) throw ((state = 'completed'), context.arg);
+          context.dispatchException(context.arg);
+        } else 'return' === context.method && context.abrupt('return', context.arg);
+        state = 'executing';
+        var record = tryCatch(innerFn, self, context);
+        if ('normal' === record.type) {
+          if (
+            ((state = context.done ? 'completed' : 'suspendedYield'),
+            record.arg === ContinueSentinel)
+          )
+            continue;
+          return { value: record.arg, done: context.done };
+        }
+        'throw' === record.type &&
+          ((state = 'completed'), (context.method = 'throw'), (context.arg = record.arg));
+      }
     };
   }
   function maybeInvokeDelegate(delegate, context) {
@@ -397,8 +381,11 @@ function _regeneratorRuntime() {
   }
   return (
     (GeneratorFunction.prototype = GeneratorFunctionPrototype),
-    define(Gp, 'constructor', GeneratorFunctionPrototype),
-    define(GeneratorFunctionPrototype, 'constructor', GeneratorFunction),
+    defineProperty(Gp, 'constructor', { value: GeneratorFunctionPrototype, configurable: !0 }),
+    defineProperty(GeneratorFunctionPrototype, 'constructor', {
+      value: GeneratorFunction,
+      configurable: !0,
+    }),
     (GeneratorFunction.displayName = define(
       GeneratorFunctionPrototype,
       toStringTagSymbol,
@@ -446,8 +433,9 @@ function _regeneratorRuntime() {
     define(Gp, 'toString', function () {
       return '[object Generator]';
     }),
-    (exports.keys = function (object) {
-      var keys = [];
+    (exports.keys = function (val) {
+      var object = Object(val),
+        keys = [];
       for (var key in object) {
         keys.push(key);
       }
@@ -598,7 +586,6 @@ function _regeneratorRuntime() {
     exports
   );
 }
-
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) {
   try {
     var info = gen[key](arg);
@@ -613,7 +600,6 @@ function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) {
     Promise.resolve(value).then(_next, _throw);
   }
 }
-
 function _asyncToGenerator(fn) {
   return function () {
     var self = this,
@@ -630,7 +616,6 @@ function _asyncToGenerator(fn) {
     });
   };
 }
-
 function _slicedToArray(arr, i) {
   return (
     _arrayWithHoles(arr) ||
@@ -639,13 +624,11 @@ function _slicedToArray(arr, i) {
     _nonIterableRest()
   );
 }
-
 function _nonIterableRest() {
   throw new TypeError(
     'Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.',
   );
 }
-
 function _unsupportedIterableToArray(o, minLen) {
   if (!o) return;
   if (typeof o === 'string') return _arrayLikeToArray(o, minLen);
@@ -655,7 +638,6 @@ function _unsupportedIterableToArray(o, minLen) {
   if (n === 'Arguments' || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n))
     return _arrayLikeToArray(o, minLen);
 }
-
 function _arrayLikeToArray(arr, len) {
   if (len == null || len > arr.length) len = arr.length;
   for (var i = 0, arr2 = new Array(len); i < len; i++) {
@@ -663,7 +645,6 @@ function _arrayLikeToArray(arr, len) {
   }
   return arr2;
 }
-
 function _iterableToArrayLimit(arr, i) {
   var _i =
     arr == null
@@ -691,11 +672,9 @@ function _iterableToArrayLimit(arr, i) {
   }
   return _arr;
 }
-
 function _arrayWithHoles(arr) {
   if (Array.isArray(arr)) return arr;
 }
-
 function _objectWithoutProperties(source, excluded) {
   if (source == null) return {};
   var target = _objectWithoutPropertiesLoose(source, excluded);
@@ -711,7 +690,6 @@ function _objectWithoutProperties(source, excluded) {
   }
   return target;
 }
-
 function _objectWithoutPropertiesLoose(source, excluded) {
   if (source == null) return {};
   var target = {};
@@ -724,19 +702,15 @@ function _objectWithoutPropertiesLoose(source, excluded) {
   }
   return target;
 }
-
 var HeaderTabs = _TNTLayout.default.HeaderTabs,
   HeaderActionItem = _TNTLayout.default.HeaderActionItem,
   AuthContext = _TNTLayout.default.AuthContext;
-
 var TGLayout = function TGLayout(props) {
   var _state$currentApp2, _state$currentOrg2;
-
   var _ref = window.location || {},
     origin = _ref.origin,
     pathname = _ref.pathname,
     search = _ref.search;
-
   var eventEmitter = props.eventEmitter,
     actions = props.actions,
     syncGlobalState = props.syncGlobalState,
@@ -751,26 +725,21 @@ var TGLayout = function TGLayout(props) {
     onMenuLevelChange = props.onMenuLevelChange,
     isDev = props.isDev,
     rest = _objectWithoutProperties(props, _excluded);
-
   var _useState = (0, _react.useState)(''),
     _useState2 = _slicedToArray(_useState, 2),
     errorMsg = _useState2[0],
     setErrorMsg = _useState2[1];
-
   var _useReducer = (0, _react.useReducer)(_reducer.default, (0, _reducer.initState)()),
     _useReducer2 = _slicedToArray(_useReducer, 2),
     state = _useReducer2[0],
     dispatch = _useReducer2[1];
-
   var _useState3 = (0, _react.useState)(
       pathname === null || pathname === void 0 ? void 0 : pathname.split('/')[1],
     ),
     _useState4 = _slicedToArray(_useState3, 2),
     routerPrefix = _useState4[0],
     setRouterPrefix = _useState4[1];
-
   var needAuth = !['/user/login', '/user/startup'].includes(pathname);
-
   var _ref2 = state || {},
     userReady = _ref2.userReady,
     menuTreeReady = _ref2.menuTreeReady,
@@ -789,15 +758,15 @@ var TGLayout = function TGLayout(props) {
     currentApp = _ref2$currentApp === void 0 ? {} : _ref2$currentApp,
     _ref2$personalMode = _ref2.personalMode,
     personalMode = _ref2$personalMode === void 0 ? {} : _ref2$personalMode;
-
   var _ref3 = menuInfo || {},
     _ref3$menuTree = _ref3.menuTree,
     menuTree = _ref3$menuTree === void 0 ? [] : _ref3$menuTree,
     name = _ref3.name,
     enName = _ref3.enName,
     logo = _ref3.logo,
-    extendMap = _ref3.extendMap; // 根据机构获取渠道
+    extendMap = _ref3.extendMap;
 
+  // 根据机构获取渠道
   var getAppByOrgId = /*#__PURE__*/ (function () {
     var _ref4 = _asyncToGenerator(
       /*#__PURE__*/ _regeneratorRuntime().mark(function _callee(org) {
@@ -810,7 +779,6 @@ var TGLayout = function TGLayout(props) {
                 return _index.default.getAppByOrgId({
                   orgUuid: org === null || org === void 0 ? void 0 : org.uuid,
                 });
-
               case 2:
                 orgAppList = _context.sent;
                 _context.next = 5;
@@ -821,7 +789,6 @@ var TGLayout = function TGLayout(props) {
                     orgAppList: orgAppList,
                   },
                 });
-
               case 5:
               case 'end':
                 return _context.stop();
@@ -830,24 +797,22 @@ var TGLayout = function TGLayout(props) {
         }, _callee);
       }),
     );
-
     return function getAppByOrgId(_x) {
       return _ref4.apply(this, arguments);
     };
-  })(); // 退出登陆
+  })();
 
+  // 退出登陆
   var onLogout = function onLogout() {
     _index.default.signOut().then(function () {
       sessionStorage.setItem('_csrf_', '');
       sessionStorage.clear();
       localStorage.clear();
-
       if (pathname !== '/user/login') {
         window.location.href = '/user/login';
       }
     });
   };
-
   (0, _react.useEffect)(
     function () {
       if (state) {
@@ -856,8 +821,8 @@ var TGLayout = function TGLayout(props) {
           (state === null || state === void 0 ? void 0 : state.userReady)
         ) {
           // 子应用同步数据
-          syncGlobalState && syncGlobalState(state); // 同步基座数据
-
+          syncGlobalState && syncGlobalState(state);
+          // 同步基座数据
           (actions === null || actions === void 0 ? void 0 : actions.setGlobalState) &&
             (actions === null || actions === void 0 ? void 0 : actions.setGlobalState(state));
         }
@@ -868,7 +833,6 @@ var TGLayout = function TGLayout(props) {
   (0, _react.useEffect)(
     function () {
       var _state$currentApp;
-
       if (
         (_state$currentApp = state.currentApp) === null || _state$currentApp === void 0
           ? void 0
@@ -886,7 +850,6 @@ var TGLayout = function TGLayout(props) {
   (0, _react.useEffect)(
     function () {
       var _state$currentOrg;
-
       if (
         (_state$currentOrg = state.currentOrg) === null || _state$currentOrg === void 0
           ? void 0
@@ -922,8 +885,8 @@ var TGLayout = function TGLayout(props) {
           } else {
             window.location = '/user/login';
           }
-        } // 获取用户信息
-
+        }
+        // 获取用户信息
         _index.default
           .getUserInfo()
           .then(
@@ -946,7 +909,6 @@ var TGLayout = function TGLayout(props) {
                     uuid,
                     code,
                     currentOrg;
-
                   return _regeneratorRuntime().wrap(function _callee2$(_context2) {
                     while (1) {
                       switch ((_context2.prev = _context2.next)) {
@@ -965,24 +927,20 @@ var TGLayout = function TGLayout(props) {
                             (appList = _formatOrgApp.appList),
                             (appMap = _formatOrgApp.appMap);
                           (_ref7 = orgGroup || {}), (uuid = _ref7.uuid), (code = _ref7.code);
-
                           if (localStorage.hasOwnProperty('currentOrg_new') && orgGroup) {
                             try {
                               currentOrg = JSON.parse(localStorage.getItem('currentOrg_new'));
-
                               if (orgCodeMap[currentOrg.code]) {
                                 uuid = currentOrg.key;
                                 code = currentOrg.code;
                               }
                             } catch (e) {}
                           }
-
                           _context2.next = 6;
                           return getAppByOrgId({
                             uuid: uuid,
                             code: code,
                           });
-
                         case 6:
                           dispatch({
                             type: 'initUserInfo',
@@ -1003,7 +961,6 @@ var TGLayout = function TGLayout(props) {
                               },
                             },
                           });
-
                         case 7:
                         case 'end':
                           return _context2.stop();
@@ -1012,7 +969,6 @@ var TGLayout = function TGLayout(props) {
                   }, _callee2);
                 }),
               );
-
               return function (_x2) {
                 return _ref5.apply(this, arguments);
               };
@@ -1023,8 +979,8 @@ var TGLayout = function TGLayout(props) {
               type: 'initUserReady',
             });
             setErrorMsg(e.message || '加载用户失败');
-          }); // 获取菜单信息
-
+          });
+        // 获取菜单信息
         _index.default
           .getMenuTree()
           .then(function (data) {
@@ -1048,14 +1004,14 @@ var TGLayout = function TGLayout(props) {
     function () {
       // 切换应用的时候重新获取用户信息和解决方案接口
       var curPathName = pathname === null || pathname === void 0 ? void 0 : pathname.split('/')[1];
-
       if (curPathName !== routerPrefix && routerPrefix) {
         setRouterPrefix(curPathName);
       }
     },
     [pathname],
-  ); // 模拟登陆
+  );
 
+  // 模拟登陆
   var mockLogin = /*#__PURE__*/ (function () {
     var _ref8 = _asyncToGenerator(
       /*#__PURE__*/ _regeneratorRuntime().mark(function _callee3(p) {
@@ -1069,7 +1025,6 @@ var TGLayout = function TGLayout(props) {
           authResult,
           res,
           csrfToken;
-
         return _regeneratorRuntime().wrap(function _callee3$(_context3) {
           while (1) {
             switch ((_context3.prev = _context3.next)) {
@@ -1082,21 +1037,17 @@ var TGLayout = function TGLayout(props) {
                 (_ref10 = ['', false, '']),
                   (tempRandom = _ref10.tempRandom),
                   (authMessage = _ref10.authMessage); // 获取加盐随机数
-
                 _context3.next = 5;
                 return _index.default.getAuthCode(params);
-
               case 5:
                 authResult = _context3.sent;
                 tempRandom = authResult;
                 authMessage =
                   authResult === null || authResult === void 0 ? void 0 : authResult.message;
-
                 if (!tempRandom) {
                   _context3.next = 23;
                   break;
                 }
-
                 _context3.next = 11;
                 return _index.default.userLogin(
                   _objectSpread(
@@ -1107,40 +1058,30 @@ var TGLayout = function TGLayout(props) {
                     },
                   ),
                 );
-
               case 11:
                 res = _context3.sent;
-
                 if (!res) {
                   _context3.next = 20;
                   break;
                 }
-
                 csrfToken = res.csrfToken;
                 sessionStorage.setItem('_csrf_', csrfToken);
                 localStorage.setItem('_sync_qjt_csrf_', csrfToken); // 新的csrf同步到其他页面
-
                 localStorage.setItem('developmentLoginData', JSON.stringify(params));
                 location.reload();
                 _context3.next = 22;
                 break;
-
               case 20:
                 _message2.default.error(res.message);
-
                 return _context3.abrupt('return', Promise.reject(res.message));
-
               case 22:
                 return _context3.abrupt('return');
-
               case 23:
                 _message2.default.error(authMessage || '账号或者密码错误');
-
                 return _context3.abrupt(
                   'return',
                   Promise.reject(authMessage || '账号或者密码错误'),
                 );
-
               case 25:
               case 'end':
                 return _context3.stop();
@@ -1149,20 +1090,21 @@ var TGLayout = function TGLayout(props) {
         }, _callee3);
       }),
     );
-
     return function mockLogin(_x3) {
       return _ref8.apply(this, arguments);
     };
-  })(); // 监听机构变更
+  })();
 
+  // 监听机构变更
   var orgChange = function orgChange(curOrgTree) {
     onOrgChange && onOrgChange(curOrgTree);
     eventEmitter === null || eventEmitter === void 0
       ? void 0
       : eventEmitter.emit('appChange', true);
     getAppByOrgId(curOrgTree);
-  }; // 渠道切换
+  };
 
+  // 渠道切换
   var appChange = function appChange(app) {
     onAppChange && onAppChange(app);
     eventEmitter === null || eventEmitter === void 0
@@ -1174,8 +1116,9 @@ var TGLayout = function TGLayout(props) {
         currentApp: app,
       },
     });
-  }; // 语言切换
+  };
 
+  // 语言切换
   var languageChange = function languageChange(language) {
     onLanguageChange && onLanguageChange(language);
     dispatch({
@@ -1194,8 +1137,9 @@ var TGLayout = function TGLayout(props) {
     cookies.set('lang', language, {
       path: '/',
     });
-  }; // 菜单级别切换
+  };
 
+  // 菜单级别切换
   var menuLevelChange = function menuLevelChange(menuLevel) {
     onMenuLevelChange && onMenuLevelChange(menuLevel);
     dispatch({
@@ -1211,7 +1155,6 @@ var TGLayout = function TGLayout(props) {
       },
     });
   };
-
   return (
     /*#__PURE__*/
     // <ConfigProvider locale={personalMode?.lang === 'en' ? enUS : zhCN}>
@@ -1246,7 +1189,6 @@ var TGLayout = function TGLayout(props) {
           onLanguageChange: languageChange,
           onMenuSelect: function onMenuSelect(data) {
             var _data$path;
-
             if (
               data === null || data === void 0
                 ? void 0
@@ -1258,7 +1200,6 @@ var TGLayout = function TGLayout(props) {
                 ? void 0
                 : eventEmitter.emit('menuClick', true);
             }
-
             _onMenuSelect && _onMenuSelect(data);
           },
         },
@@ -1292,7 +1233,8 @@ var TGLayout = function TGLayout(props) {
         : /*#__PURE__*/ _react.default.createElement(_spin.default, {
             className: 'subapp-loading',
           }),
-    ) // </ConfigProvider>
+    )
+    // </ConfigProvider>
   );
 };
 
