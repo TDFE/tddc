@@ -19,26 +19,44 @@ function _typeof(obj) {
     _typeof(obj)
   );
 }
+
 Object.defineProperty(exports, '__esModule', {
   value: true,
 });
 exports.default = void 0;
+
 require('antd/lib/button/style');
+
 var _button = _interopRequireDefault(require('antd/lib/button'));
+
 require('antd/lib/tooltip/style');
+
 var _tooltip = _interopRequireDefault(require('antd/lib/tooltip'));
+
 require('antd/lib/icon/style');
+
 var _icon = _interopRequireDefault(require('antd/lib/icon'));
+
 require('antd/lib/alert/style');
+
 var _alert = _interopRequireDefault(require('antd/lib/alert'));
+
 require('antd/lib/message/style');
+
 var _message2 = _interopRequireDefault(require('antd/lib/message'));
+
 require('antd/lib/select/style');
+
 var _select = _interopRequireDefault(require('antd/lib/select'));
+
 var _react = _interopRequireWildcard(require('react'));
+
 var _reactSortablejs = _interopRequireDefault(require('react-sortablejs'));
+
 var _utils = require('../utils');
+
 require('./index.less');
+
 function _getRequireWildcardCache(nodeInterop) {
   if (typeof WeakMap !== 'function') return null;
   var cacheBabelInterop = new WeakMap();
@@ -47,6 +65,7 @@ function _getRequireWildcardCache(nodeInterop) {
     return nodeInterop ? cacheNodeInterop : cacheBabelInterop;
   })(nodeInterop);
 }
+
 function _interopRequireWildcard(obj, nodeInterop) {
   if (!nodeInterop && obj && obj.__esModule) {
     return obj;
@@ -76,9 +95,11 @@ function _interopRequireWildcard(obj, nodeInterop) {
   }
   return newObj;
 }
+
 function _interopRequireDefault(obj) {
   return obj && obj.__esModule ? obj : { default: obj };
 }
+
 function _toConsumableArray(arr) {
   return (
     _arrayWithoutHoles(arr) ||
@@ -87,11 +108,13 @@ function _toConsumableArray(arr) {
     _nonIterableSpread()
   );
 }
+
 function _nonIterableSpread() {
   throw new TypeError(
     'Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.',
   );
 }
+
 function _iterableToArray(iter) {
   if (
     (typeof Symbol !== 'undefined' && iter[Symbol.iterator] != null) ||
@@ -99,9 +122,11 @@ function _iterableToArray(iter) {
   )
     return Array.from(iter);
 }
+
 function _arrayWithoutHoles(arr) {
   if (Array.isArray(arr)) return _arrayLikeToArray(arr);
 }
+
 function _slicedToArray(arr, i) {
   return (
     _arrayWithHoles(arr) ||
@@ -110,11 +135,13 @@ function _slicedToArray(arr, i) {
     _nonIterableRest()
   );
 }
+
 function _nonIterableRest() {
   throw new TypeError(
     'Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.',
   );
 }
+
 function _unsupportedIterableToArray(o, minLen) {
   if (!o) return;
   if (typeof o === 'string') return _arrayLikeToArray(o, minLen);
@@ -124,6 +151,7 @@ function _unsupportedIterableToArray(o, minLen) {
   if (n === 'Arguments' || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n))
     return _arrayLikeToArray(o, minLen);
 }
+
 function _arrayLikeToArray(arr, len) {
   if (len == null || len > arr.length) len = arr.length;
   for (var i = 0, arr2 = new Array(len); i < len; i++) {
@@ -131,6 +159,7 @@ function _arrayLikeToArray(arr, len) {
   }
   return arr2;
 }
+
 function _iterableToArrayLimit(arr, i) {
   var _i =
     arr == null
@@ -158,9 +187,11 @@ function _iterableToArrayLimit(arr, i) {
   }
   return _arr;
 }
+
 function _arrayWithHoles(arr) {
   if (Array.isArray(arr)) return arr;
 }
+
 function _regeneratorRuntime() {
   'use strict';
   /*! regenerator-runtime -- Copyright (c) 2014-present, Facebook, Inc. -- license (MIT): https://github.com/facebook/regenerator/blob/main/LICENSE */ _regeneratorRuntime =
@@ -170,11 +201,6 @@ function _regeneratorRuntime() {
   var exports = {},
     Op = Object.prototype,
     hasOwn = Op.hasOwnProperty,
-    defineProperty =
-      Object.defineProperty ||
-      function (obj, key, desc) {
-        obj[key] = desc.value;
-      },
     $Symbol = 'function' == typeof Symbol ? Symbol : {},
     iteratorSymbol = $Symbol.iterator || '@@iterator',
     asyncIteratorSymbol = $Symbol.asyncIterator || '@@asyncIterator',
@@ -202,7 +228,43 @@ function _regeneratorRuntime() {
       generator = Object.create(protoGenerator.prototype),
       context = new Context(tryLocsList || []);
     return (
-      defineProperty(generator, '_invoke', { value: makeInvokeMethod(innerFn, self, context) }),
+      (generator._invoke = (function (innerFn, self, context) {
+        var state = 'suspendedStart';
+        return function (method, arg) {
+          if ('executing' === state) throw new Error('Generator is already running');
+          if ('completed' === state) {
+            if ('throw' === method) throw arg;
+            return doneResult();
+          }
+          for (context.method = method, context.arg = arg; ; ) {
+            var delegate = context.delegate;
+            if (delegate) {
+              var delegateResult = maybeInvokeDelegate(delegate, context);
+              if (delegateResult) {
+                if (delegateResult === ContinueSentinel) continue;
+                return delegateResult;
+              }
+            }
+            if ('next' === context.method) context.sent = context._sent = context.arg;
+            else if ('throw' === context.method) {
+              if ('suspendedStart' === state) throw ((state = 'completed'), context.arg);
+              context.dispatchException(context.arg);
+            } else 'return' === context.method && context.abrupt('return', context.arg);
+            state = 'executing';
+            var record = tryCatch(innerFn, self, context);
+            if ('normal' === record.type) {
+              if (
+                ((state = context.done ? 'completed' : 'suspendedYield'),
+                record.arg === ContinueSentinel)
+              )
+                continue;
+              return { value: record.arg, done: context.done };
+            }
+            'throw' === record.type &&
+              ((state = 'completed'), (context.method = 'throw'), (context.arg = record.arg));
+          }
+        };
+      })(innerFn, self, context)),
       generator
     );
   }
@@ -266,54 +328,15 @@ function _regeneratorRuntime() {
       reject(record.arg);
     }
     var previousPromise;
-    defineProperty(this, '_invoke', {
-      value: function value(method, arg) {
-        function callInvokeWithMethodAndArg() {
-          return new PromiseImpl(function (resolve, reject) {
-            invoke(method, arg, resolve, reject);
-          });
-        }
-        return (previousPromise = previousPromise
-          ? previousPromise.then(callInvokeWithMethodAndArg, callInvokeWithMethodAndArg)
-          : callInvokeWithMethodAndArg());
-      },
-    });
-  }
-  function makeInvokeMethod(innerFn, self, context) {
-    var state = 'suspendedStart';
-    return function (method, arg) {
-      if ('executing' === state) throw new Error('Generator is already running');
-      if ('completed' === state) {
-        if ('throw' === method) throw arg;
-        return doneResult();
+    this._invoke = function (method, arg) {
+      function callInvokeWithMethodAndArg() {
+        return new PromiseImpl(function (resolve, reject) {
+          invoke(method, arg, resolve, reject);
+        });
       }
-      for (context.method = method, context.arg = arg; ; ) {
-        var delegate = context.delegate;
-        if (delegate) {
-          var delegateResult = maybeInvokeDelegate(delegate, context);
-          if (delegateResult) {
-            if (delegateResult === ContinueSentinel) continue;
-            return delegateResult;
-          }
-        }
-        if ('next' === context.method) context.sent = context._sent = context.arg;
-        else if ('throw' === context.method) {
-          if ('suspendedStart' === state) throw ((state = 'completed'), context.arg);
-          context.dispatchException(context.arg);
-        } else 'return' === context.method && context.abrupt('return', context.arg);
-        state = 'executing';
-        var record = tryCatch(innerFn, self, context);
-        if ('normal' === record.type) {
-          if (
-            ((state = context.done ? 'completed' : 'suspendedYield'),
-            record.arg === ContinueSentinel)
-          )
-            continue;
-          return { value: record.arg, done: context.done };
-        }
-        'throw' === record.type &&
-          ((state = 'completed'), (context.method = 'throw'), (context.arg = record.arg));
-      }
+      return (previousPromise = previousPromise
+        ? previousPromise.then(callInvokeWithMethodAndArg, callInvokeWithMethodAndArg)
+        : callInvokeWithMethodAndArg());
     };
   }
   function maybeInvokeDelegate(delegate, context) {
@@ -394,11 +417,8 @@ function _regeneratorRuntime() {
   }
   return (
     (GeneratorFunction.prototype = GeneratorFunctionPrototype),
-    defineProperty(Gp, 'constructor', { value: GeneratorFunctionPrototype, configurable: !0 }),
-    defineProperty(GeneratorFunctionPrototype, 'constructor', {
-      value: GeneratorFunction,
-      configurable: !0,
-    }),
+    define(Gp, 'constructor', GeneratorFunctionPrototype),
+    define(GeneratorFunctionPrototype, 'constructor', GeneratorFunction),
     (GeneratorFunction.displayName = define(
       GeneratorFunctionPrototype,
       toStringTagSymbol,
@@ -446,9 +466,8 @@ function _regeneratorRuntime() {
     define(Gp, 'toString', function () {
       return '[object Generator]';
     }),
-    (exports.keys = function (val) {
-      var object = Object(val),
-        keys = [];
+    (exports.keys = function (object) {
+      var keys = [];
       for (var key in object) {
         keys.push(key);
       }
@@ -599,6 +618,7 @@ function _regeneratorRuntime() {
     exports
   );
 }
+
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) {
   try {
     var info = gen[key](arg);
@@ -613,6 +633,7 @@ function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) {
     Promise.resolve(value).then(_next, _throw);
   }
 }
+
 function _asyncToGenerator(fn) {
   return function () {
     var self = this,
@@ -629,7 +650,9 @@ function _asyncToGenerator(fn) {
     });
   };
 }
+
 var Option = _select.default.Option;
+
 var SetTableHeader = function SetTableHeader(_ref) {
   var renderItem = _ref.renderItem,
     _ref$allTableHead = _ref.allTableHead,
@@ -658,15 +681,17 @@ var SetTableHeader = function SetTableHeader(_ref) {
             }),
           )
         : _ref$onOk;
+
   var _useState = (0, _react.useState)(false),
     _useState2 = _slicedToArray(_useState, 2),
     loading = _useState2[0],
-    setLoading = _useState2[1];
-  // 当前被选中的表头
+    setLoading = _useState2[1]; // 当前被选中的表头
+
   var _useState3 = (0, _react.useState)([]),
     _useState4 = _slicedToArray(_useState3, 2),
     configItem = _useState4[0],
     setConfigItem = _useState4[1];
+
   (0, _react.useEffect)(
     function () {
       if (Array.isArray(currentTableHead)) {
@@ -675,16 +700,16 @@ var SetTableHeader = function SetTableHeader(_ref) {
     },
     [currentTableHead],
   );
-
   /** 拖拽修改排序 */
+
   var changeReactSortable = function changeReactSortable(order) {
     configItem.sort(function (a, b) {
       return order.indexOf(a['field']) - order.indexOf(b['field']);
     });
     setConfigItem(_toConsumableArray(configItem));
   };
-
   /** 新增一行 */
+
   var addTableHeadCustomItem = function addTableHeadCustomItem(index) {
     configItem.splice(index + 1, 0, {
       uuid: (0, _utils.makeRandomCode)(),
@@ -692,12 +717,13 @@ var SetTableHeader = function SetTableHeader(_ref) {
     });
     setConfigItem(_toConsumableArray(configItem));
   };
-
   /** 修改当前行选中的字段 */
+
   var changeTableHeadItem = function changeTableHeadItem(index, item) {
     var isExist = configItem.find(function (res) {
       return res.field === item.field;
     });
+
     if (!isExist) {
       configItem.splice(index, 1, item);
       setConfigItem(_toConsumableArray(configItem));
@@ -705,14 +731,14 @@ var SetTableHeader = function SetTableHeader(_ref) {
       _message2.default.warning('表头已存在');
     }
   };
-
   /** 删除一行 */
+
   var deleteTableHeadCustomItem = function deleteTableHeadCustomItem(index) {
     configItem.splice(index, 1);
     setConfigItem(_toConsumableArray(configItem));
   };
-
   /** 设置默认值 */
+
   var handleSetDefault = /*#__PURE__*/ (function () {
     var _ref3 = _asyncToGenerator(
       /*#__PURE__*/ _regeneratorRuntime().mark(function _callee2() {
@@ -725,19 +751,24 @@ var SetTableHeader = function SetTableHeader(_ref) {
                   _context2.next = 4;
                   break;
                 }
+
                 setConfigItem(defaultTableHead);
                 _context2.next = 9;
                 break;
+
               case 4:
                 if (!onSetDefault) {
                   _context2.next = 9;
                   break;
                 }
+
                 _context2.next = 7;
                 return onSetDefault();
+
               case 7:
                 defaultValue = _context2.sent;
                 setConfigItem(defaultValue);
+
               case 9:
               case 'end':
                 return _context2.stop();
@@ -746,12 +777,13 @@ var SetTableHeader = function SetTableHeader(_ref) {
         }, _callee2);
       }),
     );
+
     return function handleSetDefault() {
       return _ref3.apply(this, arguments);
     };
   })();
-
   /** 保存 */
+
   var handleOk = /*#__PURE__*/ (function () {
     var _ref4 = _asyncToGenerator(
       /*#__PURE__*/ _regeneratorRuntime().mark(function _callee3() {
@@ -767,27 +799,35 @@ var SetTableHeader = function SetTableHeader(_ref) {
                         var field = _ref5.field;
                         return !field;
                       });
+
                 if (!hasEntry) {
                   _context3.next = 4;
                   break;
                 }
+
                 _message2.default.error('有字段为空,请处理');
+
                 return _context3.abrupt('return');
+
               case 4:
                 if (!(Array.isArray(configItem) && !!configItem.length)) {
                   _context3.next = 10;
                   break;
                 }
+
                 setLoading(true);
                 _context3.next = 8;
                 return onOk().finally(function () {
                   setLoading(false);
                 });
+
               case 8:
                 _context3.next = 11;
                 break;
+
               case 10:
                 _message2.default.error('请至少选择一个表头');
+
               case 11:
               case 'end':
                 return _context3.stop();
@@ -796,10 +836,12 @@ var SetTableHeader = function SetTableHeader(_ref) {
         }, _callee3);
       }),
     );
+
     return function handleOk() {
       return _ref4.apply(this, arguments);
     };
   })();
+
   return /*#__PURE__*/ _react.default.createElement(
     'div',
     {
@@ -866,6 +908,7 @@ var SetTableHeader = function SetTableHeader(_ref) {
                     if (renderItem) {
                       return renderItem(subItem);
                     }
+
                     return /*#__PURE__*/ _react.default.createElement(
                       Option,
                       {
@@ -951,5 +994,7 @@ var SetTableHeader = function SetTableHeader(_ref) {
     ),
   );
 };
+
 var _default = /*#__PURE__*/ (0, _react.memo)(SetTableHeader);
+
 exports.default = _default;

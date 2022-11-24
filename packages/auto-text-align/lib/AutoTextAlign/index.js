@@ -19,17 +19,24 @@ function _typeof(obj) {
     _typeof(obj)
   );
 }
+
 Object.defineProperty(exports, '__esModule', {
   value: true,
 });
 exports.default = void 0;
+
 var _react = _interopRequireWildcard(require('react'));
+
 var _utils = require('./utils');
+
 var _hooks = _interopRequireDefault(require('./hooks'));
+
 require('./index.less');
+
 function _interopRequireDefault(obj) {
   return obj && obj.__esModule ? obj : { default: obj };
 }
+
 function _getRequireWildcardCache(nodeInterop) {
   if (typeof WeakMap !== 'function') return null;
   var cacheBabelInterop = new WeakMap();
@@ -38,6 +45,7 @@ function _getRequireWildcardCache(nodeInterop) {
     return nodeInterop ? cacheNodeInterop : cacheBabelInterop;
   })(nodeInterop);
 }
+
 function _interopRequireWildcard(obj, nodeInterop) {
   if (!nodeInterop && obj && obj.__esModule) {
     return obj;
@@ -67,6 +75,7 @@ function _interopRequireWildcard(obj, nodeInterop) {
   }
   return newObj;
 }
+
 /*
  * @Description: 文本对其
  * @Author: 郑泳健
@@ -74,7 +83,6 @@ function _interopRequireWildcard(obj, nodeInterop) {
  * @LastEditors: 郑泳健
  * @LastEditTime: 2022-09-19 14:27:10
  */
-
 var AutoTextAlign = function AutoTextAlign(_ref) {
   var list = _ref.list,
     _ref$labelFontSize = _ref.labelFontSize,
@@ -85,8 +93,8 @@ var AutoTextAlign = function AutoTextAlign(_ref) {
     itemSpace = _ref$itemSpace === void 0 ? 8 : _ref$itemSpace,
     _ref$maxColumn = _ref.maxColumn,
     maxColumn = _ref$maxColumn === void 0 ? 10 : _ref$maxColumn;
-  var containerRef = (0, _react.useRef)();
-  // 计算每一项的宽度
+  var containerRef = (0, _react.useRef)(); // 计算每一项的宽度
+
   var widthList = (0, _react.useMemo)(
     function () {
       return list === null || list === void 0
@@ -103,13 +111,14 @@ var AutoTextAlign = function AutoTextAlign(_ref) {
           });
     },
     [list],
-  );
+  ); // 获取每一列的宽度
 
-  // 获取每一列的宽度
   var columns = (0, _hooks.default)(widthList, containerRef, maxColumn);
+
   if (!Array.isArray(list)) {
     return null;
   }
+
   return /*#__PURE__*/ _react.default.createElement(
     'div',
     {
@@ -156,5 +165,7 @@ var AutoTextAlign = function AutoTextAlign(_ref) {
     }),
   );
 };
+
 var _default = /*#__PURE__*/ (0, _react.memo)(AutoTextAlign);
+
 exports.default = _default;

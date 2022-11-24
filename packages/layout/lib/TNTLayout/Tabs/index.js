@@ -19,18 +19,26 @@ function _typeof(obj) {
     _typeof(obj)
   );
 }
+
 Object.defineProperty(exports, '__esModule', {
   value: true,
 });
 exports.default = exports.HeaderTabs = void 0;
+
 var _react = _interopRequireWildcard(require('react'));
+
 var _classnames = _interopRequireDefault(require('classnames'));
+
 var _lodash = require('lodash');
+
 require('./index.less');
+
 var _Icon = _interopRequireDefault(require('../Icon'));
+
 function _interopRequireDefault(obj) {
   return obj && obj.__esModule ? obj : { default: obj };
 }
+
 function _getRequireWildcardCache(nodeInterop) {
   if (typeof WeakMap !== 'function') return null;
   var cacheBabelInterop = new WeakMap();
@@ -39,6 +47,7 @@ function _getRequireWildcardCache(nodeInterop) {
     return nodeInterop ? cacheNodeInterop : cacheBabelInterop;
   })(nodeInterop);
 }
+
 function _interopRequireWildcard(obj, nodeInterop) {
   if (!nodeInterop && obj && obj.__esModule) {
     return obj;
@@ -68,6 +77,7 @@ function _interopRequireWildcard(obj, nodeInterop) {
   }
   return newObj;
 }
+
 function ownKeys(object, enumerableOnly) {
   var keys = Object.keys(object);
   if (Object.getOwnPropertySymbols) {
@@ -80,6 +90,7 @@ function ownKeys(object, enumerableOnly) {
   }
   return keys;
 }
+
 function _objectSpread(target) {
   for (var i = 1; i < arguments.length; i++) {
     var source = null != arguments[i] ? arguments[i] : {};
@@ -95,6 +106,7 @@ function _objectSpread(target) {
   }
   return target;
 }
+
 function _defineProperty(obj, key, value) {
   if (key in obj) {
     Object.defineProperty(obj, key, {
@@ -108,6 +120,7 @@ function _defineProperty(obj, key, value) {
   }
   return obj;
 }
+
 function _toConsumableArray(arr) {
   return (
     _arrayWithoutHoles(arr) ||
@@ -116,11 +129,13 @@ function _toConsumableArray(arr) {
     _nonIterableSpread()
   );
 }
+
 function _nonIterableSpread() {
   throw new TypeError(
     'Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.',
   );
 }
+
 function _iterableToArray(iter) {
   if (
     (typeof Symbol !== 'undefined' && iter[Symbol.iterator] != null) ||
@@ -128,9 +143,11 @@ function _iterableToArray(iter) {
   )
     return Array.from(iter);
 }
+
 function _arrayWithoutHoles(arr) {
   if (Array.isArray(arr)) return _arrayLikeToArray(arr);
 }
+
 function _slicedToArray(arr, i) {
   return (
     _arrayWithHoles(arr) ||
@@ -139,11 +156,13 @@ function _slicedToArray(arr, i) {
     _nonIterableRest()
   );
 }
+
 function _nonIterableRest() {
   throw new TypeError(
     'Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.',
   );
 }
+
 function _unsupportedIterableToArray(o, minLen) {
   if (!o) return;
   if (typeof o === 'string') return _arrayLikeToArray(o, minLen);
@@ -153,6 +172,7 @@ function _unsupportedIterableToArray(o, minLen) {
   if (n === 'Arguments' || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n))
     return _arrayLikeToArray(o, minLen);
 }
+
 function _arrayLikeToArray(arr, len) {
   if (len == null || len > arr.length) len = arr.length;
   for (var i = 0, arr2 = new Array(len); i < len; i++) {
@@ -160,6 +180,7 @@ function _arrayLikeToArray(arr, len) {
   }
   return arr2;
 }
+
 function _iterableToArrayLimit(arr, i) {
   var _i =
     arr == null
@@ -187,9 +208,11 @@ function _iterableToArrayLimit(arr, i) {
   }
   return _arr;
 }
+
 function _arrayWithHoles(arr) {
   if (Array.isArray(arr)) return arr;
 }
+
 var HeaderTabs = function HeaderTabs(props) {
   var className = props.className,
     _props$tabs = props.tabs,
@@ -200,18 +223,22 @@ var HeaderTabs = function HeaderTabs(props) {
     appListVisible = props.appListVisible,
     orgListVisible = props.orgListVisible,
     orgAppListVisible = props.orgAppListVisible;
+
   var _useState = (0, _react.useState)(props.selectedKey || (0, _lodash.get)(tabs, '0.key')),
     _useState2 = _slicedToArray(_useState, 2),
     selectedKey = _useState2[0],
     setSelectedKey = _useState2[1];
+
   var _useState3 = (0, _react.useState)(tabs || []),
     _useState4 = _slicedToArray(_useState3, 2),
     tabItems = _useState4[0],
     setTabItems = _useState4[1];
+
   var _useState5 = (0, _react.useState)(false),
     _useState6 = _slicedToArray(_useState5, 2),
     arrowVisible = _useState6[0],
     setArrowVisible = _useState6[1];
+
   var _useState7 = (0, _react.useState)({
       start: true,
       end: true,
@@ -219,17 +246,22 @@ var HeaderTabs = function HeaderTabs(props) {
     _useState8 = _slicedToArray(_useState7, 2),
     tabsPositionFlags = _useState8[0],
     setTabsPositionFlags = _useState8[1];
+
   var tabsRef = (0, _react.useRef)();
+
   var getTabsDom = function getTabsDom() {
     return tabsRef.current;
   };
+
   var onTabClick = function onTabClick(tab, index) {
     setSelectedKey(tab.key);
     onTabSelect === null || onTabSelect === void 0 ? void 0 : onTabSelect(tab);
+
     if (selectedKey !== tab.key) {
       onTabChange === null || onTabChange === void 0 ? void 0 : onTabChange(tab);
     }
   };
+
   var closeTabHandle = function closeTabHandle(tab, index, evt) {
     evt.stopPropagation();
     var newTabItems = tabItems.filter(function (_ref) {
@@ -238,8 +270,10 @@ var HeaderTabs = function HeaderTabs(props) {
     });
     var newSelectedKey = selectedKey;
     setTabItems(newTabItems);
+
     if (tab.key === selectedKey) {
       var _newTabItems$, _newTabItems;
+
       newSelectedKey =
         index === 0
           ? (_newTabItems$ = newTabItems[0]) === null || _newTabItems$ === void 0
@@ -250,6 +284,7 @@ var HeaderTabs = function HeaderTabs(props) {
           : _newTabItems.key;
       setSelectedKey(newSelectedKey);
     }
+
     onTabClose === null || onTabClose === void 0
       ? void 0
       : onTabClose(
@@ -261,6 +296,7 @@ var HeaderTabs = function HeaderTabs(props) {
           }),
         );
   };
+
   var onMoveToLeft = function onMoveToLeft() {
     var tabsDom = getTabsDom();
     var parentBBox = tabsDom.parentNode.getBoundingClientRect();
@@ -276,6 +312,7 @@ var HeaderTabs = function HeaderTabs(props) {
       end: Math.abs(newX) < width - parentWidth,
     });
   };
+
   var onMoveToRight = function onMoveToRight() {
     var tabsDom = getTabsDom();
     var parentBBox = tabsDom.parentNode.getBoundingClientRect();
@@ -291,6 +328,7 @@ var HeaderTabs = function HeaderTabs(props) {
       end: Math.abs(newX) < width - parentWidth,
     });
   };
+
   var translateTabsDom = function translateTabsDom(tabs, selectedKey) {
     if (!selectedKey) return;
     var index = tabs.indexOf(
@@ -310,15 +348,19 @@ var HeaderTabs = function HeaderTabs(props) {
     var parentWidth = parentBBox.width - 36;
     var width = tabItems.length * 130;
     var tailX = x + parentWidth; // 当前滑动窗口尾部坐标
+
     var newX = -x;
+
     if (bbox.left < x) {
       newX = -bbox.left;
     } else if (bbox.right >= tailX) {
       newX = parentWidth - bbox.right;
     }
+
     if (newX + width < parentWidth) {
       newX = -(width - parentWidth);
     }
+
     newX = Math.min(0, newX);
     tabsDom.style.transform = 'translateX('.concat(newX, 'px)');
     setTabsPositionFlags({
@@ -326,6 +368,7 @@ var HeaderTabs = function HeaderTabs(props) {
       end: Math.abs(newX) < width - parentWidth,
     });
   };
+
   (0, _react.useEffect)(
     function () {
       setSelectedKey(props.selectedKey || (0, _lodash.get)(tabs, '0.key'));
@@ -346,10 +389,12 @@ var HeaderTabs = function HeaderTabs(props) {
     },
     [tabItems, selectedKey, appListVisible, orgListVisible, orgAppListVisible],
   );
+
   var _useState9 = (0, _react.useState)({}),
     _useState10 = _slicedToArray(_useState9, 2),
     style = _useState10[0],
     setStyle = _useState10[1];
+
   var nowTab = (0, _react.useRef)();
   (0, _react.useEffect)(function () {
     window.addEventListener('click', onCancel);
@@ -357,9 +402,11 @@ var HeaderTabs = function HeaderTabs(props) {
       window.removeEventListener('click', onCancel);
     };
   }, []);
+
   var onCancel = function onCancel() {
     setStyle({});
   };
+
   var _onContextMenu = function onContextMenu(e, tab) {
     e.preventDefault();
     e.stopPropagation();
@@ -372,11 +419,13 @@ var HeaderTabs = function HeaderTabs(props) {
       display: 'block',
     });
   };
+
   var onCloseNow = function onCloseNow(e) {
     var index = tabs.indexOf(nowTab.current);
     closeTabHandle(nowTab.current, index, e);
     setStyle({});
   };
+
   var onCloseRight = function onCloseRight(e) {
     var index = tabs.indexOf(nowTab.current);
     var current = tabs.find(function (_ref4) {
@@ -386,13 +435,16 @@ var HeaderTabs = function HeaderTabs(props) {
     var currentIndex = tabs.indexOf(current);
     var activeTab = currentIndex > index ? nowTab.current : current;
     var closeTabs = tabs.splice(index + 1, tabs.length - index);
+
     var newTabs = _toConsumableArray(tabs);
+
     setTabItems(newTabs);
     onTabClose === null || onTabClose === void 0
       ? void 0
       : onTabClose(undefined, newTabs, activeTab, closeTabs);
     setStyle({});
   };
+
   var onCloseOthers = function onCloseOthers(e) {
     var newTabs = [nowTab.current];
     var index = tabs.indexOf(nowTab.current);
@@ -405,6 +457,7 @@ var HeaderTabs = function HeaderTabs(props) {
       : onTabClose(undefined, newTabs, nowTab.current, closeTabs);
     setStyle({});
   };
+
   return /*#__PURE__*/ _react.default.createElement(
     'div',
     {
@@ -418,6 +471,7 @@ var HeaderTabs = function HeaderTabs(props) {
       },
       tabItems.map(function (tab, index) {
         var _tabItems;
+
         return /*#__PURE__*/ _react.default.createElement(
           'li',
           {
@@ -502,6 +556,7 @@ var HeaderTabs = function HeaderTabs(props) {
       ),
   );
 };
+
 exports.HeaderTabs = HeaderTabs;
 var _default = HeaderTabs;
 exports.default = _default;

@@ -4,23 +4,39 @@ Object.defineProperty(exports, '__esModule', {
   value: true,
 });
 exports.default = void 0;
+
 require('antd/lib/popover/style');
+
 var _popover = _interopRequireDefault(require('antd/lib/popover'));
+
 require('antd/lib/row/style');
+
 var _row = _interopRequireDefault(require('antd/lib/row'));
+
 require('antd/lib/divider/style');
+
 var _divider = _interopRequireDefault(require('antd/lib/divider'));
+
 var _react = _interopRequireDefault(require('react'));
+
 var _deleteAllCookies = _interopRequireDefault(require('delete-all-cookies'));
+
 var _lodash = require('lodash');
+
 require('./index.less');
+
 var _images = _interopRequireDefault(require('../../images'));
+
 var _Language = _interopRequireDefault(require('../Language'));
+
 var _MenuLevel = _interopRequireDefault(require('../MenuLevel'));
+
 var _Theme = _interopRequireDefault(require('../Theme'));
+
 function _interopRequireDefault(obj) {
   return obj && obj.__esModule ? obj : { default: obj };
 }
+
 var UserInfoContent = function UserInfoContent(props) {
   var userInfo = props.userInfo,
     _props$config = props.config,
@@ -45,9 +61,11 @@ var UserInfoContent = function UserInfoContent(props) {
     onThemeChange = props.onThemeChange,
     supportLevelChange = props.supportLevelChange,
     onMenuLevelChange = props.onMenuLevelChange;
+
   var _ref = config || {},
     _ref$language = _ref.language,
     language = _ref$language === void 0 ? false : _ref$language;
+
   return /*#__PURE__*/ _react.default.createElement(
     'div',
     {
@@ -136,8 +154,10 @@ var UserInfoContent = function UserInfoContent(props) {
     ),
   );
 };
+
 var _default = function _default(props) {
   var _images$empty2;
+
   var _props$userInfo = props.userInfo,
     userInfo = _props$userInfo === void 0 ? {} : _props$userInfo;
   var avatar = userInfo.avatar;
@@ -163,6 +183,7 @@ var _default = function _default(props) {
                 : (0, _lodash.get)(_images.default[avatar], 'default', _images.default[avatar]),
             onError: function onError(e) {
               var _images$empty;
+
               e.target.onerror = null;
               e.target.src =
                 ((_images$empty = _images.default.empty) === null || _images$empty === void 0
@@ -179,4 +200,5 @@ var _default = function _default(props) {
     ),
   );
 };
+
 exports.default = _default;

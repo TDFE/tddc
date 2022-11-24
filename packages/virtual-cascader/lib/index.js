@@ -9,7 +9,9 @@ Object.defineProperty(exports, 'default', {
     return _VirtualCascader.default;
   },
 });
+
 var _VirtualCascader = _interopRequireDefault(require('./VirtualCascader'));
+
 function _interopRequireDefault(obj) {
   return obj && obj.__esModule ? obj : { default: obj };
 }

@@ -4,15 +4,23 @@ Object.defineProperty(exports, '__esModule', {
   value: true,
 });
 exports.default = void 0;
+
 require('antd/lib/divider/style');
+
 var _divider = _interopRequireDefault(require('antd/lib/divider'));
+
 var _react = _interopRequireDefault(require('react'));
+
 require('./index.less');
+
 var _GlobalNavigation = _interopRequireDefault(require('../GlobalNavigation'));
+
 var _Avatar = _interopRequireDefault(require('../Avatar'));
+
 function _interopRequireDefault(obj) {
   return obj && obj.__esModule ? obj : { default: obj };
 }
+
 function _extends() {
   _extends = Object.assign
     ? Object.assign.bind()
@@ -29,6 +37,7 @@ function _extends() {
       };
   return _extends.apply(this, arguments);
 }
+
 var _default = function _default(props) {
   var _props$config = props.config;
   _props$config = _props$config === void 0 ? {} : _props$config;
@@ -78,4 +87,5 @@ var _default = function _default(props) {
       ),
   );
 };
+
 exports.default = _default;

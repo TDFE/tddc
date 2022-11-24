@@ -19,19 +19,28 @@ function _typeof(obj) {
     _typeof(obj)
   );
 }
+
 Object.defineProperty(exports, '__esModule', {
   value: true,
 });
 exports.default = void 0;
+
 var _react = _interopRequireWildcard(require('react'));
+
 var _classnames = _interopRequireDefault(require('classnames'));
+
 var _lodash = require('lodash');
+
 var _eventEmitter = _interopRequireDefault(require('../../eventEmitter'));
+
 var _utils = require('../../utils');
+
 var _Icon = _interopRequireDefault(require('../../Icon'));
+
 function _interopRequireDefault(obj) {
   return obj && obj.__esModule ? obj : { default: obj };
 }
+
 function _getRequireWildcardCache(nodeInterop) {
   if (typeof WeakMap !== 'function') return null;
   var cacheBabelInterop = new WeakMap();
@@ -40,6 +49,7 @@ function _getRequireWildcardCache(nodeInterop) {
     return nodeInterop ? cacheNodeInterop : cacheBabelInterop;
   })(nodeInterop);
 }
+
 function _interopRequireWildcard(obj, nodeInterop) {
   if (!nodeInterop && obj && obj.__esModule) {
     return obj;
@@ -69,6 +79,7 @@ function _interopRequireWildcard(obj, nodeInterop) {
   }
   return newObj;
 }
+
 function ownKeys(object, enumerableOnly) {
   var keys = Object.keys(object);
   if (Object.getOwnPropertySymbols) {
@@ -81,6 +92,7 @@ function ownKeys(object, enumerableOnly) {
   }
   return keys;
 }
+
 function _objectSpread(target) {
   for (var i = 1; i < arguments.length; i++) {
     var source = null != arguments[i] ? arguments[i] : {};
@@ -96,6 +108,7 @@ function _objectSpread(target) {
   }
   return target;
 }
+
 function _defineProperty(obj, key, value) {
   if (key in obj) {
     Object.defineProperty(obj, key, {
@@ -109,6 +122,7 @@ function _defineProperty(obj, key, value) {
   }
   return obj;
 }
+
 function _slicedToArray(arr, i) {
   return (
     _arrayWithHoles(arr) ||
@@ -117,11 +131,13 @@ function _slicedToArray(arr, i) {
     _nonIterableRest()
   );
 }
+
 function _nonIterableRest() {
   throw new TypeError(
     'Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.',
   );
 }
+
 function _unsupportedIterableToArray(o, minLen) {
   if (!o) return;
   if (typeof o === 'string') return _arrayLikeToArray(o, minLen);
@@ -131,6 +147,7 @@ function _unsupportedIterableToArray(o, minLen) {
   if (n === 'Arguments' || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n))
     return _arrayLikeToArray(o, minLen);
 }
+
 function _arrayLikeToArray(arr, len) {
   if (len == null || len > arr.length) len = arr.length;
   for (var i = 0, arr2 = new Array(len); i < len; i++) {
@@ -138,6 +155,7 @@ function _arrayLikeToArray(arr, len) {
   }
   return arr2;
 }
+
 function _iterableToArrayLimit(arr, i) {
   var _i =
     arr == null
@@ -165,9 +183,11 @@ function _iterableToArrayLimit(arr, i) {
   }
   return _arr;
 }
+
 function _arrayWithHoles(arr) {
   if (Array.isArray(arr)) return arr;
 }
+
 var SearchList = function SearchList(_ref) {
   var items = _ref.items,
     onSelectMenu = _ref.onSelectMenu;
@@ -189,6 +209,7 @@ var SearchList = function SearchList(_ref) {
         }),
   );
 };
+
 var _default = function _default(_ref2) {
   var _ref2$menus = _ref2.menus,
     menus = _ref2$menus === void 0 ? [] : _ref2$menus,
@@ -201,26 +222,32 @@ var _default = function _default(_ref2) {
     mainMenuCodes = _ref2$mainMenuCodes === void 0 ? [] : _ref2$mainMenuCodes,
     mainMenu = _ref2.mainMenu,
     siderMenu = _ref2.siderMenu;
+
   var _useState = (0, _react.useState)(false),
     _useState2 = _slicedToArray(_useState, 2),
     active = _useState2[0],
     setActive = _useState2[1];
+
   var _useState3 = (0, _react.useState)(),
     _useState4 = _slicedToArray(_useState3, 2),
     searchValue = _useState4[0],
     setSearchValue = _useState4[1];
+
   var _useState5 = (0, _react.useState)([]),
     _useState6 = _slicedToArray(_useState5, 2),
     searchedMenus = _useState6[0],
     setSearchedMenus = _useState6[1];
+
   var _useState7 = (0, _react.useState)([]),
     _useState8 = _slicedToArray(_useState7, 2),
     mainCodes = _useState8[0],
     setMainCodes = _useState8[1];
+
   var _useState9 = (0, _react.useState)([]),
     _useState10 = _slicedToArray(_useState9, 2),
     menuList = _useState10[0],
     setMenuList = _useState10[1];
+
   (0, _react.useEffect)(
     function () {
       if (siderMenu.length) {
@@ -230,6 +257,7 @@ var _default = function _default(_ref2) {
     },
     [siderMenu],
   );
+
   var onMenuClick = function onMenuClick(menu) {
     _eventEmitter.default.emit(
       'menuSelectPopup',
@@ -240,20 +268,25 @@ var _default = function _default(_ref2) {
         menu,
       ),
     );
+
     setSearchValue('');
     setSearchedMenus([]);
     close();
   };
+
   var debounceSearch = (0, _lodash.debounce)(function (evt) {
     var _evt$target$value;
+
     var value =
       (_evt$target$value = evt.target.value) === null || _evt$target$value === void 0
         ? void 0
         : _evt$target$value.trim();
     var matchedMenus = [];
+
     if (value) {
       (0, _utils.traverseTree)(menus, function (node) {
         var _node$menuName;
+
         if (
           node.path &&
           (node === null || node === void 0
@@ -266,43 +299,52 @@ var _default = function _default(_ref2) {
         }
       });
     }
+
     setSearchedMenus(matchedMenus);
   }, 100);
+
   var onSearchChange = function onSearchChange(evt) {
     evt.persist();
     setSearchValue(evt.target.value);
     debounceSearch(evt);
   };
+
   var handleMainMenu = function handleMainMenu(item) {
     setMainCodes([item.code]);
     setMenuList(item.children);
   };
+
   (0, _react.useEffect)(function () {
     var clickOutside = function clickOutside(evt) {
       var clientX = evt.clientX,
         clientY = evt.clientY,
         pageX = evt.pageX,
         pageY = evt.pageY;
+
       var isOutside = function isOutside(evt, popup) {
         if (popup === null || popup === void 0 ? void 0 : popup.contains) {
           return !(popup === null || popup === void 0 ? void 0 : popup.contains(evt.target));
         }
+
         var _popup$getBoundingCli = popup.getBoundingClientRect(),
           x = _popup$getBoundingCli.x,
           y = _popup$getBoundingCli.y,
           height = _popup$getBoundingCli.height,
           width = _popup$getBoundingCli.width;
+
         console.log('clickOutside...', [x, y], [clientX, clientY], [pageX, pageY]);
         x += window.scrollX;
         y += window.scrollY;
         return pageX < x || pageX > x + width || pageY < y || pageY > y + height;
       };
+
       if (isOutside(evt, popupRef.current)) {
         setSearchValue('');
         setSearchedMenus([]);
         close();
       }
     };
+
     document.addEventListener('click', clickOutside);
     return function () {
       return document.removeEventListener('click', clickOutside);
@@ -424,4 +466,5 @@ var _default = function _default(_ref2) {
     ),
   );
 };
+
 exports.default = _default;

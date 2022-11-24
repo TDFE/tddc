@@ -19,21 +19,32 @@ function _typeof(obj) {
     _typeof(obj)
   );
 }
+
 Object.defineProperty(exports, '__esModule', {
   value: true,
 });
 exports.default = exports.HeaderActionItem = void 0;
+
 var _react = _interopRequireWildcard(require('react'));
+
 require('./index.less');
+
 var _Context = require('./Context');
+
 var _checkAuth = _interopRequireDefault(require('./checkAuth'));
+
 var _Tabs = _interopRequireDefault(require('./Tabs'));
+
 var _utils = require('./utils');
+
 var _Layout = _interopRequireDefault(require('./Layout'));
+
 var _storage = require('./storage');
+
 function _interopRequireDefault(obj) {
   return obj && obj.__esModule ? obj : { default: obj };
 }
+
 function _getRequireWildcardCache(nodeInterop) {
   if (typeof WeakMap !== 'function') return null;
   var cacheBabelInterop = new WeakMap();
@@ -42,6 +53,7 @@ function _getRequireWildcardCache(nodeInterop) {
     return nodeInterop ? cacheNodeInterop : cacheBabelInterop;
   })(nodeInterop);
 }
+
 function _interopRequireWildcard(obj, nodeInterop) {
   if (!nodeInterop && obj && obj.__esModule) {
     return obj;
@@ -71,6 +83,7 @@ function _interopRequireWildcard(obj, nodeInterop) {
   }
   return newObj;
 }
+
 function _extends() {
   _extends = Object.assign
     ? Object.assign.bind()
@@ -87,6 +100,7 @@ function _extends() {
       };
   return _extends.apply(this, arguments);
 }
+
 function _slicedToArray(arr, i) {
   return (
     _arrayWithHoles(arr) ||
@@ -95,11 +109,13 @@ function _slicedToArray(arr, i) {
     _nonIterableRest()
   );
 }
+
 function _nonIterableRest() {
   throw new TypeError(
     'Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.',
   );
 }
+
 function _unsupportedIterableToArray(o, minLen) {
   if (!o) return;
   if (typeof o === 'string') return _arrayLikeToArray(o, minLen);
@@ -109,6 +125,7 @@ function _unsupportedIterableToArray(o, minLen) {
   if (n === 'Arguments' || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n))
     return _arrayLikeToArray(o, minLen);
 }
+
 function _arrayLikeToArray(arr, len) {
   if (len == null || len > arr.length) len = arr.length;
   for (var i = 0, arr2 = new Array(len); i < len; i++) {
@@ -116,6 +133,7 @@ function _arrayLikeToArray(arr, len) {
   }
   return arr2;
 }
+
 function _iterableToArrayLimit(arr, i) {
   var _i =
     arr == null
@@ -143,13 +161,17 @@ function _iterableToArrayLimit(arr, i) {
   }
   return _arr;
 }
+
 function _arrayWithHoles(arr) {
   if (Array.isArray(arr)) return arr;
 }
+
 var HeaderActionItem = function HeaderActionItem(props) {
   return /*#__PURE__*/ _react.default.createElement('div', props, props.children);
 };
+
 exports.HeaderActionItem = HeaderActionItem;
+
 var TNTLayout = function TNTLayout(props) {
   var _props$userInfo = props.userInfo,
     userInfo = _props$userInfo === void 0 ? {} : _props$userInfo,
@@ -157,14 +179,17 @@ var TNTLayout = function TNTLayout(props) {
     extendMap = _props$extendMap === void 0 ? {} : _props$extendMap,
     _props$menus = props.menus,
     menus = _props$menus === void 0 ? [] : _props$menus;
+
   var _useState = (0, _react.useState)([]),
     _useState2 = _slicedToArray(_useState, 2),
     level2Menus = _useState2[0],
     setLevel2Menus = _useState2[1];
+
   var _useState3 = (0, _react.useState)(false),
     _useState4 = _slicedToArray(_useState3, 2),
     supportLevelChange = _useState4[0],
     setSupportLevelChange = _useState4[1];
+
   var theme =
     (0, _storage.getThemeStore)() ||
     (extendMap === null || extendMap === void 0 ? void 0 : extendMap.defaultTheme) ||
@@ -173,27 +198,34 @@ var TNTLayout = function TNTLayout(props) {
   theme = theme === 'default' ? 'themeS3' : theme;
   var language = (0, _storage.getLanguageStore)() || userInfo.lang || 'cn';
   var menuLevel = (0, _storage.getMenuLevelStore)() || '3';
+
   var _useState5 = (0, _react.useState)(theme),
     _useState6 = _slicedToArray(_useState5, 2),
     curTheme = _useState6[0],
     setCurTheme = _useState6[1];
+
   var _useState7 = (0, _react.useState)(language),
     _useState8 = _slicedToArray(_useState7, 2),
     curLanguage = _useState8[0],
     setCurLanguage = _useState8[1];
+
   var _useState9 = (0, _react.useState)(menuLevel),
     _useState10 = _slicedToArray(_useState9, 2),
     curMenuLevel = _useState10[0],
     setCurMenuLevel = _useState10[1];
+
   var handleTheme = function handleTheme(value) {
     setCurTheme(value);
   };
+
   var handleLanguage = function handleLanguage(value) {
     setCurLanguage(value);
   };
+
   var handleMenuLevel = function handleMenuLevel(value) {
     setCurMenuLevel(value);
   };
+
   (0, _react.useEffect)(
     function () {
       if (
@@ -239,6 +271,7 @@ var TNTLayout = function TNTLayout(props) {
     ),
   );
 };
+
 TNTLayout.HeaderActionItem = HeaderActionItem;
 TNTLayout.ThemeContext = _Context.ThemeContext;
 TNTLayout.AuthContext = _Context.AuthContext;

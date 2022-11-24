@@ -19,17 +19,26 @@ function _typeof(obj) {
     _typeof(obj)
   );
 }
+
 Object.defineProperty(exports, '__esModule', {
   value: true,
 });
 exports.default = void 0;
+
 require('antd/lib/layout/style');
+
 var _layout = _interopRequireDefault(require('antd/lib/layout'));
+
 var _react = _interopRequireWildcard(require('react'));
+
 require('./index.less');
+
 var _Actions = _interopRequireDefault(require('./Actions'));
+
 var _AppList = _interopRequireDefault(require('./AppList'));
+
 var _OrgAppList = _interopRequireDefault(require('./OrgAppList'));
+
 function _getRequireWildcardCache(nodeInterop) {
   if (typeof WeakMap !== 'function') return null;
   var cacheBabelInterop = new WeakMap();
@@ -38,6 +47,7 @@ function _getRequireWildcardCache(nodeInterop) {
     return nodeInterop ? cacheNodeInterop : cacheBabelInterop;
   })(nodeInterop);
 }
+
 function _interopRequireWildcard(obj, nodeInterop) {
   if (!nodeInterop && obj && obj.__esModule) {
     return obj;
@@ -67,9 +77,11 @@ function _interopRequireWildcard(obj, nodeInterop) {
   }
   return newObj;
 }
+
 function _interopRequireDefault(obj) {
   return obj && obj.__esModule ? obj : { default: obj };
 }
+
 function _extends() {
   _extends = Object.assign
     ? Object.assign.bind()
@@ -86,7 +98,9 @@ function _extends() {
       };
   return _extends.apply(this, arguments);
 }
+
 var AntdHeader = _layout.default.Header;
+
 var _default = function _default(props) {
   var orgList = props.orgList,
     appList = props.appList,
@@ -109,4 +123,5 @@ var _default = function _default(props) {
     ),
   );
 };
+
 exports.default = _default;

@@ -19,19 +19,30 @@ function _typeof(obj) {
     _typeof(obj)
   );
 }
+
 Object.defineProperty(exports, '__esModule', {
   value: true,
 });
 exports.default = void 0;
+
 var _react = _interopRequireDefault(require('react'));
+
 var _lodash = require('lodash');
+
 var _reactDom = _interopRequireDefault(require('react-dom'));
+
 var _Base2 = _interopRequireDefault(require('./Base'));
+
 var _constants = _interopRequireWildcard(require('./constants'));
+
 var _DefaultNode = _interopRequireDefault(require('./DefaultNode'));
+
 var _Link = _interopRequireDefault(require('./Link'));
+
 var _utils = require('./utils');
+
 var _WrapNode = _interopRequireDefault(require('./WrapNode'));
+
 function _getRequireWildcardCache(nodeInterop) {
   if (typeof WeakMap !== 'function') return null;
   var cacheBabelInterop = new WeakMap();
@@ -40,6 +51,7 @@ function _getRequireWildcardCache(nodeInterop) {
     return nodeInterop ? cacheNodeInterop : cacheBabelInterop;
   })(nodeInterop);
 }
+
 function _interopRequireWildcard(obj, nodeInterop) {
   if (!nodeInterop && obj && obj.__esModule) {
     return obj;
@@ -69,9 +81,11 @@ function _interopRequireWildcard(obj, nodeInterop) {
   }
   return newObj;
 }
+
 function _interopRequireDefault(obj) {
   return obj && obj.__esModule ? obj : { default: obj };
 }
+
 function _regeneratorRuntime() {
   'use strict';
   /*! regenerator-runtime -- Copyright (c) 2014-present, Facebook, Inc. -- license (MIT): https://github.com/facebook/regenerator/blob/main/LICENSE */ _regeneratorRuntime =
@@ -81,11 +95,6 @@ function _regeneratorRuntime() {
   var exports = {},
     Op = Object.prototype,
     hasOwn = Op.hasOwnProperty,
-    defineProperty =
-      Object.defineProperty ||
-      function (obj, key, desc) {
-        obj[key] = desc.value;
-      },
     $Symbol = 'function' == typeof Symbol ? Symbol : {},
     iteratorSymbol = $Symbol.iterator || '@@iterator',
     asyncIteratorSymbol = $Symbol.asyncIterator || '@@asyncIterator',
@@ -113,7 +122,43 @@ function _regeneratorRuntime() {
       generator = Object.create(protoGenerator.prototype),
       context = new Context(tryLocsList || []);
     return (
-      defineProperty(generator, '_invoke', { value: makeInvokeMethod(innerFn, self, context) }),
+      (generator._invoke = (function (innerFn, self, context) {
+        var state = 'suspendedStart';
+        return function (method, arg) {
+          if ('executing' === state) throw new Error('Generator is already running');
+          if ('completed' === state) {
+            if ('throw' === method) throw arg;
+            return doneResult();
+          }
+          for (context.method = method, context.arg = arg; ; ) {
+            var delegate = context.delegate;
+            if (delegate) {
+              var delegateResult = maybeInvokeDelegate(delegate, context);
+              if (delegateResult) {
+                if (delegateResult === ContinueSentinel) continue;
+                return delegateResult;
+              }
+            }
+            if ('next' === context.method) context.sent = context._sent = context.arg;
+            else if ('throw' === context.method) {
+              if ('suspendedStart' === state) throw ((state = 'completed'), context.arg);
+              context.dispatchException(context.arg);
+            } else 'return' === context.method && context.abrupt('return', context.arg);
+            state = 'executing';
+            var record = tryCatch(innerFn, self, context);
+            if ('normal' === record.type) {
+              if (
+                ((state = context.done ? 'completed' : 'suspendedYield'),
+                record.arg === ContinueSentinel)
+              )
+                continue;
+              return { value: record.arg, done: context.done };
+            }
+            'throw' === record.type &&
+              ((state = 'completed'), (context.method = 'throw'), (context.arg = record.arg));
+          }
+        };
+      })(innerFn, self, context)),
       generator
     );
   }
@@ -177,54 +222,15 @@ function _regeneratorRuntime() {
       reject(record.arg);
     }
     var previousPromise;
-    defineProperty(this, '_invoke', {
-      value: function value(method, arg) {
-        function callInvokeWithMethodAndArg() {
-          return new PromiseImpl(function (resolve, reject) {
-            invoke(method, arg, resolve, reject);
-          });
-        }
-        return (previousPromise = previousPromise
-          ? previousPromise.then(callInvokeWithMethodAndArg, callInvokeWithMethodAndArg)
-          : callInvokeWithMethodAndArg());
-      },
-    });
-  }
-  function makeInvokeMethod(innerFn, self, context) {
-    var state = 'suspendedStart';
-    return function (method, arg) {
-      if ('executing' === state) throw new Error('Generator is already running');
-      if ('completed' === state) {
-        if ('throw' === method) throw arg;
-        return doneResult();
+    this._invoke = function (method, arg) {
+      function callInvokeWithMethodAndArg() {
+        return new PromiseImpl(function (resolve, reject) {
+          invoke(method, arg, resolve, reject);
+        });
       }
-      for (context.method = method, context.arg = arg; ; ) {
-        var delegate = context.delegate;
-        if (delegate) {
-          var delegateResult = maybeInvokeDelegate(delegate, context);
-          if (delegateResult) {
-            if (delegateResult === ContinueSentinel) continue;
-            return delegateResult;
-          }
-        }
-        if ('next' === context.method) context.sent = context._sent = context.arg;
-        else if ('throw' === context.method) {
-          if ('suspendedStart' === state) throw ((state = 'completed'), context.arg);
-          context.dispatchException(context.arg);
-        } else 'return' === context.method && context.abrupt('return', context.arg);
-        state = 'executing';
-        var record = tryCatch(innerFn, self, context);
-        if ('normal' === record.type) {
-          if (
-            ((state = context.done ? 'completed' : 'suspendedYield'),
-            record.arg === ContinueSentinel)
-          )
-            continue;
-          return { value: record.arg, done: context.done };
-        }
-        'throw' === record.type &&
-          ((state = 'completed'), (context.method = 'throw'), (context.arg = record.arg));
-      }
+      return (previousPromise = previousPromise
+        ? previousPromise.then(callInvokeWithMethodAndArg, callInvokeWithMethodAndArg)
+        : callInvokeWithMethodAndArg());
     };
   }
   function maybeInvokeDelegate(delegate, context) {
@@ -305,11 +311,8 @@ function _regeneratorRuntime() {
   }
   return (
     (GeneratorFunction.prototype = GeneratorFunctionPrototype),
-    defineProperty(Gp, 'constructor', { value: GeneratorFunctionPrototype, configurable: !0 }),
-    defineProperty(GeneratorFunctionPrototype, 'constructor', {
-      value: GeneratorFunction,
-      configurable: !0,
-    }),
+    define(Gp, 'constructor', GeneratorFunctionPrototype),
+    define(GeneratorFunctionPrototype, 'constructor', GeneratorFunction),
     (GeneratorFunction.displayName = define(
       GeneratorFunctionPrototype,
       toStringTagSymbol,
@@ -357,9 +360,8 @@ function _regeneratorRuntime() {
     define(Gp, 'toString', function () {
       return '[object Generator]';
     }),
-    (exports.keys = function (val) {
-      var object = Object(val),
-        keys = [];
+    (exports.keys = function (object) {
+      var keys = [];
       for (var key in object) {
         keys.push(key);
       }
@@ -510,6 +512,7 @@ function _regeneratorRuntime() {
     exports
   );
 }
+
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) {
   try {
     var info = gen[key](arg);
@@ -524,6 +527,7 @@ function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) {
     Promise.resolve(value).then(_next, _throw);
   }
 }
+
 function _asyncToGenerator(fn) {
   return function () {
     var self = this,
@@ -540,6 +544,7 @@ function _asyncToGenerator(fn) {
     });
   };
 }
+
 function _slicedToArray(arr, i) {
   return (
     _arrayWithHoles(arr) ||
@@ -548,11 +553,13 @@ function _slicedToArray(arr, i) {
     _nonIterableRest()
   );
 }
+
 function _nonIterableRest() {
   throw new TypeError(
     'Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.',
   );
 }
+
 function _unsupportedIterableToArray(o, minLen) {
   if (!o) return;
   if (typeof o === 'string') return _arrayLikeToArray(o, minLen);
@@ -562,6 +569,7 @@ function _unsupportedIterableToArray(o, minLen) {
   if (n === 'Arguments' || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n))
     return _arrayLikeToArray(o, minLen);
 }
+
 function _arrayLikeToArray(arr, len) {
   if (len == null || len > arr.length) len = arr.length;
   for (var i = 0, arr2 = new Array(len); i < len; i++) {
@@ -569,6 +577,7 @@ function _arrayLikeToArray(arr, len) {
   }
   return arr2;
 }
+
 function _iterableToArrayLimit(arr, i) {
   var _i =
     arr == null
@@ -596,14 +605,17 @@ function _iterableToArrayLimit(arr, i) {
   }
   return _arr;
 }
+
 function _arrayWithHoles(arr) {
   if (Array.isArray(arr)) return arr;
 }
+
 function _classCallCheck(instance, Constructor) {
   if (!(instance instanceof Constructor)) {
     throw new TypeError('Cannot call a class as a function');
   }
 }
+
 function _defineProperties(target, props) {
   for (var i = 0; i < props.length; i++) {
     var descriptor = props[i];
@@ -613,12 +625,14 @@ function _defineProperties(target, props) {
     Object.defineProperty(target, descriptor.key, descriptor);
   }
 }
+
 function _createClass(Constructor, protoProps, staticProps) {
   if (protoProps) _defineProperties(Constructor.prototype, protoProps);
   if (staticProps) _defineProperties(Constructor, staticProps);
   Object.defineProperty(Constructor, 'prototype', { writable: false });
   return Constructor;
 }
+
 function _inherits(subClass, superClass) {
   if (typeof superClass !== 'function' && superClass !== null) {
     throw new TypeError('Super expression must either be null or a function');
@@ -629,6 +643,7 @@ function _inherits(subClass, superClass) {
   Object.defineProperty(subClass, 'prototype', { writable: false });
   if (superClass) _setPrototypeOf(subClass, superClass);
 }
+
 function _setPrototypeOf(o, p) {
   _setPrototypeOf = Object.setPrototypeOf
     ? Object.setPrototypeOf.bind()
@@ -638,6 +653,7 @@ function _setPrototypeOf(o, p) {
       };
   return _setPrototypeOf(o, p);
 }
+
 function _createSuper(Derived) {
   var hasNativeReflectConstruct = _isNativeReflectConstruct();
   return function _createSuperInternal() {
@@ -652,6 +668,7 @@ function _createSuper(Derived) {
     return _possibleConstructorReturn(this, result);
   };
 }
+
 function _possibleConstructorReturn(self, call) {
   if (call && (_typeof(call) === 'object' || typeof call === 'function')) {
     return call;
@@ -660,12 +677,14 @@ function _possibleConstructorReturn(self, call) {
   }
   return _assertThisInitialized(self);
 }
+
 function _assertThisInitialized(self) {
   if (self === void 0) {
     throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
   }
   return self;
 }
+
 function _isNativeReflectConstruct() {
   if (typeof Reflect === 'undefined' || !Reflect.construct) return false;
   if (Reflect.construct.sham) return false;
@@ -677,6 +696,7 @@ function _isNativeReflectConstruct() {
     return false;
   }
 }
+
 function _getPrototypeOf(o) {
   _getPrototypeOf = Object.setPrototypeOf
     ? Object.getPrototypeOf.bind()
@@ -685,12 +705,17 @@ function _getPrototypeOf(o) {
       };
   return _getPrototypeOf(o);
 }
+
 var Tree = /*#__PURE__*/ (function (_Base) {
   _inherits(Tree, _Base);
+
   var _super = _createSuper(Tree);
+
   function Tree() {
     var _this;
+
     _classCallCheck(this, Tree);
+
     _this = _super.call(this);
     _this.dom = null;
     _this.nodeDom = null;
@@ -705,12 +730,18 @@ var Tree = /*#__PURE__*/ (function (_Base) {
     _this.interaction = true;
     _this.constant = {};
     _this.constant.COMPONENT_WIDTH = _constants.COMPONENT_WIDTH; // 节点占据的宽度
+
     _this.constant.COMPONENT_HEIGHT = _constants.COMPONENT_HEIGHT; // 节点占据高度
+
     _this.constant.COMPONENT_SPACE_VERTICAL = _constants.COMPONENT_SPACE_VERTICAL; // 节点垂直之间的间隙
+
     _this.constant.COMPONENT_SPACE_HORIZONTAL = _constants.COMPONENT_SPACE_HORIZONTAL; // 节点水平之间的间隙
+
     _this.constant.ROOT_WIDTH = _constants.ROOT_WIDTH; // 根节点宽度
+
     return _this;
   }
+
   _createClass(Tree, [
     {
       key: 'init',
@@ -719,6 +750,7 @@ var Tree = /*#__PURE__*/ (function (_Base) {
           options = props.options,
           styleOptions = props.styleOptions,
           container = props.container;
+
         var _ref = options || {},
           initType = _ref.initType,
           onChange = _ref.onChange,
@@ -726,12 +758,14 @@ var Tree = /*#__PURE__*/ (function (_Base) {
           fixed = _ref.fixed,
           nodeDom = _ref.nodeDom,
           lineType = _ref.lineType;
+
         var _ref2 = styleOptions || {},
           nodeWidth = _ref2.nodeWidth,
           nodeHeight = _ref2.nodeHeight,
           spaceVertical = _ref2.spaceVertical,
           spaceHorizontal = _ref2.spaceHorizontal,
           rootWidth = _ref2.rootWidth;
+
         this.initType = initType || false;
         this.nodeDom = nodeDom || _DefaultNode.default || null;
         this.onChange = onChange;
@@ -744,14 +778,18 @@ var Tree = /*#__PURE__*/ (function (_Base) {
         this.domWidth = 0;
         this.constant = {};
         this.constant.COMPONENT_WIDTH = nodeWidth || _constants.COMPONENT_WIDTH; // 节点占据的宽度
+
         this.constant.COMPONENT_HEIGHT = nodeHeight || _constants.COMPONENT_HEIGHT; // 节点占据高度
+
         this.constant.COMPONENT_SPACE_VERTICAL =
           spaceVertical || _constants.COMPONENT_SPACE_VERTICAL; // 节点垂直之间的间隙
+
         this.constant.COMPONENT_SPACE_HORIZONTAL =
           spaceHorizontal || _constants.COMPONENT_SPACE_HORIZONTAL; // 节点水平之间的间隙
-        this.constant.ROOT_WIDTH = rootWidth || _constants.ROOT_WIDTH; // 根节点宽度
 
+        this.constant.ROOT_WIDTH = rootWidth || _constants.ROOT_WIDTH; // 根节点宽度
         // this.data = data || null;
+
         this.setData(data || null);
         if (!this.data) return;
         this.render();
@@ -769,8 +807,9 @@ var Tree = /*#__PURE__*/ (function (_Base) {
         var _this$Nodes,
           _this$flattenNodes,
           _this2 = this;
-        var result = [];
-        // 扁平化树
+
+        var result = []; // 扁平化树
+
         this.flattenNodes =
           ((_this$Nodes = this.Nodes) === null || _this$Nodes === void 0
             ? void 0
@@ -783,8 +822,10 @@ var Tree = /*#__PURE__*/ (function (_Base) {
                 y = node.y;
               var key = data.key,
                 nodeName = data.nodeName;
+
               var isExceed =
                 (0, _utils.getTextPixelWith)(nodeName) > _this2.constant.COMPONENT_WIDTH;
+
               var Eledom = function Eledom() {
                 var NodeIns =
                   (_this2.nodeDom &&
@@ -800,6 +841,7 @@ var Tree = /*#__PURE__*/ (function (_Base) {
                   null;
                 return NodeIns;
               };
+
               var Ele = (0, _WrapNode.default)(Eledom);
               result.push(
                 /*#__PURE__*/ _react.default.createElement(Ele, {
@@ -822,6 +864,7 @@ var Tree = /*#__PURE__*/ (function (_Base) {
       value: function drawLine() {
         var _this$Nodes2,
           _this3 = this;
+
         this.flattenLinks =
           ((_this$Nodes2 = this.Nodes) === null || _this$Nodes2 === void 0
             ? void 0
@@ -832,6 +875,7 @@ var Tree = /*#__PURE__*/ (function (_Base) {
             ? void 0
             : this.flattenLinks.map(function (link) {
                 var _source$data, _source$data2, _source$data3;
+
                 var source = link.source,
                   target = link.target;
                 var sourceKey = source.data.key;
@@ -852,6 +896,7 @@ var Tree = /*#__PURE__*/ (function (_Base) {
                         : _this3.constant.COMPONENT_WIDTH);
                   }
                 }
+
                 var length =
                   (source === null || source === void 0
                     ? void 0
@@ -893,14 +938,13 @@ var Tree = /*#__PURE__*/ (function (_Base) {
                 );
               })) || [];
         return result;
-      },
-
-      // 计算定位
+      }, // 计算定位
     },
     {
       key: 'buildPosition',
       value: function buildPosition(data) {
         var _this4 = this;
+
         var leafCount = 0;
         var domWidth = 0;
         var domHeight = 0;
@@ -912,6 +956,7 @@ var Tree = /*#__PURE__*/ (function (_Base) {
                 var children = node.children,
                   data = node.data,
                   parent = node.parent;
+
                 if (!_this4.fixed) {
                   node.y =
                     node.depth *
@@ -923,12 +968,16 @@ var Tree = /*#__PURE__*/ (function (_Base) {
                     node.depth *
                     (_this4.constant.COMPONENT_WIDTH + _this4.constant.COMPONENT_SPACE_HORIZONTAL);
                 }
+
                 if (_this4.customPosition) {
                   var _this4$customPosition = _this4.customPosition(node);
+
                   var _this4$customPosition2 = _slicedToArray(_this4$customPosition, 2);
+
                   node.x = _this4$customPosition2[0];
                   node.y = _this4$customPosition2[1];
                 }
+
                 if (parent === null) {
                   node.y = 0;
                   node.x =
@@ -946,20 +995,18 @@ var Tree = /*#__PURE__*/ (function (_Base) {
                     (_this4.constant.COMPONENT_HEIGHT + _this4.constant.COMPONENT_SPACE_VERTICAL);
                   leafCount += 1;
                 }
+
                 domWidth = Math.max(
                   node.y + (0, _utils.getTextPixelWith)(node.data.nodeName || ''),
                   domWidth,
                 );
                 domHeight = Math.max(node.x + _constants.COMPONENT_HEIGHT, domHeight);
-              });
+              }); // 设置容器宽度
 
-        // 设置容器宽度
         this.domWidth = domWidth;
         this.domHeight = domHeight;
         this.Nodes = Nodes;
-      },
-
-      // 获取id
+      }, // 获取id
     },
     {
       key: 'getHierarchyId',
@@ -967,35 +1014,38 @@ var Tree = /*#__PURE__*/ (function (_Base) {
         var ids = [];
         var _len = 0;
         var _key = 0;
+
         for (_len = arguments.length, ids = new Array(_len); _key < _len; _key++) {
           ids[_key] = _key < 0 || arguments.length <= _key ? undefined : arguments[_key];
         }
-        return ids.join('.');
-      },
 
-      // 计算节点长度
+        return ids.join('.');
+      }, // 计算节点长度
     },
     {
       key: 'calcWidth',
       value: function calcWidth(root) {
         var _this5 = this;
+
         var moreWidth = 0;
         if (!root) return 0;
+
         var dfs = function dfs(root) {
           if (!root) return;
           var nameWidth = (0, _utils.getTextPixelWith)(root.data.nodeName || '');
+
           if (nameWidth > _this5.constant.COMPONENT_WIDTH) {
             moreWidth += nameWidth - _this5.constant.COMPONENT_WIDTH;
           }
+
           if (root.parent) {
             dfs(root.parent);
           }
         };
+
         dfs(root.parent, 0);
         return moreWidth;
-      },
-
-      // 节点展开 闭合
+      }, // 节点展开 闭合
     },
     {
       key: 'nodeChange',
@@ -1004,9 +1054,7 @@ var Tree = /*#__PURE__*/ (function (_Base) {
         this.data.children = data.children;
         this.initData(this.data);
         this.render();
-      },
-
-      // 点击折叠
+      }, // 点击折叠
     },
     {
       key: 'foldingClick',
@@ -1017,6 +1065,7 @@ var Tree = /*#__PURE__*/ (function (_Base) {
           nodeName: this.data.nodeName,
           children: this.data.children,
         };
+
         if (d.children) {
           path = d.path.slice(0, d.path.length - 1);
           currentNode = (0, _lodash.get)(valueTemp, path);
@@ -1028,6 +1077,7 @@ var Tree = /*#__PURE__*/ (function (_Base) {
           currentNode.children = currentNode._children;
           currentNode._children = null;
         }
+
         this.nodeChange && this.nodeChange(valueTemp);
       },
     },
@@ -1043,12 +1093,15 @@ var Tree = /*#__PURE__*/ (function (_Base) {
                     case 0:
                       _context.next = 2;
                       return this.data.children.forEach(_utils.expandTree);
+
                     case 2:
                       _context.next = 4;
                       return this.initData();
+
                     case 4:
                       _context.next = 6;
                       return this.render();
+
                     case 6:
                     case 'end':
                       return _context.stop();
@@ -1060,9 +1113,11 @@ var Tree = /*#__PURE__*/ (function (_Base) {
             );
           }),
         );
+
         function expand() {
           return _expand.apply(this, arguments);
         }
+
         return expand;
       })(),
     },
@@ -1078,12 +1133,15 @@ var Tree = /*#__PURE__*/ (function (_Base) {
                     case 0:
                       _context2.next = 2;
                       return this.data.children.forEach(_utils.collapseTree);
+
                     case 2:
                       _context2.next = 4;
                       return this.initData();
+
                     case 4:
                       _context2.next = 6;
                       return this.render();
+
                     case 6:
                     case 'end':
                       return _context2.stop();
@@ -1095,9 +1153,11 @@ var Tree = /*#__PURE__*/ (function (_Base) {
             );
           }),
         );
+
         function packUp() {
           return _packUp.apply(this, arguments);
         }
+
         return packUp;
       })(),
     },
@@ -1105,6 +1165,7 @@ var Tree = /*#__PURE__*/ (function (_Base) {
       key: 'render',
       value: function render() {
         this.buildPosition(this.hierarchyData);
+
         _reactDom.default.render(
           /*#__PURE__*/ _react.default.createElement(
             'div',
@@ -1125,15 +1186,19 @@ var Tree = /*#__PURE__*/ (function (_Base) {
       },
     },
   ]);
+
   return Tree;
 })(_Base2.default);
+
 var BaseProxy = function BaseProxy() {
   return new Proxy(new Tree(), {
     set: function set(target, propertyKey, value) {
       if (propertyKey === 'data') {
         if (!value) return true;
+
         if (target.initType === true || !target.interaction) {
           var _value$children;
+
           value === null || value === void 0
             ? void 0
             : (_value$children = value.children) === null || _value$children === void 0
@@ -1141,17 +1206,20 @@ var BaseProxy = function BaseProxy() {
             : _value$children.forEach(_utils.expandTree);
         } else {
           var _value$children2;
+
           value === null || value === void 0
             ? void 0
             : (_value$children2 = value.children) === null || _value$children2 === void 0
             ? void 0
             : _value$children2.forEach(_utils.collapseTree);
         }
+
         Reflect.set(target, propertyKey, value);
         target.initData();
         target.render();
         return true;
       }
+
       Reflect.set(target, propertyKey, value);
       return true;
     },
@@ -1159,9 +1227,11 @@ var BaseProxy = function BaseProxy() {
       if (Reflect.has(target, propertyKey)) {
         return Reflect.get(target, propertyKey);
       }
+
       return -1;
     },
   });
 };
+
 var _default = BaseProxy;
 exports.default = _default;

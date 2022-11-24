@@ -15,8 +15,11 @@ Object.defineProperty(exports, 'TNTLayout', {
     return _TNTLayout.default;
   },
 });
+
 var _TNTLayout = _interopRequireDefault(require('./TNTLayout'));
+
 var _TGLayout = _interopRequireDefault(require('./TGLayout'));
+
 function _interopRequireDefault(obj) {
   return obj && obj.__esModule ? obj : { default: obj };
 }

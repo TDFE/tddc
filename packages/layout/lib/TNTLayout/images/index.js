@@ -24,7 +24,9 @@ var _default = {
   male6: require('./avatar/male6.png'),
 };
 exports.default = _default;
+
 var defaultLogo = require('./logo/default.svg');
+
 exports.defaultLogo = defaultLogo;
 var logoImgMap = {
   default: defaultLogo,

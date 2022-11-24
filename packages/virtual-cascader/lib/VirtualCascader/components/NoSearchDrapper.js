@@ -19,14 +19,20 @@ function _typeof(obj) {
     _typeof(obj)
   );
 }
+
 Object.defineProperty(exports, '__esModule', {
   value: true,
 });
 exports.default = void 0;
+
 require('antd/lib/icon/style');
+
 var _icon = _interopRequireDefault(require('antd/lib/icon'));
+
 var _react = _interopRequireWildcard(require('react'));
+
 var _useVirtualList3 = _interopRequireDefault(require('../hooks/useVirtualList'));
+
 function _getRequireWildcardCache(nodeInterop) {
   if (typeof WeakMap !== 'function') return null;
   var cacheBabelInterop = new WeakMap();
@@ -35,6 +41,7 @@ function _getRequireWildcardCache(nodeInterop) {
     return nodeInterop ? cacheNodeInterop : cacheBabelInterop;
   })(nodeInterop);
 }
+
 function _interopRequireWildcard(obj, nodeInterop) {
   if (!nodeInterop && obj && obj.__esModule) {
     return obj;
@@ -64,9 +71,11 @@ function _interopRequireWildcard(obj, nodeInterop) {
   }
   return newObj;
 }
+
 function _interopRequireDefault(obj) {
   return obj && obj.__esModule ? obj : { default: obj };
 }
+
 function _slicedToArray(arr, i) {
   return (
     _arrayWithHoles(arr) ||
@@ -75,11 +84,13 @@ function _slicedToArray(arr, i) {
     _nonIterableRest()
   );
 }
+
 function _nonIterableRest() {
   throw new TypeError(
     'Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.',
   );
 }
+
 function _unsupportedIterableToArray(o, minLen) {
   if (!o) return;
   if (typeof o === 'string') return _arrayLikeToArray(o, minLen);
@@ -89,6 +100,7 @@ function _unsupportedIterableToArray(o, minLen) {
   if (n === 'Arguments' || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n))
     return _arrayLikeToArray(o, minLen);
 }
+
 function _arrayLikeToArray(arr, len) {
   if (len == null || len > arr.length) len = arr.length;
   for (var i = 0, arr2 = new Array(len); i < len; i++) {
@@ -96,6 +108,7 @@ function _arrayLikeToArray(arr, len) {
   }
   return arr2;
 }
+
 function _iterableToArrayLimit(arr, i) {
   var _i =
     arr == null
@@ -123,9 +136,11 @@ function _iterableToArrayLimit(arr, i) {
   }
   return _arr;
 }
+
 function _arrayWithHoles(arr) {
   if (Array.isArray(arr)) return arr;
 }
+
 var NoSearchDrapper = function NoSearchDrapper(_ref) {
   var options = _ref.options,
     maxWidth = _ref.maxWidth,
@@ -138,10 +153,12 @@ var NoSearchDrapper = function NoSearchDrapper(_ref) {
     level = _ref.level;
   var containerRef = (0, _react.useRef)(null);
   var wrapperRef = (0, _react.useRef)(null);
+
   var _useState = (0, _react.useState)(true),
     _useState2 = _slicedToArray(_useState, 2),
     init = _useState2[0],
     setInit = _useState2[1];
+
   var _useVirtualList = (0, _useVirtualList3.default)(options, {
       containerTarget: containerRef,
       wrapperTarget: wrapperRef,
@@ -150,12 +167,12 @@ var NoSearchDrapper = function NoSearchDrapper(_ref) {
     }),
     _useVirtualList2 = _slicedToArray(_useVirtualList, 2),
     list = _useVirtualList2[0],
-    scrollTo = _useVirtualList2[1];
+    scrollTo = _useVirtualList2[1]; // 默认滚动到相应位置
 
-  // 默认滚动到相应位置
   (0, _react.useEffect)(
     function () {
       var timer;
+
       if (!!defaultValue && Array.isArray(options) && init) {
         var index =
           options === null || options === void 0
@@ -163,6 +180,7 @@ var NoSearchDrapper = function NoSearchDrapper(_ref) {
             : options.findIndex(function (i) {
                 return i[fieldNames.value] === defaultValue;
               });
+
         if (index >= 0) {
           timer = setTimeout(function () {
             scrollTo(index);
@@ -170,6 +188,7 @@ var NoSearchDrapper = function NoSearchDrapper(_ref) {
           }, 100);
         }
       }
+
       return function () {
         clearTimeout(timer);
       };
@@ -195,6 +214,7 @@ var NoSearchDrapper = function NoSearchDrapper(_ref) {
         : list.map(function () {
             var _ref2 = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {},
               data = _ref2.data;
+
             var isLast =
               !Array.isArray(
                 data === null || data === void 0 ? void 0 : data[fieldNames.children],
@@ -265,5 +285,7 @@ var NoSearchDrapper = function NoSearchDrapper(_ref) {
     ),
   );
 };
+
 var _default = /*#__PURE__*/ (0, _react.memo)(NoSearchDrapper);
+
 exports.default = _default;

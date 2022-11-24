@@ -19,6 +19,7 @@ function _typeof(obj) {
     _typeof(obj)
   );
 }
+
 Object.defineProperty(exports, '__esModule', {
   value: true,
 });
@@ -29,11 +30,17 @@ Object.defineProperty(exports, 'AssignApp', {
   },
 });
 exports.default = void 0;
+
 require('antd/lib/modal/style');
+
 var _modal = _interopRequireDefault(require('antd/lib/modal'));
+
 var _react = _interopRequireWildcard(require('react'));
+
 var _AssignApp = _interopRequireDefault(require('./AssignApp'));
+
 require('./index.less');
+
 function _getRequireWildcardCache(nodeInterop) {
   if (typeof WeakMap !== 'function') return null;
   var cacheBabelInterop = new WeakMap();
@@ -42,6 +49,7 @@ function _getRequireWildcardCache(nodeInterop) {
     return nodeInterop ? cacheNodeInterop : cacheBabelInterop;
   })(nodeInterop);
 }
+
 function _interopRequireWildcard(obj, nodeInterop) {
   if (!nodeInterop && obj && obj.__esModule) {
     return obj;
@@ -71,9 +79,11 @@ function _interopRequireWildcard(obj, nodeInterop) {
   }
   return newObj;
 }
+
 function _interopRequireDefault(obj) {
   return obj && obj.__esModule ? obj : { default: obj };
 }
+
 function _slicedToArray(arr, i) {
   return (
     _arrayWithHoles(arr) ||
@@ -82,11 +92,13 @@ function _slicedToArray(arr, i) {
     _nonIterableRest()
   );
 }
+
 function _nonIterableRest() {
   throw new TypeError(
     'Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.',
   );
 }
+
 function _unsupportedIterableToArray(o, minLen) {
   if (!o) return;
   if (typeof o === 'string') return _arrayLikeToArray(o, minLen);
@@ -96,6 +108,7 @@ function _unsupportedIterableToArray(o, minLen) {
   if (n === 'Arguments' || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n))
     return _arrayLikeToArray(o, minLen);
 }
+
 function _arrayLikeToArray(arr, len) {
   if (len == null || len > arr.length) len = arr.length;
   for (var i = 0, arr2 = new Array(len); i < len; i++) {
@@ -103,6 +116,7 @@ function _arrayLikeToArray(arr, len) {
   }
   return arr2;
 }
+
 function _iterableToArrayLimit(arr, i) {
   var _i =
     arr == null
@@ -130,9 +144,11 @@ function _iterableToArrayLimit(arr, i) {
   }
   return _arr;
 }
+
 function _arrayWithHoles(arr) {
   if (Array.isArray(arr)) return arr;
 }
+
 var AssignModal = function AssignModal(props) {
   var visible = props.visible,
     orgList = props.orgList,
@@ -144,13 +160,16 @@ var AssignModal = function AssignModal(props) {
     title = _props$title === void 0 ? '' : _props$title,
     onSubmit = props.onSubmit,
     appList = props.appList;
+
   var _useState = (0, _react.useState)({}),
     _useState2 = _slicedToArray(_useState, 2),
     assignData = _useState2[0],
     setAssignData = _useState2[1];
+
   var submit = function submit() {
     onSubmit(assignData);
   };
+
   return /*#__PURE__*/ _react.default.createElement(
     _modal.default,
     {
@@ -177,5 +196,6 @@ var AssignModal = function AssignModal(props) {
     }),
   );
 };
+
 var _default = AssignModal;
 exports.default = _default;

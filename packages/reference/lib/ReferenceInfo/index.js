@@ -4,23 +4,39 @@ Object.defineProperty(exports, '__esModule', {
   value: true,
 });
 exports.ReferenceInfo = void 0;
+
 require('antd/lib/table/style');
+
 var _table = _interopRequireDefault(require('antd/lib/table'));
+
 require('antd/lib/row/style');
+
 var _row = _interopRequireDefault(require('antd/lib/row'));
+
 require('antd/lib/icon/style');
+
 var _icon = _interopRequireDefault(require('antd/lib/icon'));
+
 require('antd/lib/tooltip/style');
+
 var _tooltip = _interopRequireDefault(require('antd/lib/tooltip'));
+
 require('antd/lib/empty/style');
+
 var _empty = _interopRequireDefault(require('antd/lib/empty'));
+
 var _react = _interopRequireDefault(require('react'));
+
 var _tntd = require('tntd');
+
 var _AHref = _interopRequireDefault(require('../AHref'));
+
 require('./index.less');
+
 function _interopRequireDefault(obj) {
   return obj && obj.__esModule ? obj : { default: obj };
 }
+
 function _extends() {
   _extends = Object.assign
     ? Object.assign.bind()
@@ -37,6 +53,7 @@ function _extends() {
       };
   return _extends.apply(this, arguments);
 }
+
 function ownKeys(object, enumerableOnly) {
   var keys = Object.keys(object);
   if (Object.getOwnPropertySymbols) {
@@ -49,6 +66,7 @@ function ownKeys(object, enumerableOnly) {
   }
   return keys;
 }
+
 function _objectSpread(target) {
   for (var i = 1; i < arguments.length; i++) {
     var source = null != arguments[i] ? arguments[i] : {};
@@ -64,6 +82,7 @@ function _objectSpread(target) {
   }
   return target;
 }
+
 function _defineProperty(obj, key, value) {
   if (key in obj) {
     Object.defineProperty(obj, key, {
@@ -77,6 +96,7 @@ function _defineProperty(obj, key, value) {
   }
   return obj;
 }
+
 var ReferenceInfo = function ReferenceInfo(props) {
   var from = props.from,
     _props$referenceData = props.referenceData,
@@ -110,10 +130,13 @@ var ReferenceInfo = function ReferenceInfo(props) {
       ? void 0
       : referenceData.map(function (d, dIndex) {
           var _renderColumns;
+
           var _ref = d || {},
             columns = _ref.columns,
             goName = _ref.goName;
+
           var renderColumns = [];
+
           if (columns === null || columns === void 0 ? void 0 : columns.length) {
             renderColumns =
               columns === null || columns === void 0
@@ -127,7 +150,9 @@ var ReferenceInfo = function ReferenceInfo(props) {
                         ellipsis: true,
                       },
                     );
+
                     var fixedMaxWid = {};
+
                     if (
                       i ===
                       (columns === null || columns === void 0 ? void 0 : columns.length) - 1
@@ -139,23 +164,30 @@ var ReferenceInfo = function ReferenceInfo(props) {
                         };
                       }
                     }
+
                     if (i === 0) {
                       newC.width = 180;
                     }
+
                     if (from === 'ReferenceOnlineCheck' && c.dataIndex === 'status') {
                       newC.className = 'refer-warning-txt';
                     }
+
                     newC.render = function (t, record) {
                       var content = t;
+
                       if (c.dataIndex === 'org') {
                         var _orgMap$t;
+
                         content =
                           ((_orgMap$t = orgMap[t]) === null || _orgMap$t === void 0
                             ? void 0
                             : _orgMap$t.name) || t;
                       }
+
                       if (c.dataIndex === 'app') {
                         var _appList$find;
+
                         content =
                           ((_appList$find = appList.find(function (a) {
                             return a.key === t;
@@ -163,6 +195,7 @@ var ReferenceInfo = function ReferenceInfo(props) {
                             ? void 0
                             : _appList$find.name) || t;
                       }
+
                       if (
                         c.dataIndex === goName &&
                         (record === null || record === void 0 ? void 0 : record.goLink)
@@ -186,6 +219,7 @@ var ReferenceInfo = function ReferenceInfo(props) {
                           ),
                         );
                       }
+
                       if (c.dataIndex === goName) {
                         return /*#__PURE__*/ _react.default.createElement(
                           _tntd.Ellipsis,
@@ -199,11 +233,13 @@ var ReferenceInfo = function ReferenceInfo(props) {
                           content || '- -',
                         );
                       }
+
                       if (
                         i === 0 &&
                         (record === null || record === void 0 ? void 0 : record.referenceCheckType)
                       ) {
                         var checkObj;
+
                         if (
                           (record === null || record === void 0
                             ? void 0
@@ -214,6 +250,7 @@ var ReferenceInfo = function ReferenceInfo(props) {
                             className: 'refer-tag-weak',
                           };
                         }
+
                         if (
                           (record === null || record === void 0
                             ? void 0
@@ -224,6 +261,7 @@ var ReferenceInfo = function ReferenceInfo(props) {
                             className: 'refer-tag-strong',
                           };
                         }
+
                         return /*#__PURE__*/ _react.default.createElement(
                           _tooltip.default,
                           {
@@ -241,6 +279,7 @@ var ReferenceInfo = function ReferenceInfo(props) {
                           content || '- -',
                         );
                       }
+
                       return /*#__PURE__*/ _react.default.createElement(
                         _tntd.Ellipsis,
                         _extends(
@@ -252,9 +291,11 @@ var ReferenceInfo = function ReferenceInfo(props) {
                         content || '- -',
                       );
                     };
+
                     return newC;
                   });
           }
+
           return /*#__PURE__*/ _react.default.createElement(
             'div',
             {
@@ -315,4 +356,5 @@ var ReferenceInfo = function ReferenceInfo(props) {
         }),
   );
 };
+
 exports.ReferenceInfo = ReferenceInfo;

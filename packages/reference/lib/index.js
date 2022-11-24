@@ -33,7 +33,11 @@ Object.defineProperty(exports, 'ReferenceOnlineCheck', {
     return _ReferenceBatchCheck.ReferenceBatchCheck;
   },
 });
+
 var _ReferenceDrawer = require('./ReferenceDrawer');
+
 var _ReferenceCheck = require('./ReferenceCheck');
+
 var _ReferenceBatchCheck = require('./ReferenceBatchCheck');
+
 var _ReferenceInfo = require('./ReferenceInfo');

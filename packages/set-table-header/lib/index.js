@@ -9,7 +9,9 @@ Object.defineProperty(exports, 'default', {
     return _SetTableHeader.default;
   },
 });
+
 var _SetTableHeader = _interopRequireDefault(require('./SetTableHeader'));
+
 function _interopRequireDefault(obj) {
   return obj && obj.__esModule ? obj : { default: obj };
 }

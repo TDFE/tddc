@@ -19,14 +19,20 @@ function _typeof(obj) {
     _typeof(obj)
   );
 }
+
 Object.defineProperty(exports, '__esModule', {
   value: true,
 });
 exports.default = void 0;
+
 var _react = _interopRequireWildcard(require('react'));
+
 require('./index.less');
+
 var _Context = require('../Context');
+
 var _images = require('../images');
+
 function _getRequireWildcardCache(nodeInterop) {
   if (typeof WeakMap !== 'function') return null;
   var cacheBabelInterop = new WeakMap();
@@ -35,6 +41,7 @@ function _getRequireWildcardCache(nodeInterop) {
     return nodeInterop ? cacheNodeInterop : cacheBabelInterop;
   })(nodeInterop);
 }
+
 function _interopRequireWildcard(obj, nodeInterop) {
   if (!nodeInterop && obj && obj.__esModule) {
     return obj;
@@ -64,6 +71,7 @@ function _interopRequireWildcard(obj, nodeInterop) {
   }
   return newObj;
 }
+
 function _extends() {
   _extends = Object.assign
     ? Object.assign.bind()
@@ -80,31 +88,38 @@ function _extends() {
       };
   return _extends.apply(this, arguments);
 }
+
 var getStrLen = function getStrLen() {
   var str = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : '';
   var len = 0;
+
   for (var i = 0; i < str.length; i++) {
     var c = str.charCodeAt(i);
-    var chartLength = 2;
+    var chartLength = 2; // 单字节加1
 
-    // 单字节加1
     if ((c >= 0x0001 && c <= 0x007e) || (c >= 0xff60 && c <= 0xff9f)) {
       chartLength = 1;
     }
+
     len += chartLength;
   }
+
   return len;
 };
+
 var Logo = function Logo(props) {
   var _logo$props;
+
   var logo = props.logo,
     name = props.name,
     enName = props.enName,
     size = props.size,
     siderWidth = props.siderWidth,
     collapsed = props.collapsed;
+
   var _useContext = (0, _react.useContext)(_Context.ThemeContext),
     language = _useContext.language;
+
   var productNameLen = getStrLen(language === 'cn' ? name : enName);
   var fontSize =
     {
@@ -114,6 +129,7 @@ var Logo = function Logo(props) {
       15: 16,
       16: 15,
     }[Math.max(12, Math.min(productNameLen, 16))] + (size === 'large' ? 1 : 0);
+
   var LogoImg = function LogoImg(props) {
     return /*#__PURE__*/ _react.default.createElement(
       'img',
@@ -128,6 +144,7 @@ var Logo = function Logo(props) {
       ),
     );
   };
+
   return /*#__PURE__*/ _react.default.createElement(
     'div',
     {
@@ -160,5 +177,6 @@ var Logo = function Logo(props) {
         }[language],
   );
 };
+
 var _default = Logo;
 exports.default = _default;

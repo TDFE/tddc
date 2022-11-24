@@ -4,11 +4,15 @@ Object.defineProperty(exports, '__esModule', {
   value: true,
 });
 exports.default = void 0;
+
 var _react = require('react');
+
 var _useUnmount = _interopRequireDefault(require('../useUnmount'));
+
 function _interopRequireDefault(obj) {
   return obj && obj.__esModule ? obj : { default: obj };
 }
+
 function _slicedToArray(arr, i) {
   return (
     _arrayWithHoles(arr) ||
@@ -17,11 +21,13 @@ function _slicedToArray(arr, i) {
     _nonIterableRest()
   );
 }
+
 function _nonIterableRest() {
   throw new TypeError(
     'Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.',
   );
 }
+
 function _unsupportedIterableToArray(o, minLen) {
   if (!o) return;
   if (typeof o === 'string') return _arrayLikeToArray(o, minLen);
@@ -31,6 +37,7 @@ function _unsupportedIterableToArray(o, minLen) {
   if (n === 'Arguments' || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n))
     return _arrayLikeToArray(o, minLen);
 }
+
 function _arrayLikeToArray(arr, len) {
   if (len == null || len > arr.length) len = arr.length;
   for (var i = 0, arr2 = new Array(len); i < len; i++) {
@@ -38,6 +45,7 @@ function _arrayLikeToArray(arr, len) {
   }
   return arr2;
 }
+
 function _iterableToArrayLimit(arr, i) {
   var _i =
     arr == null
@@ -65,15 +73,19 @@ function _iterableToArrayLimit(arr, i) {
   }
   return _arr;
 }
+
 function _arrayWithHoles(arr) {
   if (Array.isArray(arr)) return arr;
 }
+
 function useRafState(initialState) {
   var ref = (0, _react.useRef)(0);
+
   var _useState = (0, _react.useState)(initialState),
     _useState2 = _slicedToArray(_useState, 2),
     state = _useState2[0],
     setState = _useState2[1];
+
   var setRafState = (0, _react.useCallback)(function (value) {
     cancelAnimationFrame(ref.current);
     ref.current = requestAnimationFrame(function () {
@@ -86,5 +98,6 @@ function useRafState(initialState) {
   });
   return [state, setRafState];
 }
+
 var _default = useRafState;
 exports.default = _default;

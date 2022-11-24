@@ -19,22 +19,36 @@ function _typeof(obj) {
     _typeof(obj)
   );
 }
+
 Object.defineProperty(exports, '__esModule', {
   value: true,
 });
 exports.default = void 0;
+
 var React = _interopRequireWildcard(require('react'));
+
 var _arrayTreeFilter = _interopRequireDefault(require('array-tree-filter'));
+
 var _classnames = _interopRequireDefault(require('classnames'));
+
 var _lodash = require('lodash');
+
 var _KeyCode = _interopRequireDefault(require('rc-util/lib/KeyCode'));
+
 var _reactLifecyclesCompat = require('react-lifecycles-compat');
+
 var _input = _interopRequireDefault(require('antd/es/input'));
+
 var _icon = _interopRequireDefault(require('antd/es/icon'));
+
 var _rcCascader = _interopRequireDefault(require('rc-cascader'));
+
 var _configProvider = require('antd/es/config-provider');
+
 var _LocaleReceiver = _interopRequireDefault(require('antd/es/locale-provider/LocaleReceiver'));
+
 var _warning = _interopRequireDefault(require('antd/es/_util/warning'));
+
 var _excluded = [
   'prefixCls',
   'inputPrefixCls',
@@ -50,9 +64,11 @@ var _excluded = [
   'notFoundContent',
   'dropdownRender',
 ];
+
 function _interopRequireDefault(obj) {
   return obj && obj.__esModule ? obj : { default: obj };
 }
+
 function _getRequireWildcardCache(nodeInterop) {
   if (typeof WeakMap !== 'function') return null;
   var cacheBabelInterop = new WeakMap();
@@ -61,6 +77,7 @@ function _getRequireWildcardCache(nodeInterop) {
     return nodeInterop ? cacheNodeInterop : cacheBabelInterop;
   })(nodeInterop);
 }
+
 function _interopRequireWildcard(obj, nodeInterop) {
   if (!nodeInterop && obj && obj.__esModule) {
     return obj;
@@ -90,6 +107,7 @@ function _interopRequireWildcard(obj, nodeInterop) {
   }
   return newObj;
 }
+
 function _extends() {
   _extends = Object.assign
     ? Object.assign.bind()
@@ -106,6 +124,7 @@ function _extends() {
       };
   return _extends.apply(this, arguments);
 }
+
 function _defineProperty(obj, key, value) {
   if (key in obj) {
     Object.defineProperty(obj, key, {
@@ -119,6 +138,7 @@ function _defineProperty(obj, key, value) {
   }
   return obj;
 }
+
 function _objectWithoutProperties(source, excluded) {
   if (source == null) return {};
   var target = _objectWithoutPropertiesLoose(source, excluded);
@@ -134,6 +154,7 @@ function _objectWithoutProperties(source, excluded) {
   }
   return target;
 }
+
 function _objectWithoutPropertiesLoose(source, excluded) {
   if (source == null) return {};
   var target = {};
@@ -146,11 +167,13 @@ function _objectWithoutPropertiesLoose(source, excluded) {
   }
   return target;
 }
+
 function _classCallCheck(instance, Constructor) {
   if (!(instance instanceof Constructor)) {
     throw new TypeError('Cannot call a class as a function');
   }
 }
+
 function _defineProperties(target, props) {
   for (var i = 0; i < props.length; i++) {
     var descriptor = props[i];
@@ -160,12 +183,14 @@ function _defineProperties(target, props) {
     Object.defineProperty(target, descriptor.key, descriptor);
   }
 }
+
 function _createClass(Constructor, protoProps, staticProps) {
   if (protoProps) _defineProperties(Constructor.prototype, protoProps);
   if (staticProps) _defineProperties(Constructor, staticProps);
   Object.defineProperty(Constructor, 'prototype', { writable: false });
   return Constructor;
 }
+
 function _inherits(subClass, superClass) {
   if (typeof superClass !== 'function' && superClass !== null) {
     throw new TypeError('Super expression must either be null or a function');
@@ -176,6 +201,7 @@ function _inherits(subClass, superClass) {
   Object.defineProperty(subClass, 'prototype', { writable: false });
   if (superClass) _setPrototypeOf(subClass, superClass);
 }
+
 function _setPrototypeOf(o, p) {
   _setPrototypeOf = Object.setPrototypeOf
     ? Object.setPrototypeOf.bind()
@@ -185,6 +211,7 @@ function _setPrototypeOf(o, p) {
       };
   return _setPrototypeOf(o, p);
 }
+
 function _createSuper(Derived) {
   var hasNativeReflectConstruct = _isNativeReflectConstruct();
   return function _createSuperInternal() {
@@ -199,6 +226,7 @@ function _createSuper(Derived) {
     return _possibleConstructorReturn(this, result);
   };
 }
+
 function _possibleConstructorReturn(self, call) {
   if (call && (_typeof(call) === 'object' || typeof call === 'function')) {
     return call;
@@ -207,12 +235,14 @@ function _possibleConstructorReturn(self, call) {
   }
   return _assertThisInitialized(self);
 }
+
 function _assertThisInitialized(self) {
   if (self === void 0) {
     throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
   }
   return self;
 }
+
 function _isNativeReflectConstruct() {
   if (typeof Reflect === 'undefined' || !Reflect.construct) return false;
   if (Reflect.construct.sham) return false;
@@ -224,6 +254,7 @@ function _isNativeReflectConstruct() {
     return false;
   }
 }
+
 function _getPrototypeOf(o) {
   _getPrototypeOf = Object.setPrototypeOf
     ? Object.getPrototypeOf.bind()
@@ -232,8 +263,10 @@ function _getPrototypeOf(o) {
       };
   return _getPrototypeOf(o);
 }
+
 // We limit the filtered item count by default
 var defaultLimit = 50;
+
 function highlightKeyword(str, keyword, prefixCls) {
   return str.split(keyword).map(function (node, index) {
     return index === 0
@@ -251,11 +284,13 @@ function highlightKeyword(str, keyword, prefixCls) {
         ];
   });
 }
+
 function defaultFilterOption(inputValue, path, names) {
   return path.some(function (option) {
     return option[names.label].indexOf(inputValue) > -1;
   });
 }
+
 function defaultRenderFilteredOption(inputValue, path, prefixCls, names) {
   return path.map(function (option, index) {
     var label = option[names.label];
@@ -264,21 +299,26 @@ function defaultRenderFilteredOption(inputValue, path, prefixCls, names) {
     return index === 0 ? node : [' / ', node];
   });
 }
+
 function defaultSortFilteredOption(a, b, inputValue, names) {
   function callback(elem) {
     return elem[names.label].indexOf(inputValue) > -1;
   }
+
   return a.findIndex(callback) - b.findIndex(callback);
 }
+
 function getFieldNames(props) {
   var fieldNames = props.fieldNames,
     filedNames = props.filedNames;
+
   if ('filedNames' in props) {
     return filedNames; // For old compatibility
   }
 
   return fieldNames;
 }
+
 function getFilledFieldNames(props) {
   var fieldNames = getFieldNames(props) || {};
   var names = {
@@ -288,6 +328,7 @@ function getFilledFieldNames(props) {
   };
   return names;
 }
+
 function flattenTree(options, props) {
   var ancestor = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : [];
   var names = getFilledFieldNames(props);
@@ -295,18 +336,22 @@ function flattenTree(options, props) {
   var childrenName = names.children;
   options.forEach(function (option) {
     var path = ancestor.concat(option);
+
     if (props.changeOnSelect || !option[childrenName] || !option[childrenName].length) {
       flattenOptions.push(path);
     }
+
     if (option[childrenName]) {
       flattenOptions = flattenOptions.concat(flattenTree(option[childrenName], props, path));
     }
   });
   return flattenOptions;
 }
+
 var defaultDisplayRender = function defaultDisplayRender(label) {
   return label.join(' / ');
 };
+
 function warningValueNotExist(list) {
   var fieldNames = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
   (list || []).forEach(function (item) {
@@ -315,42 +360,58 @@ function warningValueNotExist(list) {
     warningValueNotExist(item[fieldNames.children || 'children'], fieldNames);
   });
 }
+
 var CustomCascader = /*#__PURE__*/ (function (_React$Component) {
   _inherits(CustomCascader, _React$Component);
+
   var _super = _createSuper(CustomCascader);
+
   function CustomCascader(_props) {
     var _this;
+
     _classCallCheck(this, CustomCascader);
+
     _this = _super.call(this, _props);
     _this.cachedOptions = [];
     _this.input = void 0;
+
     _this.setValue = function (value) {
       var selectedOptions = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : [];
+
       if (!('value' in _this.props)) {
         _this.setState({
           value: value,
         });
       }
+
       var onChange = _this.props.onChange;
+
       if (onChange) {
         onChange(value, selectedOptions);
       }
     };
+
     _this.saveInput = function (node) {
       _this.input = node;
     };
+
     _this.handleChange = function (value, selectedOptions) {
       _this.setState({
         inputValue: '',
       });
+
       if (selectedOptions[0].__IS_FILTERED_OPTION) {
         var unwrappedValue = value[0];
         var unwrappedSelectedOptions = selectedOptions[0].path;
+
         _this.setValue(unwrappedValue, unwrappedSelectedOptions);
+
         return;
       }
+
       _this.setValue(value, selectedOptions);
     };
+
     _this.handlePopupVisibleChange = function (popupVisible) {
       if (!('popupVisible' in _this.props)) {
         _this.setState(function (state) {
@@ -361,45 +422,56 @@ var CustomCascader = /*#__PURE__*/ (function (_React$Component) {
           };
         });
       }
+
       var onDropdownVisibleChange = _this.props.onDropdownVisibleChange;
+
       if (onDropdownVisibleChange) {
         onDropdownVisibleChange(popupVisible);
       }
     };
+
     _this.handleInputBlur = function () {
       _this.setState({
         inputFocused: false,
       });
     };
+
     _this.handleInputClick = function (e) {
       var _this$state = _this.state,
         inputFocused = _this$state.inputFocused,
-        popupVisible = _this$state.popupVisible;
-      // Prevent `Trigger` behaviour.
+        popupVisible = _this$state.popupVisible; // Prevent `Trigger` behaviour.
+
       if (inputFocused || popupVisible) {
         e.stopPropagation();
+
         if (e.nativeEvent.stopImmediatePropagation) {
           e.nativeEvent.stopImmediatePropagation();
         }
       }
     };
+
     _this.handleKeyDown = function (e) {
       // SPACE => https://github.com/ant-design/ant-design/issues/16871
       if (e.keyCode === _KeyCode.default.BACKSPACE || e.keyCode === _KeyCode.default.SPACE) {
         e.stopPropagation();
       }
     };
+
     _this.handleInputChange = function (e) {
       var inputValue = e.target.value;
+
       _this.setState({
         inputValue: inputValue,
       });
     };
+
     _this.clearSelection = function (e) {
       e.preventDefault();
       e.stopPropagation();
+
       if (!_this.state.inputValue) {
         _this.setValue([]);
+
         _this.handlePopupVisibleChange(false);
       } else {
         _this.setState({
@@ -407,14 +479,18 @@ var CustomCascader = /*#__PURE__*/ (function (_React$Component) {
         });
       }
     };
+
     _this.renderCascader = function (_ref, locale) {
       var _classNames, _classNames2, _classNames3;
+
       var getContextPopupContainer = _ref.getPopupContainer,
         getPrefixCls = _ref.getPrefixCls,
         renderEmpty = _ref.renderEmpty;
+
       var _assertThisInitialize = _assertThisInitialized(_this),
         props = _assertThisInitialize.props,
         state = _assertThisInitialize.state;
+
       var customizePrefixCls = props.prefixCls,
         customizeInputPrefixCls = props.inputPrefixCls,
         children = props.children,
@@ -434,6 +510,7 @@ var CustomCascader = /*#__PURE__*/ (function (_React$Component) {
         notFoundContent = props.notFoundContent,
         _dropdownRender = props.dropdownRender,
         otherProps = _objectWithoutProperties(props, _excluded);
+
       var value = state.value,
         inputFocused = state.inputFocused;
       var prefixCls = getPrefixCls('cascader', customizePrefixCls);
@@ -473,10 +550,9 @@ var CustomCascader = /*#__PURE__*/ (function (_React$Component) {
         _defineProperty(_classNames3, ''.concat(prefixCls, '-picker-show-search'), !!showSearch),
         _defineProperty(_classNames3, ''.concat(prefixCls, '-picker-focused'), inputFocused),
         _classNames3),
-      );
-
-      // Fix bug of https://github.com/facebook/react/pull/5004
+      ); // Fix bug of https://github.com/facebook/react/pull/5004
       // and https://fb.me/react-unknown-prop
+
       var inputProps = (0, _lodash.omit)(otherProps, [
         'onChange',
         'options',
@@ -497,15 +573,16 @@ var CustomCascader = /*#__PURE__*/ (function (_React$Component) {
         'fieldNames',
         'filedNames', // For old compatibility
       ]);
-
       var options = props.options;
       var names = getFilledFieldNames(_this.props);
+
       if (options && options.length > 0) {
         if (state.inputValue) {
           options = _this.generateFilteredOptions(prefixCls, renderEmpty);
         }
       } else {
         var _ref2;
+
         options = [
           ((_ref2 = {}),
           _defineProperty(_ref2, names.value, 'ANT_CASCADER_NOT_FOUND'),
@@ -514,23 +591,27 @@ var CustomCascader = /*#__PURE__*/ (function (_React$Component) {
           _defineProperty(_ref2, 'isEmptyNode', true),
           _ref2),
         ];
-      }
-      // Dropdown menu should keep previous status until it is fully closed.
+      } // Dropdown menu should keep previous status until it is fully closed.
+
       if (!state.popupVisible) {
         options = _this.cachedOptions;
       } else {
         _this.cachedOptions = options;
       }
+
       var dropdownMenuColumnStyle = {};
       var isNotFound = (options || []).length === 1 && options[0].isEmptyNode;
+
       if (isNotFound) {
         dropdownMenuColumnStyle.height = 'auto'; // Height of one row.
-      }
-      // The default value of `matchInputWidth` is `true`
+      } // The default value of `matchInputWidth` is `true`
+
       var resultListMatchInputWidth = showSearch.matchInputWidth !== false;
+
       if (resultListMatchInputWidth && (state.inputValue || isNotFound) && _this.input) {
         dropdownMenuColumnStyle.width = _this.input.input.offsetWidth;
       }
+
       var inputIcon =
         (suffixIcon &&
           (React.isValidElement <
@@ -625,6 +706,7 @@ var CustomCascader = /*#__PURE__*/ (function (_React$Component) {
         input,
       );
     };
+
     _this.state = {
       value: _props.value || _props.defaultValue || [],
       inputValue: '',
@@ -635,6 +717,7 @@ var CustomCascader = /*#__PURE__*/ (function (_React$Component) {
     };
     return _this;
   }
+
   _createClass(
     CustomCascader,
     [
@@ -671,6 +754,7 @@ var CustomCascader = /*#__PURE__*/ (function (_React$Component) {
         value: function generateFilteredOptions(prefixCls, renderEmpty) {
           var _this2 = this,
             _ref4;
+
           var _this$props2 = this.props,
             showSearch = _this$props2.showSearch,
             notFoundContent = _this$props2.notFoundContent;
@@ -687,21 +771,22 @@ var CustomCascader = /*#__PURE__*/ (function (_React$Component) {
           var _this$state3 = this.state,
             _this$state3$flattenO = _this$state3.flattenOptions,
             flattenOptions = _this$state3$flattenO === void 0 ? [] : _this$state3$flattenO,
-            inputValue = _this$state3.inputValue;
+            inputValue = _this$state3.inputValue; // Limit the filter if needed
 
-          // Limit the filter if needed
           var filtered;
+
           if (limit > 0) {
             filtered = [];
-            var matchCount = 0;
+            var matchCount = 0; // Perf optimization to filter items only below the limit
 
-            // Perf optimization to filter items only below the limit
             flattenOptions.some(function (path) {
               var match = filter(_this2.state.inputValue, path, names);
+
               if (match) {
                 filtered.push(path);
                 matchCount += 1;
               }
+
               return matchCount >= limit;
             });
           } else {
@@ -714,12 +799,15 @@ var CustomCascader = /*#__PURE__*/ (function (_React$Component) {
               return filter(_this2.state.inputValue, path, names);
             });
           }
+
           filtered.sort(function (a, b) {
             return sort(a, b, inputValue, names);
           });
+
           if (filtered.length > 0) {
             return filtered.map(function (path) {
               var _ref3;
+
               return (
                 (_ref3 = {
                   __IS_FILTERED_OPTION: true,
@@ -745,6 +833,7 @@ var CustomCascader = /*#__PURE__*/ (function (_React$Component) {
               );
             });
           }
+
           return [
             ((_ref4 = {}),
             _defineProperty(_ref4, names.value, 'ANT_CASCADER_NOT_FOUND'),
@@ -771,6 +860,7 @@ var CustomCascader = /*#__PURE__*/ (function (_React$Component) {
         key: 'render',
         value: function render() {
           var _this3 = this;
+
           return /*#__PURE__*/ React.createElement(
             _configProvider.ConfigConsumer,
             null,
@@ -795,25 +885,32 @@ var CustomCascader = /*#__PURE__*/ (function (_React$Component) {
           var newState = {
             prevProps: nextProps,
           };
+
           if ('value' in nextProps) {
             newState.value = nextProps.value || [];
           }
+
           if ('popupVisible' in nextProps) {
             newState.popupVisible = nextProps.popupVisible;
           }
+
           if (nextProps.showSearch && prevProps.options !== nextProps.options) {
             newState.flattenOptions = flattenTree(nextProps.options, nextProps);
           }
+
           if (process.env.NODE_ENV !== 'production' && nextProps.options) {
             warningValueNotExist(nextProps.options, getFieldNames(nextProps));
           }
+
           return newState;
         },
       },
     ],
   );
+
   return CustomCascader;
 })(React.Component);
+
 CustomCascader.defaultProps = {
   transitionName: 'slide-up',
   placement: 'bottomLeft',

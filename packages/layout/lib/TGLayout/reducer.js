@@ -4,7 +4,9 @@ Object.defineProperty(exports, '__esModule', {
   value: true,
 });
 exports.initState = exports.default = void 0;
+
 var _utils = require('./utils');
+
 function ownKeys(object, enumerableOnly) {
   var keys = Object.keys(object);
   if (Object.getOwnPropertySymbols) {
@@ -17,6 +19,7 @@ function ownKeys(object, enumerableOnly) {
   }
   return keys;
 }
+
 function _objectSpread(target) {
   for (var i = 1; i < arguments.length; i++) {
     var source = null != arguments[i] ? arguments[i] : {};
@@ -32,6 +35,7 @@ function _objectSpread(target) {
   }
   return target;
 }
+
 function _defineProperty(obj, key, value) {
   if (key in obj) {
     Object.defineProperty(obj, key, {
@@ -45,6 +49,7 @@ function _defineProperty(obj, key, value) {
   }
   return obj;
 }
+
 var initState = function initState() {
   return {
     userInfo: {},
@@ -71,19 +76,24 @@ var initState = function initState() {
     },
   };
 };
+
 exports.initState = initState;
+
 var _default = function _default(state, action) {
   switch (action.type) {
     case 'init':
       return initState();
+
     case 'initUserInfo': {
       var _ref = action.payload || {},
         userInfo = _ref.userInfo;
+
       var _ref2 = userInfo || {},
         userName = _ref2.userName,
         account = _ref2.account,
         uuid = _ref2.uuid,
         avatar = _ref2.avatar;
+
       return _objectSpread(
         _objectSpread({}, state),
         {},
@@ -98,15 +108,19 @@ var _default = function _default(state, action) {
         action.payload,
       );
     }
+
     case 'initMenuTree': {
       var menuInfo = action.payload || {};
+
       var _ref3 = menuInfo || {},
         extendMap = _ref3.extendMap;
+
       try {
         if (typeof extendMap === 'string') {
           extendMap = JSON.parse(extendMap);
         }
       } catch (e) {}
+
       var subApps = (0, _utils.getSubAppsFromMenus)(
         (menuInfo === null || menuInfo === void 0 ? void 0 : menuInfo.menuTree) || [],
       );
@@ -127,6 +141,7 @@ var _default = function _default(state, action) {
         },
       );
     }
+
     case 'initMenuTreeReady': {
       return _objectSpread(
         _objectSpread({}, state),
@@ -136,6 +151,7 @@ var _default = function _default(state, action) {
         },
       );
     }
+
     case 'initUserReady': {
       return _objectSpread(
         _objectSpread({}, state),
@@ -145,6 +161,7 @@ var _default = function _default(state, action) {
         },
       );
     }
+
     case 'setOrgInfo': {
       var orgAppList = (0, _utils.formatAppList)(action.payload.orgAppList || []);
       return _objectSpread(
@@ -155,14 +172,18 @@ var _default = function _default(state, action) {
         },
       );
     }
+
     case 'setCurrentApp': {
       return _objectSpread(_objectSpread({}, state), action.payload);
     }
+
     case 'personalMode': {
       return _objectSpread(_objectSpread({}, state), action.payload);
     }
+
     default:
       throw new Error();
   }
 };
+
 exports.default = _default;
