@@ -612,7 +612,7 @@ var CustomCascader = /*#__PURE__*/ (function (_React$Component) {
           getPopupContainer: getPopupContainer,
           options: options,
           value: value,
-          popupVisible: state.popupVisible,
+          open: state.popupVisible,
           onDropdownVisibleChange: _this.handlePopupVisibleChange,
           onChange: _this.handleChange,
           dropdownMenuColumnStyle: dropdownMenuColumnStyle,

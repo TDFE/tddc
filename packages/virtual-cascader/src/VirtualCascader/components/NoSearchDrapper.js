@@ -3,7 +3,7 @@
  * @Author: 郑泳健
  * @Date: 2022-11-15 17:32:40
  * @LastEditors: 郑泳健
- * @LastEditTime: 2022-11-22 17:26:40
+ * @LastEditTime: 2022-11-28 16:48:03
  */
 import React, { useRef, memo, useEffect, useState } from 'react';
 import { Icon } from 'antd';
@@ -51,8 +51,7 @@ const NoSearchDrapper = ({
     <div ref={containerRef} style={{ height: 180, overflow: 'auto' }}>
       <div ref={wrapperRef}>
         {list?.map(({ data } = {}) => {
-          const isLast =
-            !Array.isArray(data?.[fieldNames.children]) || !data[fieldNames.children].length;
+          const isLast = !Array.isArray(data?.[fieldNames.children]);
           return (
             <div
               className={`

@@ -3,7 +3,7 @@
  * @Author: 郑泳健
  * @Date: 2022-11-14 15:18:00
  * @LastEditors: 郑泳健
- * @LastEditTime: 2022-11-22 12:56:48
+ * @LastEditTime: 2022-11-28 16:48:25
  */
 import * as React from 'react';
 import arrayTreeFilter from 'array-tree-filter';
@@ -470,7 +470,7 @@ class CustomCascader extends React.Component {
         getPopupContainer={getPopupContainer}
         options={options}
         value={value}
-        popupVisible={state.popupVisible}
+        open={state.popupVisible}
         onDropdownVisibleChange={this.handlePopupVisibleChange}
         onChange={this.handleChange}
         dropdownMenuColumnStyle={dropdownMenuColumnStyle}

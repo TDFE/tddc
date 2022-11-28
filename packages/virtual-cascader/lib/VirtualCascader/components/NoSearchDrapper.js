@@ -195,10 +195,9 @@ var NoSearchDrapper = function NoSearchDrapper(_ref) {
         : list.map(function () {
             var _ref2 = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {},
               data = _ref2.data;
-            var isLast =
-              !Array.isArray(
-                data === null || data === void 0 ? void 0 : data[fieldNames.children],
-              ) || !data[fieldNames.children].length;
+            var isLast = !Array.isArray(
+              data === null || data === void 0 ? void 0 : data[fieldNames.children],
+            );
             return /*#__PURE__*/ _react.default.createElement(
               'div',
               {
