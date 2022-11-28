@@ -161,7 +161,15 @@ var SearchDrapper = function SearchDrapper(_ref) {
   );
   if (isEntry) {
     if (notFoundContent) {
-      return notFoundContent;
+      return /*#__PURE__*/ _react.default.createElement(
+        'div',
+        {
+          style: {
+            width: width,
+          },
+        },
+        notFoundContent,
+      );
     }
     return /*#__PURE__*/ _react.default.createElement(
       'div',

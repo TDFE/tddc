@@ -3,7 +3,7 @@
  * @Author: 郑泳健
  * @Date: 2022-11-15 17:26:18
  * @LastEditors: 郑泳健
- * @LastEditTime: 2022-11-28 18:42:54
+ * @LastEditTime: 2022-11-28 18:56:44
  */
 import React, { useRef, memo, useMemo } from 'react';
 import useVirtualList from '../hooks/useVirtualList';
@@ -39,7 +39,7 @@ const SearchDrapper = ({
 
   if (isEntry) {
     if (notFoundContent) {
-      return notFoundContent;
+      return <div style={{ width }}>{notFoundContent}</div>;
     }
     return (
       <div>
