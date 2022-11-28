@@ -123,23 +123,20 @@ const VirtualCascader = ({
 
   /** 自定义渲染弹窗 */
   const handleDropdownRender = (inputValue, filterOptions) => {
-    let positionLeft = undefined;
+    let width = undefined;
     if (ref.current?.state?.popupVisible) {
-      const left = ref?.current?.input?.input?.getBoundingClientRect()?.left;
-      if (!isNaN(left)) {
-        positionLeft = left;
+      const _width = ref?.current?.input?.input?.getBoundingClientRect()?.width;
+      if (!isNaN(_width)) {
+        width = _width;
       }
     }
 
-    if (isNaN(positionLeft)) {
+    if (isNaN(width)) {
       return null;
     }
 
     return (
-      <div
-        className={`${prefixCls}-menus ${prefixCls}-menus-placement-bottomLeft`}
-        style={{ left: positionLeft }}
-      >
+      <div className={`${prefixCls}-menus ${prefixCls}-menus-placement-bottomLeft`}>
         <div>
           {inputValue && Array.isArray(filterOptions) && !!filterOptions.length ? (
             <SearchDrapper
@@ -152,6 +149,7 @@ const VirtualCascader = ({
                 activeValueCells,
                 onChoosed: handleChoosed,
                 showSearch,
+                width,
               }}
             />
           ) : (

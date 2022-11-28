@@ -3,12 +3,13 @@
  * @Author: 郑泳健
  * @Date: 2022-11-15 17:26:18
  * @LastEditors: 郑泳健
- * @LastEditTime: 2022-11-16 15:05:01
+ * @LastEditTime: 2022-11-28 18:42:54
  */
 import React, { useRef, memo, useMemo } from 'react';
 import useVirtualList from '../hooks/useVirtualList';
 
 const SearchDrapper = ({
+  width,
   inputValue,
   filterOptions,
   prefixCls,
@@ -42,7 +43,7 @@ const SearchDrapper = ({
     }
     return (
       <div>
-        <ul className={`${prefixCls}-menu`} style={{ height: 'auto', width: 191 }}>
+        <ul className={`${prefixCls}-menu`} style={{ height: 'auto', width: width || 190 }}>
           <li
             className={`${prefixCls}-menu-item ${prefixCls}-menu-item-disabled`}
             title=""

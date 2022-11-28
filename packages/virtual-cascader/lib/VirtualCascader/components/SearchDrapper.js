@@ -125,7 +125,8 @@ function _arrayWithHoles(arr) {
   if (Array.isArray(arr)) return arr;
 }
 var SearchDrapper = function SearchDrapper(_ref) {
-  var inputValue = _ref.inputValue,
+  var width = _ref.width,
+    inputValue = _ref.inputValue,
     filterOptions = _ref.filterOptions,
     prefixCls = _ref.prefixCls,
     notFoundContent = _ref.notFoundContent,
@@ -171,7 +172,7 @@ var SearchDrapper = function SearchDrapper(_ref) {
           className: ''.concat(prefixCls, '-menu'),
           style: {
             height: 'auto',
-            width: 191,
+            width: width || 190,
           },
         },
         /*#__PURE__*/ _react.default.createElement(

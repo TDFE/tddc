@@ -346,7 +346,7 @@ var VirtualCascader = function VirtualCascader(_ref) {
   /** 自定义渲染弹窗 */
   var handleDropdownRender = function handleDropdownRender(inputValue, filterOptions) {
     var _ref$current, _ref$current$state;
-    var positionLeft = undefined;
+    var width = undefined;
     if (
       (_ref$current = ref.current) === null || _ref$current === void 0
         ? void 0
@@ -355,7 +355,7 @@ var VirtualCascader = function VirtualCascader(_ref) {
         : _ref$current$state.popupVisible
     ) {
       var _ref$current2, _ref$current2$input, _ref$current2$input$i, _ref$current2$input$i2;
-      var left =
+      var _width =
         ref === null || ref === void 0
           ? void 0
           : (_ref$current2 = ref.current) === null || _ref$current2 === void 0
@@ -368,21 +368,18 @@ var VirtualCascader = function VirtualCascader(_ref) {
           : (_ref$current2$input$i2 = _ref$current2$input$i.getBoundingClientRect()) === null ||
             _ref$current2$input$i2 === void 0
           ? void 0
-          : _ref$current2$input$i2.left;
-      if (!isNaN(left)) {
-        positionLeft = left;
+          : _ref$current2$input$i2.width;
+      if (!isNaN(_width)) {
+        width = _width;
       }
     }
-    if (isNaN(positionLeft)) {
+    if (isNaN(width)) {
       return null;
     }
     return /*#__PURE__*/ _react.default.createElement(
       'div',
       {
         className: ''.concat(prefixCls, '-menus ').concat(prefixCls, '-menus-placement-bottomLeft'),
-        style: {
-          left: positionLeft,
-        },
       },
       /*#__PURE__*/ _react.default.createElement(
         'div',
@@ -397,6 +394,7 @@ var VirtualCascader = function VirtualCascader(_ref) {
               activeValueCells: activeValueCells,
               onChoosed: handleChoosed,
               showSearch: showSearch,
+              width: width,
             })
           : /*#__PURE__*/ _react.default.createElement(
               'div',
