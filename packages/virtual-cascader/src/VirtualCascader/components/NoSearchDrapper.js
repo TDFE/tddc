@@ -3,7 +3,7 @@
  * @Author: 郑泳健
  * @Date: 2022-11-15 17:32:40
  * @LastEditors: 郑泳健
- * @LastEditTime: 2022-11-28 16:48:03
+ * @LastEditTime: 2022-11-28 17:00:49
  */
 import React, { useRef, memo, useEffect, useState } from 'react';
 import { Icon } from 'antd';
@@ -50,8 +50,9 @@ const NoSearchDrapper = ({
   return (
     <div ref={containerRef} style={{ height: 180, overflow: 'auto' }}>
       <div ref={wrapperRef}>
-        {list?.map(({ data } = {}) => {
-          const isLast = !Array.isArray(data?.[fieldNames.children]);
+        {list?.map(({ data } = {}, index) => {
+          const isLast =
+            !Array.isArray(data?.[fieldNames.children]) || !data[fieldNames.children].length;
           return (
             <div
               className={`
@@ -66,7 +67,7 @@ const NoSearchDrapper = ({
                }
                ${level !== 0 ? `${prefixCls}-not-fist-level` : `${prefixCls}-fist-level`}
               `}
-              key={data?.[fieldNames.value]}
+              key={data?.[fieldNames.value] || index}
               style={{ width: maxWidth || 'auto' }}
               value={data?.[fieldNames.value]}
               onClick={() => {
