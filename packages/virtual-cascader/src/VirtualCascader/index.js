@@ -3,7 +3,7 @@
  * @Author: 郑泳健
  * @Date: 2022-11-14 15:18:00
  * @LastEditors: 郑泳健
- * @LastEditTime: 2022-11-22 17:26:23
+ * @LastEditTime: 2022-11-29 10:14:01
  */
 import React, { memo, useState, useMemo, useRef, useEffect } from 'react';
 import AntCascader from './components/AntCascader';
@@ -124,19 +124,27 @@ const VirtualCascader = ({
   /** 自定义渲染弹窗 */
   const handleDropdownRender = (inputValue, filterOptions) => {
     let width = undefined;
+    let left = undefined;
     if (ref.current?.state?.popupVisible) {
       const _width = ref?.current?.input?.input?.getBoundingClientRect()?.width;
+      const _left = ref?.current?.input?.input?.getBoundingClientRect()?.left;
       if (!isNaN(_width)) {
         width = _width;
       }
+      if (!isNaN(_left)) {
+        left = _left;
+      }
     }
 
-    if (isNaN(width)) {
+    if (isNaN(left)) {
       return null;
     }
 
     return (
-      <div className={`${prefixCls}-menus ${prefixCls}-menus-placement-bottomLeft`}>
+      <div
+        className={`${prefixCls}-menus ${prefixCls}-menus-placement-bottomLeft`}
+        style={{ left }}
+      >
         <div>
           {inputValue && Array.isArray(filterOptions) && !!filterOptions.length ? (
             <SearchDrapper

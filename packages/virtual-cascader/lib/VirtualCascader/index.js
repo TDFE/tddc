@@ -152,30 +152,38 @@ function _arrayLikeToArray(arr, len) {
 }
 function _iterableToArrayLimit(arr, i) {
   var _i =
-    arr == null
+    null == arr
       ? null
-      : (typeof Symbol !== 'undefined' && arr[Symbol.iterator]) || arr['@@iterator'];
-  if (_i == null) return;
-  var _arr = [];
-  var _n = true;
-  var _d = false;
-  var _s, _e;
-  try {
-    for (_i = _i.call(arr); !(_n = (_s = _i.next()).done); _n = true) {
-      _arr.push(_s.value);
-      if (i && _arr.length === i) break;
-    }
-  } catch (err) {
-    _d = true;
-    _e = err;
-  } finally {
+      : ('undefined' != typeof Symbol && arr[Symbol.iterator]) || arr['@@iterator'];
+  if (null != _i) {
+    var _s,
+      _e,
+      _x,
+      _r,
+      _arr = [],
+      _n = !0,
+      _d = !1;
     try {
-      if (!_n && _i['return'] != null) _i['return']();
+      if (((_x = (_i = _i.call(arr)).next), 0 === i)) {
+        if (Object(_i) !== _i) return;
+        _n = !1;
+      } else
+        for (
+          ;
+          !(_n = (_s = _x.call(_i)).done) && (_arr.push(_s.value), _arr.length !== i);
+          _n = !0
+        ) {}
+    } catch (err) {
+      (_d = !0), (_e = err);
     } finally {
-      if (_d) throw _e;
+      try {
+        if (!_n && null != _i.return && ((_r = _i.return()), Object(_r) !== _r)) return;
+      } finally {
+        if (_d) throw _e;
+      }
     }
+    return _arr;
   }
-  return _arr;
 }
 function _arrayWithHoles(arr) {
   if (Array.isArray(arr)) return arr;
@@ -347,6 +355,7 @@ var VirtualCascader = function VirtualCascader(_ref) {
   var handleDropdownRender = function handleDropdownRender(inputValue, filterOptions) {
     var _ref$current, _ref$current$state;
     var width = undefined;
+    var left = undefined;
     if (
       (_ref$current = ref.current) === null || _ref$current === void 0
         ? void 0
@@ -354,7 +363,14 @@ var VirtualCascader = function VirtualCascader(_ref) {
         ? void 0
         : _ref$current$state.popupVisible
     ) {
-      var _ref$current2, _ref$current2$input, _ref$current2$input$i, _ref$current2$input$i2;
+      var _ref$current2,
+        _ref$current2$input,
+        _ref$current2$input$i,
+        _ref$current2$input$i2,
+        _ref$current3,
+        _ref$current3$input,
+        _ref$current3$input$i,
+        _ref$current3$input$i2;
       var _width =
         ref === null || ref === void 0
           ? void 0
@@ -369,17 +385,37 @@ var VirtualCascader = function VirtualCascader(_ref) {
             _ref$current2$input$i2 === void 0
           ? void 0
           : _ref$current2$input$i2.width;
+      var _left =
+        ref === null || ref === void 0
+          ? void 0
+          : (_ref$current3 = ref.current) === null || _ref$current3 === void 0
+          ? void 0
+          : (_ref$current3$input = _ref$current3.input) === null || _ref$current3$input === void 0
+          ? void 0
+          : (_ref$current3$input$i = _ref$current3$input.input) === null ||
+            _ref$current3$input$i === void 0
+          ? void 0
+          : (_ref$current3$input$i2 = _ref$current3$input$i.getBoundingClientRect()) === null ||
+            _ref$current3$input$i2 === void 0
+          ? void 0
+          : _ref$current3$input$i2.left;
       if (!isNaN(_width)) {
         width = _width;
       }
+      if (!isNaN(_left)) {
+        left = _left;
+      }
     }
-    if (isNaN(width)) {
+    if (isNaN(left)) {
       return null;
     }
     return /*#__PURE__*/ _react.default.createElement(
       'div',
       {
         className: ''.concat(prefixCls, '-menus ').concat(prefixCls, '-menus-placement-bottomLeft'),
+        style: {
+          left: left,
+        },
       },
       /*#__PURE__*/ _react.default.createElement(
         'div',
