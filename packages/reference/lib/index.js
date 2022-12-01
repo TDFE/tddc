@@ -9,6 +9,12 @@ Object.defineProperty(exports, 'ReferenceBatchCheck', {
     return _ReferenceBatchCheck.ReferenceBatchCheck;
   },
 });
+Object.defineProperty(exports, 'ReferenceBatchDrawer', {
+  enumerable: true,
+  get: function get() {
+    return _ReferenceBatchDrawer.ReferenceBatchDrawer;
+  },
+});
 Object.defineProperty(exports, 'ReferenceCheck', {
   enumerable: true,
   get: function get() {
@@ -37,3 +43,4 @@ var _ReferenceDrawer = require('./ReferenceDrawer');
 var _ReferenceCheck = require('./ReferenceCheck');
 var _ReferenceBatchCheck = require('./ReferenceBatchCheck');
 var _ReferenceInfo = require('./ReferenceInfo');
+var _ReferenceBatchDrawer = require('./ReferenceBatchDrawer');
