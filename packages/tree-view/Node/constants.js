@@ -35,6 +35,7 @@ export const NODE_TYPE_MAP = {
 
   THIRD_SERVICE: { name: '三方服务', color: '#3BA99E', img: require('./imgs/3.svg') },
   THIRD_SERVICE_VERSION: { name: '三方服务版本', color: '#3BA99E', img: require('./imgs/3.svg') },
+  DATASOURCE_SERVICE: { name: '三方服务', color: '#3BA99E', img: require('./imgs/3.svg') },
 
   MODEL: { name: '模型', color: '#91B53B', img: require('./imgs/4.svg') },
   MODEL_VERSION: { name: '模型版本', color: '#91B53B', img: require('./imgs/4.svg') },
@@ -62,7 +63,10 @@ export const NODE_TYPE_MAP = {
   RULE_IMMUNE: { name: '规则免疫', color: '#565ED5', img: require('./imgs/16.svg') },
   NO_DISTURB: { name: '免打扰', color: '#7ABD87', img: require('./imgs/17.svg') },
   API_SERVICE: { name: '对接服务', color: '#945FB9', img: require('./imgs/18.svg') },
+
   ETL_HANDLER: { name: 'ETL处理器', color: '#5681B0', img: require('./imgs/19.svg') },
+  DATASOURCE_ETL_HANDLER: { name: 'ETL处理器', color: '#5681B0', img: require('./imgs/19.svg') },
+
   INDEX_DATASOURCE: { name: '外数指标', color: '#BC6BC6', img: require('./imgs/22.svg') },
   INDEX_YUNTU: { name: '图谱指标', color: '#BC6BC6', img: require('./imgs/23.svg') },
   INDEX_YUNTU_VERSION: { name: '图谱指标', color: '#BC6BC6', img: require('./imgs/23.svg') },
