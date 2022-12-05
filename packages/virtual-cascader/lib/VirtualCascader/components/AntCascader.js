@@ -31,7 +31,7 @@ var _KeyCode = _interopRequireDefault(require('rc-util/lib/KeyCode'));
 var _reactLifecyclesCompat = require('react-lifecycles-compat');
 var _input = _interopRequireDefault(require('antd/es/input'));
 var _icon = _interopRequireDefault(require('antd/es/icon'));
-var _rcCascader = _interopRequireDefault(require('rc-cascader'));
+var _RcCascader = _interopRequireDefault(require('./RcCascader'));
 var _configProvider = require('antd/es/config-provider');
 var _LocaleReceiver = _interopRequireDefault(require('antd/es/locale-provider/LocaleReceiver'));
 var _warning = _interopRequireDefault(require('antd/es/_util/warning'));
@@ -621,7 +621,7 @@ var CustomCascader = /*#__PURE__*/ (function (_React$Component) {
       var getPopupContainer = props.getPopupContainer || getContextPopupContainer;
       var rest = (0, _lodash.omit)(props, ['inputIcon', 'expandIcon', 'loadingIcon']);
       return /*#__PURE__*/ React.createElement(
-        _rcCascader.default,
+        _RcCascader.default,
         _extends({}, rest, {
           prefixCls: prefixCls,
           getPopupContainer: getPopupContainer,
