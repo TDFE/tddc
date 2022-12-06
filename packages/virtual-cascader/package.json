@@ -1,6 +1,6 @@
 {
   "name": "@tddc/virtual-cascader",
-  "version": "1.0.17",
+  "version": "1.0.19",
   "description": "基于antd3级联的虚拟滚动",
   "author": "zyj",
   "license": "ISC",
@@ -9,6 +9,7 @@
     "lib"
   ],
   "dependencies": {
+    "@babel/runtime": "^7.12.5",
     "rc-cascader": "3.7.0",
     "rc-select": "~14.1.0",
     "rc-tree": "~5.7.0",
