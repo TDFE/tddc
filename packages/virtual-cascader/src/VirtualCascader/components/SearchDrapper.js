@@ -3,7 +3,7 @@
  * @Author: 郑泳健
  * @Date: 2022-11-15 17:26:18
  * @LastEditors: 郑泳健
- * @LastEditTime: 2022-12-06 17:00:44
+ * @LastEditTime: 2022-12-06 17:31:42
  */
 import React, { useRef, memo, useMemo } from 'react';
 import useVirtualList from '../hooks/useVirtualList';
@@ -87,7 +87,7 @@ const SearchDrapper = ({
                 ${activeValueCells.includes(value) ? `${prefixCls}-menu-item-active` : ''}
                 ${data?.disabled ? `${prefixCls}-menu-item-disabled` : ''}
                 ${
-                  path?.[path?.length - 1]?.[fieldNames['label']]
+                  !path?.[path?.length - 1]?.[fieldNames['label']]
                     ? `${prefixCls}-menu-item-nodata`
                     : ''
                 }

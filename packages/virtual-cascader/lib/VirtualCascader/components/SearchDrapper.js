@@ -313,16 +313,13 @@ var SearchDrapper = function SearchDrapper(_ref) {
                       '\n                ',
                     )
                     .concat(
-                      (
-                        path === null || path === void 0
-                          ? void 0
-                          : (_path =
-                              path[
-                                (path === null || path === void 0 ? void 0 : path.length) - 1
-                              ]) === null || _path === void 0
-                          ? void 0
-                          : _path[fieldNames['label']]
-                      )
+                      !(path === null || path === void 0
+                        ? void 0
+                        : (_path =
+                            path[(path === null || path === void 0 ? void 0 : path.length) - 1]) ===
+                            null || _path === void 0
+                        ? void 0
+                        : _path[fieldNames['label']])
                         ? ''.concat(prefixCls, '-menu-item-nodata')
                         : '',
                       '\n              ',
