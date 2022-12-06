@@ -3,7 +3,7 @@
  * @Author: 郑泳健
  * @Date: 2022-11-14 15:18:00
  * @LastEditors: 郑泳健
- * @LastEditTime: 2022-12-05 23:24:24
+ * @LastEditTime: 2022-12-06 12:26:47
  */
 import * as React from 'react';
 import arrayTreeFilter from 'array-tree-filter';
@@ -13,7 +13,7 @@ import KeyCode from 'rc-util/lib/KeyCode';
 import { polyfill } from 'react-lifecycles-compat';
 import Input from 'antd/es/input';
 import Icon from 'antd/es/icon';
-import RcCascader from './RcCascader';
+import RcCascader from 'rc-cascader';
 import { ConfigConsumer } from 'antd/es/config-provider';
 import LocaleReceiver from 'antd/es/locale-provider/LocaleReceiver';
 import warning from 'antd/es/_util/warning';

@@ -3,7 +3,7 @@
  * @Author: 郑泳健
  * @Date: 2022-11-15 17:26:18
  * @LastEditors: 郑泳健
- * @LastEditTime: 2022-11-28 18:56:44
+ * @LastEditTime: 2022-12-06 16:39:51
  */
 import React, { useRef, memo, useMemo } from 'react';
 import useVirtualList from '../hooks/useVirtualList';
@@ -76,7 +76,7 @@ const SearchDrapper = ({
     <div className={`${prefixCls}-menu`}>
       <div ref={containerRef} style={{ height: 180, overflow: 'auto' }}>
         <div ref={wrapperRef}>
-          {list?.map(({ data: { path } = {}, data } = {}) => {
+          {list?.map(({ data: { path } = {}, data } = {}, index) => {
             const value = data?.[fieldNames['value']];
             const labels = path?.map((i) => i?.[fieldNames['label']])?.join('/') || '';
 
@@ -90,7 +90,7 @@ const SearchDrapper = ({
                     onChoosed(value);
                   }
                 }}
-                key={labels}
+                key={value || index}
               >
                 {showSearch?.render?.(inputValue, path) || labels}
               </div>
