@@ -1,6 +1,6 @@
 export default (props) => {
   const { children, href, unmountHandle, ...rest } = props;
-  if (window.__isMultiTab__ || true) {
+  if (window.__isMultiTab__) {
     return (
       <a
         onClick={(evt) => {
