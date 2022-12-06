@@ -3,7 +3,7 @@
  * @Author: 郑泳健
  * @Date: 2022-11-15 17:26:18
  * @LastEditors: 郑泳健
- * @LastEditTime: 2022-12-06 16:39:51
+ * @LastEditTime: 2022-12-06 17:00:44
  */
 import React, { useRef, memo, useMemo } from 'react';
 import useVirtualList from '../hooks/useVirtualList';
@@ -82,9 +82,16 @@ const SearchDrapper = ({
 
             return (
               <div
-                className={`${prefixCls}-menu-item ${
-                  activeValueCells.includes(value) ? `${prefixCls}-menu-item-active` : ''
-                } ${data?.disabled ? `${prefixCls}-menu-item-disabled` : ''}`}
+                className={`
+                ${prefixCls}-menu-item
+                ${activeValueCells.includes(value) ? `${prefixCls}-menu-item-active` : ''}
+                ${data?.disabled ? `${prefixCls}-menu-item-disabled` : ''}
+                ${
+                  path?.[path?.length - 1]?.[fieldNames['label']]
+                    ? `${prefixCls}-menu-item-nodata`
+                    : ''
+                }
+              `}
                 onClick={() => {
                   if (!data?.disabled) {
                     onChoosed(value);
