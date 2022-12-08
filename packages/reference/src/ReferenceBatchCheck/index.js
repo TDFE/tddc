@@ -25,10 +25,10 @@ const ReferenceBatchCheck = (props) => {
   } = props || {};
 
   const appendModal = (reject, resolve, referenceData = []) => {
-    let type ='';
-    if(!Array.isArray(referenceData) && referenceData?.type){
+    let type = '';
+    if (!Array.isArray(referenceData) && referenceData?.type) {
       type = referenceData?.type;
-      referenceData = referenceData?.result ||[];
+      referenceData = referenceData?.result || [];
     }
     const modalWrap = document.createElement('div');
     modalWrap.setAttribute('id', 'tddc-reference-online-check-modal');
@@ -39,8 +39,8 @@ const ReferenceBatchCheck = (props) => {
       }
       modalWrap && modalWrap?.parentNode?.removeChild(modalWrap);
       !type && reject && reject(referenceData);
-      if(document.body.getAttribute("style")){
-        document.body.removeAttribute("style");
+      if (document.body.getAttribute('style')) {
+        document.body.removeAttribute('style');
       }
     };
     removeModal();
@@ -67,7 +67,7 @@ const ReferenceBatchCheck = (props) => {
             >
               下一步
             </Button>
-          )
+          ),
         ]}
       >
         <div className="reference-online-check-modal">
@@ -107,6 +107,7 @@ const ReferenceBatchCheck = (props) => {
                         <span>{headerTxt}</span>
                       </Tooltip>
                       {d?.componentVersion && <Tag color="green">V{d?.componentVersion}</Tag>}
+                      {d?.type === 'STRONG' && <Tag color="#D96156">存在强引用</Tag>}
                     </div>
                   }
                   key={i}
@@ -124,7 +125,7 @@ const ReferenceBatchCheck = (props) => {
           </Collapse>
         </div>
       </Modal>,
-      modalWrap
+      modalWrap,
     );
     document.body.appendChild(modalWrap);
   };
@@ -135,9 +136,9 @@ const ReferenceBatchCheck = (props) => {
         if (success) {
           if (Array.isArray(data) && !!data?.length) {
             appendModal(reject, resolve, data);
-          } else if(!Array.isArray(data) && data?.type !== 'NO_EXIST') {
+          } else if (!Array.isArray(data) && data?.type !== 'NO_EXIST') {
             appendModal(reject, resolve, data);
-          }else {
+          } else {
             resolve(data);
           }
         } else {
