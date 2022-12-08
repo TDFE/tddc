@@ -4,15 +4,11 @@ Object.defineProperty(exports, '__esModule', {
   value: true,
 });
 exports.default = void 0;
-
 var _react = _interopRequireDefault(require('react'));
-
 var _excluded = ['children', 'href', 'unmountHandle'];
-
 function _interopRequireDefault(obj) {
   return obj && obj.__esModule ? obj : { default: obj };
 }
-
 function _extends() {
   _extends = Object.assign
     ? Object.assign.bind()
@@ -29,7 +25,6 @@ function _extends() {
       };
   return _extends.apply(this, arguments);
 }
-
 function _objectWithoutProperties(source, excluded) {
   if (source == null) return {};
   var target = _objectWithoutPropertiesLoose(source, excluded);
@@ -45,7 +40,6 @@ function _objectWithoutProperties(source, excluded) {
   }
   return target;
 }
-
 function _objectWithoutPropertiesLoose(source, excluded) {
   if (source == null) return {};
   var target = {};
@@ -58,30 +52,24 @@ function _objectWithoutPropertiesLoose(source, excluded) {
   }
   return target;
 }
-
 var _default = function _default(props) {
   var children = props.children,
     href = props.href,
     unmountHandle = props.unmountHandle,
     rest = _objectWithoutProperties(props, _excluded);
-
   if (window.__isMultiTab__) {
     return /*#__PURE__*/ _react.default.createElement(
       'a',
       {
         onClick: function onClick(evt) {
           evt.preventDefault();
-
           if (unmountHandle && typeof unmountHandle === 'function') {
             unmountHandle();
           }
-
           var pathName = href;
-
           if (href && href.includes('?')) {
             pathName = href === null || href === void 0 ? void 0 : href.split('?')[0];
           }
-
           if (pathName === window.location.pathname) {
             window.location.href = href;
           } else {
@@ -92,7 +80,6 @@ var _default = function _default(props) {
       children,
     );
   }
-
   return /*#__PURE__*/ _react.default.createElement(
     'a',
     _extends(
@@ -104,5 +91,4 @@ var _default = function _default(props) {
     children,
   );
 };
-
 exports.default = _default;
