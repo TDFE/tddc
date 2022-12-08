@@ -91,6 +91,11 @@ var NODE_TYPE_MAP = {
     color: '#3BA99E',
     img: require('./static/imgs/3.svg'),
   },
+  DATASOURCE_SERVICE: {
+    name: '三方服务',
+    color: '#3BA99E',
+    img: require('./static/imgs/3.svg'),
+  },
   MODEL: {
     name: '模型',
     color: '#91B53B',
@@ -195,6 +200,26 @@ var NODE_TYPE_MAP = {
     name: 'ETL处理器',
     color: '#5681B0',
     img: require('./static/imgs/19.svg'),
+  },
+  DATASOURCE_ETL_HANDLER: {
+    name: 'ETL处理器',
+    color: '#5681B0',
+    img: require('./static/imgs/19.svg'),
+  },
+  INDEX_DATASOURCE: {
+    name: '外数指标',
+    color: '#BC6BC6',
+    img: require('./static/imgs/22.svg'),
+  },
+  INDEX_YUNTU: {
+    name: '图谱指标',
+    color: '#BC6BC6',
+    img: require('./static/imgs/23.svg'),
+  },
+  INDEX_YUNTU_VERSION: {
+    name: '图谱指标',
+    color: '#BC6BC6',
+    img: require('./static/imgs/23.svg'),
   },
 };
 exports.NODE_TYPE_MAP = NODE_TYPE_MAP;
