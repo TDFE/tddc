@@ -47,6 +47,7 @@ export const NODE_TYPE_MAP = {
     color: '#3BA99E',
     img: require('./static/imgs/3.svg'),
   },
+  DATASOURCE_SERVICE: { name: '三方服务', color: '#3BA99E', img: require('./static/imgs/3.svg') },
 
   MODEL: { name: '模型', color: '#91B53B', img: require('./static/imgs/4.svg') },
   MODEL_VERSION: { name: '模型版本', color: '#91B53B', img: require('./static/imgs/4.svg') },
@@ -83,6 +84,15 @@ export const NODE_TYPE_MAP = {
   NO_DISTURB: { name: '免打扰', color: '#7ABD87', img: require('./static/imgs/17.svg') },
   API_SERVICE: { name: '对接服务', color: '#945FB9', img: require('./static/imgs/18.svg') },
   ETL_HANDLER: { name: 'ETL处理器', color: '#5681B0', img: require('./static/imgs/19.svg') },
+  DATASOURCE_ETL_HANDLER: {
+    name: 'ETL处理器',
+    color: '#5681B0',
+    img: require('./static/imgs/19.svg'),
+  },
+
+  INDEX_DATASOURCE: { name: '外数指标', color: '#BC6BC6', img: require('./static/imgs/22.svg') },
+  INDEX_YUNTU: { name: '图谱指标', color: '#BC6BC6', img: require('./static/imgs/23.svg') },
+  INDEX_YUNTU_VERSION: { name: '图谱指标', color: '#BC6BC6', img: require('./static/imgs/23.svg') },
 };
 
 export default constant;
