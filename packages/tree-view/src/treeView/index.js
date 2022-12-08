@@ -327,3 +327,5 @@ let BaseProxy = () =>
   });
 
 export default BaseProxy;
+
+export { NODE_TYPE_MAP };
