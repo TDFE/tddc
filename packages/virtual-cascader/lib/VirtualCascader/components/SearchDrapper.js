@@ -279,12 +279,13 @@ var SearchDrapper = function SearchDrapper(_ref) {
         list === null || list === void 0
           ? void 0
           : list.map(function () {
-              var _path$map, _showSearch$render;
+              var _path$map, _path, _showSearch$render;
               var _ref2 = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {},
                 _ref2$data = _ref2.data;
               _ref2$data = _ref2$data === void 0 ? {} : _ref2$data;
               var path = _ref2$data.path,
                 data = _ref2.data;
+              var index = arguments.length > 1 ? arguments[1] : undefined;
               var value = data === null || data === void 0 ? void 0 : data[fieldNames['value']];
               var labels =
                 (path === null || path === void 0
@@ -297,25 +298,38 @@ var SearchDrapper = function SearchDrapper(_ref) {
               return /*#__PURE__*/ _react.default.createElement(
                 'div',
                 {
-                  className: ''
-                    .concat(prefixCls, '-menu-item ')
+                  className: '\n                '
+                    .concat(prefixCls, '-menu-item\n                ')
                     .concat(
                       activeValueCells.includes(value)
                         ? ''.concat(prefixCls, '-menu-item-active')
                         : '',
-                      ' ',
+                      '\n                ',
                     )
                     .concat(
                       (data === null || data === void 0 ? void 0 : data.disabled)
                         ? ''.concat(prefixCls, '-menu-item-disabled')
                         : '',
+                      '\n                ',
+                    )
+                    .concat(
+                      !(path === null || path === void 0
+                        ? void 0
+                        : (_path =
+                            path[(path === null || path === void 0 ? void 0 : path.length) - 1]) ===
+                            null || _path === void 0
+                        ? void 0
+                        : _path[fieldNames['label']])
+                        ? ''.concat(prefixCls, '-menu-item-nodata')
+                        : '',
+                      '\n              ',
                     ),
                   onClick: function onClick() {
                     if (!(data === null || data === void 0 ? void 0 : data.disabled)) {
                       onChoosed(value);
                     }
                   },
-                  key: labels,
+                  key: value || index,
                 },
                 (showSearch === null || showSearch === void 0
                   ? void 0

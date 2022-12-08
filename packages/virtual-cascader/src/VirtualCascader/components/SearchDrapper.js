@@ -3,7 +3,7 @@
  * @Author: 郑泳健
  * @Date: 2022-11-15 17:26:18
  * @LastEditors: 郑泳健
- * @LastEditTime: 2022-11-28 18:56:44
+ * @LastEditTime: 2022-12-06 17:31:42
  */
 import React, { useRef, memo, useMemo } from 'react';
 import useVirtualList from '../hooks/useVirtualList';
@@ -76,21 +76,28 @@ const SearchDrapper = ({
     <div className={`${prefixCls}-menu`}>
       <div ref={containerRef} style={{ height: 180, overflow: 'auto' }}>
         <div ref={wrapperRef}>
-          {list?.map(({ data: { path } = {}, data } = {}) => {
+          {list?.map(({ data: { path } = {}, data } = {}, index) => {
             const value = data?.[fieldNames['value']];
             const labels = path?.map((i) => i?.[fieldNames['label']])?.join('/') || '';
 
             return (
               <div
-                className={`${prefixCls}-menu-item ${
-                  activeValueCells.includes(value) ? `${prefixCls}-menu-item-active` : ''
-                } ${data?.disabled ? `${prefixCls}-menu-item-disabled` : ''}`}
+                className={`
+                ${prefixCls}-menu-item
+                ${activeValueCells.includes(value) ? `${prefixCls}-menu-item-active` : ''}
+                ${data?.disabled ? `${prefixCls}-menu-item-disabled` : ''}
+                ${
+                  !path?.[path?.length - 1]?.[fieldNames['label']]
+                    ? `${prefixCls}-menu-item-nodata`
+                    : ''
+                }
+              `}
                 onClick={() => {
                   if (!data?.disabled) {
                     onChoosed(value);
                   }
                 }}
-                key={labels}
+                key={value || index}
               >
                 {showSearch?.render?.(inputValue, path) || labels}
               </div>

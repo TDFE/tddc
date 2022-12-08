@@ -1,4 +1,4 @@
-import { Tooltip, Icon, Table, Row, Empty, Tag } from 'antd';
+import { Tooltip, Icon, Table, Row, Empty } from 'antd';
 import { Ellipsis } from 'tntd';
 import AHref from '../AHref';
 import './index.less';
@@ -51,22 +51,8 @@ export const ReferenceInfo = (props) => {
               if (c.dataIndex === 'app') {
                 content = appList.find((a) => a.key === t)?.name || t;
               }
-              if (c.dataIndex === goName && record?.goLink) {
-                return (
-                  <AHref href={record?.goLink} target="_blank" unmountHandle={unmountHandle}>
-                    <Ellipsis placement="topLeft" {...fixedMaxWid}>
-                      {content || '- -'}
-                    </Ellipsis>
-                  </AHref>
-                );
-              }
-              if (c.dataIndex === goName) {
-                return (
-                  <Ellipsis placement="topLeft" copyable={true} {...fixedMaxWid}>
-                    {content || '- -'}
-                  </Ellipsis>
-                );
-              }
+              // 强弱引用
+              let tagInfo = null;
               if (i === 0 && record?.referenceCheckType) {
                 let checkObj;
                 if (record?.referenceCheckType === 'WEAK') {
@@ -81,18 +67,42 @@ export const ReferenceInfo = (props) => {
                     className: 'refer-tag-strong',
                   };
                 }
+                tagInfo = checkObj ? (
+                  <span className={`refer-tag ${checkObj.className}`}>{checkObj.name}</span>
+                ) : null;
+              }
+
+              if (c.dataIndex === goName && record?.goLink) {
                 return (
-                  <Tooltip placement="topLeft" title={content}>
-                    {checkObj && <span className={`refer-tag ${checkObj.className}`}>{checkObj.name}</span>}
-                    {content || '- -'}
-                  </Tooltip>
+                  <AHref href={record?.goLink} target="_blank" unmountHandle={unmountHandle}>
+                    <Ellipsis
+                      placement="topLeft"
+                      {...fixedMaxWid}
+                      title={content || '- -'}
+                      prefix={tagInfo}
+                    />
+                  </AHref>
+                );
+              }
+              if (c.dataIndex === goName) {
+                return (
+                  <Ellipsis
+                    placement="topLeft"
+                    copyable={true}
+                    {...fixedMaxWid}
+                    title={content || '- -'}
+                    prefix={tagInfo}
+                  />
                 );
               }
 
               return (
-                <Ellipsis placement="topLeft" {...fixedMaxWid}>
-                  {content || '- -'}
-                </Ellipsis>
+                <Ellipsis
+                  placement="topLeft"
+                  {...fixedMaxWid}
+                  title={content || '- -'}
+                  prefix={tagInfo}
+                />
               );
             };
 
