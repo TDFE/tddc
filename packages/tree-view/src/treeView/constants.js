@@ -25,7 +25,8 @@ let constant = {
   EXPAND_WIDTH,
 };
 
-export const NODE_TYPE_MAP = {
+// 天策
+export const tiance = {
   POLICY: { name: '策略', color: '#D97B4E', img: require('./static/imgs/1.svg') },
   POLICY_VERSION: { name: '策略版本', color: '#D97B4E', img: require('./static/imgs/1.svg') },
   POLICY_PIBLISH_HIS: {
@@ -93,6 +94,65 @@ export const NODE_TYPE_MAP = {
   INDEX_DATASOURCE: { name: '外数指标', color: '#BC6BC6', img: require('./static/imgs/22.svg') },
   INDEX_YUNTU: { name: '图谱指标', color: '#BC6BC6', img: require('./static/imgs/23.svg') },
   INDEX_YUNTU_VERSION: { name: '图谱指标', color: '#BC6BC6', img: require('./static/imgs/23.svg') },
+};
+
+// 天座
+export const tianzuo = {
+  DATASOURCE_PARTNER: { name: '合作方', color: '#357BEB', img: require('./static/imgs/24.svg') },
+  DATASOURCE_CONTRACT: { name: '合同', color: '#1068f5', img: require('./static/imgs/25.svg') },
+  DATASOURCE_ETL_HANDLER: {
+    name: 'ETL处理器',
+    color: '#D5A142',
+    img: require('./static/imgs/26.svg'),
+  },
+
+  DATASOURCE_ETL_HANDLER_POST: {
+    name: '后置处理器',
+    color: '#3BA99E',
+    img: require('./static/imgs/27.svg'),
+  },
+  DATASOURCE_ETL_HANDLER_PRE: {
+    name: '前置处理器',
+    color: '#1DA3DA',
+    img: require('./static/imgs/28.svg'),
+  },
+  DATASOURCE_CHANNEL_SERVICE: {
+    name: '调用方',
+    color: '#945FB9',
+    img: require('./static/imgs/29.svg'),
+  },
+  DATASOURCE_SERVICE_SHUNT: {
+    name: '分流接口',
+    color: '#6776CF',
+    img: require('./static/imgs/30.svg'),
+  },
+  DATASOURCE_SERVICE_EXCEPTION: {
+    name: '异常切换接口',
+    color: '#D97B4E',
+    img: require('./static/imgs/31.svg'),
+  },
+  DATASOURCE_CHANNEL_SERVICE_GROUP: {
+    name: '调用方组',
+    color: '#DB6595',
+    img: require('./static/imgs/32.svg'),
+  },
+  EXECUTE_MODE_PARALLEL: {
+    name: '并联方式',
+    color: '#91B53B',
+    img: require('./static/imgs/33.svg'),
+  },
+  EXECUTE_MODE_SERIAL: { name: '串联方式', color: '#72A768', img: require('./static/imgs/34.svg') },
+};
+
+export const NODE_TYPE_MAP = {
+  ...tiance,
+  ...tianzuo,
+  tiance: {
+    ...tiance,
+  },
+  tianzuo: {
+    ...tianzuo,
+  },
 };
 
 export default constant;
