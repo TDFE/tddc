@@ -27,7 +27,7 @@ import 'antd/dist/antd.css';
 
 const getChildren = (key) => {
   const children = [];
-  for (let i = 0; i < 20000; i++) {
+  for (let i = 0; i < 200; i++) {
     children.push({
       name: key + String(i),
       dName: key + String(i),
@@ -56,7 +56,7 @@ const Demo = () => {
 
   useEffect(() => {
     setTimeout(() => {
-      setValue(['jiangsu', 'nanjing9991']);
+      setValue(['jiangsu', 'nanjing91']);
     }, 500);
   }, []);
 
@@ -73,6 +73,7 @@ const Demo = () => {
         <VirtualCascader
           {...{
             options,
+            multiple: true,
             fieldNames,
             value,
             onChange: (val) => setValue(val),
@@ -88,4 +89,8 @@ export default Demo;
 
 #### 🚀 `入参`
 
-参照 antd3
+新增 api 如下, 其余参照 antd3 | 参数 | 说明 | 类型 | 默认值 | | --- | --- | --- | --- | | customRender | 自定义渲染下拉, 自带三个参数为当前节点数据/是否最后一级/当前层级 | fun(current, isLast, level) | | | multiple | 支持多选节点 | boolean | - |
+
+#### 注意
+
+- 需要自定义给每一列都设置个宽度，要不然列宽会忽大忽小。这是因为用了虚拟滚动，考虑到性能暂时不去计算每一个节点的宽度，所以得不到本列最大的宽度。

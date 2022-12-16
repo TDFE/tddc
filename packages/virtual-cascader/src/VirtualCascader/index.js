@@ -3,7 +3,7 @@
  * @Author: 郑泳健
  * @Date: 2022-11-14 15:18:00
  * @LastEditors: 郑泳健
- * @LastEditTime: 2022-11-29 10:14:01
+ * @LastEditTime: 2022-12-12 11:04:58
  */
 import React, { memo, useState, useMemo, useRef, useEffect } from 'react';
 import AntCascader from './components/AntCascader';
@@ -164,7 +164,7 @@ const VirtualCascader = ({
             <div>
               {optionColumns?.map(({ options, maxWidth } = {}, level) => {
                 return (
-                  <div key={options} className={`${prefixCls}-menu`}>
+                  <div key={options} className={`${prefixCls}-menu tntd-cascader-menu`}>
                     <NoSearchDrapper
                       {...{
                         options,
@@ -189,21 +189,23 @@ const VirtualCascader = ({
   };
 
   return (
-    <AntCascader
-      {...rest}
-      changeOnSelect={changeOnSelect}
-      fieldNames={fieldNames}
-      prefixCls={prefixCls}
-      showSearch={showSearch}
-      notFoundContent={notFoundContent}
-      ref={ref}
-      value={value}
-      onChange={onChange || defaultOnChange}
-      defaultValue={defaultValue}
-      options={options}
-      dropdownRender={handleDropdownRender}
-      onDropdownVisibleChange={handleDropdownVisibleChange}
-    />
+    <div className="tntd-cascader-wrapper">
+      <AntCascader
+        {...rest}
+        changeOnSelect={changeOnSelect}
+        fieldNames={fieldNames}
+        prefixCls={prefixCls}
+        showSearch={showSearch}
+        notFoundContent={notFoundContent}
+        ref={ref}
+        value={value}
+        onChange={onChange || defaultOnChange}
+        defaultValue={defaultValue}
+        options={options}
+        dropdownRender={handleDropdownRender}
+        onDropdownVisibleChange={handleDropdownVisibleChange}
+      />
+    </div>
   );
 };
 
