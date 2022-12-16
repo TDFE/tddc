@@ -3,7 +3,9 @@
 Object.defineProperty(exports, '__esModule', {
   value: true,
 });
-exports.default =
+exports.tianzuo =
+  exports.tiance =
+  exports.default =
   exports.ROOT_WIDTH =
   exports.ROOT_HEIGHT =
   exports.RELATION_WIDTH =
@@ -18,6 +20,80 @@ exports.default =
   exports.COMPONENT_MARGIN =
   exports.COMPONENT_HEIGHT =
     void 0;
+function _typeof(obj) {
+  '@babel/helpers - typeof';
+  return (
+    (_typeof =
+      'function' == typeof Symbol && 'symbol' == typeof Symbol.iterator
+        ? function (obj) {
+            return typeof obj;
+          }
+        : function (obj) {
+            return obj &&
+              'function' == typeof Symbol &&
+              obj.constructor === Symbol &&
+              obj !== Symbol.prototype
+              ? 'symbol'
+              : typeof obj;
+          }),
+    _typeof(obj)
+  );
+}
+function ownKeys(object, enumerableOnly) {
+  var keys = Object.keys(object);
+  if (Object.getOwnPropertySymbols) {
+    var symbols = Object.getOwnPropertySymbols(object);
+    enumerableOnly &&
+      (symbols = symbols.filter(function (sym) {
+        return Object.getOwnPropertyDescriptor(object, sym).enumerable;
+      })),
+      keys.push.apply(keys, symbols);
+  }
+  return keys;
+}
+function _objectSpread(target) {
+  for (var i = 1; i < arguments.length; i++) {
+    var source = null != arguments[i] ? arguments[i] : {};
+    i % 2
+      ? ownKeys(Object(source), !0).forEach(function (key) {
+          _defineProperty(target, key, source[key]);
+        })
+      : Object.getOwnPropertyDescriptors
+      ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source))
+      : ownKeys(Object(source)).forEach(function (key) {
+          Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key));
+        });
+  }
+  return target;
+}
+function _defineProperty(obj, key, value) {
+  key = _toPropertyKey(key);
+  if (key in obj) {
+    Object.defineProperty(obj, key, {
+      value: value,
+      enumerable: true,
+      configurable: true,
+      writable: true,
+    });
+  } else {
+    obj[key] = value;
+  }
+  return obj;
+}
+function _toPropertyKey(arg) {
+  var key = _toPrimitive(arg, 'string');
+  return _typeof(key) === 'symbol' ? key : String(key);
+}
+function _toPrimitive(input, hint) {
+  if (_typeof(input) !== 'object' || input === null) return input;
+  var prim = input[Symbol.toPrimitive];
+  if (prim !== undefined) {
+    var res = prim.call(input, hint || 'default');
+    if (_typeof(res) !== 'object') return res;
+    throw new TypeError('@@toPrimitive must return a primitive value.');
+  }
+  return (hint === 'string' ? String : Number)(input);
+}
 var RELATION_WIDTH = 120;
 exports.RELATION_WIDTH = RELATION_WIDTH;
 var COMPONENT_HEIGHT = 40;
@@ -55,7 +131,9 @@ var constant = {
   DOT_WIDTH: DOT_WIDTH,
   EXPAND_WIDTH: EXPAND_WIDTH,
 };
-var NODE_TYPE_MAP = {
+
+// 天策
+var tiance = {
   POLICY: {
     name: '策略',
     color: '#D97B4E',
@@ -222,6 +300,75 @@ var NODE_TYPE_MAP = {
     img: require('./static/imgs/23.svg'),
   },
 };
+
+// 天座
+exports.tiance = tiance;
+var tianzuo = {
+  DATASOURCE_PARTNER: {
+    name: '合作方',
+    color: '#357BEB',
+    img: require('./static/imgs/24.svg'),
+  },
+  DATASOURCE_CONTRACT: {
+    name: '合同',
+    color: '#1068f5',
+    img: require('./static/imgs/25.svg'),
+  },
+  DATASOURCE_ETL_HANDLER: {
+    name: 'ETL处理器',
+    color: '#D5A142',
+    img: require('./static/imgs/26.svg'),
+  },
+  DATASOURCE_ETL_HANDLER_POST: {
+    name: '后置处理器',
+    color: '#3BA99E',
+    img: require('./static/imgs/27.svg'),
+  },
+  DATASOURCE_ETL_HANDLER_PRE: {
+    name: '前置处理器',
+    color: '#1DA3DA',
+    img: require('./static/imgs/28.svg'),
+  },
+  DATASOURCE_CHANNEL_SERVICE: {
+    name: '调用方',
+    color: '#945FB9',
+    img: require('./static/imgs/29.svg'),
+  },
+  DATASOURCE_SERVICE_SHUNT: {
+    name: '分流接口',
+    color: '#6776CF',
+    img: require('./static/imgs/30.svg'),
+  },
+  DATASOURCE_SERVICE_EXCEPTION: {
+    name: '异常切换接口',
+    color: '#D97B4E',
+    img: require('./static/imgs/31.svg'),
+  },
+  DATASOURCE_CHANNEL_SERVICE_GROUP: {
+    name: '调用方组',
+    color: '#DB6595',
+    img: require('./static/imgs/32.svg'),
+  },
+  EXECUTE_MODE_PARALLEL: {
+    name: '并联方式',
+    color: '#91B53B',
+    img: require('./static/imgs/33.svg'),
+  },
+  EXECUTE_MODE_SERIAL: {
+    name: '串联方式',
+    color: '#72A768',
+    img: require('./static/imgs/34.svg'),
+  },
+};
+exports.tianzuo = tianzuo;
+var NODE_TYPE_MAP = _objectSpread(
+  _objectSpread(_objectSpread({}, tiance), tianzuo),
+  {},
+  {
+    tiance: _objectSpread({}, tiance),
+    tianzuo: _objectSpread({}, tianzuo),
+  },
+);
 exports.NODE_TYPE_MAP = NODE_TYPE_MAP;
 var _default = constant;
 exports.default = _default;

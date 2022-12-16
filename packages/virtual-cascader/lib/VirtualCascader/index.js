@@ -447,7 +447,7 @@ var VirtualCascader = function VirtualCascader(_ref) {
                       'div',
                       {
                         key: options,
-                        className: ''.concat(prefixCls, '-menu'),
+                        className: ''.concat(prefixCls, '-menu tntd-cascader-menu'),
                       },
                       /*#__PURE__*/ _react.default.createElement(_NoSearchDrapper.default, {
                         options: options,
@@ -471,21 +471,27 @@ var VirtualCascader = function VirtualCascader(_ref) {
     );
   };
   return /*#__PURE__*/ _react.default.createElement(
-    _AntCascader.default,
-    _extends({}, rest, {
-      changeOnSelect: changeOnSelect,
-      fieldNames: fieldNames,
-      prefixCls: prefixCls,
-      showSearch: showSearch,
-      notFoundContent: notFoundContent,
-      ref: ref,
-      value: value,
-      onChange: onChange || defaultOnChange,
-      defaultValue: defaultValue,
-      options: options,
-      dropdownRender: handleDropdownRender,
-      onDropdownVisibleChange: handleDropdownVisibleChange,
-    }),
+    'div',
+    {
+      className: 'tntd-cascader-wrapper',
+    },
+    /*#__PURE__*/ _react.default.createElement(
+      _AntCascader.default,
+      _extends({}, rest, {
+        changeOnSelect: changeOnSelect,
+        fieldNames: fieldNames,
+        prefixCls: prefixCls,
+        showSearch: showSearch,
+        notFoundContent: notFoundContent,
+        ref: ref,
+        value: value,
+        onChange: onChange || defaultOnChange,
+        defaultValue: defaultValue,
+        options: options,
+        dropdownRender: handleDropdownRender,
+        onDropdownVisibleChange: handleDropdownVisibleChange,
+      }),
+    ),
   );
 };
 var _default = /*#__PURE__*/ (0, _react.memo)(VirtualCascader);
