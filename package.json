@@ -37,6 +37,7 @@
     "@testing-library/jest-dom": "^5.15.1",
     "@testing-library/react": "^12.1.2",
     "@types/jest": "^27.0.3",
+    "@types/node": "^18.11.17",
     "@umijs/fabric": "^2.8.1",
     "@umijs/test": "^3.0.5",
     "babel-plugin-import": "^1.13.5",
