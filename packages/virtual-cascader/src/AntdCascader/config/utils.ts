@@ -1,10 +1,3 @@
-/*
- * @Descripttion:
- * @Author: 郑泳健
- * @Date: 2022-12-19 19:08:25
- * @LastEditors: 郑泳健
- * @LastEditTime: 2022-12-19 19:11:27
- */
 import { SelectCommonPlacement, ValidateStatus, InputStatus } from '../interface';
 import classNames from 'classnames';
 

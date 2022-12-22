@@ -201,6 +201,7 @@ const RefOptionList = React.forwardRef<RefOptionListProps>((props, ref) => {
         {...columnProps}
         prefixCls={mergedPrefixCls}
         options={col.options}
+        searchValue={searchValue}
         prevValuePath={prevValuePath}
         activeValue={activeValue}
         renderItem={renderItem}

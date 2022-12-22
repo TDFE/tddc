@@ -6,7 +6,7 @@ import Checkbox from './Checkbox';
 import type { DefaultOptionType, SingleValueType } from '../Cascader';
 import { SEARCH_MARK } from '../hooks/useSearchOptions';
 import List, { ListRef } from 'rc-virtual-list';
-import { RenderItem } from '../context';
+import type { RenderItem } from '../context';
 
 export const FIX_LABEL = '__cascader_fix_label__';
 
@@ -26,6 +26,7 @@ export interface ColumnProps {
   loadingKeys: React.Key[];
   isSelectable: (option: DefaultOptionType) => boolean;
   renderItem?: (item: RenderItem) => React.ReactNode;
+  searchValue?: string;
 }
 
 export default function Column({
@@ -42,6 +43,7 @@ export default function Column({
   loadingKeys,
   isSelectable,
   renderItem,
+  searchValue,
 }: ColumnProps) {
   const ref = React.useRef<ListRef>(null);
   const menuPrefixCls = `${prefixCls}-menu`;
@@ -113,7 +115,18 @@ export default function Column({
   // ============================ Render ============================
   return (
     <ul className={menuPrefixCls} role="menu">
-      <List data={optionInfoList} height={180} itemHeight={32} itemKey="value" ref={ref}>
+      <List
+        className={
+          optionInfoList[0]['fullPathKey'] === '__EMPTY__' || !!searchValue
+            ? 'rc-virtual-list-full'
+            : ''
+        }
+        data={optionInfoList}
+        height={180}
+        itemHeight={32}
+        itemKey="value"
+        ref={ref}
+      >
         {({
           disabled,
           label,
@@ -195,7 +208,9 @@ export default function Column({
                 />
               )}
               <div className={`${menuItemPrefixCls}-content`}>
-                {renderItem?.({ label, value }) || label}
+                {optionInfoList[0]['fullPathKey'] !== '__EMPTY__' && renderItem
+                  ? renderItem({ label, value })
+                  : label}
               </div>
               {!isLoading && expandIcon && !isMergedLeaf && (
                 <div className={`${menuItemPrefixCls}-expand-icon`}>{expandIcon}</div>
