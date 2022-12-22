@@ -17,6 +17,7 @@ export default function Checkbox({
   disabled,
   onClick,
 }: CheckboxProps) {
+  // @ts-ignore
   const { checkable } = React.useContext(CascaderContext);
 
   const customCheckbox = typeof checkable !== 'boolean' ? checkable : null;
