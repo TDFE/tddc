@@ -9,6 +9,5 @@
     "strict": true,
     "skipLibCheck": true,
     "declaration": true
-  },
-  "exclude": ["packages/virtual-cascader/src/rc-cascader/*"]
+  }
 }

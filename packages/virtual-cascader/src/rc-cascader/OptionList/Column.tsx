@@ -85,7 +85,8 @@ export default function Column({
 
         // Get real value of option. Search option is different way.
         const fullPath = searchOptions
-          ? searchOptions.map((opt) => opt[fieldNames.value])
+          ? // @ts-ignore
+            searchOptions.map((opt) => opt[fieldNames.value])
           : [...prevValuePath, value];
         const fullPathKey = toPathKey(fullPath);
 
@@ -171,6 +172,7 @@ export default function Column({
               })}
               style={dropdownMenuColumnStyle}
               role="menuitemcheckbox"
+              // @ts-ignore
               title={title}
               aria-checked={checked}
               data-path-key={fullPathKey}

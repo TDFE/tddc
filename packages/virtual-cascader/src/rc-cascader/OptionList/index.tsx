@@ -1,4 +1,5 @@
 /* eslint-disable default-case */
+// @ts-nocheck
 import classNames from 'classnames';
 import { useBaseProps } from 'rc-select';
 import type { RefOptionListProps } from 'rc-select/lib/OptionList';

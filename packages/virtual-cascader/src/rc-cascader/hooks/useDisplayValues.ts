@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { toPathOptions } from '../utils/treeUtil';
 import * as React from 'react';
 import type {

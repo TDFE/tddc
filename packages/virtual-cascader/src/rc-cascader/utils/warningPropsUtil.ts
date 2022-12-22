@@ -1,3 +1,4 @@
+// @ts-nocheck
 import warning from 'rc-util/lib/warning';
 import type { DefaultOptionType, FieldNames, InternalCascaderProps } from '../Cascader';
 

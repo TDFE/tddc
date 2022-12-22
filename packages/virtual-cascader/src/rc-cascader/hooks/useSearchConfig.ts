@@ -1,3 +1,4 @@
+// @ts-nocheck
 import * as React from 'react';
 import warning from 'rc-util/lib/warning';
 import type { CascaderProps, ShowSearchType } from '../Cascader';

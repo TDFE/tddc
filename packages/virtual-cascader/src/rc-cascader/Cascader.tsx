@@ -1,3 +1,4 @@
+// @ts-nocheck
 import type { BaseSelectProps, BaseSelectPropsWithoutPrivate, BaseSelectRef } from 'rc-select';
 import { BaseSelect } from 'rc-select';
 import type { DisplayValueType, Placement } from 'rc-select/lib/BaseSelect';

@@ -51,6 +51,7 @@ export function toPathOptions(
     valueOptions.push({
       value: foundOption?.[fieldNames.value] ?? valueCell,
       index: foundIndex,
+      // @ts-ignore
       option: foundOption,
     });
 

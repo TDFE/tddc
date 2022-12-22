@@ -1,3 +1,4 @@
+// @ts-nocheck
 import type { DefaultOptionType, ShowSearchType, InternalFieldNames } from '../Cascader';
 import * as React from 'react';
 

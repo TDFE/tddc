@@ -1,3 +1,4 @@
+// @ts-nocheck
 import * as React from 'react';
 import { convertDataToEntities } from 'rc-tree/lib/utils/treeUtil';
 import type { DefaultOptionType, InternalFieldNames } from '../Cascader';

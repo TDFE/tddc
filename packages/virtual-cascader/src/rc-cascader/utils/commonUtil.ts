@@ -33,6 +33,7 @@ export function fillFieldNames(fieldNames?: FieldNames): InternalFieldNames {
 }
 
 export function isLeaf(option: DefaultOptionType, fieldNames: FieldNames) {
+  // @ts-ignore
   return option.isLeaf ?? !option[fieldNames.children]?.length;
 }
 

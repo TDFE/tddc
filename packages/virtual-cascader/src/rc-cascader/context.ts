@@ -29,6 +29,6 @@ export interface CascaderContextProps {
   renderItem?: (item: RenderItem) => React.ReactNode;
 }
 
-const CascaderContext = React.createContext<CascaderContextProps>(null);
+const CascaderContext = React.createContext<CascaderContextProps | null>(null);
 
 export default CascaderContext;
