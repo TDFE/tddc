@@ -154,9 +154,11 @@ function Column(_ref) {
     loadingKeys = _ref.loadingKeys,
     isSelectable = _ref.isSelectable,
     renderItem = _ref.renderItem,
-    searchValue = _ref.searchValue;
+    searchValue = _ref.searchValue,
+    level = _ref.level,
+    dropdownVisible = _ref.dropdownVisible;
   var ref = React.useRef(null);
-  var menuPrefixCls = ''.concat(prefixCls, '-menu');
+  var menuPrefixCls = ''.concat(prefixCls, '-menu ').concat(prefixCls, '-menu-').concat(level);
   var menuItemPrefixCls = ''.concat(prefixCls, '-menu-item');
   var _React$useContext = React.useContext(_context.default),
     fieldNames = _React$useContext.fieldNames,
@@ -166,21 +168,29 @@ function Column(_ref) {
     loadingIcon = _React$useContext.loadingIcon,
     dropdownMenuColumnStyle = _React$useContext.dropdownMenuColumnStyle;
   var hoverOpen = expandTrigger === 'hover';
-  /** 单选滚动到相应的位置 */
+  /** 单选情况下滚动到相应的位置 */
   React.useEffect(
     function () {
-      if (ref === null || ref === void 0 ? void 0 : ref.current) {
-        if (!multiple) {
-          var index = options.findIndex(function (it) {
-            return it[fieldNames['value']] === activeValue;
-          });
-          if (index > 0) {
+      var timer = null;
+      if (ref.current && ref.current.scrollTo && !multiple && dropdownVisible) {
+        var index = options.findIndex(function (it) {
+          return it[fieldNames['value']] === activeValue;
+        });
+        if (index > 0 && !isNaN(index)) {
+          timer = window.setTimeout(function () {
             ref.current.scrollTo(32 * index);
-          }
+          }, 5);
         }
       }
+      return function () {
+        if (timer) {
+          window.clearTimeout(timer);
+        }
+        timer = null;
+        console.log(timer, 'timer');
+      };
     },
-    [multiple, activeValue, options, fieldNames],
+    [multiple, activeValue, options, fieldNames, dropdownVisible],
   );
   // ============================ Option ============================
   var optionInfoList = React.useMemo(
@@ -336,10 +346,7 @@ function Column(_ref) {
               className: ''.concat(menuItemPrefixCls, '-content'),
             },
             optionInfoList[0]['fullPathKey'] !== '__EMPTY__' && renderItem
-              ? renderItem({
-                  label: label,
-                  value: value,
-                })
+              ? renderItem(option, level)
               : label,
           ),
           !isLoading &&

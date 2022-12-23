@@ -239,7 +239,8 @@ var RefOptionList = /*#__PURE__*/ React.forwardRef(function (props, ref) {
     dropdownPrefixCls = _React$useContext.dropdownPrefixCls,
     loadData = _React$useContext.loadData,
     expandTrigger = _React$useContext.expandTrigger,
-    renderItem = _React$useContext.renderItem;
+    renderItem = _React$useContext.renderItem,
+    dropdownVisible = _React$useContext.dropdownVisible;
   var mergedPrefixCls = dropdownPrefixCls || prefixCls;
   // ========================= loadData =========================
   var _React$useState = React.useState([]),
@@ -451,6 +452,8 @@ var RefOptionList = /*#__PURE__*/ React.forwardRef(function (props, ref) {
         _objectSpread(
           {
             key: index,
+            level: index,
+            dropdownVisible: dropdownVisible,
           },
           columnProps,
         ),

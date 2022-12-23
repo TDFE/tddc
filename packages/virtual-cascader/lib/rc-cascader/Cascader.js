@@ -339,6 +339,10 @@ var Cascader = /*#__PURE__*/ React.forwardRef(function (props, ref) {
     restProps = _objectWithoutProperties(props, _excluded);
   var mergedId = (0, _useId.default)(id);
   var multiple = !!checkable;
+  var _React$useState = React.useState(false),
+    _React$useState2 = _slicedToArray(_React$useState, 2),
+    dropdownVisible = _React$useState2[0],
+    setDropdownVisible = _React$useState2[1];
   // =========================== Values ===========================
   var _useMergedState = (0, _useMergedState5.default)(defaultValue, {
       value: value,
@@ -560,6 +564,7 @@ var Cascader = /*#__PURE__*/ React.forwardRef(function (props, ref) {
     onPopupVisibleChange === null || onPopupVisibleChange === void 0
       ? void 0
       : onPopupVisibleChange(nextVisible);
+    setDropdownVisible(nextVisible);
   };
   // ========================== Warning ===========================
   if (process.env.NODE_ENV !== 'production') {
@@ -585,6 +590,7 @@ var Cascader = /*#__PURE__*/ React.forwardRef(function (props, ref) {
         loadingIcon: loadingIcon,
         dropdownMenuColumnStyle: dropdownMenuColumnStyle,
         renderItem: renderItem,
+        dropdownVisible: dropdownVisible,
       };
     },
     [
@@ -602,6 +608,8 @@ var Cascader = /*#__PURE__*/ React.forwardRef(function (props, ref) {
       expandIcon,
       loadingIcon,
       dropdownMenuColumnStyle,
+      renderItem,
+      dropdownVisible,
     ],
   );
   // ==============================================================

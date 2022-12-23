@@ -28,6 +28,8 @@ export interface ColumnProps {
   isSelectable: (option: DefaultOptionType) => boolean;
   renderItem?: (item: RenderItem) => React.ReactNode;
   searchValue?: string;
+  level?: number;
+  dropdownVisible?: boolean;
 }
 
 export default function Column({
@@ -45,9 +47,11 @@ export default function Column({
   isSelectable,
   renderItem,
   searchValue,
+  level,
+  dropdownVisible,
 }: ColumnProps) {
   const ref = React.useRef<ListRef>(null);
-  const menuPrefixCls = `${prefixCls}-menu`;
+  const menuPrefixCls = `${prefixCls}-menu ${prefixCls}-menu-${level}`;
   const menuItemPrefixCls = `${prefixCls}-menu-item`;
 
   const {
@@ -61,17 +65,27 @@ export default function Column({
 
   const hoverOpen = expandTrigger === 'hover';
 
-  /** 单选滚动到相应的位置 */
+  /** 单选情况下滚动到相应的位置 */
   React.useEffect(() => {
-    if (ref?.current) {
-      if (!multiple) {
-        const index = options.findIndex((it) => it[fieldNames['value']] === activeValue);
-        if (index > 0) {
+    let timer = null;
+    if (ref.current && ref.current.scrollTo && !multiple && dropdownVisible) {
+      const index = options.findIndex((it) => it[fieldNames['value']] === activeValue);
+
+      if (index > 0 && !isNaN(index)) {
+        timer = window.setTimeout(() => {
           ref.current.scrollTo(32 * index);
-        }
+        }, 5);
       }
     }
-  }, [multiple, activeValue, options, fieldNames]);
+
+    return () => {
+      if (timer) {
+        window.clearTimeout(timer);
+      }
+      timer = null;
+      console.log(timer, 'timer');
+    };
+  }, [multiple, activeValue, options, fieldNames, dropdownVisible]);
 
   // ============================ Option ============================
   const optionInfoList = React.useMemo(
@@ -212,7 +226,7 @@ export default function Column({
               )}
               <div className={`${menuItemPrefixCls}-content`}>
                 {optionInfoList[0]['fullPathKey'] !== '__EMPTY__' && renderItem
-                  ? renderItem({ label, value })
+                  ? renderItem(option, level)
                   : label}
               </div>
               {!isLoading && expandIcon && !isMergedLeaf && (

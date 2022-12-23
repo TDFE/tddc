@@ -222,6 +222,7 @@ const Cascader = React.forwardRef<CascaderRef, InternalCascaderProps>((props, re
 
   const mergedId = useId(id);
   const multiple = !!checkable;
+  const [dropdownVisible, setDropdownVisible] = React.useState(false);
 
   // =========================== Values ===========================
   const [rawValues, setRawValues] = useMergedState<ValueType, SingleValueType[]>(defaultValue, {
@@ -428,6 +429,7 @@ const Cascader = React.forwardRef<CascaderRef, InternalCascaderProps>((props, re
   const onInternalDropdownVisibleChange = (nextVisible: boolean) => {
     onDropdownVisibleChange?.(nextVisible);
     onPopupVisibleChange?.(nextVisible);
+    setDropdownVisible(nextVisible);
   };
 
   // ========================== Warning ===========================
@@ -454,6 +456,7 @@ const Cascader = React.forwardRef<CascaderRef, InternalCascaderProps>((props, re
       loadingIcon,
       dropdownMenuColumnStyle,
       renderItem,
+      dropdownVisible,
     }),
     [
       mergedOptions,
@@ -470,6 +473,8 @@ const Cascader = React.forwardRef<CascaderRef, InternalCascaderProps>((props, re
       expandIcon,
       loadingIcon,
       dropdownMenuColumnStyle,
+      renderItem,
+      dropdownVisible,
     ],
   );
 

@@ -22,8 +22,8 @@ npm install @tddc/virtual-cascader --save
 
 ```jsx
 import React, { useState, useEffect } from 'react';
+import { Tooltip } from 'antd';
 import TdCascader from '@tddc/virtual-cascader';
-import { Cascader, Tooltip } from 'antd';
 
 const getChildren = (key) => {
   const children = [];
@@ -45,7 +45,6 @@ const options = [
   {
     name: 'jiangsu',
     dName: 'jiangsu',
-    disabled: true,
     children: getChildren('nanjing'),
   },
 ];
@@ -73,8 +72,13 @@ const Demo = () => {
             value,
             showSearch: true,
             onChange: (val) => setValue(val),
-            renderItem: (item) => {
-              return <Tooltip title={item.value}>{item.value}</Tooltip>;
+            renderItem: (item, level) => {
+              return (
+                <Tooltip title={`${item.name}${level}`}>
+                  {item.dName}
+                  {level}
+                </Tooltip>
+              );
             },
           }}
         />
@@ -100,16 +104,10 @@ export default Demo;
 
 #### 🚀 `入参`
 
-1.x 版本新增 api 如下, 其余参照 antd3 
-| 参数 | 说明 | 类型 | 默认值 | 
-| --- | --- | --- | --- | 
-| customRender | 自定义渲染下拉, 自带三个参数为当前节点数据/是否最后一级/当前层级 | fun(current: number, isLast: boolean, level: number) | |
+1.x 版本新增 api 如下, 其余参照 antd3 | 参数 | 说明 | 类型 | 默认值 | | --- | --- | --- | --- | | customRender | 自定义渲染下拉, 自带三个参数为当前节点数据/是否最后一级/当前层级 | fun(current: number, isLast: boolean, level: number) | |
 
-2.x 版本新增 api 如下, 其余参照 antd4 
-| 参数 | 说明 | 类型 | 默认值 |
-| --- | --- | --- | --- | 
-| renderItem | 自定义渲染每一条数据 | fun({label: any, value: any}) | label |
+2.x 版本新增 api 如下, 其余参照 antd4 | 参数 | 说明 | 类型 | 默认值 | | --- | --- | --- | --- | | renderItem | 自定义渲染每一条数据 | fun({item: Option}, level: number) | label |
 
 #### 注意
 
-- 默认每一列宽度设置为120px，这是因为用了虚拟滚动，如果不设置固定宽度列就会忽大忽小。考虑过动态计算每一列最大宽度，但是如果数据量太大的情况下会有性能问题，所以暂时就不考虑了
+- 默认每一列宽度设置为 120px，这是因为用了虚拟滚动，如果不设置固定宽度列就会忽大忽小。考虑过动态计算每一列最大宽度，但是如果数据量太大的情况下会有性能问题，所以暂时就不考虑了

@@ -19,6 +19,8 @@ export interface ColumnProps {
   isSelectable: (option: DefaultOptionType) => boolean;
   renderItem?: (item: RenderItem) => React.ReactNode;
   searchValue?: string;
+  level?: number;
+  dropdownVisible?: boolean;
 }
 export default function Column({
   prefixCls,
@@ -35,4 +37,6 @@ export default function Column({
   isSelectable,
   renderItem,
   searchValue,
+  level,
+  dropdownVisible,
 }: ColumnProps): JSX.Element;
