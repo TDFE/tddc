@@ -22,7 +22,7 @@ npm install @tddc/virtual-cascader --save
 
 ```jsx
 import React, { useState, useEffect } from 'react';
-import { Tooltip } from 'antd';
+import { Tooltip, Icon } from 'antd';
 import TdCascader from '@tddc/virtual-cascader';
 
 const getChildren = (key) => {
@@ -59,15 +59,47 @@ const Demo = () => {
     }, 500);
   }, []);
 
+  /** 多选自定义显示 */
+  const tagRender = (props) => {
+    const { label, closable, onClose, disabled } = props;
+
+    return (
+      <span className={`tntd-select-selection-item ${disabled && 'tntd-select-selection-item-disabled'}`}>
+        <span className="tntd-select-selection-item-content">{label}</span>
+        {
+          closable ? 
+          <span className="tntd-select-selection-item-remove">
+            <Icon type="close" />
+          </span> : null
+        }
+      </span>
+    );
+  }
+
+  /** 多选超过maxTagCount后自定义显示 */
+  const maxTagPlaceholder = (arr) => {
+    const str = Array.isArray(arr) ? arr.map(i => i.label).join(',') : ''
+
+    if(str) {
+      return (
+        <Tooltip title={str}>
+            <span>+ {arr.length} ...</span>
+        </Tooltip>
+      )
+    }
+    return null;
+  }
+
   return (
-    <>
+    <div>
       <div>
-        <span>多选:</span>
+        <span>多选默认显示:</span>
         <TdCascader
           {...{
+            style: { width: 300 },
             options,
             multiple: true,
-            maxTagCount: 'responsive',
+            maxTagCount: 3,
             fieldNames,
             value,
             showSearch: true,
@@ -79,23 +111,48 @@ const Demo = () => {
                   {level}
                 </Tooltip>
               );
-            },
+            }
           }}
         />
-        <div>
-          <span>单选:</span>
-          <TdCascader
-            {...{
-              showSearch: true,
-              options,
-              fieldNames,
-              value,
-              onChange: (val) => setValue(val),
-            }}
-          />
-        </div>
       </div>
-    </>
+        <div>
+        <span>多选自定义显示:</span>
+        <TdCascader
+          {...{
+            style: { width: 300 },
+            options,
+            multiple: true,
+            maxTagCount: 'responsive',
+            fieldNames,
+            value,
+            showSearch: true,
+            onChange: (val) => setValue(val),
+            tagRender,
+            maxTagPlaceholder,
+            renderItem: (item, level) => {
+              return (
+                <Tooltip title={`${item.name}${level}`}>
+                  {item.dName}
+                  {level}
+                </Tooltip>
+              );
+            }
+          }}
+        />
+      </div>
+      <div>
+        <span>单选:</span>
+        <TdCascader
+          {...{
+            showSearch: true,
+            options,
+            fieldNames,
+            value,
+            onChange: (val) => setValue(val),
+          }}
+        />
+      </div>
+    </div>
   );
 };
 
