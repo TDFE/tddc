@@ -92,6 +92,11 @@ export const tiance = {
   },
 
   INDEX_DATASOURCE: { name: '外数指标', color: '#BC6BC6', img: require('./static/imgs/22.svg') },
+  INDEXDATASOURCE_SET: {
+    name: '外数指标集',
+    color: '#BC6BC6',
+    img: require('./static/imgs/22.svg'),
+  },
   INDEX_YUNTU: { name: '图谱指标', color: '#BC6BC6', img: require('./static/imgs/23.svg') },
   INDEX_YUNTU_VERSION: { name: '图谱指标', color: '#BC6BC6', img: require('./static/imgs/23.svg') },
 };
