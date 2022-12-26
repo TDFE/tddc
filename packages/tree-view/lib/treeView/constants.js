@@ -174,6 +174,11 @@ var tiance = {
     color: '#3BA99E',
     img: require('./static/imgs/3.svg'),
   },
+  INDEX_DATASOURCE_SET: {
+    name: '三方指标集',
+    color: '#3BA99E',
+    img: require('./static/imgs/3.svg'),
+  },
   MODEL: {
     name: '模型',
     color: '#91B53B',
@@ -286,6 +291,11 @@ var tiance = {
   },
   INDEX_DATASOURCE: {
     name: '外数指标',
+    color: '#BC6BC6',
+    img: require('./static/imgs/22.svg'),
+  },
+  INDEXDATASOURCE_SET: {
+    name: '外数指标集',
     color: '#BC6BC6',
     img: require('./static/imgs/22.svg'),
   },
