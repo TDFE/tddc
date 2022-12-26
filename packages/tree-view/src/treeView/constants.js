@@ -49,6 +49,11 @@ export const tiance = {
     img: require('./static/imgs/3.svg'),
   },
   DATASOURCE_SERVICE: { name: '三方服务', color: '#3BA99E', img: require('./static/imgs/3.svg') },
+  INDEX_DATASOURCE_SET: {
+    name: '三方指标集',
+    color: '#3BA99E',
+    img: require('./static/imgs/3.svg'),
+  },
 
   MODEL: { name: '模型', color: '#91B53B', img: require('./static/imgs/4.svg') },
   MODEL_VERSION: { name: '模型版本', color: '#91B53B', img: require('./static/imgs/4.svg') },
