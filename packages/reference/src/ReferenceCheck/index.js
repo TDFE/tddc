@@ -12,7 +12,7 @@ const ReferenceCheck = (props) => {
     orgMap = {},
     appList = [],
     weakMsg = '存在弱引用（被下线、禁用、待提交/上线、导入待提交/上线、暂存、保存等相关状态组件引用）关系，谨慎操作',
-    strongMsg = '存在强引用（被上线、启用、上下线审批中和指标补数、指标数据准备等相关状态组件引用）关系，禁止操作',
+    strongMsg = '存在强引用（被上线、启用、上下线审批中和指标初始化等相关状态组件引用）关系，禁止操作',
   } = props || {};
   const appendModal = (resolve, { type, result: referenceData = [] }) => {
     const modalWrap = document.createElement('div');
@@ -23,8 +23,8 @@ const ReferenceCheck = (props) => {
         tddcModal.forEach((ele) => ele?.parentNode?.removeChild(ele));
       }
       modalWrap && modalWrap?.parentNode?.removeChild(modalWrap);
-      if(document.body.getAttribute("style")){
-        document.body.removeAttribute("style");
+      if (document.body.getAttribute('style')) {
+        document.body.removeAttribute('style');
       }
     };
     removeModal();
@@ -72,7 +72,7 @@ const ReferenceCheck = (props) => {
                 type="error"
                 message={
                   strongMsg ||
-                  '存在强引用（被上线、启用、上下线审批中和指标补数、指标数据准备等相关状态组件引用）关系，禁止操作'
+                  '存在强引用（被上线、启用、上下线审批中和指标初始化等相关状态组件引用）关系，禁止操作'
                 }
               />
             </div>
@@ -87,7 +87,7 @@ const ReferenceCheck = (props) => {
           </div>
         </div>
       </Modal>,
-      modalWrap
+      modalWrap,
     );
     document.body.appendChild(modalWrap);
   };

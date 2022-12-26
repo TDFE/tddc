@@ -36,7 +36,7 @@ var ReferenceCheck = function ReferenceCheck(props) {
     _ref$strongMsg = _ref.strongMsg,
     strongMsg =
       _ref$strongMsg === void 0
-        ? '存在强引用（被上线、启用、上下线审批中和指标补数、指标数据准备等相关状态组件引用）关系，禁止操作'
+        ? '存在强引用（被上线、启用、上下线审批中和指标初始化等相关状态组件引用）关系，禁止操作'
         : _ref$strongMsg;
   var appendModal = function appendModal(resolve, _ref2) {
     var type = _ref2.type,
@@ -131,7 +131,7 @@ var ReferenceCheck = function ReferenceCheck(props) {
                 type: 'error',
                 message:
                   strongMsg ||
-                  '存在强引用（被上线、启用、上下线审批中和指标补数、指标数据准备等相关状态组件引用）关系，禁止操作',
+                  '存在强引用（被上线、启用、上下线审批中和指标初始化等相关状态组件引用）关系，禁止操作',
               }),
             ),
           /*#__PURE__*/ _react.default.createElement(
