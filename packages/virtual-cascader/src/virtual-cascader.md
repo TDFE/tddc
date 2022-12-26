@@ -60,7 +60,7 @@ const Demo = () => {
   }, []);
 
   /** 多选自定义显示 */
-  const tagRender = (props, ...rest) => {
+  const tagRender = (props) => {
     const { label, closable, onClose, disabled } = props;
 
     return (
@@ -82,7 +82,7 @@ const Demo = () => {
 
     if(str) {
       return (
-        <Tooltip title={`${str}`}>
+        <Tooltip title={str}>
             <span>+ {arr.length} ...</span>
         </Tooltip>
       )
