@@ -28,12 +28,16 @@ export const ReferenceInfo = (props) => {
         if (columns?.length) {
           renderColumns = columns?.map((c, i) => {
             const newC = { ...c, width: 140, ellipsis: true };
-            let fixedMaxWid = {};
+            let fixedWidthLimit = {};
+            let fixedMaxWidth = {};
             if (i === columns?.length - 1) {
               if (columns?.length > 4) {
                 newC.fixed = 'right';
-                fixedMaxWid = {
+                fixedWidthLimit = {
                   widthLimit: 108,
+                };
+                fixedMaxWidth = {
+                  'max-width': '108px',
                 };
               }
             }
@@ -75,12 +79,12 @@ export const ReferenceInfo = (props) => {
               if (c.dataIndex === goName && record?.goLink) {
                 return (
                   <AHref href={record?.goLink} target="_blank" unmountHandle={unmountHandle}>
-                    <Ellipsis
-                      placement="topLeft"
-                      {...fixedMaxWid}
-                      title={content || '- -'}
-                      prefix={tagInfo}
-                    />
+                    <Tooltip placement="topLeft" title={content || '- -'}>
+                      <span className="content-span" style={fixedMaxWidth}>
+                        {tagInfo}
+                        {content || '- -'}
+                      </span>
+                    </Tooltip>
                   </AHref>
                 );
               }
@@ -89,20 +93,19 @@ export const ReferenceInfo = (props) => {
                   <Ellipsis
                     placement="topLeft"
                     copyable={true}
-                    {...fixedMaxWid}
+                    {...fixedWidthLimit}
                     title={content || '- -'}
                     prefix={tagInfo}
                   />
                 );
               }
-
               return (
-                <Ellipsis
-                  placement="topLeft"
-                  {...fixedMaxWid}
-                  title={content || '- -'}
-                  prefix={tagInfo}
-                />
+                <Tooltip placement="topLeft" title={content || '- -'}>
+                  <span className="content-span" style={fixedMaxWidth}>
+                    {tagInfo}
+                    {content || '- -'}
+                  </span>
+                </Tooltip>
               );
             };
 

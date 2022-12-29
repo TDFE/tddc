@@ -19,23 +19,38 @@ function _typeof(obj) {
     _typeof(obj)
   );
 }
+
 Object.defineProperty(exports, '__esModule', {
   value: true,
 });
 exports.ReferenceDrawer = void 0;
+
 require('antd/lib/drawer/style');
+
 var _drawer = _interopRequireDefault(require('antd/lib/drawer'));
+
 require('antd/lib/spin/style');
+
 var _spin = _interopRequireDefault(require('antd/lib/spin'));
+
 require('antd/lib/tooltip/style');
+
 var _tooltip = _interopRequireDefault(require('antd/lib/tooltip'));
+
 require('antd/lib/message/style');
+
 var _message2 = _interopRequireDefault(require('antd/lib/message'));
+
 var _react = _interopRequireWildcard(require('react'));
+
 var _propTypes = _interopRequireDefault(require('prop-types'));
+
 var _ReferenceInfo = require('../ReferenceInfo');
+
 require('./index.less');
+
 var _excluded = ['fetchReference', 'data', 'orgMap', 'appList', 'title', 'visible', 'onClose'];
+
 function _getRequireWildcardCache(nodeInterop) {
   if (typeof WeakMap !== 'function') return null;
   var cacheBabelInterop = new WeakMap();
@@ -44,6 +59,7 @@ function _getRequireWildcardCache(nodeInterop) {
     return nodeInterop ? cacheNodeInterop : cacheBabelInterop;
   })(nodeInterop);
 }
+
 function _interopRequireWildcard(obj, nodeInterop) {
   if (!nodeInterop && obj && obj.__esModule) {
     return obj;
@@ -73,9 +89,11 @@ function _interopRequireWildcard(obj, nodeInterop) {
   }
   return newObj;
 }
+
 function _interopRequireDefault(obj) {
   return obj && obj.__esModule ? obj : { default: obj };
 }
+
 function _extends() {
   _extends = Object.assign
     ? Object.assign.bind()
@@ -92,6 +110,7 @@ function _extends() {
       };
   return _extends.apply(this, arguments);
 }
+
 function _slicedToArray(arr, i) {
   return (
     _arrayWithHoles(arr) ||
@@ -100,11 +119,13 @@ function _slicedToArray(arr, i) {
     _nonIterableRest()
   );
 }
+
 function _nonIterableRest() {
   throw new TypeError(
     'Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.',
   );
 }
+
 function _unsupportedIterableToArray(o, minLen) {
   if (!o) return;
   if (typeof o === 'string') return _arrayLikeToArray(o, minLen);
@@ -114,6 +135,7 @@ function _unsupportedIterableToArray(o, minLen) {
   if (n === 'Arguments' || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n))
     return _arrayLikeToArray(o, minLen);
 }
+
 function _arrayLikeToArray(arr, len) {
   if (len == null || len > arr.length) len = arr.length;
   for (var i = 0, arr2 = new Array(len); i < len; i++) {
@@ -121,44 +143,39 @@ function _arrayLikeToArray(arr, len) {
   }
   return arr2;
 }
+
 function _iterableToArrayLimit(arr, i) {
   var _i =
-    null == arr
+    arr == null
       ? null
-      : ('undefined' != typeof Symbol && arr[Symbol.iterator]) || arr['@@iterator'];
-  if (null != _i) {
-    var _s,
-      _e,
-      _x,
-      _r,
-      _arr = [],
-      _n = !0,
-      _d = !1;
-    try {
-      if (((_x = (_i = _i.call(arr)).next), 0 === i)) {
-        if (Object(_i) !== _i) return;
-        _n = !1;
-      } else
-        for (
-          ;
-          !(_n = (_s = _x.call(_i)).done) && (_arr.push(_s.value), _arr.length !== i);
-          _n = !0
-        ) {}
-    } catch (err) {
-      (_d = !0), (_e = err);
-    } finally {
-      try {
-        if (!_n && null != _i.return && ((_r = _i.return()), Object(_r) !== _r)) return;
-      } finally {
-        if (_d) throw _e;
-      }
+      : (typeof Symbol !== 'undefined' && arr[Symbol.iterator]) || arr['@@iterator'];
+  if (_i == null) return;
+  var _arr = [];
+  var _n = true;
+  var _d = false;
+  var _s, _e;
+  try {
+    for (_i = _i.call(arr); !(_n = (_s = _i.next()).done); _n = true) {
+      _arr.push(_s.value);
+      if (i && _arr.length === i) break;
     }
-    return _arr;
+  } catch (err) {
+    _d = true;
+    _e = err;
+  } finally {
+    try {
+      if (!_n && _i['return'] != null) _i['return']();
+    } finally {
+      if (_d) throw _e;
+    }
   }
+  return _arr;
 }
+
 function _arrayWithHoles(arr) {
   if (Array.isArray(arr)) return arr;
 }
+
 function _objectWithoutProperties(source, excluded) {
   if (source == null) return {};
   var target = _objectWithoutPropertiesLoose(source, excluded);
@@ -174,6 +191,7 @@ function _objectWithoutProperties(source, excluded) {
   }
   return target;
 }
+
 function _objectWithoutPropertiesLoose(source, excluded) {
   if (source == null) return {};
   var target = {};
@@ -186,6 +204,7 @@ function _objectWithoutPropertiesLoose(source, excluded) {
   }
   return target;
 }
+
 var ReferenceDrawer = function ReferenceDrawer(props) {
   var fetchReference = props.fetchReference,
     _props$data = props.data,
@@ -198,14 +217,17 @@ var ReferenceDrawer = function ReferenceDrawer(props) {
     visible = props.visible,
     onClose = props.onClose,
     rest = _objectWithoutProperties(props, _excluded);
+
   var _useState = (0, _react.useState)(data),
     _useState2 = _slicedToArray(_useState, 2),
     referenceData = _useState2[0],
     setReferenceData = _useState2[1];
+
   var _useState3 = (0, _react.useState)(!data),
     _useState4 = _slicedToArray(_useState3, 2),
     referenceLoad = _useState4[0],
     setReferenceLoad = _useState4[1];
+
   (0, _react.useEffect)(
     function () {
       if (visible && fetchReference) {
@@ -217,6 +239,7 @@ var ReferenceDrawer = function ReferenceDrawer(props) {
             ) {
               setReferenceData((res === null || res === void 0 ? void 0 : res.data) || []);
             }
+
             if (!(res === null || res === void 0 ? void 0 : res.success)) {
               _message2.default.error(res.message || '查询引用关系失败');
             }
@@ -266,6 +289,7 @@ var ReferenceDrawer = function ReferenceDrawer(props) {
       ),
   );
 };
+
 exports.ReferenceDrawer = ReferenceDrawer;
 ReferenceDrawer.propTypes = {
   title: _propTypes.default.string,
