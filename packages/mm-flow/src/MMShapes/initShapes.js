@@ -29,6 +29,8 @@ export const sliceName = (str, defaultWidth = 80) => {
   return str;
 };
 export default function initShapes(editor, flowNodes) {
+  const { config = {} } = editor || {};
+  const { showMiniMap } = config || {};
   // 渲染策略类节点
   const renderNode = (data, snapPaper, opt) => {
     const { name: namePre } = data;
@@ -66,16 +68,19 @@ export default function initShapes(editor, flowNodes) {
       fontSize: 12,
     });
 
-    const obj = document.createElementNS('http://www.w3.org/2000/svg', 'foreignObject');
-    obj.innerHTML = '<span xmlns="http://www.w3.org/1999/xhtml" class="task-status"></span>';
-    const statusIcon = window.Snap(obj);
-    statusIcon.attr({
-      width: 14,
-      height: 14,
-      x: node.getBBox().width - 14,
-      y: 0,
-    });
-    return snapPaper.group(node, circleGroup, text, statusIcon);
+    if (!showMiniMap) {
+      const obj = document.createElementNS('http://www.w3.org/2000/svg', 'foreignObject');
+      obj.innerHTML = '<span xmlns="http://www.w3.org/1999/xhtml" class="task-status"></span>';
+      const statusIcon = window.Snap(obj);
+      statusIcon.attr({
+        width: 14,
+        height: 14,
+        x: node.getBBox().width - 14,
+        y: 0,
+      });
+      return snapPaper.group(node, circleGroup, text, statusIcon);
+    }
+    return snapPaper.group(node, circleGroup, text);
   };
 
   // 初始化组件

@@ -10,21 +10,37 @@ Object.defineProperty(exports, 'sliceName', {
     return _initShapes.sliceName;
   },
 });
+
 require('antd/lib/tooltip/style');
+
 var _tooltip = _interopRequireDefault(require('antd/lib/tooltip'));
+
 require('antd/lib/row/style');
+
 var _row = _interopRequireDefault(require('antd/lib/row'));
+
 require('antd/lib/message/style');
+
 var _message2 = _interopRequireDefault(require('antd/lib/message'));
+
 var _react = _interopRequireWildcard(require('react'));
+
 var _mmeditor = _interopRequireDefault(require('mmeditor'));
+
 var _TopBar = _interopRequireDefault(require('./Content/TopBar'));
+
 var _LeftBar = _interopRequireDefault(require('./Content/LeftBar'));
+
 var _initShapes = _interopRequireWildcard(require('./MMShapes/initShapes'));
+
 var _DefaultDataConvert = _interopRequireDefault(require('./DefaultDataConvert'));
+
 var _DialogHandle = _interopRequireDefault(require('./DialogHandle'));
+
 require('./index.less');
+
 var _this = void 0;
+
 function _getRequireWildcardCache(nodeInterop) {
   if (typeof WeakMap !== 'function') return null;
   var cacheBabelInterop = new WeakMap();
@@ -33,6 +49,7 @@ function _getRequireWildcardCache(nodeInterop) {
     return nodeInterop ? cacheNodeInterop : cacheBabelInterop;
   })(nodeInterop);
 }
+
 function _interopRequireWildcard(obj, nodeInterop) {
   if (!nodeInterop && obj && obj.__esModule) {
     return obj;
@@ -62,9 +79,11 @@ function _interopRequireWildcard(obj, nodeInterop) {
   }
   return newObj;
 }
+
 function _interopRequireDefault(obj) {
   return obj && obj.__esModule ? obj : { default: obj };
 }
+
 function ownKeys(object, enumerableOnly) {
   var keys = Object.keys(object);
   if (Object.getOwnPropertySymbols) {
@@ -77,6 +96,7 @@ function ownKeys(object, enumerableOnly) {
   }
   return keys;
 }
+
 function _objectSpread(target) {
   for (var i = 1; i < arguments.length; i++) {
     var source = null != arguments[i] ? arguments[i] : {};
@@ -92,8 +112,8 @@ function _objectSpread(target) {
   }
   return target;
 }
+
 function _defineProperty(obj, key, value) {
-  key = _toPropertyKey(key);
   if (key in obj) {
     Object.defineProperty(obj, key, {
       value: value,
@@ -106,20 +126,7 @@ function _defineProperty(obj, key, value) {
   }
   return obj;
 }
-function _toPropertyKey(arg) {
-  var key = _toPrimitive(arg, 'string');
-  return _typeof(key) === 'symbol' ? key : String(key);
-}
-function _toPrimitive(input, hint) {
-  if (_typeof(input) !== 'object' || input === null) return input;
-  var prim = input[Symbol.toPrimitive];
-  if (prim !== undefined) {
-    var res = prim.call(input, hint || 'default');
-    if (_typeof(res) !== 'object') return res;
-    throw new TypeError('@@toPrimitive must return a primitive value.');
-  }
-  return (hint === 'string' ? String : Number)(input);
-}
+
 function _extends() {
   _extends = Object.assign
     ? Object.assign.bind()
@@ -136,6 +143,7 @@ function _extends() {
       };
   return _extends.apply(this, arguments);
 }
+
 function _typeof(obj) {
   '@babel/helpers - typeof';
   return (
@@ -155,6 +163,7 @@ function _typeof(obj) {
     _typeof(obj)
   );
 }
+
 function _regeneratorRuntime() {
   'use strict';
   /*! regenerator-runtime -- Copyright (c) 2014-present, Facebook, Inc. -- license (MIT): https://github.com/facebook/regenerator/blob/main/LICENSE */ _regeneratorRuntime =
@@ -164,11 +173,6 @@ function _regeneratorRuntime() {
   var exports = {},
     Op = Object.prototype,
     hasOwn = Op.hasOwnProperty,
-    defineProperty =
-      Object.defineProperty ||
-      function (obj, key, desc) {
-        obj[key] = desc.value;
-      },
     $Symbol = 'function' == typeof Symbol ? Symbol : {},
     iteratorSymbol = $Symbol.iterator || '@@iterator',
     asyncIteratorSymbol = $Symbol.asyncIterator || '@@asyncIterator',
@@ -196,7 +200,43 @@ function _regeneratorRuntime() {
       generator = Object.create(protoGenerator.prototype),
       context = new Context(tryLocsList || []);
     return (
-      defineProperty(generator, '_invoke', { value: makeInvokeMethod(innerFn, self, context) }),
+      (generator._invoke = (function (innerFn, self, context) {
+        var state = 'suspendedStart';
+        return function (method, arg) {
+          if ('executing' === state) throw new Error('Generator is already running');
+          if ('completed' === state) {
+            if ('throw' === method) throw arg;
+            return doneResult();
+          }
+          for (context.method = method, context.arg = arg; ; ) {
+            var delegate = context.delegate;
+            if (delegate) {
+              var delegateResult = maybeInvokeDelegate(delegate, context);
+              if (delegateResult) {
+                if (delegateResult === ContinueSentinel) continue;
+                return delegateResult;
+              }
+            }
+            if ('next' === context.method) context.sent = context._sent = context.arg;
+            else if ('throw' === context.method) {
+              if ('suspendedStart' === state) throw ((state = 'completed'), context.arg);
+              context.dispatchException(context.arg);
+            } else 'return' === context.method && context.abrupt('return', context.arg);
+            state = 'executing';
+            var record = tryCatch(innerFn, self, context);
+            if ('normal' === record.type) {
+              if (
+                ((state = context.done ? 'completed' : 'suspendedYield'),
+                record.arg === ContinueSentinel)
+              )
+                continue;
+              return { value: record.arg, done: context.done };
+            }
+            'throw' === record.type &&
+              ((state = 'completed'), (context.method = 'throw'), (context.arg = record.arg));
+          }
+        };
+      })(innerFn, self, context)),
       generator
     );
   }
@@ -260,75 +300,34 @@ function _regeneratorRuntime() {
       reject(record.arg);
     }
     var previousPromise;
-    defineProperty(this, '_invoke', {
-      value: function value(method, arg) {
-        function callInvokeWithMethodAndArg() {
-          return new PromiseImpl(function (resolve, reject) {
-            invoke(method, arg, resolve, reject);
-          });
-        }
-        return (previousPromise = previousPromise
-          ? previousPromise.then(callInvokeWithMethodAndArg, callInvokeWithMethodAndArg)
-          : callInvokeWithMethodAndArg());
-      },
-    });
-  }
-  function makeInvokeMethod(innerFn, self, context) {
-    var state = 'suspendedStart';
-    return function (method, arg) {
-      if ('executing' === state) throw new Error('Generator is already running');
-      if ('completed' === state) {
-        if ('throw' === method) throw arg;
-        return doneResult();
+    this._invoke = function (method, arg) {
+      function callInvokeWithMethodAndArg() {
+        return new PromiseImpl(function (resolve, reject) {
+          invoke(method, arg, resolve, reject);
+        });
       }
-      for (context.method = method, context.arg = arg; ; ) {
-        var delegate = context.delegate;
-        if (delegate) {
-          var delegateResult = maybeInvokeDelegate(delegate, context);
-          if (delegateResult) {
-            if (delegateResult === ContinueSentinel) continue;
-            return delegateResult;
-          }
-        }
-        if ('next' === context.method) context.sent = context._sent = context.arg;
-        else if ('throw' === context.method) {
-          if ('suspendedStart' === state) throw ((state = 'completed'), context.arg);
-          context.dispatchException(context.arg);
-        } else 'return' === context.method && context.abrupt('return', context.arg);
-        state = 'executing';
-        var record = tryCatch(innerFn, self, context);
-        if ('normal' === record.type) {
-          if (
-            ((state = context.done ? 'completed' : 'suspendedYield'),
-            record.arg === ContinueSentinel)
-          )
-            continue;
-          return { value: record.arg, done: context.done };
-        }
-        'throw' === record.type &&
-          ((state = 'completed'), (context.method = 'throw'), (context.arg = record.arg));
-      }
+      return (previousPromise = previousPromise
+        ? previousPromise.then(callInvokeWithMethodAndArg, callInvokeWithMethodAndArg)
+        : callInvokeWithMethodAndArg());
     };
   }
   function maybeInvokeDelegate(delegate, context) {
-    var methodName = context.method,
-      method = delegate.iterator[methodName];
-    if (undefined === method)
-      return (
-        (context.delegate = null),
-        ('throw' === methodName &&
+    var method = delegate.iterator[context.method];
+    if (undefined === method) {
+      if (((context.delegate = null), 'throw' === context.method)) {
+        if (
           delegate.iterator.return &&
           ((context.method = 'return'),
           (context.arg = undefined),
           maybeInvokeDelegate(delegate, context),
-          'throw' === context.method)) ||
-          ('return' !== methodName &&
-            ((context.method = 'throw'),
-            (context.arg = new TypeError(
-              "The iterator does not provide a '" + methodName + "' method",
-            )))),
-        ContinueSentinel
-      );
+          'throw' === context.method)
+        )
+          return ContinueSentinel;
+        (context.method = 'throw'),
+          (context.arg = new TypeError("The iterator does not provide a 'throw' method"));
+      }
+      return ContinueSentinel;
+    }
     var record = tryCatch(method, delegate.iterator, context.arg);
     if ('throw' === record.type)
       return (
@@ -390,11 +389,8 @@ function _regeneratorRuntime() {
   }
   return (
     (GeneratorFunction.prototype = GeneratorFunctionPrototype),
-    defineProperty(Gp, 'constructor', { value: GeneratorFunctionPrototype, configurable: !0 }),
-    defineProperty(GeneratorFunctionPrototype, 'constructor', {
-      value: GeneratorFunction,
-      configurable: !0,
-    }),
+    define(Gp, 'constructor', GeneratorFunctionPrototype),
+    define(GeneratorFunctionPrototype, 'constructor', GeneratorFunction),
     (GeneratorFunction.displayName = define(
       GeneratorFunctionPrototype,
       toStringTagSymbol,
@@ -442,9 +438,8 @@ function _regeneratorRuntime() {
     define(Gp, 'toString', function () {
       return '[object Generator]';
     }),
-    (exports.keys = function (val) {
-      var object = Object(val),
-        keys = [];
+    (exports.keys = function (object) {
+      var keys = [];
       for (var key in object) {
         keys.push(key);
       }
@@ -595,6 +590,7 @@ function _regeneratorRuntime() {
     exports
   );
 }
+
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) {
   try {
     var info = gen[key](arg);
@@ -609,6 +605,7 @@ function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) {
     Promise.resolve(value).then(_next, _throw);
   }
 }
+
 function _asyncToGenerator(fn) {
   return function () {
     var self = this,
@@ -625,6 +622,7 @@ function _asyncToGenerator(fn) {
     });
   };
 }
+
 function _slicedToArray(arr, i) {
   return (
     _arrayWithHoles(arr) ||
@@ -633,11 +631,13 @@ function _slicedToArray(arr, i) {
     _nonIterableRest()
   );
 }
+
 function _nonIterableRest() {
   throw new TypeError(
     'Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.',
   );
 }
+
 function _unsupportedIterableToArray(o, minLen) {
   if (!o) return;
   if (typeof o === 'string') return _arrayLikeToArray(o, minLen);
@@ -647,6 +647,7 @@ function _unsupportedIterableToArray(o, minLen) {
   if (n === 'Arguments' || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n))
     return _arrayLikeToArray(o, minLen);
 }
+
 function _arrayLikeToArray(arr, len) {
   if (len == null || len > arr.length) len = arr.length;
   for (var i = 0, arr2 = new Array(len); i < len; i++) {
@@ -654,62 +655,62 @@ function _arrayLikeToArray(arr, len) {
   }
   return arr2;
 }
+
 function _iterableToArrayLimit(arr, i) {
   var _i =
-    null == arr
+    arr == null
       ? null
-      : ('undefined' != typeof Symbol && arr[Symbol.iterator]) || arr['@@iterator'];
-  if (null != _i) {
-    var _s,
-      _e,
-      _x,
-      _r,
-      _arr = [],
-      _n = !0,
-      _d = !1;
-    try {
-      if (((_x = (_i = _i.call(arr)).next), 0 === i)) {
-        if (Object(_i) !== _i) return;
-        _n = !1;
-      } else
-        for (
-          ;
-          !(_n = (_s = _x.call(_i)).done) && (_arr.push(_s.value), _arr.length !== i);
-          _n = !0
-        ) {}
-    } catch (err) {
-      (_d = !0), (_e = err);
-    } finally {
-      try {
-        if (!_n && null != _i.return && ((_r = _i.return()), Object(_r) !== _r)) return;
-      } finally {
-        if (_d) throw _e;
-      }
+      : (typeof Symbol !== 'undefined' && arr[Symbol.iterator]) || arr['@@iterator'];
+  if (_i == null) return;
+  var _arr = [];
+  var _n = true;
+  var _d = false;
+  var _s, _e;
+  try {
+    for (_i = _i.call(arr); !(_n = (_s = _i.next()).done); _n = true) {
+      _arr.push(_s.value);
+      if (i && _arr.length === i) break;
     }
-    return _arr;
+  } catch (err) {
+    _d = true;
+    _e = err;
+  } finally {
+    try {
+      if (!_n && _i['return'] != null) _i['return']();
+    } finally {
+      if (_d) throw _e;
+    }
   }
+  return _arr;
 }
+
 function _arrayWithHoles(arr) {
   if (Array.isArray(arr)) return arr;
 }
+
 var _default = /*#__PURE__*/ (0, _react.forwardRef)(function (props, ref) {
   var _toolTipInfo$nowTextN;
+
   var editorWrapRef = (0, _react.useRef)();
   var editorDomRef = (0, _react.useRef)();
   var editorRef = (0, _react.useRef)();
   var dialogHandleRef = (0, _react.useRef)();
+
   var _useState = (0, _react.useState)(),
     _useState2 = _slicedToArray(_useState, 2),
     toolTipInfo = _useState2[0],
     setToolTipInfo = _useState2[1];
+
   var _useState3 = (0, _react.useState)(null),
     _useState4 = _slicedToArray(_useState3, 2),
     dialogShowInfo = _useState4[0],
     setDialogShowInfo = _useState4[1];
+
   var _useState5 = (0, _react.useState)(false),
     _useState6 = _slicedToArray(_useState5, 2),
     initReady = _useState6[0],
     setInitReady = _useState6[1];
+
   var type = props.type,
     graphData = props.graphData,
     _props$flowNodesDict = props.flowNodesDict,
@@ -739,33 +740,40 @@ var _default = /*#__PURE__*/ (0, _react.forwardRef)(function (props, ref) {
       updateGraph: setGraphData,
     };
   });
+
   var checkNewLine = function checkNewLine(data, editor) {
     var nodes = editor.graph.node.nodes;
     var from = data.from,
-      to = data.to;
-    // 通组件输入输出不能连接
+      to = data.to; // 通组件输入输出不能连接
+
     if (from === to) return false;
     var fromNode = nodes[from];
     var toNode = nodes[to];
+
     var _ref = fromNode || {},
       _ref$data = _ref.data,
       fromType = _ref$data.type,
       fromName = _ref$data.name,
       sourceFromLines = _ref.fromLines;
+
     var _ref2 = toNode || {},
       _ref2$data = _ref2.data,
       toType = _ref2$data.type,
       toName = _ref2$data.name,
       targetToLines = _ref2.toLines;
+
     if (['start'].includes(toType) && targetToLines && targetToLines.size) {
       _message2.default.error(toName + '不能设置输入流');
+
       return false;
-    }
-    // 不能设置输出流
+    } // 不能设置输出流
+
     if (['end'].includes(fromType) && sourceFromLines && sourceFromLines.size) {
       _message2.default.error(fromName + '不能设置输出流');
+
       return false;
     }
+
     checkLineExtendFn &&
       checkLineExtendFn({
         data: data,
@@ -773,6 +781,7 @@ var _default = /*#__PURE__*/ (0, _react.forwardRef)(function (props, ref) {
       });
     return true;
   };
+
   (0, _react.useEffect)(function () {
     var resizeBound = function resizeBound() {
       var _ref3 =
@@ -782,14 +791,17 @@ var _default = /*#__PURE__*/ (0, _react.forwardRef)(function (props, ref) {
           {},
         jobEditorHei = _ref3.height,
         jobEditorWid = _ref3.width;
+
       if (jobEditorHei && editorDomRef) {
         editorDomRef.current.style.height = jobEditorHei - (!previewMode ? 48 : 0) + 'px';
         editorDomRef.current.style.width = jobEditorWid - (!previewMode ? 140 : 0) + 'px';
       }
+
       if (editorRef.current) {
         editorRef.current.controller.autoFit();
       }
     };
+
     var init = /*#__PURE__*/ (function () {
       var _ref4 = _asyncToGenerator(
         /*#__PURE__*/ _regeneratorRuntime().mark(function _callee() {
@@ -803,25 +815,28 @@ var _default = /*#__PURE__*/ (0, _react.forwardRef)(function (props, ref) {
                     dom: editorDomRef.current,
                     showMiniMap: showMiniMap,
                     mode: previewMode ? 'view' : 'edit', // 只读模式设置 mode:"view"
-                  });
-                  // 注册节点
+                  }); // 注册节点
+
                   (0, _initShapes.default)(editorRef.current, flowNodesDict);
+
                   if (!graphData) {
                     _context.next = 7;
                     break;
                   }
+
                   _context.next = 7;
                   return setGraphData(graphData);
+
                 case 7:
                   // 连线时校验
                   if (editorRef.current.graph.line.shapes['default']) {
                     editorRef.current.graph.line.shapes['default'].checkNewLine = checkNewLine;
-                  }
+                  } // 注册节点⌚️
 
-                  // 注册节点⌚️
                   addEditorEvent();
                   onRef && onRef(_this);
                   setInitReady(true);
+
                 case 11:
                 case 'end':
                   return _context.stop();
@@ -830,10 +845,12 @@ var _default = /*#__PURE__*/ (0, _react.forwardRef)(function (props, ref) {
           }, _callee);
         }),
       );
+
       return function init() {
         return _ref4.apply(this, arguments);
       };
     })();
+
     init();
     window.addEventListener('resize', resizeBound);
     return function () {
@@ -842,14 +859,17 @@ var _default = /*#__PURE__*/ (0, _react.forwardRef)(function (props, ref) {
         editorRef.current.destroy();
         editorRef.current = null;
       }
+
       setInitReady(false);
       window.removeEventListener('resize', resizeBound);
     };
   }, []);
+
   var setGraphData = /*#__PURE__*/ (function () {
     var _ref5 = _asyncToGenerator(
       /*#__PURE__*/ _regeneratorRuntime().mark(function _callee2(data) {
         var _convertFun, dataFormatted, convertFun;
+
         return _regeneratorRuntime().wrap(
           function _callee2$(_context2) {
             while (1) {
@@ -858,31 +878,38 @@ var _default = /*#__PURE__*/ (0, _react.forwardRef)(function (props, ref) {
                   _context2.prev = 0;
                   dataFormatted = _typeof(data) === 'object' ? data : JSON.parse(data || '{}');
                   convertFun = _DefaultDataConvert.default;
+
                   if (DataConvert) {
                     convertFun = DataConvert;
                   }
+
                   _context2.next = 6;
                   return editorRef.current.schema.setInitData(
                     (_convertFun = convertFun) === null || _convertFun === void 0
                       ? void 0
                       : _convertFun.convert(dataFormatted, editorRef.current),
                   );
+
                 case 6:
                   _context2.next = 8;
                   return editorRef.current.controller.autoFit();
+
                 case 8:
                   runFlow();
                   _context2.next = 14;
                   break;
+
                 case 11:
                   _context2.prev = 11;
                   _context2.t0 = _context2['catch'](0);
+
                   _message2.default.error(
                     '解析数据错误,' +
                       (_context2.t0 === null || _context2.t0 === void 0
                         ? void 0
                         : _context2.t0.message),
                   );
+
                 case 14:
                 case 'end':
                   return _context2.stop();
@@ -895,10 +922,12 @@ var _default = /*#__PURE__*/ (0, _react.forwardRef)(function (props, ref) {
         );
       }),
     );
-    return function setGraphData(_x2) {
+
+    return function setGraphData(_x) {
       return _ref5.apply(this, arguments);
     };
   })();
+
   (0, _react.useEffect)(
     function () {
       if (editorRef.current && initReady) {
@@ -925,16 +954,16 @@ var _default = /*#__PURE__*/ (0, _react.forwardRef)(function (props, ref) {
       }
     },
     [graphData, auditedNodes, autoDiffAuditNodes],
-  );
+  ); // 初始化编辑器事件
 
-  // 初始化编辑器事件
   var addEditorEvent = function addEditorEvent() {
-    var timeStamp;
-    // 选中
+    var timeStamp; // 选中
+
     editorRef === null || editorRef === void 0
       ? void 0
       : editorRef.current.graph.on('node:click', function (_ref6) {
           var _document$getElements, _document$getElements2;
+
           var node = _ref6.node;
           (_document$getElements = document.getElementsByClassName('lb-workflow-header')[0]) ===
             null || _document$getElements === void 0
@@ -944,6 +973,7 @@ var _default = /*#__PURE__*/ (0, _react.forwardRef)(function (props, ref) {
             ? void 0
             : _document$getElements2.blur();
           var now = new Date().getTime();
+
           if (now - timeStamp < 300) {
             // 产品说这个情况下就不用弹窗
             !dialogHide &&
@@ -955,11 +985,11 @@ var _default = /*#__PURE__*/ (0, _react.forwardRef)(function (props, ref) {
                 },
               );
           }
+
           timeStamp = now;
           props.onNodeClick && props.onNodeClick(node.data);
-        });
+        }); // 没有选中
 
-    // 没有选中
     editorRef === null || editorRef === void 0
       ? void 0
       : editorRef.current.graph.on('node:mouseenter', function (_ref7) {
@@ -976,17 +1006,15 @@ var _default = /*#__PURE__*/ (0, _react.forwardRef)(function (props, ref) {
       ? void 0
       : editorRef.current.graph.on('node:mouseleave', function () {
           setToolTipInfo(null);
-        });
+        }); // 节点删除事件
 
-    // 节点删除事件
     editorRef === null || editorRef === void 0
       ? void 0
       : editorRef.current.graph.on('node:remove', function () {
           setToolTipInfo(null);
         });
-  };
+  }; // 动画效果
 
-  // 动画效果
   var runFlow = /*#__PURE__*/ (function () {
     var _ref8 = _asyncToGenerator(
       /*#__PURE__*/ _regeneratorRuntime().mark(function _callee3() {
@@ -1001,6 +1029,7 @@ var _default = /*#__PURE__*/ (0, _react.forwardRef)(function (props, ref) {
           node,
           _key,
           line;
+
         return _regeneratorRuntime().wrap(function _callee3$(_context3) {
           while (1) {
             switch ((_context3.prev = _context3.next)) {
@@ -1011,7 +1040,9 @@ var _default = /*#__PURE__*/ (0, _react.forwardRef)(function (props, ref) {
                   _context3.next = 2;
                   break;
                 }
+
                 return _context3.abrupt('return');
+
               case 2:
                 (_ref9 =
                   (editorRef === null || editorRef === void 0 ? void 0 : editorRef.current) || {}),
@@ -1024,6 +1055,7 @@ var _default = /*#__PURE__*/ (0, _react.forwardRef)(function (props, ref) {
                 auditedNodes.forEach(function (hasAudited) {
                   var _ref11 = hasAudited || {},
                     uuid = _ref11.uuid;
+
                   var status = 'instance '.concat(hasAudited.status || '');
                   Object.values(nodes).forEach(function (node) {
                     if (node.data.uuid === uuid) {
@@ -1033,8 +1065,10 @@ var _default = /*#__PURE__*/ (0, _react.forwardRef)(function (props, ref) {
                       node.addClass(status);
                     }
                   });
+
                   for (var key in lines) {
                     var line = lines[key];
+
                     if (uuid === line.data.to && hasAuditedNodeUuids.indexOf(line.data.from) > -1) {
                       line.data.className = ''
                         .concat(line.data.className || '', '  ')
@@ -1044,6 +1078,7 @@ var _default = /*#__PURE__*/ (0, _react.forwardRef)(function (props, ref) {
                     }
                   }
                 });
+
                 for (key in nodes) {
                   if (!hasAuditedNodeUuids.includes(key)) {
                     node = nodes[key];
@@ -1051,6 +1086,7 @@ var _default = /*#__PURE__*/ (0, _react.forwardRef)(function (props, ref) {
                     node.addClass('unrun');
                   }
                 }
+
                 for (_key in lines) {
                   if (!auditedLine.includes(_key)) {
                     line = lines[_key];
@@ -1058,6 +1094,7 @@ var _default = /*#__PURE__*/ (0, _react.forwardRef)(function (props, ref) {
                     line.addClass('unrun');
                   }
                 }
+
               case 9:
               case 'end':
                 return _context3.stop();
@@ -1066,14 +1103,15 @@ var _default = /*#__PURE__*/ (0, _react.forwardRef)(function (props, ref) {
         }, _callee3);
       }),
     );
+
     return function runFlow() {
       return _ref8.apply(this, arguments);
     };
-  })();
+  })(); // 目标放置
 
-  // 目标放置
   var onDrop = function onDrop(item, e) {
     var _editorRef$current, _editorRef$current2;
+
     // 增加节点
     var dom =
       editorRef === null || editorRef === void 0
@@ -1084,9 +1122,11 @@ var _default = /*#__PURE__*/ (0, _react.forwardRef)(function (props, ref) {
     var name =
       (item === null || item === void 0 ? void 0 : item.initName) ||
       (item === null || item === void 0 ? void 0 : item.name);
+
     var _ref12 = item || {},
       _ref12$size = _ref12.size,
       size = _ref12$size === void 0 ? [] : _ref12$size;
+
     var transform =
       editorRef === null || editorRef === void 0 ? void 0 : editorRef.current.paper.transform();
     var info = transform.globalMatrix.split();
@@ -1108,6 +1148,7 @@ var _default = /*#__PURE__*/ (0, _react.forwardRef)(function (props, ref) {
           }),
         );
   };
+
   return /*#__PURE__*/ _react.default.createElement(
     'div',
     _extends(
@@ -1226,4 +1267,5 @@ var _default = /*#__PURE__*/ (0, _react.forwardRef)(function (props, ref) {
         }),
   );
 });
+
 exports.default = _default;

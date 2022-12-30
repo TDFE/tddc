@@ -19,21 +19,34 @@ function _typeof(obj) {
     _typeof(obj)
   );
 }
+
 Object.defineProperty(exports, '__esModule', {
   value: true,
 });
 exports.default = void 0;
+
 require('antd/lib/modal/style');
+
 var _modal = _interopRequireDefault(require('antd/lib/modal'));
+
 require('antd/lib/input/style');
+
 var _input = _interopRequireDefault(require('antd/lib/input'));
+
 require('antd/lib/button/style');
+
 var _button = _interopRequireDefault(require('antd/lib/button'));
+
 require('antd/lib/form/style');
+
 var _form = _interopRequireDefault(require('antd/lib/form'));
+
 require('antd/lib/select/style');
+
 var _select = _interopRequireDefault(require('antd/lib/select'));
+
 var _react = _interopRequireWildcard(require('react'));
+
 function _getRequireWildcardCache(nodeInterop) {
   if (typeof WeakMap !== 'function') return null;
   var cacheBabelInterop = new WeakMap();
@@ -42,6 +55,7 @@ function _getRequireWildcardCache(nodeInterop) {
     return nodeInterop ? cacheNodeInterop : cacheBabelInterop;
   })(nodeInterop);
 }
+
 function _interopRequireWildcard(obj, nodeInterop) {
   if (!nodeInterop && obj && obj.__esModule) {
     return obj;
@@ -71,9 +85,11 @@ function _interopRequireWildcard(obj, nodeInterop) {
   }
   return newObj;
 }
+
 function _interopRequireDefault(obj) {
   return obj && obj.__esModule ? obj : { default: obj };
 }
+
 function _regeneratorRuntime() {
   'use strict';
   /*! regenerator-runtime -- Copyright (c) 2014-present, Facebook, Inc. -- license (MIT): https://github.com/facebook/regenerator/blob/main/LICENSE */ _regeneratorRuntime =
@@ -83,11 +99,6 @@ function _regeneratorRuntime() {
   var exports = {},
     Op = Object.prototype,
     hasOwn = Op.hasOwnProperty,
-    defineProperty =
-      Object.defineProperty ||
-      function (obj, key, desc) {
-        obj[key] = desc.value;
-      },
     $Symbol = 'function' == typeof Symbol ? Symbol : {},
     iteratorSymbol = $Symbol.iterator || '@@iterator',
     asyncIteratorSymbol = $Symbol.asyncIterator || '@@asyncIterator',
@@ -115,7 +126,43 @@ function _regeneratorRuntime() {
       generator = Object.create(protoGenerator.prototype),
       context = new Context(tryLocsList || []);
     return (
-      defineProperty(generator, '_invoke', { value: makeInvokeMethod(innerFn, self, context) }),
+      (generator._invoke = (function (innerFn, self, context) {
+        var state = 'suspendedStart';
+        return function (method, arg) {
+          if ('executing' === state) throw new Error('Generator is already running');
+          if ('completed' === state) {
+            if ('throw' === method) throw arg;
+            return doneResult();
+          }
+          for (context.method = method, context.arg = arg; ; ) {
+            var delegate = context.delegate;
+            if (delegate) {
+              var delegateResult = maybeInvokeDelegate(delegate, context);
+              if (delegateResult) {
+                if (delegateResult === ContinueSentinel) continue;
+                return delegateResult;
+              }
+            }
+            if ('next' === context.method) context.sent = context._sent = context.arg;
+            else if ('throw' === context.method) {
+              if ('suspendedStart' === state) throw ((state = 'completed'), context.arg);
+              context.dispatchException(context.arg);
+            } else 'return' === context.method && context.abrupt('return', context.arg);
+            state = 'executing';
+            var record = tryCatch(innerFn, self, context);
+            if ('normal' === record.type) {
+              if (
+                ((state = context.done ? 'completed' : 'suspendedYield'),
+                record.arg === ContinueSentinel)
+              )
+                continue;
+              return { value: record.arg, done: context.done };
+            }
+            'throw' === record.type &&
+              ((state = 'completed'), (context.method = 'throw'), (context.arg = record.arg));
+          }
+        };
+      })(innerFn, self, context)),
       generator
     );
   }
@@ -179,75 +226,34 @@ function _regeneratorRuntime() {
       reject(record.arg);
     }
     var previousPromise;
-    defineProperty(this, '_invoke', {
-      value: function value(method, arg) {
-        function callInvokeWithMethodAndArg() {
-          return new PromiseImpl(function (resolve, reject) {
-            invoke(method, arg, resolve, reject);
-          });
-        }
-        return (previousPromise = previousPromise
-          ? previousPromise.then(callInvokeWithMethodAndArg, callInvokeWithMethodAndArg)
-          : callInvokeWithMethodAndArg());
-      },
-    });
-  }
-  function makeInvokeMethod(innerFn, self, context) {
-    var state = 'suspendedStart';
-    return function (method, arg) {
-      if ('executing' === state) throw new Error('Generator is already running');
-      if ('completed' === state) {
-        if ('throw' === method) throw arg;
-        return doneResult();
+    this._invoke = function (method, arg) {
+      function callInvokeWithMethodAndArg() {
+        return new PromiseImpl(function (resolve, reject) {
+          invoke(method, arg, resolve, reject);
+        });
       }
-      for (context.method = method, context.arg = arg; ; ) {
-        var delegate = context.delegate;
-        if (delegate) {
-          var delegateResult = maybeInvokeDelegate(delegate, context);
-          if (delegateResult) {
-            if (delegateResult === ContinueSentinel) continue;
-            return delegateResult;
-          }
-        }
-        if ('next' === context.method) context.sent = context._sent = context.arg;
-        else if ('throw' === context.method) {
-          if ('suspendedStart' === state) throw ((state = 'completed'), context.arg);
-          context.dispatchException(context.arg);
-        } else 'return' === context.method && context.abrupt('return', context.arg);
-        state = 'executing';
-        var record = tryCatch(innerFn, self, context);
-        if ('normal' === record.type) {
-          if (
-            ((state = context.done ? 'completed' : 'suspendedYield'),
-            record.arg === ContinueSentinel)
-          )
-            continue;
-          return { value: record.arg, done: context.done };
-        }
-        'throw' === record.type &&
-          ((state = 'completed'), (context.method = 'throw'), (context.arg = record.arg));
-      }
+      return (previousPromise = previousPromise
+        ? previousPromise.then(callInvokeWithMethodAndArg, callInvokeWithMethodAndArg)
+        : callInvokeWithMethodAndArg());
     };
   }
   function maybeInvokeDelegate(delegate, context) {
-    var methodName = context.method,
-      method = delegate.iterator[methodName];
-    if (undefined === method)
-      return (
-        (context.delegate = null),
-        ('throw' === methodName &&
+    var method = delegate.iterator[context.method];
+    if (undefined === method) {
+      if (((context.delegate = null), 'throw' === context.method)) {
+        if (
           delegate.iterator.return &&
           ((context.method = 'return'),
           (context.arg = undefined),
           maybeInvokeDelegate(delegate, context),
-          'throw' === context.method)) ||
-          ('return' !== methodName &&
-            ((context.method = 'throw'),
-            (context.arg = new TypeError(
-              "The iterator does not provide a '" + methodName + "' method",
-            )))),
-        ContinueSentinel
-      );
+          'throw' === context.method)
+        )
+          return ContinueSentinel;
+        (context.method = 'throw'),
+          (context.arg = new TypeError("The iterator does not provide a 'throw' method"));
+      }
+      return ContinueSentinel;
+    }
     var record = tryCatch(method, delegate.iterator, context.arg);
     if ('throw' === record.type)
       return (
@@ -309,11 +315,8 @@ function _regeneratorRuntime() {
   }
   return (
     (GeneratorFunction.prototype = GeneratorFunctionPrototype),
-    defineProperty(Gp, 'constructor', { value: GeneratorFunctionPrototype, configurable: !0 }),
-    defineProperty(GeneratorFunctionPrototype, 'constructor', {
-      value: GeneratorFunction,
-      configurable: !0,
-    }),
+    define(Gp, 'constructor', GeneratorFunctionPrototype),
+    define(GeneratorFunctionPrototype, 'constructor', GeneratorFunction),
     (GeneratorFunction.displayName = define(
       GeneratorFunctionPrototype,
       toStringTagSymbol,
@@ -361,9 +364,8 @@ function _regeneratorRuntime() {
     define(Gp, 'toString', function () {
       return '[object Generator]';
     }),
-    (exports.keys = function (val) {
-      var object = Object(val),
-        keys = [];
+    (exports.keys = function (object) {
+      var keys = [];
       for (var key in object) {
         keys.push(key);
       }
@@ -514,6 +516,7 @@ function _regeneratorRuntime() {
     exports
   );
 }
+
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) {
   try {
     var info = gen[key](arg);
@@ -528,6 +531,7 @@ function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) {
     Promise.resolve(value).then(_next, _throw);
   }
 }
+
 function _asyncToGenerator(fn) {
   return function () {
     var self = this,
@@ -544,6 +548,7 @@ function _asyncToGenerator(fn) {
     });
   };
 }
+
 var Option = _select.default.Option;
 var formItemLayout = {
   labelCol: {
@@ -563,10 +568,12 @@ var formItemLayout = {
     },
   },
 };
+
 var _default = _form.default.create({
   name: 'data_process',
 })(function (props) {
   var _ref5;
+
   var form = props.form,
     onCancel = props.onCancel,
     _props$dmConfig = props.dmConfig,
@@ -574,16 +581,20 @@ var _default = _form.default.create({
     dialogShowInfo = props.dialogShowInfo,
     editor = props.editor,
     disabled = props.disabled;
+
   var _ref = dmConfig || {},
     _ref$dataMachine = _ref.dataMachine,
     dataMachine = _ref$dataMachine === void 0 ? [] : _ref$dataMachine;
+
   var getFieldDecorator = form.getFieldDecorator,
     setFieldsValue = form.setFieldsValue,
     resetFields = form.resetFields,
     validateFields = form.validateFields;
+
   var _ref2 = dialogShowInfo || {},
     type = _ref2.type,
     nodeId = _ref2.nodeId;
+
   var visible = type === 'DecisionToolServiceNode';
   (0, _react.useEffect)(
     function () {
@@ -593,6 +604,7 @@ var _default = _form.default.create({
     },
     [type],
   );
+
   var initData = /*#__PURE__*/ (function () {
     var _ref3 = _asyncToGenerator(
       /*#__PURE__*/ _regeneratorRuntime().mark(function _callee() {
@@ -603,9 +615,11 @@ var _default = _form.default.create({
               case 0:
                 _context.next = 2;
                 return resetFields();
+
               case 2:
                 data = editor.schema.data.nodesMap[nodeId].data;
                 setFieldsValue(data || {});
+
               case 4:
               case 'end':
                 return _context.stop();
@@ -614,15 +628,18 @@ var _default = _form.default.create({
         }, _callee);
       }),
     );
+
     return function initData() {
       return _ref3.apply(this, arguments);
     };
   })();
+
   var commitModal = function commitModal() {
     validateFields(function (errors, data) {
       if (!errors) {
         var _ref4 = data || {},
           nodeName = _ref4.nodeName;
+
         editor.schema.data.nodesMap[nodeId].name = nodeName;
         editor.schema.data.nodesMap[nodeId].data = data;
         editor.graph.node.nodes[nodeId].shape.select('text.flow-txt-node').node.innerHTML =
@@ -631,6 +648,7 @@ var _default = _form.default.create({
       }
     });
   };
+
   var footerDom = [
     /*#__PURE__*/ _react.default.createElement(
       _button.default,
@@ -751,4 +769,5 @@ var _default = _form.default.create({
     ),
   );
 });
+
 exports.default = _default;

@@ -4,21 +4,37 @@ Object.defineProperty(exports, '__esModule', {
   value: true,
 });
 exports.toolBarTypeNameMap = exports.default = void 0;
+
 require('antd/lib/row/style');
+
 var _row = _interopRequireDefault(require('antd/lib/row'));
+
 require('antd/lib/tooltip/style');
+
 var _tooltip = _interopRequireDefault(require('antd/lib/tooltip'));
+
 require('antd/lib/button/style');
+
 var _button = _interopRequireDefault(require('antd/lib/button'));
+
 require('antd/lib/dropdown/style');
+
 var _dropdown = _interopRequireDefault(require('antd/lib/dropdown'));
+
 require('antd/lib/menu/style');
+
 var _menu = _interopRequireDefault(require('antd/lib/menu'));
+
 require('antd/lib/icon/style');
+
 var _icon = _interopRequireDefault(require('antd/lib/icon'));
+
 var _react = _interopRequireWildcard(require('react'));
+
 var _DefaultDataConvert = _interopRequireDefault(require('../DefaultDataConvert'));
+
 require('./TopBar.less');
+
 function _getRequireWildcardCache(nodeInterop) {
   if (typeof WeakMap !== 'function') return null;
   var cacheBabelInterop = new WeakMap();
@@ -27,6 +43,7 @@ function _getRequireWildcardCache(nodeInterop) {
     return nodeInterop ? cacheNodeInterop : cacheBabelInterop;
   })(nodeInterop);
 }
+
 function _interopRequireWildcard(obj, nodeInterop) {
   if (!nodeInterop && obj && obj.__esModule) {
     return obj;
@@ -56,9 +73,11 @@ function _interopRequireWildcard(obj, nodeInterop) {
   }
   return newObj;
 }
+
 function _interopRequireDefault(obj) {
   return obj && obj.__esModule ? obj : { default: obj };
 }
+
 function ownKeys(object, enumerableOnly) {
   var keys = Object.keys(object);
   if (Object.getOwnPropertySymbols) {
@@ -71,6 +90,7 @@ function ownKeys(object, enumerableOnly) {
   }
   return keys;
 }
+
 function _objectSpread(target) {
   for (var i = 1; i < arguments.length; i++) {
     var source = null != arguments[i] ? arguments[i] : {};
@@ -86,8 +106,8 @@ function _objectSpread(target) {
   }
   return target;
 }
+
 function _defineProperty(obj, key, value) {
-  key = _toPropertyKey(key);
   if (key in obj) {
     Object.defineProperty(obj, key, {
       value: value,
@@ -100,20 +120,7 @@ function _defineProperty(obj, key, value) {
   }
   return obj;
 }
-function _toPropertyKey(arg) {
-  var key = _toPrimitive(arg, 'string');
-  return _typeof(key) === 'symbol' ? key : String(key);
-}
-function _toPrimitive(input, hint) {
-  if (_typeof(input) !== 'object' || input === null) return input;
-  var prim = input[Symbol.toPrimitive];
-  if (prim !== undefined) {
-    var res = prim.call(input, hint || 'default');
-    if (_typeof(res) !== 'object') return res;
-    throw new TypeError('@@toPrimitive must return a primitive value.');
-  }
-  return (hint === 'string' ? String : Number)(input);
-}
+
 function _typeof(obj) {
   '@babel/helpers - typeof';
   return (
@@ -133,6 +140,7 @@ function _typeof(obj) {
     _typeof(obj)
   );
 }
+
 function _slicedToArray(arr, i) {
   return (
     _arrayWithHoles(arr) ||
@@ -141,11 +149,13 @@ function _slicedToArray(arr, i) {
     _nonIterableRest()
   );
 }
+
 function _nonIterableRest() {
   throw new TypeError(
     'Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.',
   );
 }
+
 function _unsupportedIterableToArray(o, minLen) {
   if (!o) return;
   if (typeof o === 'string') return _arrayLikeToArray(o, minLen);
@@ -155,6 +165,7 @@ function _unsupportedIterableToArray(o, minLen) {
   if (n === 'Arguments' || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n))
     return _arrayLikeToArray(o, minLen);
 }
+
 function _arrayLikeToArray(arr, len) {
   if (len == null || len > arr.length) len = arr.length;
   for (var i = 0, arr2 = new Array(len); i < len; i++) {
@@ -162,44 +173,39 @@ function _arrayLikeToArray(arr, len) {
   }
   return arr2;
 }
+
 function _iterableToArrayLimit(arr, i) {
   var _i =
-    null == arr
+    arr == null
       ? null
-      : ('undefined' != typeof Symbol && arr[Symbol.iterator]) || arr['@@iterator'];
-  if (null != _i) {
-    var _s,
-      _e,
-      _x,
-      _r,
-      _arr = [],
-      _n = !0,
-      _d = !1;
-    try {
-      if (((_x = (_i = _i.call(arr)).next), 0 === i)) {
-        if (Object(_i) !== _i) return;
-        _n = !1;
-      } else
-        for (
-          ;
-          !(_n = (_s = _x.call(_i)).done) && (_arr.push(_s.value), _arr.length !== i);
-          _n = !0
-        ) {}
-    } catch (err) {
-      (_d = !0), (_e = err);
-    } finally {
-      try {
-        if (!_n && null != _i.return && ((_r = _i.return()), Object(_r) !== _r)) return;
-      } finally {
-        if (_d) throw _e;
-      }
+      : (typeof Symbol !== 'undefined' && arr[Symbol.iterator]) || arr['@@iterator'];
+  if (_i == null) return;
+  var _arr = [];
+  var _n = true;
+  var _d = false;
+  var _s, _e;
+  try {
+    for (_i = _i.call(arr); !(_n = (_s = _i.next()).done); _n = true) {
+      _arr.push(_s.value);
+      if (i && _arr.length === i) break;
     }
-    return _arr;
+  } catch (err) {
+    _d = true;
+    _e = err;
+  } finally {
+    try {
+      if (!_n && _i['return'] != null) _i['return']();
+    } finally {
+      if (_d) throw _e;
+    }
   }
+  return _arr;
 }
+
 function _arrayWithHoles(arr) {
   if (Array.isArray(arr)) return arr;
 }
+
 var toolBarTypeNameMap = {
   redo: '重做',
   undo: '撤销',
@@ -213,36 +219,45 @@ var toolBarTypeNameMap = {
   fullscreen: '最大化',
 };
 exports.toolBarTypeNameMap = toolBarTypeNameMap;
+
 var _default = function _default(props) {
   var _commandActions;
+
   var _ref = props || {},
     editor = _ref.editor,
     previewMode = _ref.previewMode,
     operateGroup = _ref.operateGroup,
     DataConvert = _ref.DataConvert,
     commandAction = _ref.commandAction;
+
   var _useState = (0, _react.useState)(false),
     _useState2 = _slicedToArray(_useState, 2),
     canRedo = _useState2[0],
     setCanRedo = _useState2[1];
+
   var _useState3 = (0, _react.useState)(false),
     _useState4 = _slicedToArray(_useState3, 2),
     canUndo = _useState4[0],
     setCanUndo = _useState4[1];
+
   var _useState5 = (0, _react.useState)(false),
     _useState6 = _slicedToArray(_useState5, 2),
     canDelete = _useState6[0],
     setCanDelete = _useState6[1];
+
   var _useState7 = (0, _react.useState)({}),
     _useState8 = _slicedToArray(_useState7, 2),
     load = _useState8[0],
     setLoad = _useState8[1];
+
   var curEditor = (0, _react.useRef)(editor);
+
   var _ref2 = editor || {},
     history = _ref2.schema.history,
     graph = _ref2.graph,
     controller = _ref2.controller,
     paper = _ref2.paper;
+
   (0, _react.useEffect)(
     function () {
       if (editor) {
@@ -250,11 +265,13 @@ var _default = function _default(props) {
           curEditor.current = editor;
           offEvent();
         }
+
         watchHistory(props);
       }
     },
     [editor],
   );
+
   var offEvent = function offEvent() {
     if (editor) {
       editor.off('change');
@@ -264,6 +281,7 @@ var _default = function _default(props) {
       editor.off('node:remove');
     }
   };
+
   var watchHistory = function watchHistory(props) {
     if (!editor) return;
     editor.on('change', function () {
@@ -274,6 +292,7 @@ var _default = function _default(props) {
     });
     editor.graph.on('node:click', function (_ref3) {
       var _editor$graph$line;
+
       var node = _ref3.node;
       var canDelete =
         Object.keys(editor.graph.node.actives).length !== 0 ||
@@ -284,6 +303,7 @@ var _default = function _default(props) {
     });
     editor.graph.on('node:unactive', function () {
       var _editor$graph$line2;
+
       var canDelete =
         Object.keys(editor.graph.node.actives).length !== 0 ||
         ((_editor$graph$line2 = editor.graph.line) === null || _editor$graph$line2 === void 0
@@ -293,6 +313,7 @@ var _default = function _default(props) {
     });
     editor.graph.on('paper:click', function () {
       var _editor$graph$line3;
+
       var canDelete =
         Object.keys(editor.graph.node.actives).length !== 0 ||
         ((_editor$graph$line3 = editor.graph.line) === null || _editor$graph$line3 === void 0
@@ -304,37 +325,45 @@ var _default = function _default(props) {
       setCanDelete(false);
     });
   };
+
   var redo = function redo() {
     editor.schema.redo();
   };
+
   var undo = function undo() {
     editor.schema.undo();
   };
+
   var deleteFun = function deleteFun() {
     var _ref4 = graph || {},
       node = _ref4.node,
       line = _ref4.line;
+
     var deleteKeys = [];
+
     for (var key in node.actives) {
       // 不触发事件
       node.deleteNode(node.actives[key]);
       delete node.actives[key];
       deleteKeys.push(key);
     }
+
     line.activeLine && line.deleteLine(line.activeLine);
     /**
      * @event Graph#delete
      * @type {Object}
      */
+
     graph.fire('delete', {
       deleteKeys: deleteKeys,
     });
   };
+
   var format = function format(type) {
     var lines = editor.graph.line.lines;
     var fromPoint = 1,
-      toPoint = 3;
-    // 横向排序
+      toPoint = 3; // 横向排序
+
     if (type === 'x') {
       fromPoint = 1;
       toPoint = 3;
@@ -344,8 +373,8 @@ var _default = function _default(props) {
         edgesep: 40,
         rankdir: 'LR',
       };
-    }
-    // 纵向排序
+    } // 纵向排序
+
     if (type === 'y') {
       fromPoint = 2;
       toPoint = 0;
@@ -353,6 +382,7 @@ var _default = function _default(props) {
         ranksep: 60,
       };
     }
+
     Object.values(lines).forEach(function (line) {
       line.data.fromPoint = fromPoint;
       line.data.toPoint = toPoint;
@@ -360,72 +390,93 @@ var _default = function _default(props) {
     editor.schema.format();
     editor.controller.autoFit();
   };
+
   var clickEvent = function clickEvent(type) {
     switch (type) {
       case 'redo':
         return canRedo && redo;
+
       case 'undo':
         return canUndo && undo;
+
       case 'zoom-in':
         return function () {
           controller.zoom(1.05);
         };
+
       case 'zoom-out':
         return function () {
           controller.zoom(0.95);
         };
+
       case 'reset':
         return function () {
           var transform = paper.transform();
+
           var _transform$localMatri = transform.localMatrix.split(),
             scalex = _transform$localMatri.scalex;
+
           controller.zoom(1 / scalex);
           controller.autoFit(true, true, true);
         };
+
       case 'auto-fit':
         return function () {
           controller.autoFit(true, true, true);
         };
+
       case 'fullscreen':
         return commandAction['fullscreen'] || void 0;
+
       case 'delete':
         return function () {
           canDelete && deleteFun();
         };
     }
   };
+
   var getClassName = function getClassName(type) {
     var disableClass = '';
+
     switch (type) {
       case 'redo':
         if (!canRedo) {
           disableClass = 'disable';
         }
+
         break;
+
       case 'undo':
         if (!canUndo) {
           disableClass = 'disable';
         }
+
         break;
+
       case 'delete':
         if (!canDelete) {
           disableClass = 'disable';
         }
+
         break;
     }
+
     return disableClass;
   };
+
   var getCommandChild = function getCommandChild(commandActions) {
     var child = [];
     commandActions === null || commandActions === void 0
       ? void 0
       : commandActions.forEach(function (type) {
           var click = null;
+
           if (_typeof(type) === 'object') {
             var _type = type;
             type = _type.type;
             click = _type.click;
           }
+
           if (type) {
             child.push(
               /*#__PURE__*/ _react.default.createElement(
@@ -447,6 +498,7 @@ var _default = function _default(props) {
             );
           }
         });
+
     var menu = /*#__PURE__*/ _react.default.createElement(
       _menu.default,
       null,
@@ -469,6 +521,7 @@ var _default = function _default(props) {
         '\u6A2A\u5411\u6392\u5E8F',
       ),
     );
+
     child.push(
       /*#__PURE__*/ _react.default.createElement(
         _dropdown.default,
@@ -490,15 +543,19 @@ var _default = function _default(props) {
     );
     return child;
   };
+
   var commandActions = ['zoom-out', 'zoom-in'];
+
   if (!previewMode) {
     commandActions = commandActions.concat(['reset', 'auto-fit', 'redo', 'undo', 'delete']);
   } else {
     commandActions = commandActions.concat(['reset', 'auto-fit']);
+
     if (commandAction && commandAction['fullscreen']) {
       commandActions = commandActions.concat(['fullscreen']);
     }
   }
+
   if (!editor) return null;
   return /*#__PURE__*/ _react.default.createElement(
     _react.default.Fragment,
@@ -562,12 +619,16 @@ var _default = function _default(props) {
                     type: v === null || v === void 0 ? void 0 : v.type,
                     onClick: function onClick() {
                       var convertFun = _DefaultDataConvert.default;
+
                       if (DataConvert) {
                         convertFun = DataConvert;
                       }
+
                       var _ref5 = editor || {},
                         schema = _ref5.schema;
+
                       var data = convertFun.format(schema.getData(), editor);
+
                       if (data) {
                         if ((v === null || v === void 0 ? void 0 : v.clickType) === 'async') {
                           setLoad(
@@ -582,7 +643,9 @@ var _default = function _default(props) {
                             ),
                           );
                         }
+
                         var vFun = v === null || v === void 0 ? void 0 : v.click(data);
+
                         if ((v === null || v === void 0 ? void 0 : v.clickType) === 'async') {
                           vFun === null || vFun === void 0
                             ? void 0
@@ -610,4 +673,5 @@ var _default = function _default(props) {
       ),
   );
 };
+
 exports.default = _default;
