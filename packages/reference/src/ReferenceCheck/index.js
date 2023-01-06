@@ -105,9 +105,8 @@ const ReferenceCheck = (props) => {
           const { type } = data || {};
           if (type === 'NO_EXIST') {
             resolve(type);
-          }
-          // if (['WEAK', 'STRONG'].includes(type)) {
-          if (type) {
+          } else if (type) {
+            // if (['WEAK', 'STRONG'].includes(type)) {
             appendModal(resolve, data);
           }
         } else {
