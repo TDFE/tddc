@@ -1,6 +1,7 @@
 import ReactDOM from 'react-dom';
 import { Button, Collapse, message, Tag, Tooltip, Icon, Alert } from 'antd';
 import { Modal } from 'tntd';
+import { getText } from '../locale';
 import { ReferenceInfo } from '../ReferenceInfo';
 import './index.less';
 
@@ -11,7 +12,8 @@ const ReferenceBatchCheck = (props) => {
     title = (
       <>
         <Icon type="warning" style={{ marginRight: '4px', color: '#EF6555' }} />
-        上线校验失败
+        {/* 上线校验失败 */}
+        {getText('onLineFail', props?.lang)}
       </>
     ),
     rq,
@@ -20,8 +22,8 @@ const ReferenceBatchCheck = (props) => {
     appList = [],
     value = undefined,
     onChange = () => {},
-    weakMsg = '存在弱引用（被下线、禁用、待提交/上线、导入待提交/上线、暂存、保存等相关状态组件引用）关系，谨慎操作',
-    strongMsg = '存在强引用（被上线、启用、上下线审批中和指标初始化等相关状态组件引用）关系，禁止操作',
+    weakMsg = getText('weakMsg', props?.lang),
+    strongMsg = getText('strongMsg', props?.lang),
   } = props || {};
 
   const appendModal = (reject, resolve, referenceData = []) => {
@@ -57,7 +59,7 @@ const ReferenceBatchCheck = (props) => {
         onCancel={removeModal}
         footer={[
           <Button key="back" onClick={removeModal}>
-            取消
+            {getText('cancel', props?.lang)}
           </Button>,
           canNextOpera && (
             <Button
@@ -68,7 +70,7 @@ const ReferenceBatchCheck = (props) => {
                 resolve(type);
               }}
             >
-              下一步
+              {getText('next', props?.lang)}
             </Button>
           ),
         ]}
@@ -79,9 +81,8 @@ const ReferenceBatchCheck = (props) => {
               <Alert
                 type="warning"
                 message={
-                  weakMsg ||
-                  referenceData?.message ||
-                  '存在弱引用（被下线、禁用、待提交/上线、导入待提交/上线、暂存、保存等相关状态组件引用）关系，谨慎操作'
+                  weakMsg || referenceData?.message || getText('weakMsg', props?.lang)
+                  // '存在弱引用（被下线、禁用、待提交/上线、导入待提交/上线、暂存、保存等相关状态组件引用）关系，谨慎操作'
                 }
               />
             </div>
@@ -91,9 +92,8 @@ const ReferenceBatchCheck = (props) => {
               <Alert
                 type="error"
                 message={
-                  strongMsg ||
-                  referenceData?.message ||
-                  '存在强引用（被上线、启用、上下线审批中和指标初始化等相关状态组件引用）关系，禁止操作'
+                  strongMsg || referenceData?.message || getText('strongMsg', props?.lang)
+                  // '存在强引用（被上线、启用、上下线审批中和指标初始化等相关状态组件引用）关系，禁止操作'
                 }
               />
             </div>
@@ -114,7 +114,10 @@ const ReferenceBatchCheck = (props) => {
                       </Tooltip>
                       {d?.componentVersion && <Tag color="green">V{d?.componentVersion}</Tag>}
                       {d?.type === 'STRONG' && (
-                        <Tag color="#D96156">存在{d?.typeName || '强引用'}</Tag>
+                        <Tag color="#D96156">
+                          {getText('exist', props?.lang)}
+                          {d?.typeName || getText('strong', props?.lang)}
+                        </Tag>
                       )}
                     </div>
                   }
@@ -150,12 +153,12 @@ const ReferenceBatchCheck = (props) => {
             resolve(data);
           }
         } else {
-          reject('查询关联关系失败');
+          reject(getText('relationFail', props?.lang));
         }
       });
     });
   } else {
-    message.error('请提供一个可靠的查询请求!!!');
+    message.error(getText('reliableQuery', props?.lang)); // '请提供一个可靠的查询请求!!!'
   }
 };
 export { ReferenceBatchCheck };

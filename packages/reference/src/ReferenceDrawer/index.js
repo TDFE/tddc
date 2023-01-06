@@ -2,10 +2,20 @@ import { useEffect, useState } from 'react';
 import { Drawer, Spin, Tooltip, message } from 'antd';
 import PropTypes from 'prop-types';
 import { ReferenceInfo } from '../ReferenceInfo';
+import { getText } from '../locale';
 import './index.less';
 
 const ReferenceDrawer = (props) => {
-  const { fetchReference, data = null, orgMap = {}, appList = [], title, visible, onClose, ...rest } = props;
+  const {
+    fetchReference,
+    data = null,
+    orgMap = {},
+    appList = [],
+    title,
+    visible,
+    onClose,
+    ...rest
+  } = props;
   const [referenceData, setReferenceData] = useState(data);
   const [referenceLoad, setReferenceLoad] = useState(!data);
   useEffect(() => {
@@ -16,7 +26,7 @@ const ReferenceDrawer = (props) => {
             setReferenceData(res?.data || []);
           }
           if (!res?.success) {
-            message.error(res.message || '查询引用关系失败');
+            message.error(res.message || getText('referenceFail', props?.lang)); // '查询引用关系失败'
           }
         })
         .finally(() => {
@@ -34,7 +44,7 @@ const ReferenceDrawer = (props) => {
       visible={visible}
       {...rest}
     >
-      {referenceLoad && <Spin className="globalSpin" tip="查询中..."></Spin>}
+      {referenceLoad && <Spin className="globalSpin" tip={getText('inQuery', props?.lang)}></Spin>}
       {!referenceLoad && (
         <div className="drawer-reference-body">
           <ReferenceInfo

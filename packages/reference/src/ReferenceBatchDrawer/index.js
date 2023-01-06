@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { Drawer, Spin, Tooltip, message, Collapse, Tag, Empty } from 'antd';
 import PropTypes from 'prop-types';
 import { ReferenceInfo } from '../ReferenceInfo';
+import { getText } from '../locale';
 import './index.js';
 
 const { Panel } = Collapse;
@@ -29,7 +30,7 @@ const ReferenceBatchDrawer = (props) => {
             setReferenceData(res?.data || []);
           }
           if (!res?.success) {
-            message.error(res.message || '查询引用关系失败');
+            message.error(res.message || getText('referenceFail', props?.lang)); // '查询引用关系失败'
           }
         })
         .finally(() => {
@@ -47,7 +48,7 @@ const ReferenceBatchDrawer = (props) => {
       visible={visible}
       {...rest}
     >
-      {referenceLoad && <Spin className="globalSpin" tip="查询中..." />}
+      {referenceLoad && <Spin className="globalSpin" tip={getText('inQuery', props?.lang)} />}
       {(!referenceLoad && referenceData.length && (
         <div className="drawer-reference-body">
           <Collapse defaultActiveKey={value || [0]} onChange={onChange}>
@@ -82,7 +83,7 @@ const ReferenceBatchDrawer = (props) => {
         </div>
       )) || (
         <Empty
-          description={'暂无数据'}
+          description={getText('noData', props?.lang)}
           image={Empty.PRESENTED_IMAGE_SIMPLE}
           imageStyle={{ marginTop: 120 }}
         />

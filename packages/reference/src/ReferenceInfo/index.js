@@ -1,5 +1,6 @@
 import { Tooltip, Icon, Table, Row, Empty } from 'antd';
 import { Ellipsis } from 'tntd';
+import { getText } from '../locale';
 import AHref from '../AHref';
 import './index.less';
 
@@ -17,7 +18,7 @@ export const ReferenceInfo = (props) => {
     <div className="reference-body">
       {!referenceData?.length && (
         <Empty
-          description={description || '暂无数据'}
+          description={description || getText('noData', props?.lang)}
           image={Empty.PRESENTED_IMAGE_SIMPLE}
           imageStyle={{ marginTop: 120, ...imageStyle }}
         />
@@ -64,12 +65,12 @@ export const ReferenceInfo = (props) => {
                 const isStrong = ['STRONG'].includes(record?.referenceCheckType);
                 if (isStrong) {
                   checkObj = {
-                    name: record?.referenceCheckTypeName || '强引用',
+                    name: record?.referenceCheckTypeName || getText('strong', props?.lang),
                     className: 'refer-tag-strong',
                   };
                 } else {
                   checkObj = {
-                    name: record?.referenceCheckTypeName || '弱引用',
+                    name: record?.referenceCheckTypeName || getText('weak', props?.lang),
                     className: 'refer-tag-weak',
                   };
                 }

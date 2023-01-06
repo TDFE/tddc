@@ -25,6 +25,8 @@ var _tntd = require('tntd');
 
 var _ReferenceInfo = require('../ReferenceInfo');
 
+var _locale = require('../locale');
+
 require('./index.less');
 
 function _interopRequireDefault(obj) {
@@ -34,7 +36,13 @@ function _interopRequireDefault(obj) {
 var ReferenceCheck = function ReferenceCheck(props) {
   var _ref = props || {},
     _ref$title = _ref.title,
-    title = _ref$title === void 0 ? '引用关系查看' : _ref$title,
+    title =
+      _ref$title === void 0
+        ? (0, _locale.getText)(
+            'viewReference',
+            props === null || props === void 0 ? void 0 : props.lang,
+          )
+        : _ref$title,
     rq = _ref.rq,
     checkReferResponse = _ref.checkReferResponse,
     _ref$orgMap = _ref.orgMap,
@@ -44,12 +52,15 @@ var ReferenceCheck = function ReferenceCheck(props) {
     _ref$weakMsg = _ref.weakMsg,
     weakMsg =
       _ref$weakMsg === void 0
-        ? '存在弱引用（被下线、禁用、待提交/上线、导入待提交/上线、暂存、保存等相关状态组件引用）关系，谨慎操作'
+        ? (0, _locale.getText)('weakMsg', props === null || props === void 0 ? void 0 : props.lang)
         : _ref$weakMsg,
     _ref$strongMsg = _ref.strongMsg,
     strongMsg =
       _ref$strongMsg === void 0
-        ? '存在强引用（被上线、启用、上下线审批中和指标初始化等相关状态组件引用）关系，禁止操作'
+        ? (0, _locale.getText)(
+            'strongMsg',
+            props === null || props === void 0 ? void 0 : props.lang,
+          )
         : _ref$strongMsg;
 
   var appendModal = function appendModal(resolve, _ref2) {
@@ -110,7 +121,10 @@ var ReferenceCheck = function ReferenceCheck(props) {
                 key: 'back',
                 onClick: removeModal,
               },
-              '\u53D6\u6D88',
+              (0, _locale.getText)(
+                'cancel',
+                props === null || props === void 0 ? void 0 : props.lang,
+              ),
             ),
             canNextOpera &&
               /*#__PURE__*/ _react.default.createElement(
@@ -123,7 +137,10 @@ var ReferenceCheck = function ReferenceCheck(props) {
                     resolve(type);
                   },
                 },
-                '\u4E0B\u4E00\u6B65',
+                (0, _locale.getText)(
+                  'next',
+                  props === null || props === void 0 ? void 0 : props.lang,
+                ),
               ),
           ],
         },
@@ -145,7 +162,10 @@ var ReferenceCheck = function ReferenceCheck(props) {
                   (referenceData === null || referenceData === void 0
                     ? void 0
                     : referenceData.message) ||
-                  '存在弱引用（被下线、禁用、待提交/上线、导入待提交/上线、暂存、保存等相关状态组件引用）关系，谨慎操作',
+                  (0, _locale.getText)(
+                    'weakMsg',
+                    props === null || props === void 0 ? void 0 : props.lang,
+                  ), // '存在弱引用（被下线、禁用、待提交/上线、导入待提交/上线、暂存、保存等相关状态组件引用）关系，谨慎操作'
               }),
             ),
           !canNextOpera &&
@@ -161,7 +181,10 @@ var ReferenceCheck = function ReferenceCheck(props) {
                   (referenceData === null || referenceData === void 0
                     ? void 0
                     : referenceData.message) ||
-                  '存在强引用（被上线、启用、上下线审批中和指标初始化等相关状态组件引用）关系，禁止操作',
+                  (0, _locale.getText)(
+                    'strongMsg',
+                    props === null || props === void 0 ? void 0 : props.lang,
+                  ), // '存在强引用（被上线、启用、上下线审批中和指标初始化等相关状态组件引用）关系，禁止操作'
               }),
             ),
           /*#__PURE__*/ _react.default.createElement(
@@ -202,12 +225,23 @@ var ReferenceCheck = function ReferenceCheck(props) {
             appendModal(resolve, data);
           }
         } else {
-          reject('查询关联关系失败');
+          // reject('查询关联关系失败');
+          reject(
+            (0, _locale.getText)(
+              'relationFail',
+              props === null || props === void 0 ? void 0 : props.lang,
+            ),
+          );
         }
       });
     });
   } else {
-    _message2.default.error('请提供一个可靠的查询请求!!!');
+    _message2.default.error(
+      (0, _locale.getText)(
+        'reliableQuery',
+        props === null || props === void 0 ? void 0 : props.lang,
+      ),
+    ); // '请提供一个可靠的查询请求!!!'
   }
 };
 
