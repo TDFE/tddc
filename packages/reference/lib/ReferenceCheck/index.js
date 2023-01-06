@@ -89,7 +89,9 @@ var ReferenceCheck = function ReferenceCheck(props) {
       }
     };
 
-    removeModal();
+    removeModal(); // 能进行下一步操作
+
+    var canNextOpera = !['STRONG'].includes(type);
 
     _reactDom.default.render(
       /*#__PURE__*/ _react.default.createElement(
@@ -110,7 +112,7 @@ var ReferenceCheck = function ReferenceCheck(props) {
               },
               '\u53D6\u6D88',
             ),
-            type === 'WEAK' &&
+            canNextOpera &&
               /*#__PURE__*/ _react.default.createElement(
                 _button.default,
                 {
@@ -130,7 +132,7 @@ var ReferenceCheck = function ReferenceCheck(props) {
           {
             className: 'reference-check-modal',
           },
-          type === 'WEAK' &&
+          canNextOpera &&
             /*#__PURE__*/ _react.default.createElement(
               'div',
               {
@@ -140,10 +142,13 @@ var ReferenceCheck = function ReferenceCheck(props) {
                 type: 'warning',
                 message:
                   weakMsg ||
+                  (referenceData === null || referenceData === void 0
+                    ? void 0
+                    : referenceData.message) ||
                   '存在弱引用（被下线、禁用、待提交/上线、导入待提交/上线、暂存、保存等相关状态组件引用）关系，谨慎操作',
               }),
             ),
-          type === 'STRONG' &&
+          !canNextOpera &&
             /*#__PURE__*/ _react.default.createElement(
               'div',
               {
@@ -153,6 +158,9 @@ var ReferenceCheck = function ReferenceCheck(props) {
                 type: 'error',
                 message:
                   strongMsg ||
+                  (referenceData === null || referenceData === void 0
+                    ? void 0
+                    : referenceData.message) ||
                   '存在强引用（被上线、启用、上下线审批中和指标初始化等相关状态组件引用）关系，禁止操作',
               }),
             ),
@@ -189,9 +197,9 @@ var ReferenceCheck = function ReferenceCheck(props) {
 
           if (type === 'NO_EXIST') {
             resolve(type);
-          }
+          } // if (['WEAK', 'STRONG'].includes(type)) {
 
-          if (['WEAK', 'STRONG'].includes(type)) {
+          if (type) {
             appendModal(resolve, data);
           }
         } else {

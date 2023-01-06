@@ -206,27 +206,27 @@ var ReferenceInfo = function ReferenceInfo(props) {
                         i === 0 &&
                         (record === null || record === void 0 ? void 0 : record.referenceCheckType)
                       ) {
-                        var checkObj;
+                        var checkObj; // 能进行下一步操作
 
-                        if (
-                          (record === null || record === void 0
-                            ? void 0
-                            : record.referenceCheckType) === 'WEAK'
-                        ) {
-                          checkObj = {
-                            name: '弱引用',
-                            className: 'refer-tag-weak',
-                          };
-                        }
+                        var isStrong = ['STRONG'].includes(
+                          record === null || record === void 0 ? void 0 : record.referenceCheckType,
+                        );
 
-                        if (
-                          (record === null || record === void 0
-                            ? void 0
-                            : record.referenceCheckType) === 'STRONG'
-                        ) {
+                        if (isStrong) {
                           checkObj = {
-                            name: '强引用',
+                            name:
+                              (record === null || record === void 0
+                                ? void 0
+                                : record.referenceCheckTypeName) || '强引用',
                             className: 'refer-tag-strong',
+                          };
+                        } else {
+                          checkObj = {
+                            name:
+                              (record === null || record === void 0
+                                ? void 0
+                                : record.referenceCheckTypeName) || '弱引用',
+                            className: 'refer-tag-weak',
                           };
                         }
 

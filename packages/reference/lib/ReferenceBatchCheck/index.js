@@ -89,7 +89,7 @@ var ReferenceBatchCheck = function ReferenceBatchCheck(props) {
         : _ref$strongMsg;
 
   var appendModal = function appendModal(reject, resolve) {
-    var _referenceData, _referenceData4;
+    var _referenceData, _referenceData4, _referenceData5, _referenceData6;
 
     var referenceData = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : [];
     var type = '';
@@ -146,7 +146,9 @@ var ReferenceBatchCheck = function ReferenceBatchCheck(props) {
       }
     };
 
-    removeModal();
+    removeModal(); // 能进行下一步操作
+
+    var canNextOpera = !['STRONG'].includes(type);
 
     _reactDom.default.render(
       /*#__PURE__*/ _react.default.createElement(
@@ -167,7 +169,7 @@ var ReferenceBatchCheck = function ReferenceBatchCheck(props) {
               },
               '\u53D6\u6D88',
             ),
-            type === 'WEAK' &&
+            canNextOpera &&
               /*#__PURE__*/ _react.default.createElement(
                 _button.default,
                 {
@@ -187,7 +189,8 @@ var ReferenceBatchCheck = function ReferenceBatchCheck(props) {
           {
             className: 'reference-online-check-modal',
           },
-          type === 'WEAK' &&
+          type &&
+            canNextOpera &&
             /*#__PURE__*/ _react.default.createElement(
               'div',
               {
@@ -197,10 +200,13 @@ var ReferenceBatchCheck = function ReferenceBatchCheck(props) {
                 type: 'warning',
                 message:
                   weakMsg ||
+                  ((_referenceData4 = referenceData) === null || _referenceData4 === void 0
+                    ? void 0
+                    : _referenceData4.message) ||
                   '存在弱引用（被下线、禁用、待提交/上线、导入待提交/上线、暂存、保存等相关状态组件引用）关系，谨慎操作',
               }),
             ),
-          type === 'STRONG' &&
+          !canNextOpera &&
             /*#__PURE__*/ _react.default.createElement(
               'div',
               {
@@ -210,6 +216,9 @@ var ReferenceBatchCheck = function ReferenceBatchCheck(props) {
                 type: 'error',
                 message:
                   strongMsg ||
+                  ((_referenceData5 = referenceData) === null || _referenceData5 === void 0
+                    ? void 0
+                    : _referenceData5.message) ||
                   '存在强引用（被上线、启用、上下线审批中和指标初始化等相关状态组件引用）关系，禁止操作',
               }),
             ),
@@ -219,9 +228,9 @@ var ReferenceBatchCheck = function ReferenceBatchCheck(props) {
               defaultActiveKey: value || [0],
               onChange: onChange,
             },
-            (_referenceData4 = referenceData) === null || _referenceData4 === void 0
+            (_referenceData6 = referenceData) === null || _referenceData6 === void 0
               ? void 0
-              : _referenceData4.map(function (d, i) {
+              : _referenceData6.map(function (d, i) {
                   var headerTxt = d === null || d === void 0 ? void 0 : d.componentName;
 
                   if (d === null || d === void 0 ? void 0 : d.componentCode) {
@@ -262,7 +271,8 @@ var ReferenceBatchCheck = function ReferenceBatchCheck(props) {
                             {
                               color: '#D96156',
                             },
-                            '\u5B58\u5728\u5F3A\u5F15\u7528',
+                            '\u5B58\u5728',
+                            (d === null || d === void 0 ? void 0 : d.typeName) || '强引用',
                           ),
                       ),
                       key: i,

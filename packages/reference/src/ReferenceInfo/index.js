@@ -59,16 +59,18 @@ export const ReferenceInfo = (props) => {
               let tagInfo = null;
               if (i === 0 && record?.referenceCheckType) {
                 let checkObj;
-                if (record?.referenceCheckType === 'WEAK') {
+
+                // 能进行下一步操作
+                const isStrong = ['STRONG'].includes(record?.referenceCheckType);
+                if (isStrong) {
                   checkObj = {
-                    name: '弱引用',
-                    className: 'refer-tag-weak',
-                  };
-                }
-                if (record?.referenceCheckType === 'STRONG') {
-                  checkObj = {
-                    name: '强引用',
+                    name: record?.referenceCheckTypeName || '强引用',
                     className: 'refer-tag-strong',
+                  };
+                } else {
+                  checkObj = {
+                    name: record?.referenceCheckTypeName || '弱引用',
+                    className: 'refer-tag-weak',
                   };
                 }
                 tagInfo = checkObj ? (

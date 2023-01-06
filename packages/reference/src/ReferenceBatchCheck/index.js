@@ -44,6 +44,9 @@ const ReferenceBatchCheck = (props) => {
       }
     };
     removeModal();
+
+    // 能进行下一步操作
+    const canNextOpera = !['STRONG'].includes(type);
     ReactDOM.render(
       <Modal
         title={title}
@@ -56,7 +59,7 @@ const ReferenceBatchCheck = (props) => {
           <Button key="back" onClick={removeModal}>
             取消
           </Button>,
-          type === 'WEAK' && (
+          canNextOpera && (
             <Button
               key="submit"
               type="primary"
@@ -71,28 +74,31 @@ const ReferenceBatchCheck = (props) => {
         ]}
       >
         <div className="reference-online-check-modal">
-          {type === 'WEAK' && (
+          {type && canNextOpera && (
             <div className="mb10">
               <Alert
                 type="warning"
                 message={
                   weakMsg ||
+                  referenceData?.message ||
                   '存在弱引用（被下线、禁用、待提交/上线、导入待提交/上线、暂存、保存等相关状态组件引用）关系，谨慎操作'
                 }
               />
             </div>
           )}
-          {type === 'STRONG' && (
+          {!canNextOpera && (
             <div className="mb10">
               <Alert
                 type="error"
                 message={
                   strongMsg ||
+                  referenceData?.message ||
                   '存在强引用（被上线、启用、上下线审批中和指标初始化等相关状态组件引用）关系，禁止操作'
                 }
               />
             </div>
           )}
+
           <Collapse defaultActiveKey={value || [0]} onChange={onChange}>
             {referenceData?.map((d, i) => {
               let headerTxt = d?.componentName;
@@ -107,7 +113,9 @@ const ReferenceBatchCheck = (props) => {
                         <span>{headerTxt}</span>
                       </Tooltip>
                       {d?.componentVersion && <Tag color="green">V{d?.componentVersion}</Tag>}
-                      {d?.type === 'STRONG' && <Tag color="#D96156">存在强引用</Tag>}
+                      {d?.type === 'STRONG' && (
+                        <Tag color="#D96156">存在{d?.typeName || '强引用'}</Tag>
+                      )}
                     </div>
                   }
                   key={i}
