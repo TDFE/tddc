@@ -22,6 +22,8 @@ const ReferenceBatchCheck = (props) => {
     appList = [],
     value = undefined,
     onChange = () => {},
+    cancelText,
+    okText,
     weakMsg = getText('weakMsg', props?.lang),
     strongMsg = getText('strongMsg', props?.lang),
   } = props || {};
@@ -59,7 +61,7 @@ const ReferenceBatchCheck = (props) => {
         onCancel={removeModal}
         footer={[
           <Button key="back" onClick={removeModal}>
-            {getText('cancel', props?.lang)}
+            {cancelText || getText('cancel', props?.lang)}
           </Button>,
           canNextOpera && (
             <Button
@@ -70,7 +72,7 @@ const ReferenceBatchCheck = (props) => {
                 resolve(type);
               }}
             >
-              {getText('next', props?.lang)}
+              {okText || getText('next', props?.lang)}
             </Button>
           ),
         ]}
