@@ -49,6 +49,7 @@ export default (WrapperComponent, rest) => {
     includesSearch = ['currentTab'],
     BreadCrumbCustom,
     BreadCrumbPrototype = {},
+    showHeader,
   } = rest || {};
   return withRouter((props) => {
     const { match, location } = props || {};
@@ -85,25 +86,27 @@ export default (WrapperComponent, rest) => {
 
     return (
       <>
-        <div className="page-global-header bread-crumb-head">
-          {BreadCrumbCustom && !!breadList?.length && BreadCrumbCustom(breadList)}
-          {!BreadCrumbCustom && (
-            <Breadcrumb separator=">" className="c-breadcrumb" {...(BreadCrumbPrototype || {})}>
-              {breadList?.map((v, i) => {
-                let href = null;
-                if (i < breadList?.length - 1) {
-                  href = v?.path + (getParams(newObj) ? `?${getParams(newObj)}` : '');
-                }
-                return (
-                  <Breadcrumb.Item key={v?.path}>
-                    {href ? <Link to={href}>{v?.name}</Link> : v?.name}
-                  </Breadcrumb.Item>
-                );
-              })}
-            </Breadcrumb>
-          )}
-        </div>
-        <div className="page-global-body bread-crumb-body">{children || null}</div>
+        {(breadList?.length > 1 || showHeader) && (
+          <div className="page-global-header bread-crumb-head">
+            {BreadCrumbCustom && !!breadList?.length && BreadCrumbCustom(breadList)}
+            {!BreadCrumbCustom && (
+              <Breadcrumb separator=">" className="c-breadcrumb" {...(BreadCrumbPrototype || {})}>
+                {breadList?.map((v, i) => {
+                  let href = null;
+                  if (i < breadList?.length - 1) {
+                    href = v?.path + (getParams(newObj) ? `?${getParams(newObj)}` : '');
+                  }
+                  return (
+                    <Breadcrumb.Item key={v?.path}>
+                      {href ? <Link to={href}>{v?.name}</Link> : v?.name}
+                    </Breadcrumb.Item>
+                  );
+                })}
+              </Breadcrumb>
+            )}
+          </div>
+        )}
+        {children || null}
       </>
     );
   });

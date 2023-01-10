@@ -1,3 +1,3 @@
 export default () => {
-  return <div style={{ marginTop: '10px' }}>这里面包屑详情展示</div>;
+  return <div style={{ padding: '16px 20px' }}>这里面包屑详情展示</div>;
 };

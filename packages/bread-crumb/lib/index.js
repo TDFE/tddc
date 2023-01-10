@@ -271,7 +271,8 @@ var _default = function _default(WrapperComponent, rest) {
     includesSearch = _ref$includesSearch === void 0 ? ['currentTab'] : _ref$includesSearch,
     BreadCrumbCustom = _ref.BreadCrumbCustom,
     _ref$BreadCrumbProtot = _ref.BreadCrumbPrototype,
-    BreadCrumbPrototype = _ref$BreadCrumbProtot === void 0 ? {} : _ref$BreadCrumbProtot;
+    BreadCrumbPrototype = _ref$BreadCrumbProtot === void 0 ? {} : _ref$BreadCrumbProtot,
+    showHeader = _ref.showHeader;
   return (0, _reactRouter.withRouter)(function (props) {
     var _ref2 = props || {},
       match = _ref2.match,
@@ -329,63 +330,59 @@ var _default = function _default(WrapperComponent, rest) {
     return /*#__PURE__*/ _react.default.createElement(
       _react.default.Fragment,
       null,
-      /*#__PURE__*/ _react.default.createElement(
-        'div',
-        {
-          className: 'page-global-header bread-crumb-head',
-        },
-        BreadCrumbCustom &&
-          !!(breadList === null || breadList === void 0 ? void 0 : breadList.length) &&
-          BreadCrumbCustom(breadList),
-        !BreadCrumbCustom &&
-          /*#__PURE__*/ _react.default.createElement(
-            _breadcrumb.default,
-            _extends(
-              {
-                separator: '>',
-                className: 'c-breadcrumb',
-              },
-              BreadCrumbPrototype || {},
+      ((breadList === null || breadList === void 0 ? void 0 : breadList.length) > 1 ||
+        showHeader) &&
+        /*#__PURE__*/ _react.default.createElement(
+          'div',
+          {
+            className: 'page-global-header bread-crumb-head',
+          },
+          BreadCrumbCustom &&
+            !!(breadList === null || breadList === void 0 ? void 0 : breadList.length) &&
+            BreadCrumbCustom(breadList),
+          !BreadCrumbCustom &&
+            /*#__PURE__*/ _react.default.createElement(
+              _breadcrumb.default,
+              _extends(
+                {
+                  separator: '>',
+                  className: 'c-breadcrumb',
+                },
+                BreadCrumbPrototype || {},
+              ),
+              breadList === null || breadList === void 0
+                ? void 0
+                : breadList.map(function (v, i) {
+                    var href = null;
+                    if (
+                      i <
+                      (breadList === null || breadList === void 0 ? void 0 : breadList.length) - 1
+                    ) {
+                      href =
+                        (v === null || v === void 0 ? void 0 : v.path) +
+                        (getParams(newObj) ? '?'.concat(getParams(newObj)) : '');
+                    }
+                    return /*#__PURE__*/ _react.default.createElement(
+                      _breadcrumb.default.Item,
+                      {
+                        key: v === null || v === void 0 ? void 0 : v.path,
+                      },
+                      href
+                        ? /*#__PURE__*/ _react.default.createElement(
+                            _reactRouterDom.Link,
+                            {
+                              to: href,
+                            },
+                            v === null || v === void 0 ? void 0 : v.name,
+                          )
+                        : v === null || v === void 0
+                        ? void 0
+                        : v.name,
+                    );
+                  }),
             ),
-            breadList === null || breadList === void 0
-              ? void 0
-              : breadList.map(function (v, i) {
-                  var href = null;
-                  if (
-                    i <
-                    (breadList === null || breadList === void 0 ? void 0 : breadList.length) - 1
-                  ) {
-                    href =
-                      (v === null || v === void 0 ? void 0 : v.path) +
-                      (getParams(newObj) ? '?'.concat(getParams(newObj)) : '');
-                  }
-                  return /*#__PURE__*/ _react.default.createElement(
-                    _breadcrumb.default.Item,
-                    {
-                      key: v === null || v === void 0 ? void 0 : v.path,
-                    },
-                    href
-                      ? /*#__PURE__*/ _react.default.createElement(
-                          _reactRouterDom.Link,
-                          {
-                            to: href,
-                          },
-                          v === null || v === void 0 ? void 0 : v.name,
-                        )
-                      : v === null || v === void 0
-                      ? void 0
-                      : v.name,
-                  );
-                }),
-          ),
-      ),
-      /*#__PURE__*/ _react.default.createElement(
-        'div',
-        {
-          className: 'page-global-body bread-crumb-body',
-        },
-        children || null,
-      ),
+        ),
+      children || null,
     );
   });
 };
