@@ -5,6 +5,7 @@ import { Ellipsis } from 'tntd';
 import { cloneDeep } from 'lodash';
 import './index.less';
 import { addPath, findSameCodePath, preorder } from './utils';
+import { getText } from '../../locale';
 
 const { TreeNode } = Tree;
 
@@ -235,10 +236,12 @@ const AssignModal = (props) => {
     <div className="assign-box-container">
       <div className="left">
         <div className="menu-header">
-          授权可用机构列表
+          {/* 授权可用机构列表 */}
+          {getText('authorizesOrgList', props?.lang)}
           <div className="menu-all-checked">
             <Checkbox onChange={checkAllOrg} checked={allOrgChecked} disabled={disabled}>
-              全部机构可用
+              {/* 全部机构可用 */}
+              {getText('allOrgAvailable', props?.lang)}
             </Checkbox>
           </div>
         </div>
@@ -257,10 +260,12 @@ const AssignModal = (props) => {
       </div>
       <div className="right">
         <div className="menu-header">
-          授权可用渠道列表
+          {/* 授权可用渠道列表 */}
+          {getText('authorizesAppList', props?.lang)}
           <div className="menu-all-checked">
             <Checkbox onChange={checkedAllApp} checked={allAppChecked} disabled={disabled}>
-              全部渠道可用
+              {/* 全部渠道可用 */}
+              {getText('allOrgAvailable', props?.lang)}
             </Checkbox>
           </div>
         </div>
