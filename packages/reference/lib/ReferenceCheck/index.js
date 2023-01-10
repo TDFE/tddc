@@ -4,35 +4,21 @@ Object.defineProperty(exports, '__esModule', {
   value: true,
 });
 exports.ReferenceCheck = void 0;
-
 require('antd/lib/message/style');
-
 var _message2 = _interopRequireDefault(require('antd/lib/message'));
-
 require('antd/lib/alert/style');
-
 var _alert = _interopRequireDefault(require('antd/lib/alert'));
-
 require('antd/lib/button/style');
-
 var _button = _interopRequireDefault(require('antd/lib/button'));
-
 var _react = _interopRequireDefault(require('react'));
-
 var _reactDom = _interopRequireDefault(require('react-dom'));
-
 var _tntd = require('tntd');
-
 var _ReferenceInfo = require('../ReferenceInfo');
-
 var _locale = require('../locale');
-
 require('./index.less');
-
 function _interopRequireDefault(obj) {
   return obj && obj.__esModule ? obj : { default: obj };
 }
-
 var ReferenceCheck = function ReferenceCheck(props) {
   var _ref = props || {},
     _ref$title = _ref.title,
@@ -49,6 +35,8 @@ var ReferenceCheck = function ReferenceCheck(props) {
     orgMap = _ref$orgMap === void 0 ? {} : _ref$orgMap,
     _ref$appList = _ref.appList,
     appList = _ref$appList === void 0 ? [] : _ref$appList,
+    cancelText = _ref.cancelText,
+    okText = _ref.okText,
     _ref$weakMsg = _ref.weakMsg,
     weakMsg =
       _ref$weakMsg === void 0
@@ -62,23 +50,18 @@ var ReferenceCheck = function ReferenceCheck(props) {
             props === null || props === void 0 ? void 0 : props.lang,
           )
         : _ref$strongMsg;
-
   var appendModal = function appendModal(resolve, _ref2) {
     var type = _ref2.type,
       _ref2$result = _ref2.result,
       referenceData = _ref2$result === void 0 ? [] : _ref2$result;
     var modalWrap = document.createElement('div');
     modalWrap.setAttribute('id', 'tddc-reference-check-modal');
-
     var removeModal = function removeModal() {
       var _modalWrap$parentNode;
-
       var tddcModal = document.querySelectorAll('#tddc-reference-check-modal');
-
       if (tddcModal) {
         tddcModal.forEach(function (ele) {
           var _ele$parentNode;
-
           return ele === null || ele === void 0
             ? void 0
             : (_ele$parentNode = ele.parentNode) === null || _ele$parentNode === void 0
@@ -86,7 +69,6 @@ var ReferenceCheck = function ReferenceCheck(props) {
             : _ele$parentNode.removeChild(ele);
         });
       }
-
       modalWrap &&
         (modalWrap === null || modalWrap === void 0
           ? void 0
@@ -94,16 +76,14 @@ var ReferenceCheck = function ReferenceCheck(props) {
             _modalWrap$parentNode === void 0
           ? void 0
           : _modalWrap$parentNode.removeChild(modalWrap));
-
       if (document.body.getAttribute('style')) {
         document.body.removeAttribute('style');
       }
     };
+    removeModal();
 
-    removeModal(); // 能进行下一步操作
-
+    // 能进行下一步操作
     var canNextOpera = !['STRONG'].includes(type);
-
     _reactDom.default.render(
       /*#__PURE__*/ _react.default.createElement(
         _tntd.Modal,
@@ -121,10 +101,11 @@ var ReferenceCheck = function ReferenceCheck(props) {
                 key: 'back',
                 onClick: removeModal,
               },
-              (0, _locale.getText)(
-                'cancel',
-                props === null || props === void 0 ? void 0 : props.lang,
-              ),
+              cancelText ||
+                (0, _locale.getText)(
+                  'cancel',
+                  props === null || props === void 0 ? void 0 : props.lang,
+                ),
             ),
             canNextOpera &&
               /*#__PURE__*/ _react.default.createElement(
@@ -137,10 +118,11 @@ var ReferenceCheck = function ReferenceCheck(props) {
                     resolve(type);
                   },
                 },
-                (0, _locale.getText)(
-                  'next',
-                  props === null || props === void 0 ? void 0 : props.lang,
-                ),
+                okText ||
+                  (0, _locale.getText)(
+                    'next',
+                    props === null || props === void 0 ? void 0 : props.lang,
+                  ),
               ),
           ],
         },
@@ -165,7 +147,8 @@ var ReferenceCheck = function ReferenceCheck(props) {
                   (0, _locale.getText)(
                     'weakMsg',
                     props === null || props === void 0 ? void 0 : props.lang,
-                  ), // '存在弱引用（被下线、禁用、待提交/上线、导入待提交/上线、暂存、保存等相关状态组件引用）关系，谨慎操作'
+                  ),
+                // '存在弱引用（被下线、禁用、待提交/上线、导入待提交/上线、暂存、保存等相关状态组件引用）关系，谨慎操作'
               }),
             ),
           !canNextOpera &&
@@ -184,7 +167,8 @@ var ReferenceCheck = function ReferenceCheck(props) {
                   (0, _locale.getText)(
                     'strongMsg',
                     props === null || props === void 0 ? void 0 : props.lang,
-                  ), // '存在强引用（被上线、启用、上下线审批中和指标初始化等相关状态组件引用）关系，禁止操作'
+                  ),
+                // '存在强引用（被上线、启用、上下线审批中和指标初始化等相关状态组件引用）关系，禁止操作'
               }),
             ),
           /*#__PURE__*/ _react.default.createElement(
@@ -203,21 +187,17 @@ var ReferenceCheck = function ReferenceCheck(props) {
       ),
       modalWrap,
     );
-
     document.body.appendChild(modalWrap);
   };
-
   if (rq && typeof rq === 'function') {
     return new Promise(function (resolve, reject) {
       return rq().then(function (res) {
         var _ref3 = res || {},
           success = _ref3.success,
           data = _ref3.data;
-
         if (success) {
           var _ref4 = data || {},
             type = _ref4.type;
-
           if (type === 'NO_EXIST') {
             resolve(type);
           } else if (type) {
@@ -244,5 +224,4 @@ var ReferenceCheck = function ReferenceCheck(props) {
     ); // '请提供一个可靠的查询请求!!!'
   }
 };
-
 exports.ReferenceCheck = ReferenceCheck;

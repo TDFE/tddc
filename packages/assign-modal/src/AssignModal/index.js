@@ -32,6 +32,7 @@ const AssignModal = (props) => {
           setAssignData(data);
         }}
         disabled={disabled}
+        lang={props?.lang}
       />
     </Modal>
   );

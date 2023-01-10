@@ -93,6 +93,8 @@ import { ReferenceCheck } from '@tddc/reference';
 export default () => {
   const confirmClick = () => {
     ReferenceCheck({
+      okText: '确定删除',
+      cancelText: '关闭',
       rq: () => {
         return new Promise((resolve) => {
           resolve({
@@ -199,6 +201,8 @@ import { ReferenceBatchCheck } from '@tddc/reference';
 export default () => {
   const confirmClick = () => {
     ReferenceBatchCheck({
+      okText: '确定删除',
+      cancelText: '关闭',
       rq: () => {
         return new Promise((resolve) => {
           resolve({
@@ -206,7 +210,7 @@ export default () => {
             success: true,
             message: '执行成功',
             data: {
-              type: 'STRONG',
+              type: 'WEAK',
               typeName: '强引用',
               message:
                 '存在强引用（被上线、启用、上下线审批中和指标初始化等相关状态组件引用）关系，禁止操作',
