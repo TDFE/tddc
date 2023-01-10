@@ -30,6 +30,7 @@
   "dependencies": {
     "antd": "^3.26.20",
     "react-sortablejs": "^1.5.1",
+    "sortablejs": "^1.15.0",
     "tntd": "^1.4.9",
     "universal-cookie": "^4.0.4"
   },

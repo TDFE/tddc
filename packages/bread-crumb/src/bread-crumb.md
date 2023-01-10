@@ -1,0 +1,79 @@
+---
+title: react-router4.0的面包屑
+group:
+  path: /
+nav:
+  title: 组件
+  path: /components
+---
+
+### 安装和初始化
+
+```
+npm install @tddc/bread-crumb --save
+```
+
+### 面包屑
+
+```jsx
+import React, { memo } from 'react';
+import { createBrowserHistory } from 'history';
+import { Router, Route, Switch } from 'react-router-dom';
+import BreadCrumb from '@tddc/bread-crumb';
+import Detail from '../Test/Detail';
+import List from '../Test/List';
+
+const BreadCrumbDefault = BreadCrumb(
+  (props) => {
+    return (
+      <Switch>
+        <Route name="面包屑" path={`/components/bread-crumb`} exact component={Detail} />
+        <Route name="组件总览" component={List} path="/components" />
+      </Switch>
+    );
+  },
+  {
+    // BreadCrumbCustom:(breadList)=>{
+    //   console.log(breadList)
+    //   return <div>{breadList?.map(v=>v?.name)}</div>
+    // },
+    // BreadCrumbPrototype:{
+    //   separator:"->",
+    //   className:"z-c-breadcrumb"
+    // }
+  },
+);
+
+export default memo(BreadCrumbDefault);
+```
+
+#### 🚀 高阶组件
+
+```javascript
+BreadCrumb(
+  (props) => {
+    return (
+      <Switch>
+        <Route name="面包屑" path={`/components/bread-crumb`} exact component={Detail} />
+        <Route name="组件总览" component={List} path="/components" />
+      </Switch>
+    );
+  },
+  {
+    // BreadCrumbCustom:(breadList)=>{
+    //   console.log(breadList)
+    //   return <div>{breadList?.map(v=>v?.name)}</div>
+    // },
+    // BreadCrumbPrototype:{
+    //   separator:"->",
+    //   className:"z-c-breadcrumb"
+    // }
+  },
+);
+```
+
+| 参数                | 说明                                       | 类型            | 默认值 |
+| ------------------- | ------------------------------------------ | --------------- | ------ |
+| component           | 子路由定义，可嵌套                         |                 |        |
+| BreadCrumbCustom    | 自定义面包屑                               | (breadList)=>{} | null   |
+| BreadCrumbPrototype | 面包屑属性，同 antd 的 BreadCrumb 组件参数 | Object          | {}     |
