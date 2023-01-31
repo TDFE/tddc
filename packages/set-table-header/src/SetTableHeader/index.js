@@ -3,17 +3,26 @@
  * @Author: 郑泳健
  * @Date: 2022-09-29 10:24:28
  * @LastEditors: 郑泳健
- * @LastEditTime: 2022-10-08 14:31:23
+ * @LastEditTime: 2023-01-31 16:51:05
  */
+import I18N from '../locale';
 import React, { useState, useEffect, memo } from 'react';
-import { Alert, Select, Button, Tooltip, Icon, message } from 'antd'
+import { Alert, Select, Button, Tooltip, Icon, message } from 'antd';
 import Sortable from 'react-sortablejs';
 import { makeRandomCode } from '../utils';
 import './index.less';
 
 const { Option } = Select;
 
-const SetTableHeader = ({ renderItem, allTableHead = [], currentTableHead = [], defaultTableHead = [], onSetDefault, onCancel = () => { }, onOk = async () => { } }) => {
+const SetTableHeader = ({
+  renderItem,
+  allTableHead = [],
+  currentTableHead = [],
+  defaultTableHead = [],
+  onSetDefault,
+  onCancel = () => {},
+  onOk = async () => {},
+}) => {
   const [loading, setLoading] = useState(false);
   // 当前被选中的表头
   const [configItem, setConfigItem] = useState([]);
@@ -50,7 +59,7 @@ const SetTableHeader = ({ renderItem, allTableHead = [], currentTableHead = [], 
       configItem.splice(index, 1, item);
       setConfigItem([...configItem]);
     } else {
-      message.warning('表头已存在');
+      message.warning(I18N.settableheader.index.biaoTouYiCunZai);
     }
   };
 
@@ -65,8 +74,8 @@ const SetTableHeader = ({ renderItem, allTableHead = [], currentTableHead = [], 
     if (defaultTableHead) {
       setConfigItem(defaultTableHead);
     } else if (onSetDefault) {
-      const defaultValue = await onSetDefault()
-      setConfigItem(defaultValue)
+      const defaultValue = await onSetDefault();
+      setConfigItem(defaultValue);
     }
   };
 
@@ -75,7 +84,7 @@ const SetTableHeader = ({ renderItem, allTableHead = [], currentTableHead = [], 
     const hasEntry = configItem?.some(({ field }) => !field);
 
     if (hasEntry) {
-      message.error('有字段为空,请处理');
+      message.error(I18N.settableheader.index.youZiDuanWeiKong);
       return;
     }
 
@@ -85,31 +94,37 @@ const SetTableHeader = ({ renderItem, allTableHead = [], currentTableHead = [], 
         setLoading(false);
       });
     } else {
-      message.error('请至少选择一个表头');
+      message.error(I18N.settableheader.index.qingZhiShaoXuanZe);
     }
   };
 
   return (
     <div className="set-columns-wrapper">
       <div className="set-columns-body">
-        <Alert style={{ marginBottom: 10 }} message="表头字段可拖动排序" type="info" showIcon />
+        <Alert
+          style={{ marginBottom: 10 }}
+          message={I18N.settableheader.index.biaoTouZiDuanKe}
+          type="info"
+          showIcon
+        />
 
         <div className="set-col-head">
           <Sortable
             options={{
               animation: 150,
-              ghostClass: 'blue-background-class'
+              ghostClass: 'blue-background-class',
             }}
             tag="div"
             onChange={(order) => {
               changeReactSortable(order);
-            }}>
+            }}
+          >
             {configItem.map((item, index) => {
               return (
                 <div className="table-item" key={index} data-id={item?.field}>
                   <div className="left">
                     <Select
-                      placeholder="请选择表头字段"
+                      placeholder={I18N.settableheader.index.qingXuanZeBiaoTou}
                       className="table-item-select"
                       onChange={(val, e) => {
                         changeTableHeadItem(index, e.props.item);
@@ -117,11 +132,14 @@ const SetTableHeader = ({ renderItem, allTableHead = [], currentTableHead = [], 
                       value={item.field === `${index}` ? undefined : item.field}
                       showSearch
                       filterOption={(input, option) => {
-                        return option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0;
-                      }}>
+                        return (
+                          option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
+                        );
+                      }}
+                    >
                       {allTableHead.map((subItem) => {
                         if (renderItem) {
-                          return renderItem(subItem)
+                          return renderItem(subItem);
                         }
                         return (
                           <Option key={subItem.field} item={subItem} value={subItem.field}>
@@ -132,7 +150,7 @@ const SetTableHeader = ({ renderItem, allTableHead = [], currentTableHead = [], 
                     </Select>
                   </div>
                   <div className="right">
-                    <Tooltip title="添加一项" placement="left">
+                    <Tooltip title={I18N.settableheader.index.tianJiaYiXiang} placement="left">
                       <Icon
                         className="add"
                         type="plus-circle-o"
@@ -142,7 +160,10 @@ const SetTableHeader = ({ renderItem, allTableHead = [], currentTableHead = [], 
                       />
                     </Tooltip>
                     {configItem.length > 3 && (
-                      <Tooltip title="移除当前行" placement="right">
+                      <Tooltip
+                        title={I18N.settableheader.index.yiChuDangQianXing}
+                        placement="right"
+                      >
                         <Icon
                           className="delete"
                           type="delete"
@@ -161,13 +182,13 @@ const SetTableHeader = ({ renderItem, allTableHead = [], currentTableHead = [], 
       </div>
       <div className="ant-modal-footer modal-footer">
         <Button type="primary" onClick={onCancel}>
-          取 消
+          {I18N.settableheader.index.quXiao}
         </Button>
         <Button type="primary" onClick={handleSetDefault}>
-          恢复默认表头
+          {I18N.settableheader.index.huiFuMoRenBiao}
         </Button>
         <Button type="primary" onClick={handleOk} loading={loading}>
-          确 定
+          {I18N.settableheader.index.queDing}
         </Button>
       </div>
     </div>
