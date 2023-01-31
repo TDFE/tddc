@@ -22,7 +22,7 @@ function _typeof(obj) {
 Object.defineProperty(exports, '__esModule', {
   value: true,
 });
-exports.default = useRefFunc;
+exports.SizeContext = void 0;
 var React = _interopRequireWildcard(require('react'));
 function _getRequireWildcardCache(nodeInterop) {
   if (typeof WeakMap !== 'function') return null;
@@ -61,17 +61,5 @@ function _interopRequireWildcard(obj, nodeInterop) {
   }
   return newObj;
 }
-// @ts-nocheck
-
-/**
- * Same as `React.useCallback` but always return a memoized function
- * but redirect to real function.
- */
-function useRefFunc(callback) {
-  var funcRef = React.useRef();
-  funcRef.current = callback;
-  var cacheFn = React.useCallback(function () {
-    return funcRef.current.apply(funcRef, arguments);
-  }, []);
-  return cacheFn;
-}
+var SizeContext = /*#__PURE__*/ React.createContext(undefined);
+exports.SizeContext = SizeContext;

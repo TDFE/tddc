@@ -22,8 +22,8 @@ function _typeof(obj) {
 Object.defineProperty(exports, '__esModule', {
   value: true,
 });
-exports.default = useRefFunc;
-var React = _interopRequireWildcard(require('react'));
+exports.default = void 0;
+var _warning = _interopRequireWildcard(require('rc-util/lib/warning'));
 function _getRequireWildcardCache(nodeInterop) {
   if (typeof WeakMap !== 'function') return null;
   var cacheBabelInterop = new WeakMap();
@@ -61,17 +61,17 @@ function _interopRequireWildcard(obj, nodeInterop) {
   }
   return newObj;
 }
-// @ts-nocheck
-
-/**
- * Same as `React.useCallback` but always return a memoized function
- * but redirect to real function.
- */
-function useRefFunc(callback) {
-  var funcRef = React.useRef();
-  funcRef.current = callback;
-  var cacheFn = React.useCallback(function () {
-    return funcRef.current.apply(funcRef, arguments);
-  }, []);
-  return cacheFn;
+function noop() {}
+// eslint-disable-next-line import/no-mutable-exports
+var warning = noop;
+if (process.env.NODE_ENV !== 'production') {
+  warning = function warning(valid, component, message) {
+    (0, _warning.default)(valid, '[antd: '.concat(component, '] ').concat(message));
+    // StrictMode will inject console which will not throw warning in React 17.
+    if (process.env.NODE_ENV === 'test') {
+      (0, _warning.resetWarned)();
+    }
+  };
 }
+var _default = warning;
+exports.default = _default;

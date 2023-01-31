@@ -35,6 +35,7 @@ require('antd/lib/message/style');
 var _message2 = _interopRequireDefault(require('antd/lib/message'));
 require('antd/lib/select/style');
 var _select = _interopRequireDefault(require('antd/lib/select'));
+var _locale = _interopRequireDefault(require('../locale'));
 var _react = _interopRequireWildcard(require('react'));
 var _reactSortablejs = _interopRequireDefault(require('react-sortablejs'));
 var _utils = require('../utils');
@@ -712,7 +713,7 @@ var SetTableHeader = function SetTableHeader(_ref) {
       configItem.splice(index, 1, item);
       setConfigItem(_toConsumableArray(configItem));
     } else {
-      _message2.default.warning('表头已存在');
+      _message2.default.warning(_locale.default.settableheader.index.biaoTouYiCunZai);
     }
   };
 
@@ -781,7 +782,7 @@ var SetTableHeader = function SetTableHeader(_ref) {
                   _context3.next = 4;
                   break;
                 }
-                _message2.default.error('有字段为空,请处理');
+                _message2.default.error(_locale.default.settableheader.index.youZiDuanWeiKong);
                 return _context3.abrupt('return');
               case 4:
                 if (!(Array.isArray(configItem) && !!configItem.length)) {
@@ -797,7 +798,7 @@ var SetTableHeader = function SetTableHeader(_ref) {
                 _context3.next = 11;
                 break;
               case 10:
-                _message2.default.error('请至少选择一个表头');
+                _message2.default.error(_locale.default.settableheader.index.qingZhiShaoXuanZe);
               case 11:
               case 'end':
                 return _context3.stop();
@@ -824,7 +825,7 @@ var SetTableHeader = function SetTableHeader(_ref) {
         style: {
           marginBottom: 10,
         },
-        message: '\u8868\u5934\u5B57\u6BB5\u53EF\u62D6\u52A8\u6392\u5E8F',
+        message: _locale.default.settableheader.index.biaoTouZiDuanKe,
         type: 'info',
         showIcon: true,
       }),
@@ -861,7 +862,7 @@ var SetTableHeader = function SetTableHeader(_ref) {
                 /*#__PURE__*/ _react.default.createElement(
                   _select.default,
                   {
-                    placeholder: '\u8BF7\u9009\u62E9\u8868\u5934\u5B57\u6BB5',
+                    placeholder: _locale.default.settableheader.index.qingXuanZeBiaoTou,
                     className: 'table-item-select',
                     onChange: function onChange(val, e) {
                       changeTableHeadItem(index, e.props.item);
@@ -896,7 +897,7 @@ var SetTableHeader = function SetTableHeader(_ref) {
                 /*#__PURE__*/ _react.default.createElement(
                   _tooltip.default,
                   {
-                    title: '\u6DFB\u52A0\u4E00\u9879',
+                    title: _locale.default.settableheader.index.tianJiaYiXiang,
                     placement: 'left',
                   },
                   /*#__PURE__*/ _react.default.createElement(_icon.default, {
@@ -911,7 +912,7 @@ var SetTableHeader = function SetTableHeader(_ref) {
                   /*#__PURE__*/ _react.default.createElement(
                     _tooltip.default,
                     {
-                      title: '\u79FB\u9664\u5F53\u524D\u884C',
+                      title: _locale.default.settableheader.index.yiChuDangQianXing,
                       placement: 'right',
                     },
                     /*#__PURE__*/ _react.default.createElement(_icon.default, {
@@ -939,7 +940,7 @@ var SetTableHeader = function SetTableHeader(_ref) {
           type: 'primary',
           onClick: onCancel,
         },
-        '\u53D6 \u6D88',
+        _locale.default.settableheader.index.quXiao,
       ),
       /*#__PURE__*/ _react.default.createElement(
         _button.default,
@@ -947,7 +948,7 @@ var SetTableHeader = function SetTableHeader(_ref) {
           type: 'primary',
           onClick: handleSetDefault,
         },
-        '\u6062\u590D\u9ED8\u8BA4\u8868\u5934',
+        _locale.default.settableheader.index.huiFuMoRenBiao,
       ),
       /*#__PURE__*/ _react.default.createElement(
         _button.default,
@@ -956,7 +957,7 @@ var SetTableHeader = function SetTableHeader(_ref) {
           onClick: handleOk,
           loading: loading,
         },
-        '\u786E \u5B9A',
+        _locale.default.settableheader.index.queDing,
       ),
     ),
   );

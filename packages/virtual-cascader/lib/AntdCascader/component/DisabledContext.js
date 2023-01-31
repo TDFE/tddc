@@ -22,7 +22,7 @@ function _typeof(obj) {
 Object.defineProperty(exports, '__esModule', {
   value: true,
 });
-exports.default = useRefFunc;
+exports.default = exports.DisabledContextProvider = void 0;
 var React = _interopRequireWildcard(require('react'));
 function _getRequireWildcardCache(nodeInterop) {
   if (typeof WeakMap !== 'function') return null;
@@ -61,17 +61,19 @@ function _interopRequireWildcard(obj, nodeInterop) {
   }
   return newObj;
 }
-// @ts-nocheck
-
-/**
- * Same as `React.useCallback` but always return a memoized function
- * but redirect to real function.
- */
-function useRefFunc(callback) {
-  var funcRef = React.useRef();
-  funcRef.current = callback;
-  var cacheFn = React.useCallback(function () {
-    return funcRef.current.apply(funcRef, arguments);
-  }, []);
-  return cacheFn;
-}
+var DisabledContext = /*#__PURE__*/ React.createContext(false);
+var DisabledContextProvider = function DisabledContextProvider(_ref) {
+  var children = _ref.children,
+    disabled = _ref.disabled;
+  var originDisabled = React.useContext(DisabledContext);
+  return /*#__PURE__*/ React.createElement(
+    DisabledContext.Provider,
+    {
+      value: disabled !== null && disabled !== void 0 ? disabled : originDisabled,
+    },
+    children,
+  );
+};
+exports.DisabledContextProvider = DisabledContextProvider;
+var _default = DisabledContext;
+exports.default = _default;

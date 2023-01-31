@@ -22,8 +22,10 @@ function _typeof(obj) {
 Object.defineProperty(exports, '__esModule', {
   value: true,
 });
-exports.default = useRefFunc;
+exports.default = void 0;
+var _locale = _interopRequireDefault(require('../../locale'));
 var React = _interopRequireWildcard(require('react'));
+var _context = require('./context');
 function _getRequireWildcardCache(nodeInterop) {
   if (typeof WeakMap !== 'function') return null;
   var cacheBabelInterop = new WeakMap();
@@ -61,17 +63,40 @@ function _interopRequireWildcard(obj, nodeInterop) {
   }
   return newObj;
 }
-// @ts-nocheck
-
-/**
- * Same as `React.useCallback` but always return a memoized function
- * but redirect to real function.
- */
-function useRefFunc(callback) {
-  var funcRef = React.useRef();
-  funcRef.current = callback;
-  var cacheFn = React.useCallback(function () {
-    return funcRef.current.apply(funcRef, arguments);
-  }, []);
-  return cacheFn;
+function _interopRequireDefault(obj) {
+  return obj && obj.__esModule ? obj : { default: obj };
 }
+/*
+ * @Descripttion: 空状态
+ * @Author: 郑泳健
+ * @Date: 2022-12-19 16:45:16
+ * @LastEditors: 郑泳健
+ * @LastEditTime: 2023-01-31 17:36:32
+ */
+// @ts-ignore
+
+var defaultRenderEmpty = function defaultRenderEmpty(componentName) {
+  return /*#__PURE__*/ React.createElement(_context.ConfigConsumer, null, function (_ref) {
+    var getPrefixCls = _ref.getPrefixCls;
+    var prefix = getPrefixCls('empty');
+    return /*#__PURE__*/ React.createElement(
+      'div',
+      null,
+      /*#__PURE__*/ React.createElement('img', {
+        style: {
+          width: 80,
+          height: 50,
+          marginTop: 35,
+        },
+        src: require('../../img/no-data-s.png'),
+      }),
+      /*#__PURE__*/ React.createElement(
+        'div',
+        null,
+        _locale.default.component.defaultrenderempty.zanWuShuJu,
+      ),
+    );
+  });
+};
+var _default = defaultRenderEmpty;
+exports.default = _default;
