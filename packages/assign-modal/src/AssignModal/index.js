@@ -3,6 +3,8 @@ import { useState } from 'react';
 
 import AssignApp from './AssignApp';
 import './index.less';
+import Cookies from 'universal-cookie';
+const cookies = new Cookies();
 
 const AssignModal = (props) => {
   const { visible, orgList, dataItem = {}, close, disabled, title = '', onSubmit, appList } = props;
@@ -32,7 +34,7 @@ const AssignModal = (props) => {
           setAssignData(data);
         }}
         disabled={disabled}
-        lang={props?.lang}
+        lang={props?.lang || cookies.get('lang') || 'cn'}
       />
     </Modal>
   );

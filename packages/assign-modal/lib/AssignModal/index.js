@@ -34,6 +34,7 @@ var _modal = _interopRequireDefault(require('antd/lib/modal'));
 var _react = _interopRequireWildcard(require('react'));
 var _AssignApp = _interopRequireDefault(require('./AssignApp'));
 require('./index.less');
+var _universalCookie = _interopRequireDefault(require('universal-cookie'));
 function _getRequireWildcardCache(nodeInterop) {
   if (typeof WeakMap !== 'function') return null;
   var cacheBabelInterop = new WeakMap();
@@ -141,6 +142,7 @@ function _iterableToArrayLimit(arr, i) {
 function _arrayWithHoles(arr) {
   if (Array.isArray(arr)) return arr;
 }
+var cookies = new _universalCookie.default();
 var AssignModal = function AssignModal(props) {
   var visible = props.visible,
     orgList = props.orgList,
@@ -182,7 +184,8 @@ var AssignModal = function AssignModal(props) {
         setAssignData(data);
       },
       disabled: disabled,
-      lang: props === null || props === void 0 ? void 0 : props.lang,
+      lang:
+        (props === null || props === void 0 ? void 0 : props.lang) || cookies.get('lang') || 'cn',
     }),
   );
 };
