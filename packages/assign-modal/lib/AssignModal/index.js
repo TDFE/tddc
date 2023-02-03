@@ -182,6 +182,7 @@ var AssignModal = function AssignModal(props) {
         setAssignData(data);
       },
       disabled: disabled,
+      lang: props === null || props === void 0 ? void 0 : props.lang,
     }),
   );
 };

@@ -32,6 +32,7 @@ var _tntd = require('tntd');
 var _lodash = require('lodash');
 require('./index.less');
 var _utils = require('./utils');
+var _locale = require('../../locale');
 function _getRequireWildcardCache(nodeInterop) {
   if (typeof WeakMap !== 'function') return null;
   var cacheBabelInterop = new WeakMap();
@@ -429,7 +430,10 @@ var AssignModal = function AssignModal(props) {
         {
           className: 'menu-header',
         },
-        '\u6388\u6743\u53EF\u7528\u673A\u6784\u5217\u8868',
+        (0, _locale.getText)(
+          'authorizesOrgList',
+          props === null || props === void 0 ? void 0 : props.lang,
+        ),
         /*#__PURE__*/ _react.default.createElement(
           'div',
           {
@@ -442,7 +446,10 @@ var AssignModal = function AssignModal(props) {
               checked: allOrgChecked,
               disabled: disabled,
             },
-            '\u5168\u90E8\u673A\u6784\u53EF\u7528',
+            (0, _locale.getText)(
+              'allOrgAvailable',
+              props === null || props === void 0 ? void 0 : props.lang,
+            ),
           ),
         ),
       ),
@@ -471,7 +478,10 @@ var AssignModal = function AssignModal(props) {
         {
           className: 'menu-header',
         },
-        '\u6388\u6743\u53EF\u7528\u6E20\u9053\u5217\u8868',
+        (0, _locale.getText)(
+          'authorizesAppList',
+          props === null || props === void 0 ? void 0 : props.lang,
+        ),
         /*#__PURE__*/ _react.default.createElement(
           'div',
           {
@@ -484,7 +494,10 @@ var AssignModal = function AssignModal(props) {
               checked: allAppChecked,
               disabled: disabled,
             },
-            '\u5168\u90E8\u6E20\u9053\u53EF\u7528',
+            (0, _locale.getText)(
+              'allOrgAvailable',
+              props === null || props === void 0 ? void 0 : props.lang,
+            ),
           ),
         ),
       ),
