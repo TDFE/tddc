@@ -1,4 +1,10 @@
-export default {
+'use strict';
+
+Object.defineProperty(exports, '__esModule', {
+  value: true,
+});
+exports.default = void 0;
+var _default = {
   index: {
     queDing: '确 定',
     huiFuMoRenBiao: '恢复默认表头',
@@ -12,3 +18,4 @@ export default {
     biaoTouYiCunZai: '表头已存在',
   },
 };
+exports.default = _default;

@@ -1,6 +1,6 @@
 import Cookies from 'universal-cookie';
-import zhCN from './.octopus/zh-CN';
-import enUS from './.octopus/en-US';
+import zhCN from './octopus/zh-CN';
+import enUS from './octopus/en-US';
 
 const cookies = new Cookies();
 

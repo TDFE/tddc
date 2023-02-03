@@ -1,4 +1,10 @@
-export default {
+'use strict';
+
+Object.defineProperty(exports, '__esModule', {
+  value: true,
+});
+exports.default = void 0;
+var _default = {
   index: {
     queDing: 'comfirm',
     huiFuMoRenBiao: 'Restore the default table header',
@@ -12,3 +18,4 @@ export default {
     biaoTouYiCunZai: 'The header already exists',
   },
 };
+exports.default = _default;

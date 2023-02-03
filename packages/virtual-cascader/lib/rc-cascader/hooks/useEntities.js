@@ -3,13 +3,10 @@
 Object.defineProperty(exports, '__esModule', {
   value: true,
 });
-exports.default = Checkbox;
+exports.default = void 0;
 var React = _interopRequireWildcard(require('react'));
-var _classnames = _interopRequireDefault(require('classnames'));
-var _context = _interopRequireDefault(require('../context'));
-function _interopRequireDefault(obj) {
-  return obj && obj.__esModule ? obj : { default: obj };
-}
+var _treeUtil = require('rc-tree/lib/utils/treeUtil');
+var _commonUtil = require('../utils/commonUtil');
 function _getRequireWildcardCache(nodeInterop) {
   if (typeof WeakMap !== 'function') return null;
   var cacheBabelInterop = new WeakMap();
@@ -66,6 +63,33 @@ function _typeof(obj) {
     _typeof(obj)
   );
 }
+function ownKeys(object, enumerableOnly) {
+  var keys = Object.keys(object);
+  if (Object.getOwnPropertySymbols) {
+    var symbols = Object.getOwnPropertySymbols(object);
+    enumerableOnly &&
+      (symbols = symbols.filter(function (sym) {
+        return Object.getOwnPropertyDescriptor(object, sym).enumerable;
+      })),
+      keys.push.apply(keys, symbols);
+  }
+  return keys;
+}
+function _objectSpread(target) {
+  for (var i = 1; i < arguments.length; i++) {
+    var source = null != arguments[i] ? arguments[i] : {};
+    i % 2
+      ? ownKeys(Object(source), !0).forEach(function (key) {
+          _defineProperty(target, key, source[key]);
+        })
+      : Object.getOwnPropertyDescriptors
+      ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source))
+      : ownKeys(Object(source)).forEach(function (key) {
+          Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key));
+        });
+  }
+  return target;
+}
 function _defineProperty(obj, key, value) {
   key = _toPropertyKey(key);
   if (key in obj) {
@@ -94,34 +118,44 @@ function _toPrimitive(input, hint) {
   }
   return (hint === 'string' ? String : Number)(input);
 }
-function Checkbox(_ref) {
-  var _classNames;
-  var prefixCls = _ref.prefixCls,
-    checked = _ref.checked,
-    halfChecked = _ref.halfChecked,
-    disabled = _ref.disabled,
-    onClick = _ref.onClick;
-  // @ts-ignore
-  var _React$useContext = React.useContext(_context.default),
-    checkable = _React$useContext.checkable;
-  var customCheckbox = typeof checkable !== 'boolean' ? checkable : null;
-  return /*#__PURE__*/ React.createElement(
-    'span',
-    {
-      className: (0, _classnames.default)(
-        ''.concat(prefixCls),
-        ((_classNames = {}),
-        _defineProperty(_classNames, ''.concat(prefixCls, '-checked'), checked),
-        _defineProperty(
-          _classNames,
-          ''.concat(prefixCls, '-indeterminate'),
-          !checked && halfChecked,
-        ),
-        _defineProperty(_classNames, ''.concat(prefixCls, '-disabled'), disabled),
-        _classNames),
-      ),
-      onClick: onClick,
+/** Lazy parse options data into conduct-able info to avoid perf issue in single mode */
+var _default = function _default(options, fieldNames) {
+  var cacheRef = React.useRef({
+    options: null,
+    info: null,
+  });
+  var getEntities = React.useCallback(
+    function () {
+      if (cacheRef.current.options !== options) {
+        cacheRef.current.options = options;
+        cacheRef.current.info = (0, _treeUtil.convertDataToEntities)(options, {
+          fieldNames: fieldNames,
+          initWrapper: function initWrapper(wrapper) {
+            return _objectSpread(
+              _objectSpread({}, wrapper),
+              {},
+              {
+                pathKeyEntities: {},
+              },
+            );
+          },
+          processEntity: function processEntity(entity, wrapper) {
+            var pathKey = entity.nodes
+              .map(function (node) {
+                return node[fieldNames.value];
+              })
+              .join(_commonUtil.VALUE_SPLIT);
+            wrapper.pathKeyEntities[pathKey] = entity;
+            // Overwrite origin key.
+            // this is very hack but we need let conduct logic work with connect path
+            entity.key = pathKey;
+          },
+        });
+      }
+      return cacheRef.current.info.pathKeyEntities;
     },
-    customCheckbox,
+    [fieldNames, options],
   );
-}
+  return getEntities;
+};
+exports.default = _default;
