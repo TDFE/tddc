@@ -1,15 +1,15 @@
 {
   "name": "@tddc/tree-transfer",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "基于antd tree组件实现的树形穿梭框组件",
-  "author": "lingbin.jiang@tongdun.net>",
+  "author": "lingbin.jiang@tongdun.cn",
   "license": "ISC",
   "main": "lib/index.js",
   "files": [
     "lib"
   ],
   "peerDependencies": {
-    "antd": "^3.26.20",
+    "antd": ">=3.20.1",
     "react": ">=16.8.0",
     "react-dom": ">=16.8.0"
   },
