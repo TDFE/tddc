@@ -4,33 +4,19 @@ Object.defineProperty(exports, '__esModule', {
   value: true,
 });
 exports.toolBarTypeNameMap = exports.default = void 0;
-
 require('antd/lib/row/style');
-
 var _row = _interopRequireDefault(require('antd/lib/row'));
-
 require('antd/lib/tooltip/style');
-
 var _tooltip = _interopRequireDefault(require('antd/lib/tooltip'));
-
 require('antd/lib/button/style');
-
 var _button = _interopRequireDefault(require('antd/lib/button'));
-
 require('antd/lib/dropdown/style');
-
 var _dropdown = _interopRequireDefault(require('antd/lib/dropdown'));
-
 require('antd/lib/menu/style');
-
 var _menu = _interopRequireDefault(require('antd/lib/menu'));
-
 require('antd/lib/icon/style');
-
 var _icon = _interopRequireDefault(require('antd/lib/icon'));
-
 var _react = _interopRequireWildcard(require('react'));
-
 function _getRequireWildcardCache(nodeInterop) {
   if (typeof WeakMap !== 'function') return null;
   var cacheBabelInterop = new WeakMap();
@@ -39,7 +25,6 @@ function _getRequireWildcardCache(nodeInterop) {
     return nodeInterop ? cacheNodeInterop : cacheBabelInterop;
   })(nodeInterop);
 }
-
 function _interopRequireWildcard(obj, nodeInterop) {
   if (!nodeInterop && obj && obj.__esModule) {
     return obj;
@@ -69,11 +54,9 @@ function _interopRequireWildcard(obj, nodeInterop) {
   }
   return newObj;
 }
-
 function _interopRequireDefault(obj) {
   return obj && obj.__esModule ? obj : { default: obj };
 }
-
 function _typeof(obj) {
   '@babel/helpers - typeof';
   return (
@@ -93,7 +76,6 @@ function _typeof(obj) {
     _typeof(obj)
   );
 }
-
 function _slicedToArray(arr, i) {
   return (
     _arrayWithHoles(arr) ||
@@ -102,13 +84,11 @@ function _slicedToArray(arr, i) {
     _nonIterableRest()
   );
 }
-
 function _nonIterableRest() {
   throw new TypeError(
     'Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.',
   );
 }
-
 function _unsupportedIterableToArray(o, minLen) {
   if (!o) return;
   if (typeof o === 'string') return _arrayLikeToArray(o, minLen);
@@ -118,7 +98,6 @@ function _unsupportedIterableToArray(o, minLen) {
   if (n === 'Arguments' || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n))
     return _arrayLikeToArray(o, minLen);
 }
-
 function _arrayLikeToArray(arr, len) {
   if (len == null || len > arr.length) len = arr.length;
   for (var i = 0, arr2 = new Array(len); i < len; i++) {
@@ -126,7 +105,6 @@ function _arrayLikeToArray(arr, len) {
   }
   return arr2;
 }
-
 function _iterableToArrayLimit(arr, i) {
   var _i =
     arr == null
@@ -154,11 +132,9 @@ function _iterableToArrayLimit(arr, i) {
   }
   return _arr;
 }
-
 function _arrayWithHoles(arr) {
   if (Array.isArray(arr)) return arr;
 }
-
 var toolBarTypeNameMap = {
   redo: '重做',
   undo: '撤销',
@@ -171,41 +147,33 @@ var toolBarTypeNameMap = {
   copy: '拷贝规则流',
 };
 exports.toolBarTypeNameMap = toolBarTypeNameMap;
-
 var _default = function _default(props) {
   var _commandActions;
-
   var _ref = props || {},
     editor = _ref.editor,
     previewMode = _ref.previewMode,
     operateGroup = _ref.operateGroup;
-
   var _useState = (0, _react.useState)(false),
     _useState2 = _slicedToArray(_useState, 2),
     canRedo = _useState2[0],
     setCanRedo = _useState2[1];
-
   var _useState3 = (0, _react.useState)(false),
     _useState4 = _slicedToArray(_useState3, 2),
     canUndo = _useState4[0],
     setCanUndo = _useState4[1];
-
   var _useState5 = (0, _react.useState)(false),
     _useState6 = _slicedToArray(_useState5, 2),
     canDelete = _useState6[0],
     setCanDelete = _useState6[1];
-
   var _useState7 = (0, _react.useState)(false),
     _useState8 = _slicedToArray(_useState7, 2),
     fullscreen = _useState8[0],
     setFullScreen = _useState8[1];
-
   var _ref2 = editor || {},
     history = _ref2.schema.history,
     graph = _ref2.graph,
     controller = _ref2.controller,
     paper = _ref2.paper;
-
   (0, _react.useEffect)(
     function () {
       if (props.editor) {
@@ -214,7 +182,6 @@ var _default = function _default(props) {
     },
     [props.editor],
   );
-
   var watchHistory = function watchHistory(props) {
     if (!editor) return;
     editor.off('change');
@@ -230,7 +197,6 @@ var _default = function _default(props) {
     });
     editor.graph.on('node:click', function (_ref3) {
       var _editor$graph$line;
-
       var node = _ref3.node;
       var canDelete =
         Object.keys(editor.graph.node.actives).length !== 0 ||
@@ -241,7 +207,6 @@ var _default = function _default(props) {
     });
     editor.graph.on('node:unactive', function () {
       var _editor$graph$line2;
-
       var canDelete =
         Object.keys(editor.graph.node.actives).length !== 0 ||
         ((_editor$graph$line2 = editor.graph.line) === null || _editor$graph$line2 === void 0
@@ -251,7 +216,6 @@ var _default = function _default(props) {
     });
     editor.graph.on('paper:click', function () {
       var _editor$graph$line3;
-
       var canDelete =
         Object.keys(editor.graph.node.actives).length !== 0 ||
         ((_editor$graph$line3 = editor.graph.line) === null || _editor$graph$line3 === void 0
@@ -263,45 +227,37 @@ var _default = function _default(props) {
       setCanDelete(false);
     });
   };
-
   var redo = function redo() {
     editor.schema.redo();
   };
-
   var undo = function undo() {
     editor.schema.undo();
   };
-
   var deleteFun = function deleteFun() {
     var _ref4 = graph || {},
       node = _ref4.node,
       line = _ref4.line;
-
     var deleteKeys = [];
-
     for (var key in node.actives) {
       // 不触发事件
       node.deleteNode(node.actives[key]);
       delete node.actives[key];
       deleteKeys.push(key);
     }
-
     line.activeLine && line.deleteLine(line.activeLine);
     /**
      * @event Graph#delete
      * @type {Object}
      */
-
     graph.fire('delete', {
       deleteKeys: deleteKeys,
     });
   };
-
   var format = function format(type) {
     var lines = editor.graph.line.lines;
     var fromPoint = 1,
-      toPoint = 3; // 横向排序
-
+      toPoint = 3;
+    // 横向排序
     if (type === 'x') {
       fromPoint = 1;
       toPoint = 3;
@@ -311,8 +267,8 @@ var _default = function _default(props) {
         edgesep: 40,
         rankdir: 'LR',
       };
-    } // 纵向排序
-
+    }
+    // 纵向排序
     if (type === 'y') {
       fromPoint = 2;
       toPoint = 0;
@@ -320,7 +276,6 @@ var _default = function _default(props) {
         ranksep: 60,
       };
     }
-
     Object.values(lines).forEach(function (line) {
       line.data.fromPoint = fromPoint;
       line.data.toPoint = toPoint;
@@ -328,7 +283,6 @@ var _default = function _default(props) {
     editor.schema.format();
     editor.controller.autoFit();
   };
-
   var onPrint = function onPrint() {
     var div = document.createElement('div');
     div.className = 'print-window job-editor ';
@@ -337,16 +291,14 @@ var _default = function _default(props) {
     window.print();
     document.body.removeChild(div);
   };
-
   var handleScreen = function handleScreen() {
     if (fullscreen) {
       return exitFullscreen();
     }
+    setFullScreen(true);
 
-    setFullScreen(true); // eslint-disable-next-line vars-on-top
-
+    // eslint-disable-next-line vars-on-top
     var element = document.documentElement;
-
     if (element.requestFullscreen) {
       element.requestFullscreen();
     } else if (element.msRequestFullscreen) {
@@ -356,11 +308,11 @@ var _default = function _default(props) {
     } else if (element.webkitRequestFullscreen) {
       element.webkitRequestFullscreen();
     }
-  }; // 退出全屏
+  };
 
+  // 退出全屏
   var exitFullscreen = function exitFullscreen() {
     setFullScreen(false);
-
     if (document.exitFullscreen) {
       document.exitFullscreen();
     } else if (document.msExitFullscreen) {
@@ -371,89 +323,69 @@ var _default = function _default(props) {
       document.webkitExitFullscreen();
     }
   };
-
   var clickEvent = function clickEvent(type) {
     switch (type) {
       case 'redo':
         return canRedo && redo;
-
       case 'undo':
         return canUndo && undo;
-
       case 'zoom-in':
         return function () {
           controller.zoom(1.05);
         };
-
       case 'zoom-out':
         return function () {
           controller.zoom(0.95);
         };
-
       case 'fullscreen':
         return function () {
           controller.autoFit();
         };
-
       case 'fullscreen-exit':
         return function () {
           var transform = paper.transform();
-
           var _transform$localMatri = transform.localMatrix.split(),
             scalex = _transform$localMatri.scalex;
-
           controller.zoom(1 / scalex);
         };
-
       case 'delete':
         return function () {
           canDelete && deleteFun();
         };
     }
   };
-
   var getClassName = function getClassName(type) {
     var disableClass = '';
-
     switch (type) {
       case 'redo':
         if (!canRedo) {
           disableClass = 'disable';
         }
-
         break;
-
       case 'undo':
         if (!canUndo) {
           disableClass = 'disable';
         }
-
         break;
-
       case 'delete':
         if (!canDelete) {
           disableClass = 'disable';
         }
-
         break;
     }
-
     return disableClass;
   };
-
   var getCommandChild = function getCommandChild(commandActions) {
     var child = [];
     commandActions === null || commandActions === void 0
       ? void 0
       : commandActions.forEach(function (type) {
           var click = null;
-
           if (_typeof(type) === 'object') {
             var _type = type;
             type = _type.type;
             click = _type.click;
           }
-
           if (type) {
             child.push(
               /*#__PURE__*/ _react.default.createElement(
@@ -470,7 +402,6 @@ var _default = function _default(props) {
             );
           }
         });
-
     var menu = /*#__PURE__*/ _react.default.createElement(
       _menu.default,
       null,
@@ -493,7 +424,6 @@ var _default = function _default(props) {
         '\u6A2A\u5411\u6392\u5E8F',
       ),
     );
-
     child.push(
       /*#__PURE__*/ _react.default.createElement(
         _dropdown.default,
@@ -515,9 +445,7 @@ var _default = function _default(props) {
     );
     return child;
   };
-
   var commandActions = ['zoom-out', 'zoom-in'];
-
   if (!previewMode) {
     commandActions = commandActions.concat([
       'fullscreen',
@@ -529,7 +457,6 @@ var _default = function _default(props) {
   } else {
     commandActions = commandActions.concat(['fullscreen']);
   }
-
   if (!editor) return null;
   return /*#__PURE__*/ _react.default.createElement(
     _react.default.Fragment,
@@ -594,5 +521,4 @@ var _default = function _default(props) {
       ),
   );
 };
-
 exports.default = _default;

@@ -4,31 +4,18 @@ Object.defineProperty(exports, '__esModule', {
   value: true,
 });
 exports.default = void 0;
-
 require('antd/lib/tooltip/style');
-
 var _tooltip = _interopRequireDefault(require('antd/lib/tooltip'));
-
 require('antd/lib/message/style');
-
 var _message2 = _interopRequireDefault(require('antd/lib/message'));
-
 var _react = _interopRequireWildcard(require('react'));
-
 var _mmeditor = _interopRequireDefault(require('mmeditor'));
-
 var _TopBar = _interopRequireDefault(require('./Content/TopBar'));
-
 var _LeftBar = _interopRequireDefault(require('./Content/LeftBar'));
-
 var _initShapes = _interopRequireDefault(require('./MMShapes/initShapes'));
-
 var _DefaultDataConvert = _interopRequireDefault(require('./DefaultDataConvert'));
-
 var _DialogHandle = _interopRequireDefault(require('./DialogHandle'));
-
 require('./index.less');
-
 var _excluded = [
   'type',
   'graphData',
@@ -43,7 +30,6 @@ var _excluded = [
   'dialogDom',
   'editorStyle',
 ];
-
 function _getRequireWildcardCache(nodeInterop) {
   if (typeof WeakMap !== 'function') return null;
   var cacheBabelInterop = new WeakMap();
@@ -52,7 +38,6 @@ function _getRequireWildcardCache(nodeInterop) {
     return nodeInterop ? cacheNodeInterop : cacheBabelInterop;
   })(nodeInterop);
 }
-
 function _interopRequireWildcard(obj, nodeInterop) {
   if (!nodeInterop && obj && obj.__esModule) {
     return obj;
@@ -82,11 +67,9 @@ function _interopRequireWildcard(obj, nodeInterop) {
   }
   return newObj;
 }
-
 function _interopRequireDefault(obj) {
   return obj && obj.__esModule ? obj : { default: obj };
 }
-
 function ownKeys(object, enumerableOnly) {
   var keys = Object.keys(object);
   if (Object.getOwnPropertySymbols) {
@@ -99,7 +82,6 @@ function ownKeys(object, enumerableOnly) {
   }
   return keys;
 }
-
 function _objectSpread(target) {
   for (var i = 1; i < arguments.length; i++) {
     var source = null != arguments[i] ? arguments[i] : {};
@@ -115,7 +97,6 @@ function _objectSpread(target) {
   }
   return target;
 }
-
 function _defineProperty(obj, key, value) {
   if (key in obj) {
     Object.defineProperty(obj, key, {
@@ -129,7 +110,6 @@ function _defineProperty(obj, key, value) {
   }
   return obj;
 }
-
 function _extends() {
   _extends = Object.assign
     ? Object.assign.bind()
@@ -146,7 +126,6 @@ function _extends() {
       };
   return _extends.apply(this, arguments);
 }
-
 function _regeneratorRuntime() {
   'use strict';
   /*! regenerator-runtime -- Copyright (c) 2014-present, Facebook, Inc. -- license (MIT): https://github.com/facebook/regenerator/blob/main/LICENSE */ _regeneratorRuntime =
@@ -156,6 +135,11 @@ function _regeneratorRuntime() {
   var exports = {},
     Op = Object.prototype,
     hasOwn = Op.hasOwnProperty,
+    defineProperty =
+      Object.defineProperty ||
+      function (obj, key, desc) {
+        obj[key] = desc.value;
+      },
     $Symbol = 'function' == typeof Symbol ? Symbol : {},
     iteratorSymbol = $Symbol.iterator || '@@iterator',
     asyncIteratorSymbol = $Symbol.asyncIterator || '@@asyncIterator',
@@ -183,43 +167,7 @@ function _regeneratorRuntime() {
       generator = Object.create(protoGenerator.prototype),
       context = new Context(tryLocsList || []);
     return (
-      (generator._invoke = (function (innerFn, self, context) {
-        var state = 'suspendedStart';
-        return function (method, arg) {
-          if ('executing' === state) throw new Error('Generator is already running');
-          if ('completed' === state) {
-            if ('throw' === method) throw arg;
-            return doneResult();
-          }
-          for (context.method = method, context.arg = arg; ; ) {
-            var delegate = context.delegate;
-            if (delegate) {
-              var delegateResult = maybeInvokeDelegate(delegate, context);
-              if (delegateResult) {
-                if (delegateResult === ContinueSentinel) continue;
-                return delegateResult;
-              }
-            }
-            if ('next' === context.method) context.sent = context._sent = context.arg;
-            else if ('throw' === context.method) {
-              if ('suspendedStart' === state) throw ((state = 'completed'), context.arg);
-              context.dispatchException(context.arg);
-            } else 'return' === context.method && context.abrupt('return', context.arg);
-            state = 'executing';
-            var record = tryCatch(innerFn, self, context);
-            if ('normal' === record.type) {
-              if (
-                ((state = context.done ? 'completed' : 'suspendedYield'),
-                record.arg === ContinueSentinel)
-              )
-                continue;
-              return { value: record.arg, done: context.done };
-            }
-            'throw' === record.type &&
-              ((state = 'completed'), (context.method = 'throw'), (context.arg = record.arg));
-          }
-        };
-      })(innerFn, self, context)),
+      defineProperty(generator, '_invoke', { value: makeInvokeMethod(innerFn, self, context) }),
       generator
     );
   }
@@ -283,15 +231,54 @@ function _regeneratorRuntime() {
       reject(record.arg);
     }
     var previousPromise;
-    this._invoke = function (method, arg) {
-      function callInvokeWithMethodAndArg() {
-        return new PromiseImpl(function (resolve, reject) {
-          invoke(method, arg, resolve, reject);
-        });
+    defineProperty(this, '_invoke', {
+      value: function value(method, arg) {
+        function callInvokeWithMethodAndArg() {
+          return new PromiseImpl(function (resolve, reject) {
+            invoke(method, arg, resolve, reject);
+          });
+        }
+        return (previousPromise = previousPromise
+          ? previousPromise.then(callInvokeWithMethodAndArg, callInvokeWithMethodAndArg)
+          : callInvokeWithMethodAndArg());
+      },
+    });
+  }
+  function makeInvokeMethod(innerFn, self, context) {
+    var state = 'suspendedStart';
+    return function (method, arg) {
+      if ('executing' === state) throw new Error('Generator is already running');
+      if ('completed' === state) {
+        if ('throw' === method) throw arg;
+        return doneResult();
       }
-      return (previousPromise = previousPromise
-        ? previousPromise.then(callInvokeWithMethodAndArg, callInvokeWithMethodAndArg)
-        : callInvokeWithMethodAndArg());
+      for (context.method = method, context.arg = arg; ; ) {
+        var delegate = context.delegate;
+        if (delegate) {
+          var delegateResult = maybeInvokeDelegate(delegate, context);
+          if (delegateResult) {
+            if (delegateResult === ContinueSentinel) continue;
+            return delegateResult;
+          }
+        }
+        if ('next' === context.method) context.sent = context._sent = context.arg;
+        else if ('throw' === context.method) {
+          if ('suspendedStart' === state) throw ((state = 'completed'), context.arg);
+          context.dispatchException(context.arg);
+        } else 'return' === context.method && context.abrupt('return', context.arg);
+        state = 'executing';
+        var record = tryCatch(innerFn, self, context);
+        if ('normal' === record.type) {
+          if (
+            ((state = context.done ? 'completed' : 'suspendedYield'),
+            record.arg === ContinueSentinel)
+          )
+            continue;
+          return { value: record.arg, done: context.done };
+        }
+        'throw' === record.type &&
+          ((state = 'completed'), (context.method = 'throw'), (context.arg = record.arg));
+      }
     };
   }
   function maybeInvokeDelegate(delegate, context) {
@@ -372,8 +359,11 @@ function _regeneratorRuntime() {
   }
   return (
     (GeneratorFunction.prototype = GeneratorFunctionPrototype),
-    define(Gp, 'constructor', GeneratorFunctionPrototype),
-    define(GeneratorFunctionPrototype, 'constructor', GeneratorFunction),
+    defineProperty(Gp, 'constructor', { value: GeneratorFunctionPrototype, configurable: !0 }),
+    defineProperty(GeneratorFunctionPrototype, 'constructor', {
+      value: GeneratorFunction,
+      configurable: !0,
+    }),
     (GeneratorFunction.displayName = define(
       GeneratorFunctionPrototype,
       toStringTagSymbol,
@@ -421,8 +411,9 @@ function _regeneratorRuntime() {
     define(Gp, 'toString', function () {
       return '[object Generator]';
     }),
-    (exports.keys = function (object) {
-      var keys = [];
+    (exports.keys = function (val) {
+      var object = Object(val),
+        keys = [];
       for (var key in object) {
         keys.push(key);
       }
@@ -573,7 +564,6 @@ function _regeneratorRuntime() {
     exports
   );
 }
-
 function _typeof(obj) {
   '@babel/helpers - typeof';
   return (
@@ -593,7 +583,6 @@ function _typeof(obj) {
     _typeof(obj)
   );
 }
-
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) {
   try {
     var info = gen[key](arg);
@@ -608,7 +597,6 @@ function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) {
     Promise.resolve(value).then(_next, _throw);
   }
 }
-
 function _asyncToGenerator(fn) {
   return function () {
     var self = this,
@@ -625,7 +613,6 @@ function _asyncToGenerator(fn) {
     });
   };
 }
-
 function _objectWithoutProperties(source, excluded) {
   if (source == null) return {};
   var target = _objectWithoutPropertiesLoose(source, excluded);
@@ -641,7 +628,6 @@ function _objectWithoutProperties(source, excluded) {
   }
   return target;
 }
-
 function _objectWithoutPropertiesLoose(source, excluded) {
   if (source == null) return {};
   var target = {};
@@ -654,7 +640,6 @@ function _objectWithoutPropertiesLoose(source, excluded) {
   }
   return target;
 }
-
 function _slicedToArray(arr, i) {
   return (
     _arrayWithHoles(arr) ||
@@ -663,13 +648,11 @@ function _slicedToArray(arr, i) {
     _nonIterableRest()
   );
 }
-
 function _nonIterableRest() {
   throw new TypeError(
     'Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.',
   );
 }
-
 function _unsupportedIterableToArray(o, minLen) {
   if (!o) return;
   if (typeof o === 'string') return _arrayLikeToArray(o, minLen);
@@ -679,7 +662,6 @@ function _unsupportedIterableToArray(o, minLen) {
   if (n === 'Arguments' || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n))
     return _arrayLikeToArray(o, minLen);
 }
-
 function _arrayLikeToArray(arr, len) {
   if (len == null || len > arr.length) len = arr.length;
   for (var i = 0, arr2 = new Array(len); i < len; i++) {
@@ -687,7 +669,6 @@ function _arrayLikeToArray(arr, len) {
   }
   return arr2;
 }
-
 function _iterableToArrayLimit(arr, i) {
   var _i =
     arr == null
@@ -715,31 +696,24 @@ function _iterableToArrayLimit(arr, i) {
   }
   return _arr;
 }
-
 function _arrayWithHoles(arr) {
   if (Array.isArray(arr)) return arr;
 }
-
 var _default = function _default(props) {
   var _toolTipInfo$nowTextN;
-
   var editorDomRef = (0, _react.useRef)();
   var editorRef = (0, _react.useRef)();
   var dialogHandleRef = (0, _react.useRef)();
-
   var _useState = (0, _react.useState)(),
     _useState2 = _slicedToArray(_useState, 2),
     toolTipInfo = _useState2[0],
     setToolTipInfo = _useState2[1];
-
   var _useState3 = (0, _react.useState)(null),
     _useState4 = _slicedToArray(_useState3, 2),
     dialogShowInfo = _useState4[0],
     setDialogShowInfo = _useState4[1];
-
   var _ref = (editorRef === null || editorRef === void 0 ? void 0 : editorRef.current) || {},
     graph = _ref.graph;
-
   var type = props.type,
     graphData = props.graphData,
     _props$flowNodesDict = props.flowNodesDict,
@@ -757,41 +731,35 @@ var _default = function _default(props) {
     dialogDom = _props$dialogDom === void 0 ? [] : _props$dialogDom,
     editorStyle = props.editorStyle,
     rest = _objectWithoutProperties(props, _excluded);
-
   var previewMode = type === 'view';
   (0, _react.useEffect)(function () {
     dialogHandleRef.current = new _DialogHandle.default(showType);
-
     var _document$querySelect = document.querySelector('.job-editor').getBoundingClientRect(),
       jobEditorHei = _document$querySelect.height,
       jobEditorWid = _document$querySelect.width;
-
     if (jobEditorHei && editorDomRef) {
       editorDomRef.current.style.height = jobEditorHei - (!previewMode ? 48 : 0) + 'px';
       editorDomRef.current.style.width = jobEditorWid - (!previewMode ? 140 : 0) + 'px';
     }
-
     editorRef.current = new _mmeditor.default({
       dom: editorDomRef.current,
       showMiniMap: showMiniMap,
       mode: previewMode ? 'view' : 'edit', // 只读模式设置 mode:"view"
     });
-    window.mm = editorRef.current; // 注册节点
 
+    window.mm = editorRef.current;
+    // 注册节点
     (0, _initShapes.default)(editorRef.current, flowNodesDict);
-
     if (graphData) {
       setGraphData(graphData);
-    } // 注册节点⌚️
-
+    }
+    // 注册节点⌚️
     addEditorEvent();
   }, []);
-
   var setGraphData = /*#__PURE__*/ (function () {
     var _ref2 = _asyncToGenerator(
       /*#__PURE__*/ _regeneratorRuntime().mark(function _callee(data) {
         var _convertFun, dataFormatted, convertFun;
-
         return _regeneratorRuntime().wrap(
           function _callee$(_context) {
             while (1) {
@@ -800,38 +768,31 @@ var _default = function _default(props) {
                   _context.prev = 0;
                   dataFormatted = _typeof(data) === 'object' ? data : JSON.parse(data || '{}');
                   convertFun = _DefaultDataConvert.default;
-
                   if (DataConvert) {
                     convertFun = DataConvert;
                   }
-
                   _context.next = 6;
                   return editorRef.current.schema.setInitData(
                     (_convertFun = convertFun) === null || _convertFun === void 0
                       ? void 0
                       : _convertFun.convert(dataFormatted, editorRef.current),
                   );
-
                 case 6:
                   _context.next = 8;
                   return editorRef.current.controller.autoFit();
-
                 case 8:
                   runFlow();
                   _context.next = 14;
                   break;
-
                 case 11:
                   _context.prev = 11;
                   _context.t0 = _context['catch'](0);
-
                   _message2.default.error(
                     '解析数据错误,' +
                       (_context.t0 === null || _context.t0 === void 0
                         ? void 0
                         : _context.t0.message),
                   );
-
                 case 14:
                 case 'end':
                   return _context.stop();
@@ -844,20 +805,19 @@ var _default = function _default(props) {
         );
       }),
     );
-
     return function setGraphData(_x) {
       return _ref2.apply(this, arguments);
     };
-  })(); // 初始化编辑器事件
+  })();
 
+  // 初始化编辑器事件
   var addEditorEvent = function addEditorEvent() {
-    var timeStamp; // 选中
-
+    var timeStamp;
+    // 选中
     editorRef === null || editorRef === void 0
       ? void 0
       : editorRef.current.graph.on('node:click', function (_ref3) {
           var _document$getElements, _document$getElements2;
-
           var node = _ref3.node;
           (_document$getElements = document.getElementsByClassName('lb-workflow-header')[0]) ===
             null || _document$getElements === void 0
@@ -867,7 +827,6 @@ var _default = function _default(props) {
             ? void 0
             : _document$getElements2.blur();
           var now = new Date().getTime();
-
           if (now - timeStamp < 300) {
             // 产品说这个情况下就不用弹窗
             !dialogHide &&
@@ -879,11 +838,11 @@ var _default = function _default(props) {
                 },
               );
           }
-
           timeStamp = now;
           props.onNodeClick && props.onNodeClick(node.data);
-        }); // 没有选中
+        });
 
+    // 没有选中
     editorRef === null || editorRef === void 0
       ? void 0
       : editorRef.current.graph.on('node:mouseenter', function (_ref4) {
@@ -900,15 +859,17 @@ var _default = function _default(props) {
       ? void 0
       : editorRef.current.graph.on('node:mouseleave', function () {
           setToolTipInfo(null);
-        }); // 节点删除事件
+        });
 
+    // 节点删除事件
     editorRef === null || editorRef === void 0
       ? void 0
       : editorRef.current.graph.on('node:remove', function () {
           setToolTipInfo(null);
         });
-  }; // 动画效果
+  };
 
+  // 动画效果
   var runFlow = /*#__PURE__*/ (function () {
     var _ref5 = _asyncToGenerator(
       /*#__PURE__*/ _regeneratorRuntime().mark(function _callee2() {
@@ -923,7 +884,6 @@ var _default = function _default(props) {
           node,
           _key,
           line;
-
         return _regeneratorRuntime().wrap(function _callee2$(_context2) {
           while (1) {
             switch ((_context2.prev = _context2.next)) {
@@ -934,9 +894,7 @@ var _default = function _default(props) {
                   _context2.next = 2;
                   break;
                 }
-
                 return _context2.abrupt('return');
-
               case 2:
                 (_ref6 =
                   (editorRef === null || editorRef === void 0 ? void 0 : editorRef.current) || {}),
@@ -949,7 +907,6 @@ var _default = function _default(props) {
                 auditedNodes.forEach(function (hasAudited) {
                   var _ref8 = hasAudited || {},
                     uuid = _ref8.uuid;
-
                   var status = 'instance '.concat(hasAudited.status || '');
                   Object.values(nodes).forEach(function (node) {
                     if (node.data.uuid === uuid) {
@@ -959,10 +916,8 @@ var _default = function _default(props) {
                       node.addClass(status);
                     }
                   });
-
                   for (var key in lines) {
                     var line = lines[key];
-
                     if (uuid === line.data.to && hasAuditedNodeUuids.indexOf(line.data.from) > -1) {
                       line.data.className = ''
                         .concat(line.data.className || '', '  ')
@@ -972,7 +927,6 @@ var _default = function _default(props) {
                     }
                   }
                 });
-
                 for (key in nodes) {
                   if (!hasAuditedNodeUuids.includes(key)) {
                     node = nodes[key];
@@ -980,7 +934,6 @@ var _default = function _default(props) {
                     node.addClass('unrun');
                   }
                 }
-
                 for (_key in lines) {
                   if (!auditedLine.includes(_key)) {
                     line = lines[_key];
@@ -988,7 +941,6 @@ var _default = function _default(props) {
                     line.addClass('unrun');
                   }
                 }
-
               case 9:
               case 'end':
                 return _context2.stop();
@@ -997,15 +949,14 @@ var _default = function _default(props) {
         }, _callee2);
       }),
     );
-
     return function runFlow() {
       return _ref5.apply(this, arguments);
     };
-  })(); // 目标放置
+  })();
 
+  // 目标放置
   var onDrop = function onDrop(item, e) {
     var _editorRef$current, _editorRef$current2;
-
     // 增加节点
     var dom =
       editorRef === null || editorRef === void 0
@@ -1016,11 +967,9 @@ var _default = function _default(props) {
     var name =
       (item === null || item === void 0 ? void 0 : item.initName) ||
       (item === null || item === void 0 ? void 0 : item.name);
-
     var _ref9 = item || {},
       _ref9$size = _ref9.size,
       size = _ref9$size === void 0 ? [] : _ref9$size;
-
     var transform =
       editorRef === null || editorRef === void 0 ? void 0 : editorRef.current.paper.transform();
     var info = transform.globalMatrix.split();
@@ -1042,7 +991,6 @@ var _default = function _default(props) {
           }),
         );
   };
-
   return /*#__PURE__*/ _react.default.createElement(
     'div',
     _extends(
@@ -1125,5 +1073,4 @@ var _default = function _default(props) {
         }),
   );
 };
-
 exports.default = _default;

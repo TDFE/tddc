@@ -9,9 +9,7 @@ Object.defineProperty(exports, 'default', {
     return _treeView.default;
   },
 });
-
 var _treeView = _interopRequireDefault(require('./treeView'));
-
 function _interopRequireDefault(obj) {
   return obj && obj.__esModule ? obj : { default: obj };
 }

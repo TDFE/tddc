@@ -4,23 +4,17 @@ Object.defineProperty(exports, '__esModule', {
   value: true,
 });
 exports.default = initShapes;
-
 var _flowExclusivity = _interopRequireDefault(require('../images/flow-exclusivity.svg'));
-
 var _flowParallel = _interopRequireDefault(require('../images/flow-parallel.svg'));
-
 function _interopRequireDefault(obj) {
   return obj && obj.__esModule ? obj : { default: obj };
 }
-
 function initShapes(editor, flowNodes) {
   // JS判断字符串长度（英文占1个字符，中文汉字占2个字符）
   var getStrLen = function getStrLen(str, max) {
     var len = [];
-
     for (var i = 0; i < str.length; i++) {
       var c = str.charCodeAt(i);
-
       if (i < max) {
         // 单字节加1
         if ((c >= 0x0001 && c <= 0x007e) || (c >= 0xff60 && c <= 0xff9f)) {
@@ -30,17 +24,14 @@ function initShapes(editor, flowNodes) {
         }
       }
     }
-
     return len;
-  }; // 渲染策略类节点
-
+  };
+  // 渲染策略类节点
   var renderNode = function renderNode(data, snapPaper, opt) {
     var namePre = data.name;
     var name = namePre;
-
     if (name) {
       var _getStrLen;
-
       console.log('getStrLen(name) ', getStrLen(name, 6));
       name =
         name.slice(
@@ -50,7 +41,6 @@ function initShapes(editor, flowNodes) {
             : _getStrLen.length,
         ) + '...';
     }
-
     var text1 = snapPaper.text(15, 15, opt.iconText);
     var circle = snapPaper.circle(15, 14, 11);
     text1.attr({
@@ -62,10 +52,8 @@ function initShapes(editor, flowNodes) {
     });
     var circleGroup = snapPaper.group(circle, text1);
     var text = snapPaper.text(30, 15, name);
-
     var _text$getBBox = text.getBBox(),
       textW = _text$getBBox.w;
-
     var node = snapPaper.rect(0, 0, Math.max(textW + 40, 120), 28, 15, 15);
     node.attr({
       fill: '#eaeefa',
@@ -90,8 +78,9 @@ function initShapes(editor, flowNodes) {
       y: 0,
     });
     return snapPaper.group(node, circleGroup, text, statusIcon);
-  }; // 初始化组件
+  };
 
+  // 初始化组件
   var initEditorShape = function initEditorShape() {
     var _loop = function _loop(i) {
       var node = flowNodes[i];
@@ -99,7 +88,6 @@ function initShapes(editor, flowNodes) {
         (node === null || node === void 0 ? void 0 : node.type) ||
         (node === null || node === void 0 ? void 0 : node.code);
       var typeLow = nodeType === null || nodeType === void 0 ? void 0 : nodeType.toLowerCase();
-
       if (typeLow.startsWith('start')) {
         // 开始
         editor.graph.node.registeNode(
@@ -185,7 +173,6 @@ function initShapes(editor, flowNodes) {
           {
             render: function render(data, snapPaper) {
               var _text$node;
-
               var image = snapPaper.image(_flowParallel.default, 0, 0, 60, 56);
               image.node.setAttribute('xmlns:xlink', 'http://www.w3.org/1999/xlink');
               var text = snapPaper.text(30, 28, data.name);
@@ -228,7 +215,6 @@ function initShapes(editor, flowNodes) {
           {
             render: function render(data, snapPaper) {
               var _text$node2;
-
               var image = snapPaper.image(_flowExclusivity.default, 0, 0, 60, 56);
               image.node.setAttribute('xmlns:xlink', 'http://www.w3.org/1999/xlink');
               var text = snapPaper.text(30, 28, data.name);
@@ -297,11 +283,9 @@ function initShapes(editor, flowNodes) {
         );
       }
     };
-
     for (var i in flowNodes) {
       _loop(i);
     }
   };
-
   initEditorShape();
 }
