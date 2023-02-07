@@ -101,13 +101,10 @@ class App extends Component {
   };
 
   render() {
-    return (
-      <TreeTransfer dataSource={mockData} title={['左侧标题', '右侧标题']} onMove={this.onMove} />
-    );
+    return <TreeTransfer dataSource={mockData} onChange={this.onMove} />;
   }
 }
-
-render(<App />, document.querySelector('#app'));
+export default App;
 ```
 
 #### 🚀 `入参`
