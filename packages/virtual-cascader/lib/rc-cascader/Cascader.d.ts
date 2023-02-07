@@ -24,9 +24,9 @@ export interface FieldNames {
 export interface InternalFieldNames extends Required<FieldNames> {
   key: string;
 }
-export type SingleValueType = (string | number)[];
-export type ValueType = SingleValueType | SingleValueType[];
-export type ShowCheckedStrategy = typeof SHOW_PARENT | typeof SHOW_CHILD;
+export declare type SingleValueType = (string | number)[];
+export declare type ValueType = SingleValueType | SingleValueType[];
+export declare type ShowCheckedStrategy = typeof SHOW_PARENT | typeof SHOW_CHILD;
 export interface BaseOptionType {
   disabled?: boolean;
   [name: string]: any;
@@ -75,8 +75,11 @@ interface BaseCascaderProps<OptionType extends BaseOptionType = DefaultOptionTyp
   expandIcon?: React.ReactNode;
   loadingIcon?: React.ReactNode;
 }
-type OnSingleChange<OptionType> = (value: SingleValueType, selectOptions: OptionType[]) => void;
-type OnMultipleChange<OptionType> = (
+declare type OnSingleChange<OptionType> = (
+  value: SingleValueType,
+  selectOptions: OptionType[],
+) => void;
+declare type OnMultipleChange<OptionType> = (
   value: SingleValueType[],
   selectOptions: OptionType[][],
 ) => void;
@@ -90,19 +93,17 @@ export interface MultipleCascaderProps<OptionType extends BaseOptionType = Defau
   checkable: true | React.ReactNode;
   onChange?: OnMultipleChange<OptionType>;
 }
-export type CascaderProps<OptionType extends BaseOptionType = DefaultOptionType> =
+export declare type CascaderProps<OptionType extends BaseOptionType = DefaultOptionType> =
   | SingleCascaderProps<OptionType>
   | MultipleCascaderProps<OptionType>;
-export type InternalCascaderProps<OptionType extends BaseOptionType = DefaultOptionType> = Omit<
-  SingleCascaderProps<OptionType> | MultipleCascaderProps<OptionType>,
-  'onChange'
-> & {
-  onChange?: (
-    value: SingleValueType | SingleValueType[],
-    selectOptions: OptionType[] | OptionType[][],
-  ) => void;
-};
-export type CascaderRef = Omit<BaseSelectRef, 'scrollTo'>;
+export declare type InternalCascaderProps<OptionType extends BaseOptionType = DefaultOptionType> =
+  Omit<SingleCascaderProps<OptionType> | MultipleCascaderProps<OptionType>, 'onChange'> & {
+    onChange?: (
+      value: SingleValueType | SingleValueType[],
+      selectOptions: OptionType[] | OptionType[][],
+    ) => void;
+  };
+export declare type CascaderRef = Omit<BaseSelectRef, 'scrollTo'>;
 declare const Cascader: (<
   OptionType extends DefaultOptionType | BaseOptionType = DefaultOptionType,
 >(

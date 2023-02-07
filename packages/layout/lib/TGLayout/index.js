@@ -136,7 +136,6 @@ function _objectSpread(target) {
   return target;
 }
 function _defineProperty(obj, key, value) {
-  key = _toPropertyKey(key);
   if (key in obj) {
     Object.defineProperty(obj, key, {
       value: value,
@@ -148,20 +147,6 @@ function _defineProperty(obj, key, value) {
     obj[key] = value;
   }
   return obj;
-}
-function _toPropertyKey(arg) {
-  var key = _toPrimitive(arg, 'string');
-  return _typeof(key) === 'symbol' ? key : String(key);
-}
-function _toPrimitive(input, hint) {
-  if (_typeof(input) !== 'object' || input === null) return input;
-  var prim = input[Symbol.toPrimitive];
-  if (prim !== undefined) {
-    var res = prim.call(input, hint || 'default');
-    if (_typeof(res) !== 'object') return res;
-    throw new TypeError('@@toPrimitive must return a primitive value.');
-  }
-  return (hint === 'string' ? String : Number)(input);
 }
 function _regeneratorRuntime() {
   'use strict';
@@ -319,24 +304,22 @@ function _regeneratorRuntime() {
     };
   }
   function maybeInvokeDelegate(delegate, context) {
-    var methodName = context.method,
-      method = delegate.iterator[methodName];
-    if (undefined === method)
-      return (
-        (context.delegate = null),
-        ('throw' === methodName &&
+    var method = delegate.iterator[context.method];
+    if (undefined === method) {
+      if (((context.delegate = null), 'throw' === context.method)) {
+        if (
           delegate.iterator.return &&
           ((context.method = 'return'),
           (context.arg = undefined),
           maybeInvokeDelegate(delegate, context),
-          'throw' === context.method)) ||
-          ('return' !== methodName &&
-            ((context.method = 'throw'),
-            (context.arg = new TypeError(
-              "The iterator does not provide a '" + methodName + "' method",
-            )))),
-        ContinueSentinel
-      );
+          'throw' === context.method)
+        )
+          return ContinueSentinel;
+        (context.method = 'throw'),
+          (context.arg = new TypeError("The iterator does not provide a 'throw' method"));
+      }
+      return ContinueSentinel;
+    }
     var record = tryCatch(method, delegate.iterator, context.arg);
     if ('throw' === record.type)
       return (
@@ -664,38 +647,30 @@ function _arrayLikeToArray(arr, len) {
 }
 function _iterableToArrayLimit(arr, i) {
   var _i =
-    null == arr
+    arr == null
       ? null
-      : ('undefined' != typeof Symbol && arr[Symbol.iterator]) || arr['@@iterator'];
-  if (null != _i) {
-    var _s,
-      _e,
-      _x,
-      _r,
-      _arr = [],
-      _n = !0,
-      _d = !1;
-    try {
-      if (((_x = (_i = _i.call(arr)).next), 0 === i)) {
-        if (Object(_i) !== _i) return;
-        _n = !1;
-      } else
-        for (
-          ;
-          !(_n = (_s = _x.call(_i)).done) && (_arr.push(_s.value), _arr.length !== i);
-          _n = !0
-        ) {}
-    } catch (err) {
-      (_d = !0), (_e = err);
-    } finally {
-      try {
-        if (!_n && null != _i.return && ((_r = _i.return()), Object(_r) !== _r)) return;
-      } finally {
-        if (_d) throw _e;
-      }
+      : (typeof Symbol !== 'undefined' && arr[Symbol.iterator]) || arr['@@iterator'];
+  if (_i == null) return;
+  var _arr = [];
+  var _n = true;
+  var _d = false;
+  var _s, _e;
+  try {
+    for (_i = _i.call(arr); !(_n = (_s = _i.next()).done); _n = true) {
+      _arr.push(_s.value);
+      if (i && _arr.length === i) break;
     }
-    return _arr;
+  } catch (err) {
+    _d = true;
+    _e = err;
+  } finally {
+    try {
+      if (!_n && _i['return'] != null) _i['return']();
+    } finally {
+      if (_d) throw _e;
+    }
   }
+  return _arr;
 }
 function _arrayWithHoles(arr) {
   if (Array.isArray(arr)) return arr;
@@ -822,7 +797,7 @@ var TGLayout = function TGLayout(props) {
         }, _callee);
       }),
     );
-    return function getAppByOrgId(_x2) {
+    return function getAppByOrgId(_x) {
       return _ref4.apply(this, arguments);
     };
   })();
@@ -994,7 +969,7 @@ var TGLayout = function TGLayout(props) {
                   }, _callee2);
                 }),
               );
-              return function (_x3) {
+              return function (_x2) {
                 return _ref5.apply(this, arguments);
               };
             })(),
@@ -1115,7 +1090,7 @@ var TGLayout = function TGLayout(props) {
         }, _callee3);
       }),
     );
-    return function mockLogin(_x4) {
+    return function mockLogin(_x3) {
       return _ref8.apply(this, arguments);
     };
   })();

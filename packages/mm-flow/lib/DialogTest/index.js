@@ -230,24 +230,22 @@ function _regeneratorRuntime() {
     };
   }
   function maybeInvokeDelegate(delegate, context) {
-    var methodName = context.method,
-      method = delegate.iterator[methodName];
-    if (undefined === method)
-      return (
-        (context.delegate = null),
-        ('throw' === methodName &&
+    var method = delegate.iterator[context.method];
+    if (undefined === method) {
+      if (((context.delegate = null), 'throw' === context.method)) {
+        if (
           delegate.iterator.return &&
           ((context.method = 'return'),
           (context.arg = undefined),
           maybeInvokeDelegate(delegate, context),
-          'throw' === context.method)) ||
-          ('return' !== methodName &&
-            ((context.method = 'throw'),
-            (context.arg = new TypeError(
-              "The iterator does not provide a '" + methodName + "' method",
-            )))),
-        ContinueSentinel
-      );
+          'throw' === context.method)
+        )
+          return ContinueSentinel;
+        (context.method = 'throw'),
+          (context.arg = new TypeError("The iterator does not provide a 'throw' method"));
+      }
+      return ContinueSentinel;
+    }
     var record = tryCatch(method, delegate.iterator, context.arg);
     if ('throw' === record.type)
       return (

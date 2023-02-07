@@ -1,5 +1,5 @@
 import * as React from 'react';
-export type DisabledType = true | false | undefined;
+export declare type DisabledType = true | false | undefined;
 declare const DisabledContext: React.Context<DisabledType>;
 export interface DisabledContextProps {
   disabled?: DisabledType;

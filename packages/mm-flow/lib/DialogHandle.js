@@ -1,9 +1,5 @@
 'use strict';
 
-Object.defineProperty(exports, '__esModule', {
-  value: true,
-});
-exports.default = void 0;
 function _typeof(obj) {
   '@babel/helpers - typeof';
   return (
@@ -23,6 +19,10 @@ function _typeof(obj) {
     _typeof(obj)
   );
 }
+Object.defineProperty(exports, '__esModule', {
+  value: true,
+});
+exports.default = void 0;
 function _regeneratorRuntime() {
   'use strict';
   /*! regenerator-runtime -- Copyright (c) 2014-present, Facebook, Inc. -- license (MIT): https://github.com/facebook/regenerator/blob/main/LICENSE */ _regeneratorRuntime =
@@ -179,24 +179,22 @@ function _regeneratorRuntime() {
     };
   }
   function maybeInvokeDelegate(delegate, context) {
-    var methodName = context.method,
-      method = delegate.iterator[methodName];
-    if (undefined === method)
-      return (
-        (context.delegate = null),
-        ('throw' === methodName &&
+    var method = delegate.iterator[context.method];
+    if (undefined === method) {
+      if (((context.delegate = null), 'throw' === context.method)) {
+        if (
           delegate.iterator.return &&
           ((context.method = 'return'),
           (context.arg = undefined),
           maybeInvokeDelegate(delegate, context),
-          'throw' === context.method)) ||
-          ('return' !== methodName &&
-            ((context.method = 'throw'),
-            (context.arg = new TypeError(
-              "The iterator does not provide a '" + methodName + "' method",
-            )))),
-        ContinueSentinel
-      );
+          'throw' === context.method)
+        )
+          return ContinueSentinel;
+        (context.method = 'throw'),
+          (context.arg = new TypeError("The iterator does not provide a 'throw' method"));
+      }
+      return ContinueSentinel;
+    }
     var record = tryCatch(method, delegate.iterator, context.arg);
     if ('throw' === record.type)
       return (
@@ -504,7 +502,7 @@ function _defineProperties(target, props) {
     descriptor.enumerable = descriptor.enumerable || false;
     descriptor.configurable = true;
     if ('value' in descriptor) descriptor.writable = true;
-    Object.defineProperty(target, _toPropertyKey(descriptor.key), descriptor);
+    Object.defineProperty(target, descriptor.key, descriptor);
   }
 }
 function _createClass(Constructor, protoProps, staticProps) {
@@ -512,20 +510,6 @@ function _createClass(Constructor, protoProps, staticProps) {
   if (staticProps) _defineProperties(Constructor, staticProps);
   Object.defineProperty(Constructor, 'prototype', { writable: false });
   return Constructor;
-}
-function _toPropertyKey(arg) {
-  var key = _toPrimitive(arg, 'string');
-  return _typeof(key) === 'symbol' ? key : String(key);
-}
-function _toPrimitive(input, hint) {
-  if (_typeof(input) !== 'object' || input === null) return input;
-  var prim = input[Symbol.toPrimitive];
-  if (prim !== undefined) {
-    var res = prim.call(input, hint || 'default');
-    if (_typeof(res) !== 'object') return res;
-    throw new TypeError('@@toPrimitive must return a primitive value.');
-  }
-  return (hint === 'string' ? String : Number)(input);
 }
 var DialogHandle = /*#__PURE__*/ (function () {
   function DialogHandle(showType) {

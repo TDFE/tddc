@@ -11,17 +11,17 @@ import type { SelectCommonPlacement } from './interface';
 import type { InputStatus } from './interface';
 import './index.css';
 export { BaseOptionType, DefaultOptionType };
-export type FieldNamesType = FieldNames;
-export type FilledFieldNamesType = Required<FieldNamesType>;
+export declare type FieldNamesType = FieldNames;
+export declare type FilledFieldNamesType = Required<FieldNamesType>;
 declare const SHOW_CHILD: 'SHOW_CHILD', SHOW_PARENT: 'SHOW_PARENT';
-type SingleCascaderProps = Omit<RcSingleCascaderProps, 'checkable' | 'options'> & {
+declare type SingleCascaderProps = Omit<RcSingleCascaderProps, 'checkable' | 'options'> & {
   multiple?: false;
 };
-type MultipleCascaderProps = Omit<RcMultipleCascaderProps, 'checkable' | 'options'> & {
+declare type MultipleCascaderProps = Omit<RcMultipleCascaderProps, 'checkable' | 'options'> & {
   multiple: true;
 };
-type UnionCascaderProps = SingleCascaderProps | MultipleCascaderProps;
-export type CascaderProps<DataNodeType> = UnionCascaderProps & {
+declare type UnionCascaderProps = SingleCascaderProps | MultipleCascaderProps;
+export declare type CascaderProps<DataNodeType> = UnionCascaderProps & {
   multiple?: boolean;
   size?: SizeType;
   disabled?: boolean;

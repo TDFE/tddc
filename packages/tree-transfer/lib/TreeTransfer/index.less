@@ -1,0 +1,65 @@
+.td-tree-transfer {
+  display: flex;
+  width: 100%;
+  &-box {
+    display: flex;
+    flex-direction: column;
+    min-width: 220px;
+    height: auto;
+    min-height: 250px;
+    max-height: 500px;
+    border: 1px solid #d9d9d9;
+    border-radius: 2px;
+    &-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 34px;
+      margin-bottom: 8px;
+      padding-left: 16px;
+      line-height: 34px;
+      border-bottom: 1px solid #e8e8e8;
+    }
+    &-select-all {
+      line-height: 32px;
+    }
+    &-search {
+      display: flex;
+      justify-content: center;
+      padding-right: 10px;
+      padding-left: 24px;
+      .ant-input {
+        width: 200px;
+        height: 20px;
+        font-size: 12px;
+        line-height: 20px;
+        border-radius: 2px;
+      }
+    }
+  }
+  &-tree {
+    flex-grow: 1;
+    height: 148px;
+    padding-left: 4px;
+    overflow: auto;
+  }
+  &-no-data {
+    display: flex;
+    flex-grow: 1;
+    align-items: center;
+    justify-content: center;
+    height: 148px;
+  }
+  &-exchange {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin: 0 12px;
+    .ant-btn {
+      width: 24px;
+      height: 24px;
+      margin-bottom: 8px;
+      padding: 0;
+    }
+  }
+}

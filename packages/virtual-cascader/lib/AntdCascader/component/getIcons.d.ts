@@ -1,6 +1,6 @@
 import type { ReactNode } from 'react';
 import * as React from 'react';
-type RenderNode = React.ReactNode | ((props: any) => React.ReactNode);
+declare type RenderNode = React.ReactNode | ((props: any) => React.ReactNode);
 export default function getIcons({
   suffixIcon,
   clearIcon,

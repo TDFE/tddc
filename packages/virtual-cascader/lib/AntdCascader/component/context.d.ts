@@ -3,9 +3,9 @@ import type { RenderEmptyHandler } from './defaultRenderEmpty';
 export interface CSPConfig {
   nonce?: string;
 }
-export type DirectionType = 'ltr' | 'rtl' | undefined;
-export type SizeType = 'small' | 'middle' | 'large' | undefined;
-export type RequiredMark = boolean | 'optional';
+export declare type DirectionType = 'ltr' | 'rtl' | undefined;
+export declare type SizeType = 'small' | 'middle' | 'large' | undefined;
+export declare type RequiredMark = boolean | 'optional';
 export declare const defaultIconPrefixCls = 'anticon';
 export interface ConfigConsumerProps {
   getTargetContainer?: () => HTMLElement;
