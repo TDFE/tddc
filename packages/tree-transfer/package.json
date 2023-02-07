@@ -1,7 +1,7 @@
 {
   "name": "@tddc/tree-transfer",
   "version": "1.0.0",
-  "description": "tree transfer",
+  "description": "基于antd tree组件实现的树形穿梭框组件",
   "author": "lingbin.jiang@tongdun.net>",
   "license": "ISC",
   "main": "lib/index.js",
@@ -10,9 +10,10 @@
   ],
   "peerDependencies": {
     "antd": "^3.26.20",
-    "lib-service": ">=0.2.21",
     "react": ">=16.8.0",
     "react-dom": ">=16.8.0"
   },
-  "gitHead": "885c8ff2733b4b33e5e89300a08981e86716f918"
+  "publishConfig": {
+    "access": "public"
+  }
 }
