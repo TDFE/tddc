@@ -3,10 +3,9 @@
 Object.defineProperty(exports, '__esModule', {
   value: true,
 });
-exports.default = Checkbox;
+exports.useCompactItemContext = exports.SpaceCompactItemContext = void 0;
 var React = _interopRequireWildcard(require('react'));
 var _classnames = _interopRequireDefault(require('classnames'));
-var _context = _interopRequireDefault(require('../context'));
 function _interopRequireDefault(obj) {
   return obj && obj.__esModule ? obj : { default: obj };
 }
@@ -94,34 +93,55 @@ function _toPrimitive(input, hint) {
   }
   return (hint === 'string' ? String : Number)(input);
 }
-function Checkbox(_ref) {
-  var _classNames;
-  var prefixCls = _ref.prefixCls,
-    checked = _ref.checked,
-    halfChecked = _ref.halfChecked,
-    disabled = _ref.disabled,
-    onClick = _ref.onClick;
-  // @ts-ignore
-  var _React$useContext = React.useContext(_context.default),
-    checkable = _React$useContext.checkable;
-  var customCheckbox = typeof checkable !== 'boolean' ? checkable : null;
-  return /*#__PURE__*/ React.createElement(
-    'span',
-    {
-      className: (0, _classnames.default)(
-        ''.concat(prefixCls),
+var SpaceCompactItemContext = /*#__PURE__*/ React.createContext(null);
+exports.SpaceCompactItemContext = SpaceCompactItemContext;
+var useCompactItemContext = function useCompactItemContext(prefixCls, direction) {
+  var compactItemContext = React.useContext(SpaceCompactItemContext);
+  var compactItemClassnames = React.useMemo(
+    function () {
+      var _classNames;
+      if (!compactItemContext) return '';
+      var compactDirection = compactItemContext.compactDirection,
+        isFirstItem = compactItemContext.isFirstItem,
+        isLastItem = compactItemContext.isLastItem;
+      var separator = compactDirection === 'vertical' ? '-vertical-' : '-';
+      return (0, _classnames.default)(
         ((_classNames = {}),
-        _defineProperty(_classNames, ''.concat(prefixCls, '-checked'), checked),
         _defineProperty(
           _classNames,
-          ''.concat(prefixCls, '-indeterminate'),
-          !checked && halfChecked,
+          ''.concat(prefixCls, '-compact').concat(separator, 'item'),
+          true,
         ),
-        _defineProperty(_classNames, ''.concat(prefixCls, '-disabled'), disabled),
+        _defineProperty(
+          _classNames,
+          ''.concat(prefixCls, '-compact').concat(separator, 'first-item'),
+          isFirstItem,
+        ),
+        _defineProperty(
+          _classNames,
+          ''.concat(prefixCls, '-compact').concat(separator, 'last-item'),
+          isLastItem,
+        ),
+        _defineProperty(
+          _classNames,
+          ''.concat(prefixCls, '-compact').concat(separator, 'item-rtl'),
+          direction === 'rtl',
+        ),
         _classNames),
-      ),
-      onClick: onClick,
+      );
     },
-    customCheckbox,
+    [prefixCls, direction, compactItemContext],
   );
-}
+  return {
+    compactSize:
+      compactItemContext === null || compactItemContext === void 0
+        ? void 0
+        : compactItemContext.compactSize,
+    compactDirection:
+      compactItemContext === null || compactItemContext === void 0
+        ? void 0
+        : compactItemContext.compactDirection,
+    compactItemClassnames: compactItemClassnames,
+  };
+};
+exports.useCompactItemContext = useCompactItemContext;

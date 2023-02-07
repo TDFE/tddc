@@ -1,5 +1,5 @@
 {
-  "otpDir": "src/.octopus",
+  "otpDir": "src/octopus",
   "proType": "react",
   "srcLang": "zh-CN",
   "distLangs": ["en-US"],

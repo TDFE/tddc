@@ -5,8 +5,8 @@ Object.defineProperty(exports, '__esModule', {
 });
 exports.default = void 0;
 var _universalCookie = _interopRequireDefault(require('universal-cookie'));
-var _zhCN = _interopRequireDefault(require('./.octopus/zh-CN'));
-var _enUS = _interopRequireDefault(require('./.octopus/en-US'));
+var _zhCN = _interopRequireDefault(require('./octopus/zh-CN'));
+var _enUS = _interopRequireDefault(require('./octopus/en-US'));
 function _interopRequireDefault(obj) {
   return obj && obj.__esModule ? obj : { default: obj };
 }

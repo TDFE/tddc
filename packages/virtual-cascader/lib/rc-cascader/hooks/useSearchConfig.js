@@ -3,10 +3,9 @@
 Object.defineProperty(exports, '__esModule', {
   value: true,
 });
-exports.default = Checkbox;
+exports.default = useSearchConfig;
 var React = _interopRequireWildcard(require('react'));
-var _classnames = _interopRequireDefault(require('classnames'));
-var _context = _interopRequireDefault(require('../context'));
+var _warning = _interopRequireDefault(require('rc-util/lib/warning'));
 function _interopRequireDefault(obj) {
   return obj && obj.__esModule ? obj : { default: obj };
 }
@@ -47,24 +46,32 @@ function _interopRequireWildcard(obj, nodeInterop) {
   }
   return newObj;
 }
-function _typeof(obj) {
-  '@babel/helpers - typeof';
-  return (
-    (_typeof =
-      'function' == typeof Symbol && 'symbol' == typeof Symbol.iterator
-        ? function (obj) {
-            return typeof obj;
-          }
-        : function (obj) {
-            return obj &&
-              'function' == typeof Symbol &&
-              obj.constructor === Symbol &&
-              obj !== Symbol.prototype
-              ? 'symbol'
-              : typeof obj;
-          }),
-    _typeof(obj)
-  );
+function ownKeys(object, enumerableOnly) {
+  var keys = Object.keys(object);
+  if (Object.getOwnPropertySymbols) {
+    var symbols = Object.getOwnPropertySymbols(object);
+    enumerableOnly &&
+      (symbols = symbols.filter(function (sym) {
+        return Object.getOwnPropertyDescriptor(object, sym).enumerable;
+      })),
+      keys.push.apply(keys, symbols);
+  }
+  return keys;
+}
+function _objectSpread(target) {
+  for (var i = 1; i < arguments.length; i++) {
+    var source = null != arguments[i] ? arguments[i] : {};
+    i % 2
+      ? ownKeys(Object(source), !0).forEach(function (key) {
+          _defineProperty(target, key, source[key]);
+        })
+      : Object.getOwnPropertyDescriptors
+      ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source))
+      : ownKeys(Object(source)).forEach(function (key) {
+          Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key));
+        });
+  }
+  return target;
 }
 function _defineProperty(obj, key, value) {
   key = _toPropertyKey(key);
@@ -94,34 +101,47 @@ function _toPrimitive(input, hint) {
   }
   return (hint === 'string' ? String : Number)(input);
 }
-function Checkbox(_ref) {
-  var _classNames;
-  var prefixCls = _ref.prefixCls,
-    checked = _ref.checked,
-    halfChecked = _ref.halfChecked,
-    disabled = _ref.disabled,
-    onClick = _ref.onClick;
-  // @ts-ignore
-  var _React$useContext = React.useContext(_context.default),
-    checkable = _React$useContext.checkable;
-  var customCheckbox = typeof checkable !== 'boolean' ? checkable : null;
-  return /*#__PURE__*/ React.createElement(
-    'span',
-    {
-      className: (0, _classnames.default)(
-        ''.concat(prefixCls),
-        ((_classNames = {}),
-        _defineProperty(_classNames, ''.concat(prefixCls, '-checked'), checked),
-        _defineProperty(
-          _classNames,
-          ''.concat(prefixCls, '-indeterminate'),
-          !checked && halfChecked,
-        ),
-        _defineProperty(_classNames, ''.concat(prefixCls, '-disabled'), disabled),
-        _classNames),
-      ),
-      onClick: onClick,
+function _typeof(obj) {
+  '@babel/helpers - typeof';
+  return (
+    (_typeof =
+      'function' == typeof Symbol && 'symbol' == typeof Symbol.iterator
+        ? function (obj) {
+            return typeof obj;
+          }
+        : function (obj) {
+            return obj &&
+              'function' == typeof Symbol &&
+              obj.constructor === Symbol &&
+              obj !== Symbol.prototype
+              ? 'symbol'
+              : typeof obj;
+          }),
+    _typeof(obj)
+  );
+}
+// Convert `showSearch` to unique config
+function useSearchConfig(showSearch) {
+  return React.useMemo(
+    function () {
+      if (!showSearch) {
+        return [false, {}];
+      }
+      var searchConfig = {
+        matchInputWidth: true,
+        limit: 50,
+      };
+      if (showSearch && _typeof(showSearch) === 'object') {
+        searchConfig = _objectSpread(_objectSpread({}, searchConfig), showSearch);
+      }
+      if (searchConfig.limit <= 0) {
+        delete searchConfig.limit;
+        if (process.env.NODE_ENV !== 'production') {
+          (0, _warning.default)(false, "'limit' of showSearch should be positive number or false.");
+        }
+      }
+      return [true, searchConfig];
     },
-    customCheckbox,
+    [showSearch],
   );
 }
