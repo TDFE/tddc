@@ -1,1 +1,1 @@
-export { default } from './TreeTransfer';
+export { default } from './Transfer';
