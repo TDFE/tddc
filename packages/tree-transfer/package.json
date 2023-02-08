@@ -1,7 +1,7 @@
 {
-  "name": "@tddc/cron",
-  "version": "1.0.0",
-  "description": "cron表达式组件",
+  "name": "@tddc/tree-transfer",
+  "version": "1.0.1",
+  "description": "基于antd tree组件实现的树形穿梭框组件",
   "author": "kobingogo",
   "license": "ISC",
   "main": "lib/index.js",
@@ -10,12 +10,11 @@
   ],
   "peerDependencies": {
     "antd": ">=3.20.1",
-    "moment": "^2.19.1",
     "react": ">=16.8.0",
     "react-dom": ">=16.8.0"
   },
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "90ef30869e713deda85fa18c15d1a47b2090006e"
+  "gitHead": "353f4c9bf5abd4eef5fa1de0a0fb8a9d65a14409"
 }
