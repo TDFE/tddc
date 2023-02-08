@@ -1,0 +1,23 @@
+{
+  "otpDir": "./.octopus",
+  "proType": "react",
+  "srcLang": "zh-CN",
+  "distLangs": ["en-US"],
+  "googleApiKey": "",
+  "baiduApiKey": {
+    "appId": "",
+    "appKey": ""
+  },
+  "baiduLangMap": {
+    "en-US": "en"
+  },
+  "translateOptions": {
+    "concurrentLimit": 10,
+    "requestOptions": {}
+  },
+  "fileSuffix": [".ts", ".js", ".vue", ".jsx", ".tsx"],
+  "defaultTranslateKeyApi": "Pinyin",
+  "importI18N": "import I18N from 'src/locale';",
+  "include": ["./src"],
+  "exclude": ["./src/locale.js"]
+}
