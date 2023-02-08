@@ -2,7 +2,7 @@
   "name": "@tddc/tree-transfer",
   "version": "1.0.1",
   "description": "基于antd tree组件实现的树形穿梭框组件",
-  "author": "lingbin.jiang@tongdun.cn",
+  "author": "kobingogo",
   "license": "ISC",
   "main": "lib/index.js",
   "files": [
@@ -16,5 +16,5 @@
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "2483878d74eaa968c8c689b692976218f2a44579"
+  "gitHead": "03c22f3ada72a158ce6fcbba536d1f3d250ff96d"
 }

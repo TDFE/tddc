@@ -1,4 +1,5 @@
-import React, { useState, useEffect, useMemo, useCallback } from 'react';
+import I18N from '../locale';
+import React, { useState, useEffect, useCallback } from 'react';
 import PropTypes from 'prop-types';
 import _ from 'lodash';
 import { Input, Tree, Button, Icon, Checkbox } from 'antd';
@@ -264,7 +265,7 @@ const TreeTransfer = ({
             style={{ marginRight: '6px' }}
             disabled={checkAllDisabled}
           />
-          {`${allLength}项`}
+          {I18N.template(I18N.treetransfer.index.aLLLE, { val1: allLength })}
         </div>
       );
     } else {
@@ -277,7 +278,7 @@ const TreeTransfer = ({
             onClick={() => checkAll(direction, type)}
             style={{ marginRight: '6px' }}
           />
-          {`${selectLength}/${allLength}项`}
+          {I18N.template(I18N.treetransfer.index.sELEC, { val1: selectLength, val2: allLength })}
         </div>
       );
     }
@@ -354,7 +355,7 @@ const TreeTransfer = ({
               <Search
                 // style={{ width: "95%", marginBottom: "10px" }}
                 onChange={(e) => handleSearch(e, 'left')}
-                placeholder={_.get(searchPlaceholder, 0, '请输入')}
+                placeholder={_.get(searchPlaceholder, 0, I18N.treetransfer.index.qingShuRu)}
               />
             </div>
           )}
@@ -403,7 +404,7 @@ const TreeTransfer = ({
               <Search
                 // style={{ width: "95%", marginBottom: "10px" }}
                 onChange={(e) => handleSearch(e, 'right')}
-                placeholder={_.get(searchPlaceholder, 1, '请输入')}
+                placeholder={_.get(searchPlaceholder, 1, I18N.treetransfer.index.qingShuRu)}
               />
             </div>
           )}
@@ -453,8 +454,8 @@ TreeTransfer.defaultProps = {
   // title: ["左侧标题", "右侧标题"],
   showSearch: true,
   searchItems: ['label', 'key'],
-  searchPlaceholder: ['请输入', '请输入'],
-  notFoundContent: '暂无数据',
+  searchPlaceholder: [I18N.treetransfer.index.qingShuRu, I18N.treetransfer.index.qingShuRu],
+  notFoundContent: I18N.treetransfer.index.zanWuShuJu,
   disabled: false,
   leftDisabled: false,
   rightDisabled: false,
@@ -462,5 +463,3 @@ TreeTransfer.defaultProps = {
 };
 
 export default TreeTransfer;
-
-export { TreeTransfer };

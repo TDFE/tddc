@@ -94,7 +94,7 @@ const mockData = [
   },
 ];
 
-class App extends Component {
+class TreeTransferDemo extends Component {
   onMove = (keys, info) => {
     console.log(keys);
     console.log(JSON.parse(info));
@@ -104,7 +104,7 @@ class App extends Component {
     return <TreeTransfer dataSource={mockData} onChange={this.onMove} />;
   }
 }
-export default App;
+export default TreeTransferDemo;
 ```
 
 #### 🚀 `入参`
