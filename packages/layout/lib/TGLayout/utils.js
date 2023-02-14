@@ -4,6 +4,7 @@ Object.defineProperty(exports, '__esModule', {
   value: true,
 });
 exports.getLayoutPageTitle =
+  exports.getLang =
   exports.getHeader =
   exports.formatOrgApp =
   exports.formatAppList =
@@ -18,6 +19,7 @@ exports.traverseTree =
   exports.getSubAppsFromMenus =
     void 0;
 var _jsencrypt = _interopRequireDefault(require('jsencrypt'));
+var _universalCookie = _interopRequireDefault(require('universal-cookie'));
 var _lodash = require('lodash');
 function _interopRequireDefault(obj) {
   return obj && obj.__esModule ? obj : { default: obj };
@@ -50,6 +52,7 @@ function _objectSpread(target) {
   return target;
 }
 function _defineProperty(obj, key, value) {
+  key = _toPropertyKey(key);
   if (key in obj) {
     Object.defineProperty(obj, key, {
       value: value,
@@ -61,6 +64,20 @@ function _defineProperty(obj, key, value) {
     obj[key] = value;
   }
   return obj;
+}
+function _toPropertyKey(arg) {
+  var key = _toPrimitive(arg, 'string');
+  return _typeof(key) === 'symbol' ? key : String(key);
+}
+function _toPrimitive(input, hint) {
+  if (_typeof(input) !== 'object' || input === null) return input;
+  var prim = input[Symbol.toPrimitive];
+  if (prim !== undefined) {
+    var res = prim.call(input, hint || 'default');
+    if (_typeof(res) !== 'object') return res;
+    throw new TypeError('@@toPrimitive must return a primitive value.');
+  }
+  return (hint === 'string' ? String : Number)(input);
 }
 function _typeof(obj) {
   '@babel/helpers - typeof';
@@ -115,11 +132,10 @@ function _arrayWithoutHoles(arr) {
 }
 function _arrayLikeToArray(arr, len) {
   if (len == null || len > arr.length) len = arr.length;
-  for (var i = 0, arr2 = new Array(len); i < len; i++) {
-    arr2[i] = arr[i];
-  }
+  for (var i = 0, arr2 = new Array(len); i < len; i++) arr2[i] = arr[i];
   return arr2;
 }
+var cookies = new _universalCookie.default();
 var pubKey =
   'MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDNpMKIVmt0u5lx62tRD1O/15EyNLN0lNi3++ytnvLalkQNSrrqU2w3uD5NwdVE/v4OrDznTpBdTl6N1ryXAILU5GDu0bLATC46RKxDlH52LIvaRBU7BZkEGqllEqRJFmwtvtNCVeZD6ekJWc67MLUh4LNa1yMQ9V6Zsf64uY2lgwIDAQAB';
 var rsaPwd = function rsaPwd(pwd) {
@@ -319,8 +335,13 @@ var getSubAppsFromMenus = function getSubAppsFromMenus(menus) {
   walkThroughMenus(menus);
   return (0, _lodash.uniq)(subapps);
 };
-// 获取页面标题
 exports.getSubAppsFromMenus = getSubAppsFromMenus;
+var getLang = function getLang() {
+  return cookies.get('lang') || 'cn';
+};
+
+// 获取页面标题
+exports.getLang = getLang;
 var getLayoutPageTitle = function getLayoutPageTitle(menuTree) {
   var title;
   var pathname = window.location.pathname;
@@ -331,7 +352,7 @@ var getLayoutPageTitle = function getLayoutPageTitle(menuTree) {
         taskList.shift();
         if (item.path) {
           if (pathname.includes(item.path)) {
-            title = item['menuName'];
+            title = getLang() === 'cn' ? item['menuName'] : item['enName'];
           }
         }
         if (item.children) {

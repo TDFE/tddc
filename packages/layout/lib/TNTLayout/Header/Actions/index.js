@@ -30,12 +30,12 @@ function _extends() {
   return _extends.apply(this, arguments);
 }
 var _default = function _default(props) {
-  var _props$config = props.config;
-  _props$config = _props$config === void 0 ? {} : _props$config;
-  var _props$config$avatar = _props$config.avatar,
-    avatar = _props$config$avatar === void 0 ? true : _props$config$avatar,
-    _props$config$globalN = _props$config.globalNavigation,
-    globalNavigation = _props$config$globalN === void 0 ? true : _props$config$globalN,
+  var _props$config = props.config,
+    _props$config2 = _props$config === void 0 ? {} : _props$config,
+    _props$config2$avatar = _props$config2.avatar,
+    avatar = _props$config2$avatar === void 0 ? true : _props$config2$avatar,
+    _props$config2$global = _props$config2.globalNavigation,
+    globalNavigation = _props$config2$global === void 0 ? true : _props$config2$global,
     menus = props.menus,
     headerRef = props.headerRef,
     extraHeaderActions = props.extraHeaderActions,

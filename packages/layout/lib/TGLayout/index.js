@@ -136,6 +136,7 @@ function _objectSpread(target) {
   return target;
 }
 function _defineProperty(obj, key, value) {
+  key = _toPropertyKey(key);
   if (key in obj) {
     Object.defineProperty(obj, key, {
       value: value,
@@ -147,6 +148,20 @@ function _defineProperty(obj, key, value) {
     obj[key] = value;
   }
   return obj;
+}
+function _toPropertyKey(arg) {
+  var key = _toPrimitive(arg, 'string');
+  return _typeof(key) === 'symbol' ? key : String(key);
+}
+function _toPrimitive(input, hint) {
+  if (_typeof(input) !== 'object' || input === null) return input;
+  var prim = input[Symbol.toPrimitive];
+  if (prim !== undefined) {
+    var res = prim.call(input, hint || 'default');
+    if (_typeof(res) !== 'object') return res;
+    throw new TypeError('@@toPrimitive must return a primitive value.');
+  }
+  return (hint === 'string' ? String : Number)(input);
 }
 function _regeneratorRuntime() {
   'use strict';
@@ -304,22 +319,24 @@ function _regeneratorRuntime() {
     };
   }
   function maybeInvokeDelegate(delegate, context) {
-    var method = delegate.iterator[context.method];
-    if (undefined === method) {
-      if (((context.delegate = null), 'throw' === context.method)) {
-        if (
+    var methodName = context.method,
+      method = delegate.iterator[methodName];
+    if (undefined === method)
+      return (
+        (context.delegate = null),
+        ('throw' === methodName &&
           delegate.iterator.return &&
           ((context.method = 'return'),
           (context.arg = undefined),
           maybeInvokeDelegate(delegate, context),
-          'throw' === context.method)
-        )
-          return ContinueSentinel;
-        (context.method = 'throw'),
-          (context.arg = new TypeError("The iterator does not provide a 'throw' method"));
-      }
-      return ContinueSentinel;
-    }
+          'throw' === context.method)) ||
+          ('return' !== methodName &&
+            ((context.method = 'throw'),
+            (context.arg = new TypeError(
+              "The iterator does not provide a '" + methodName + "' method",
+            )))),
+        ContinueSentinel
+      );
     var record = tryCatch(method, delegate.iterator, context.arg);
     if ('throw' === record.type)
       return (
@@ -365,10 +382,9 @@ function _regeneratorRuntime() {
       if (!isNaN(iterable.length)) {
         var i = -1,
           next = function next() {
-            for (; ++i < iterable.length; ) {
+            for (; ++i < iterable.length; )
               if (hasOwn.call(iterable, i))
                 return (next.value = iterable[i]), (next.done = !1), next;
-            }
             return (next.value = undefined), (next.done = !0), next;
           };
         return (next.next = next);
@@ -436,9 +452,7 @@ function _regeneratorRuntime() {
     (exports.keys = function (val) {
       var object = Object(val),
         keys = [];
-      for (var key in object) {
-        keys.push(key);
-      }
+      for (var key in object) keys.push(key);
       return (
         keys.reverse(),
         function next() {
@@ -465,12 +479,11 @@ function _regeneratorRuntime() {
           this.tryEntries.forEach(resetTryEntry),
           !skipTempReset)
         )
-          for (var name in this) {
+          for (var name in this)
             't' === name.charAt(0) &&
               hasOwn.call(this, name) &&
               !isNaN(+name.slice(1)) &&
               (this[name] = undefined);
-          }
       },
       stop: function stop() {
         this.done = !0;
@@ -640,37 +653,43 @@ function _unsupportedIterableToArray(o, minLen) {
 }
 function _arrayLikeToArray(arr, len) {
   if (len == null || len > arr.length) len = arr.length;
-  for (var i = 0, arr2 = new Array(len); i < len; i++) {
-    arr2[i] = arr[i];
-  }
+  for (var i = 0, arr2 = new Array(len); i < len; i++) arr2[i] = arr[i];
   return arr2;
 }
 function _iterableToArrayLimit(arr, i) {
   var _i =
-    arr == null
+    null == arr
       ? null
-      : (typeof Symbol !== 'undefined' && arr[Symbol.iterator]) || arr['@@iterator'];
-  if (_i == null) return;
-  var _arr = [];
-  var _n = true;
-  var _d = false;
-  var _s, _e;
-  try {
-    for (_i = _i.call(arr); !(_n = (_s = _i.next()).done); _n = true) {
-      _arr.push(_s.value);
-      if (i && _arr.length === i) break;
-    }
-  } catch (err) {
-    _d = true;
-    _e = err;
-  } finally {
+      : ('undefined' != typeof Symbol && arr[Symbol.iterator]) || arr['@@iterator'];
+  if (null != _i) {
+    var _s,
+      _e,
+      _x,
+      _r,
+      _arr = [],
+      _n = !0,
+      _d = !1;
     try {
-      if (!_n && _i['return'] != null) _i['return']();
+      if (((_x = (_i = _i.call(arr)).next), 0 === i)) {
+        if (Object(_i) !== _i) return;
+        _n = !1;
+      } else
+        for (
+          ;
+          !(_n = (_s = _x.call(_i)).done) && (_arr.push(_s.value), _arr.length !== i);
+          _n = !0
+        );
+    } catch (err) {
+      (_d = !0), (_e = err);
     } finally {
-      if (_d) throw _e;
+      try {
+        if (!_n && null != _i.return && ((_r = _i.return()), Object(_r) !== _r)) return;
+      } finally {
+        if (_d) throw _e;
+      }
     }
+    return _arr;
   }
-  return _arr;
 }
 function _arrayWithHoles(arr) {
   if (Array.isArray(arr)) return arr;
@@ -772,7 +791,7 @@ var TGLayout = function TGLayout(props) {
       /*#__PURE__*/ _regeneratorRuntime().mark(function _callee(org) {
         var orgAppList;
         return _regeneratorRuntime().wrap(function _callee$(_context) {
-          while (1) {
+          while (1)
             switch ((_context.prev = _context.next)) {
               case 0:
                 _context.next = 2;
@@ -793,11 +812,10 @@ var TGLayout = function TGLayout(props) {
               case 'end':
                 return _context.stop();
             }
-          }
         }, _callee);
       }),
     );
-    return function getAppByOrgId(_x) {
+    return function getAppByOrgId(_x2) {
       return _ref4.apply(this, arguments);
     };
   })();
@@ -910,7 +928,7 @@ var TGLayout = function TGLayout(props) {
                     code,
                     currentOrg;
                   return _regeneratorRuntime().wrap(function _callee2$(_context2) {
-                    while (1) {
+                    while (1)
                       switch ((_context2.prev = _context2.next)) {
                         case 0:
                           // 获取机构树
@@ -965,11 +983,10 @@ var TGLayout = function TGLayout(props) {
                         case 'end':
                           return _context2.stop();
                       }
-                    }
                   }, _callee2);
                 }),
               );
-              return function (_x2) {
+              return function (_x3) {
                 return _ref5.apply(this, arguments);
               };
             })(),
@@ -1026,7 +1043,7 @@ var TGLayout = function TGLayout(props) {
           res,
           csrfToken;
         return _regeneratorRuntime().wrap(function _callee3$(_context3) {
-          while (1) {
+          while (1)
             switch ((_context3.prev = _context3.next)) {
               case 0:
                 (_ref9 = p || {}), (account = _ref9.account), (password = _ref9.password);
@@ -1086,11 +1103,10 @@ var TGLayout = function TGLayout(props) {
               case 'end':
                 return _context3.stop();
             }
-          }
         }, _callee3);
       }),
     );
-    return function mockLogin(_x3) {
+    return function mockLogin(_x4) {
       return _ref8.apply(this, arguments);
     };
   })();
