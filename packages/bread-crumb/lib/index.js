@@ -1,24 +1,5 @@
 'use strict';
 
-function _typeof(obj) {
-  '@babel/helpers - typeof';
-  return (
-    (_typeof =
-      'function' == typeof Symbol && 'symbol' == typeof Symbol.iterator
-        ? function (obj) {
-            return typeof obj;
-          }
-        : function (obj) {
-            return obj &&
-              'function' == typeof Symbol &&
-              obj.constructor === Symbol &&
-              obj !== Symbol.prototype
-              ? 'symbol'
-              : typeof obj;
-          }),
-    _typeof(obj)
-  );
-}
 Object.defineProperty(exports, '__esModule', {
   value: true,
 });
@@ -26,6 +7,8 @@ exports.default = void 0;
 exports.flatten = flatten;
 require('antd/lib/breadcrumb/style');
 var _breadcrumb = _interopRequireDefault(require('antd/lib/breadcrumb'));
+require('antd/lib/icon/style');
+var _icon = _interopRequireDefault(require('antd/lib/icon'));
 var _react = _interopRequireWildcard(require('react'));
 var _reactRouter = require('react-router');
 var _reactRouterDom = require('react-router-dom');
@@ -69,6 +52,25 @@ function _interopRequireWildcard(obj, nodeInterop) {
 }
 function _interopRequireDefault(obj) {
   return obj && obj.__esModule ? obj : { default: obj };
+}
+function _typeof(obj) {
+  '@babel/helpers - typeof';
+  return (
+    (_typeof =
+      'function' == typeof Symbol && 'symbol' == typeof Symbol.iterator
+        ? function (obj) {
+            return typeof obj;
+          }
+        : function (obj) {
+            return obj &&
+              'function' == typeof Symbol &&
+              obj.constructor === Symbol &&
+              obj !== Symbol.prototype
+              ? 'symbol'
+              : typeof obj;
+          }),
+    _typeof(obj)
+  );
 }
 function _extends() {
   _extends = Object.assign
@@ -117,30 +119,38 @@ function _arrayLikeToArray(arr, len) {
 }
 function _iterableToArrayLimit(arr, i) {
   var _i =
-    arr == null
+    null == arr
       ? null
-      : (typeof Symbol !== 'undefined' && arr[Symbol.iterator]) || arr['@@iterator'];
-  if (_i == null) return;
-  var _arr = [];
-  var _n = true;
-  var _d = false;
-  var _s, _e;
-  try {
-    for (_i = _i.call(arr); !(_n = (_s = _i.next()).done); _n = true) {
-      _arr.push(_s.value);
-      if (i && _arr.length === i) break;
-    }
-  } catch (err) {
-    _d = true;
-    _e = err;
-  } finally {
+      : ('undefined' != typeof Symbol && arr[Symbol.iterator]) || arr['@@iterator'];
+  if (null != _i) {
+    var _s,
+      _e,
+      _x,
+      _r,
+      _arr = [],
+      _n = !0,
+      _d = !1;
     try {
-      if (!_n && _i['return'] != null) _i['return']();
+      if (((_x = (_i = _i.call(arr)).next), 0 === i)) {
+        if (Object(_i) !== _i) return;
+        _n = !1;
+      } else
+        for (
+          ;
+          !(_n = (_s = _x.call(_i)).done) && (_arr.push(_s.value), _arr.length !== i);
+          _n = !0
+        ) {}
+    } catch (err) {
+      (_d = !0), (_e = err);
     } finally {
-      if (_d) throw _e;
+      try {
+        if (!_n && null != _i.return && ((_r = _i.return()), Object(_r) !== _r)) return;
+      } finally {
+        if (_d) throw _e;
+      }
     }
+    return _arr;
   }
-  return _arr;
 }
 function _arrayWithHoles(arr) {
   if (Array.isArray(arr)) return arr;
@@ -173,6 +183,7 @@ function _objectSpread(target) {
   return target;
 }
 function _defineProperty(obj, key, value) {
+  key = _toPropertyKey(key);
   if (key in obj) {
     Object.defineProperty(obj, key, {
       value: value,
@@ -184,6 +195,20 @@ function _defineProperty(obj, key, value) {
     obj[key] = value;
   }
   return obj;
+}
+function _toPropertyKey(arg) {
+  var key = _toPrimitive(arg, 'string');
+  return _typeof(key) === 'symbol' ? key : String(key);
+}
+function _toPrimitive(input, hint) {
+  if (_typeof(input) !== 'object' || input === null) return input;
+  var prim = input[Symbol.toPrimitive];
+  if (prim !== undefined) {
+    var res = prim.call(input, hint || 'default');
+    if (_typeof(res) !== 'object') return res;
+    throw new TypeError('@@toPrimitive must return a primitive value.');
+  }
+  return (hint === 'string' ? String : Number)(input);
 }
 var searchToObject = function searchToObject(search) {
   var pairs = search.substring(1).split('&');
@@ -255,7 +280,8 @@ var _default = function _default(WrapperComponent, rest) {
   return (0, _reactRouter.withRouter)(function (props) {
     var _ref2 = props || {},
       match = _ref2.match,
-      location = _ref2.location;
+      location = _ref2.location,
+      separator = _ref2.separator;
     var _ref3 = location || {},
       pathname = _ref3.pathname,
       search = _ref3.search;
@@ -306,6 +332,8 @@ var _default = function _default(WrapperComponent, rest) {
       },
       [pathname],
     );
+    var onlyTwoLevels =
+      (breadList === null || breadList === void 0 ? void 0 : breadList.length) === 2;
     return /*#__PURE__*/ _react.default.createElement(
       _react.default.Fragment,
       null,
@@ -324,7 +352,7 @@ var _default = function _default(WrapperComponent, rest) {
               _breadcrumb.default,
               _extends(
                 {
-                  separator: '>',
+                  separator: !onlyTwoLevels ? separator || '>' : ' ',
                   className: 'c-breadcrumb',
                 },
                 BreadCrumbPrototype || {},
@@ -340,6 +368,32 @@ var _default = function _default(WrapperComponent, rest) {
                       href =
                         (v === null || v === void 0 ? void 0 : v.path) +
                         (getParams(newObj) ? '?'.concat(getParams(newObj)) : '');
+                    }
+                    if (onlyTwoLevels && i === 0) {
+                      var dom = /*#__PURE__*/ _react.default.createElement(
+                        _react.default.Fragment,
+                        null,
+                        /*#__PURE__*/ _react.default.createElement(_icon.default, {
+                          type: 'left',
+                          className: 'go-back',
+                        }),
+                        '\u8FD4\u56DE',
+                      );
+                      return /*#__PURE__*/ _react.default.createElement(
+                        _breadcrumb.default.Item,
+                        {
+                          key: v === null || v === void 0 ? void 0 : v.path,
+                        },
+                        href
+                          ? /*#__PURE__*/ _react.default.createElement(
+                              _reactRouterDom.Link,
+                              {
+                                to: href,
+                              },
+                              dom,
+                            )
+                          : dom,
+                      );
                     }
                     return /*#__PURE__*/ _react.default.createElement(
                       _breadcrumb.default.Item,

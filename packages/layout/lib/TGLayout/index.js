@@ -382,9 +382,10 @@ function _regeneratorRuntime() {
       if (!isNaN(iterable.length)) {
         var i = -1,
           next = function next() {
-            for (; ++i < iterable.length; )
+            for (; ++i < iterable.length; ) {
               if (hasOwn.call(iterable, i))
                 return (next.value = iterable[i]), (next.done = !1), next;
+            }
             return (next.value = undefined), (next.done = !0), next;
           };
         return (next.next = next);
@@ -452,7 +453,9 @@ function _regeneratorRuntime() {
     (exports.keys = function (val) {
       var object = Object(val),
         keys = [];
-      for (var key in object) keys.push(key);
+      for (var key in object) {
+        keys.push(key);
+      }
       return (
         keys.reverse(),
         function next() {
@@ -479,11 +482,12 @@ function _regeneratorRuntime() {
           this.tryEntries.forEach(resetTryEntry),
           !skipTempReset)
         )
-          for (var name in this)
+          for (var name in this) {
             't' === name.charAt(0) &&
               hasOwn.call(this, name) &&
               !isNaN(+name.slice(1)) &&
               (this[name] = undefined);
+          }
       },
       stop: function stop() {
         this.done = !0;
@@ -653,7 +657,9 @@ function _unsupportedIterableToArray(o, minLen) {
 }
 function _arrayLikeToArray(arr, len) {
   if (len == null || len > arr.length) len = arr.length;
-  for (var i = 0, arr2 = new Array(len); i < len; i++) arr2[i] = arr[i];
+  for (var i = 0, arr2 = new Array(len); i < len; i++) {
+    arr2[i] = arr[i];
+  }
   return arr2;
 }
 function _iterableToArrayLimit(arr, i) {
@@ -678,7 +684,7 @@ function _iterableToArrayLimit(arr, i) {
           ;
           !(_n = (_s = _x.call(_i)).done) && (_arr.push(_s.value), _arr.length !== i);
           _n = !0
-        );
+        ) {}
     } catch (err) {
       (_d = !0), (_e = err);
     } finally {
@@ -791,7 +797,7 @@ var TGLayout = function TGLayout(props) {
       /*#__PURE__*/ _regeneratorRuntime().mark(function _callee(org) {
         var orgAppList;
         return _regeneratorRuntime().wrap(function _callee$(_context) {
-          while (1)
+          while (1) {
             switch ((_context.prev = _context.next)) {
               case 0:
                 _context.next = 2;
@@ -812,6 +818,7 @@ var TGLayout = function TGLayout(props) {
               case 'end':
                 return _context.stop();
             }
+          }
         }, _callee);
       }),
     );
@@ -928,7 +935,7 @@ var TGLayout = function TGLayout(props) {
                     code,
                     currentOrg;
                   return _regeneratorRuntime().wrap(function _callee2$(_context2) {
-                    while (1)
+                    while (1) {
                       switch ((_context2.prev = _context2.next)) {
                         case 0:
                           // 获取机构树
@@ -983,6 +990,7 @@ var TGLayout = function TGLayout(props) {
                         case 'end':
                           return _context2.stop();
                       }
+                    }
                   }, _callee2);
                 }),
               );
@@ -1043,7 +1051,7 @@ var TGLayout = function TGLayout(props) {
           res,
           csrfToken;
         return _regeneratorRuntime().wrap(function _callee3$(_context3) {
-          while (1)
+          while (1) {
             switch ((_context3.prev = _context3.next)) {
               case 0:
                 (_ref9 = p || {}), (account = _ref9.account), (password = _ref9.password);
@@ -1103,6 +1111,7 @@ var TGLayout = function TGLayout(props) {
               case 'end':
                 return _context3.stop();
             }
+          }
         }, _callee3);
       }),
     );
