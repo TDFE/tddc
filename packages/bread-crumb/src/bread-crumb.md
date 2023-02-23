@@ -28,7 +28,12 @@ const BreadCrumbDefault = BreadCrumb(
     return (
       <Switch>
         <Route name="面包屑" path={`/components/bread-crumb`} exact component={Detail} />
-        <Route name="组件总览" component={List} path="/components" />
+        <Route
+          name="组件总览"
+          component={List}
+          path="/components"
+          query={[{ token: 'parentToken' }]}
+        />
       </Switch>
     );
   },

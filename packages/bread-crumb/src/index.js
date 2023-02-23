@@ -72,6 +72,7 @@ export default (WrapperComponent, rest) => {
         routerArr.push({
           path: props.path === '/' ? match?.path : props.path,
           name: props.name,
+          query: props.query,
         });
       });
       const breadCrumbList = routerArr?.filter(({ path }) => {
@@ -100,10 +101,24 @@ export default (WrapperComponent, rest) => {
                 {...(BreadCrumbPrototype || {})}
               >
                 {breadList?.map((v, i) => {
+                  const { query } = v;
+
+                  if (query && Array.isArray(query)) {
+                    query.forEach((q) => {
+                      for (let qKey in q) {
+                        const getVKey = q[qKey];
+                        if (newSearchObj[getVKey]) {
+                          newObj[qKey] = newSearchObj[getVKey];
+                        }
+                      }
+                    });
+                  }
+
                   let href = null;
                   if (i < breadList?.length - 1) {
                     href = v?.path + (getParams(newObj) ? `?${getParams(newObj)}` : '');
                   }
+
                   if (onlyTwoLevels && i === 0) {
                     const dom = (
                       <>
