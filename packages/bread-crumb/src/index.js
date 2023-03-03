@@ -72,6 +72,7 @@ export default (WrapperComponent, rest) => {
         routerArr.push({
           path: props.path === '/' ? match?.path : props.path,
           name: props.name,
+          query: props.query,
         });
       });
       const breadCrumbList = routerArr?.filter(({ path }) => {
@@ -90,18 +91,34 @@ export default (WrapperComponent, rest) => {
       <>
         {(breadList?.length > 1 || showHeader) && (
           <div className="page-global-header bread-crumb-head">
-            {BreadCrumbCustom && !!breadList?.length && BreadCrumbCustom(breadList)}
-            {!BreadCrumbCustom && (
+            {BreadCrumbCustom &&
+              !!breadList?.length &&
+              BreadCrumbCustom(breadList, getParams(newObj))}
+            {!(BreadCrumbCustom && BreadCrumbCustom(breadList)) && (
               <Breadcrumb
                 separator={!onlyTwoLevels ? separator || '>' : ' '}
                 className="c-breadcrumb"
                 {...(BreadCrumbPrototype || {})}
               >
                 {breadList?.map((v, i) => {
+                  const { query } = v;
+
+                  if (query && Array.isArray(query)) {
+                    query.forEach((q) => {
+                      for (let qKey in q) {
+                        const getVKey = q[qKey];
+                        if (newSearchObj[getVKey]) {
+                          newObj[qKey] = newSearchObj[getVKey];
+                        }
+                      }
+                    });
+                  }
+
                   let href = null;
                   if (i < breadList?.length - 1) {
                     href = v?.path + (getParams(newObj) ? `?${getParams(newObj)}` : '');
                   }
+
                   if (onlyTwoLevels && i === 0) {
                     const dom = (
                       <>
