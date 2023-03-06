@@ -71,7 +71,7 @@ export const tiance = {
   INDEX_DATASOURCE: { en: 'E', cn: '外', color: '#BC6BC6' },
   INDEX_YUNTU: { en: 'G', cn: '图', color: '#BC6BC6' },
   INDEX_YUNTU_VERSION: { en: 'G', cn: '图', color: '#BC6BC6' },
-  INDEX_YUNTU_VERSION: { en: 'S', cn: '评', color: '#DB6595' },
+  SCORE_CARD: { en: 'S', cn: '评', color: '#DB6595' },
 };
 
 // 天座
