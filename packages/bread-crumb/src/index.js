@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Breadcrumb } from 'antd';
+import { Breadcrumb, Icon } from 'antd';
 import { withRouter, matchPath } from 'react-router';
 import { Link } from 'react-router-dom';
 import './index.less';
@@ -52,7 +52,7 @@ export default (WrapperComponent, rest) => {
     showHeader,
   } = rest || {};
   return withRouter((props) => {
-    const { match, location } = props || {};
+    const { match, location, separator } = props || {};
     const { pathname, search } = location || {};
     const children = WrapperComponent({ ...props });
     const [breadList, setBreadList] = useState([]);
@@ -72,6 +72,7 @@ export default (WrapperComponent, rest) => {
         routerArr.push({
           path: props.path === '/' ? match?.path : props.path,
           name: props.name,
+          query: props.query,
         });
       });
       const breadCrumbList = routerArr?.filter(({ path }) => {
@@ -84,17 +85,52 @@ export default (WrapperComponent, rest) => {
       setBreadList(breadCrumbList);
     }, [pathname]);
 
+    const onlyTwoLevels = breadList?.length === 2;
+
     return (
       <>
         {(breadList?.length > 1 || showHeader) && (
           <div className="page-global-header bread-crumb-head">
-            {BreadCrumbCustom && !!breadList?.length && BreadCrumbCustom(breadList)}
-            {!BreadCrumbCustom && (
-              <Breadcrumb separator=">" className="c-breadcrumb" {...(BreadCrumbPrototype || {})}>
+            {BreadCrumbCustom &&
+              !!breadList?.length &&
+              BreadCrumbCustom(breadList, getParams(newObj))}
+            {!(BreadCrumbCustom && BreadCrumbCustom(breadList)) && (
+              <Breadcrumb
+                separator={!onlyTwoLevels ? separator || '>' : ' '}
+                className="c-breadcrumb"
+                {...(BreadCrumbPrototype || {})}
+              >
                 {breadList?.map((v, i) => {
+                  const { query } = v;
+
+                  if (query && Array.isArray(query)) {
+                    query.forEach((q) => {
+                      for (let qKey in q) {
+                        const getVKey = q[qKey];
+                        if (newSearchObj[getVKey]) {
+                          newObj[qKey] = newSearchObj[getVKey];
+                        }
+                      }
+                    });
+                  }
+
                   let href = null;
                   if (i < breadList?.length - 1) {
                     href = v?.path + (getParams(newObj) ? `?${getParams(newObj)}` : '');
+                  }
+
+                  if (onlyTwoLevels && i === 0) {
+                    const dom = (
+                      <>
+                        <Icon type="left" className="go-back" />
+                        返回
+                      </>
+                    );
+                    return (
+                      <Breadcrumb.Item key={v?.path}>
+                        {href ? <Link to={href}>{dom}</Link> : dom}
+                      </Breadcrumb.Item>
+                    );
                   }
                   return (
                     <Breadcrumb.Item key={v?.path}>

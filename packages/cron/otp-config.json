@@ -1,5 +1,5 @@
 {
-  "otpDir": "src/.octopus",
+  "otpDir": "./.octopus",
   "proType": "react",
   "srcLang": "zh-CN",
   "distLangs": ["en-US"],
@@ -19,7 +19,5 @@
   "defaultTranslateKeyApi": "Pinyin",
   "importI18N": "import I18N from 'src/locale';",
   "include": ["./src"],
-  "exclude": ["./src/octopus"],
-  "regPath": "locale",
-  "reservedKey": ["template", "case"]
+  "exclude": ["./src/locale.js"]
 }

@@ -27,131 +27,99 @@ let constant = {
 
 // 天策
 export const tiance = {
-  POLICY: { name: '策略', color: '#D97B4E', img: require('./static/imgs/1.svg') },
-  POLICY_VERSION: { name: '策略版本', color: '#D97B4E', img: require('./static/imgs/1.svg') },
-  POLICY_PIBLISH_HIS: {
-    name: '策略发布历史',
-    color: '#C78F58',
-    img: require('./static/imgs/1.svg'),
-  },
+  POLICY: { en: 'P', cn: '策', color: '#D97B4E' },
+  POLICY_VERSION: { en: 'P', cn: '策', color: '#D97B4E' },
+  POLICY_PIBLISH_HIS: { en: 'P', cn: '策', color: '#C78F58' },
 
-  DECISION_TOOL: { name: '决策工具', color: '#357BEB', img: require('./static/imgs/2.svg') },
-  DECISION_TOOL_VERSION: {
-    name: '决策工具版本',
-    color: '#357BEB',
-    img: require('./static/imgs/2.svg'),
-  },
+  DECISION_TOOL: { en: 'D', cn: '决', color: '#357BEB' },
+  DECISION_TOOL_VERSION: { en: 'D', cn: '决', color: '#357BEB' },
 
-  THIRD_SERVICE: { name: '三方服务', color: '#3BA99E', img: require('./static/imgs/3.svg') },
-  THIRD_SERVICE_VERSION: {
-    name: '三方服务版本',
-    color: '#3BA99E',
-    img: require('./static/imgs/3.svg'),
-  },
-  DATASOURCE_SERVICE: { name: '三方服务', color: '#3BA99E', img: require('./static/imgs/3.svg') },
-  INDEX_DATASOURCE_SET: {
-    name: '三方指标集',
-    color: '#3BA99E',
-    img: require('./static/imgs/3.svg'),
-  },
+  THIRD_SERVICE: { en: 'T', cn: '三', color: '#3BA99E' },
+  THIRD_SERVICE_VERSION: { en: 'T', cn: '三', color: '#3BA99E' },
+  DATASOURCE_SERVICE: { en: 'T', cn: '三', color: '#3BA99E' },
 
-  MODEL: { name: '模型', color: '#91B53B', img: require('./static/imgs/4.svg') },
-  MODEL_VERSION: { name: '模型版本', color: '#91B53B', img: require('./static/imgs/4.svg') },
+  MODEL: { en: 'M', cn: '模', color: '#91B53B' },
+  MODEL_VERSION: { en: 'M', cn: '模', color: '#91B53B' },
 
-  RULE: { name: '规则', color: '#126BFB', img: require('./static/imgs/6.svg') },
+  RULE: { en: 'R', cn: '规', color: '#126BFB' },
 
-  RULE_SET: { name: '规则集', color: '#1DA3DA', img: require('./static/imgs/5.svg') },
-  RULE_SET_VERSION: { name: '规则集版本', color: '#1DA3DA', img: require('./static/imgs/6.svg') },
+  RULE_SET: { en: 'R', cn: '规', color: '#1DA3DA' },
+  RULE_SET_VERSION: { en: 'R', cn: '规', color: '#1DA3DA' },
 
-  INDEX_OFFLINE: { name: '离线指标', color: '#BC6BC6', img: require('./static/imgs/7.svg') },
-  INDEX_OFFLINE_VERSION: {
-    name: '离线指标版本',
-    color: '#BC6BC6',
-    img: require('./static/imgs/7.svg'),
-  },
+  INDEX_OFFLINE: { en: 'O', cn: '离', color: '#BC6BC6' },
+  INDEX_OFFLINE_VERSION: { en: 'O', cn: '离', color: '#BC6BC6' },
 
-  INDEX_REALTIME: { name: '实时指标', color: '#0BBBD1', img: require('./static/imgs/8.svg') },
-  INDEX_REALTIME_VERSION: {
-    name: '实时指标版本',
-    color: '#0BBBD1',
-    img: require('./static/imgs/8.svg'),
-  },
+  INDEX_REALTIME: { en: 'R', cn: '实', color: '#0BBBD1' },
+  INDEX_REALTIME_VERSION: { en: 'R', cn: '实', color: '#0BBBD1' },
 
-  FIELD_SYSTEM: { name: '系统字段', color: '#6776CF', img: require('./static/imgs/9.svg') },
-  FIELD_SCRIPT: { name: '动态字段', color: '#5B8FF9 ', img: require('./static/imgs/10.svg') },
+  FIELD_SYSTEM: { en: 'S', cn: '系', color: '#6776CF' },
+  FIELD_SCRIPT: { en: 'D', cn: '动', color: '#5B8FF9 ' },
 
-  DEAL_TYPE: { name: '风险决策', color: '#CF6867', img: require('./static/imgs/11.svg') },
-  EVENT_TYPE: { name: '事件类型', color: '#D5A142', img: require('./static/imgs/12.svg') },
-  FUNCTION: { name: '函数', color: '#DB6595', img: require('./static/imgs/13.svg') },
-  FUNCTION_VERSION: { name: '函数版本', color: '#DB6595', img: require('./static/imgs/13.svg') },
-  NAME_LIST: { name: '名单集', color: '#E6A133', img: require('./static/imgs/14.svg') },
-  FLOW_TEMPLATE: { name: '流程模板', color: '#72A768', img: require('./static/imgs/15.svg') },
-  RULE_IMMUNE: { name: '规则免疫', color: '#565ED5', img: require('./static/imgs/16.svg') },
-  NO_DISTURB: { name: '免打扰', color: '#7ABD87', img: require('./static/imgs/17.svg') },
-  API_SERVICE: { name: '对接服务', color: '#945FB9', img: require('./static/imgs/18.svg') },
-  ETL_HANDLER: { name: 'ETL处理器', color: '#5681B0', img: require('./static/imgs/19.svg') },
-  DATASOURCE_ETL_HANDLER: {
-    name: 'ETL处理器',
-    color: '#5681B0',
-    img: require('./static/imgs/19.svg'),
-  },
+  DEAL_TYPE: { en: 'R', cn: '风', color: '#CF6867' },
+  EVENT_TYPE: { en: 'E', cn: '事', color: '#D5A142' },
+  FUNCTION: { en: 'F', cn: '函', color: '#DB6595' },
+  FUNCTION_VERSION: { en: 'F', cn: '函', color: '#DB6595' },
+  NAME_LIST: { en: 'L', cn: '名单集', color: '#E6A133' },
+  FLOW_TEMPLATE: { en: 'P', cn: '流', color: '#72A768' },
+  RULE_IMMUNE: { en: 'R', cn: '规', color: '#565ED5' },
+  NO_DISTURB: { en: 'D', cn: '免', color: '#7ABD87' },
+  API_SERVICE: { en: 'D', cn: '对', color: '#945FB9' },
 
-  INDEX_DATASOURCE: { name: '外数指标', color: '#BC6BC6', img: require('./static/imgs/22.svg') },
-  INDEXDATASOURCE_SET: {
-    name: '外数指标集',
-    color: '#BC6BC6',
-    img: require('./static/imgs/22.svg'),
-  },
-  INDEX_YUNTU: { name: '图谱指标', color: '#BC6BC6', img: require('./static/imgs/23.svg') },
-  INDEX_YUNTU_VERSION: { name: '图谱指标', color: '#BC6BC6', img: require('./static/imgs/23.svg') },
+  ETL_HANDLER: { en: 'E', cn: 'E', color: '#5681B0' },
+  DATASOURCE_ETL_HANDLER: { en: 'E', cn: 'E', color: '#5681B0' },
+
+  INDEX_DATASOURCE: { en: 'E', cn: '外', color: '#BC6BC6' },
+  INDEX_YUNTU: { en: 'G', cn: '图', color: '#BC6BC6' },
+  INDEX_YUNTU_VERSION: { en: 'G', cn: '图', color: '#BC6BC6' },
+  SCORE_CARD: { en: 'S', cn: '评', color: '#DB6595' },
 };
 
 // 天座
 export const tianzuo = {
-  DATASOURCE_PARTNER: { name: '合作方', color: '#357BEB', img: require('./static/imgs/24.svg') },
-  DATASOURCE_CONTRACT: { name: '合同', color: '#1068f5', img: require('./static/imgs/25.svg') },
+  DATASOURCE_PARTNER: { en: 'P', name: '合', color: '#357BEB' },
+  DATASOURCE_CONTRACT: { en: 'C', name: '合', color: '#1068f5' },
   DATASOURCE_ETL_HANDLER: {
-    name: 'ETL处理器',
+    en: 'E',
+    cn: 'E',
     color: '#D5A142',
-    img: require('./static/imgs/26.svg'),
   },
 
   DATASOURCE_ETL_HANDLER_POST: {
-    name: '后置处理器',
+    en: 'P',
+    name: '后',
     color: '#3BA99E',
-    img: require('./static/imgs/27.svg'),
   },
   DATASOURCE_ETL_HANDLER_PRE: {
-    name: '前置处理器',
+    en: 'P',
+    name: '前',
     color: '#1DA3DA',
-    img: require('./static/imgs/28.svg'),
   },
   DATASOURCE_CHANNEL_SERVICE: {
-    name: '调用方',
+    en: 'C',
+    name: '调',
     color: '#945FB9',
-    img: require('./static/imgs/29.svg'),
   },
   DATASOURCE_SERVICE_SHUNT: {
-    name: '分流接口',
+    en: 'S',
+    name: '分',
     color: '#6776CF',
-    img: require('./static/imgs/30.svg'),
   },
   DATASOURCE_SERVICE_EXCEPTION: {
+    en: 'A',
     name: '异常切换接口',
     color: '#D97B4E',
-    img: require('./static/imgs/31.svg'),
   },
   DATASOURCE_CHANNEL_SERVICE_GROUP: {
-    name: '调用方组',
+    en: 'C',
+    name: '调',
     color: '#DB6595',
-    img: require('./static/imgs/32.svg'),
   },
   EXECUTE_MODE_PARALLEL: {
-    name: '并联方式',
+    en: 'P',
+    name: '并',
     color: '#91B53B',
-    img: require('./static/imgs/33.svg'),
   },
-  EXECUTE_MODE_SERIAL: { name: '串联方式', color: '#72A768', img: require('./static/imgs/34.svg') },
+  EXECUTE_MODE_SERIAL: { en: 'S', name: '串', color: '#72A768' },
 };
 
 export const NODE_TYPE_MAP = {

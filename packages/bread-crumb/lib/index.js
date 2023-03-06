@@ -7,6 +7,8 @@ exports.default = void 0;
 exports.flatten = flatten;
 require('antd/lib/breadcrumb/style');
 var _breadcrumb = _interopRequireDefault(require('antd/lib/breadcrumb'));
+require('antd/lib/icon/style');
+var _icon = _interopRequireDefault(require('antd/lib/icon'));
 var _react = _interopRequireWildcard(require('react'));
 var _reactRouter = require('react-router');
 var _reactRouterDom = require('react-router-dom');
@@ -278,7 +280,8 @@ var _default = function _default(WrapperComponent, rest) {
   return (0, _reactRouter.withRouter)(function (props) {
     var _ref2 = props || {},
       match = _ref2.match,
-      location = _ref2.location;
+      location = _ref2.location,
+      separator = _ref2.separator;
     var _ref3 = location || {},
       pathname = _ref3.pathname,
       search = _ref3.search;
@@ -329,6 +332,8 @@ var _default = function _default(WrapperComponent, rest) {
       },
       [pathname],
     );
+    var onlyTwoLevels =
+      (breadList === null || breadList === void 0 ? void 0 : breadList.length) === 2;
     return /*#__PURE__*/ _react.default.createElement(
       _react.default.Fragment,
       null,
@@ -347,7 +352,7 @@ var _default = function _default(WrapperComponent, rest) {
               _breadcrumb.default,
               _extends(
                 {
-                  separator: '>',
+                  separator: !onlyTwoLevels ? separator || '>' : ' ',
                   className: 'c-breadcrumb',
                 },
                 BreadCrumbPrototype || {},
@@ -363,6 +368,32 @@ var _default = function _default(WrapperComponent, rest) {
                       href =
                         (v === null || v === void 0 ? void 0 : v.path) +
                         (getParams(newObj) ? '?'.concat(getParams(newObj)) : '');
+                    }
+                    if (onlyTwoLevels && i === 0) {
+                      var dom = /*#__PURE__*/ _react.default.createElement(
+                        _react.default.Fragment,
+                        null,
+                        /*#__PURE__*/ _react.default.createElement(_icon.default, {
+                          type: 'left',
+                          className: 'go-back',
+                        }),
+                        '\u8FD4\u56DE',
+                      );
+                      return /*#__PURE__*/ _react.default.createElement(
+                        _breadcrumb.default.Item,
+                        {
+                          key: v === null || v === void 0 ? void 0 : v.path,
+                        },
+                        href
+                          ? /*#__PURE__*/ _react.default.createElement(
+                              _reactRouterDom.Link,
+                              {
+                                to: href,
+                              },
+                              dom,
+                            )
+                          : dom,
+                      );
                     }
                     return /*#__PURE__*/ _react.default.createElement(
                       _breadcrumb.default.Item,

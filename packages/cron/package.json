@@ -1,8 +1,8 @@
 {
-  "name": "@tddc/auto-text-align",
-  "version": "1.0.1",
-  "description": "文本自适应",
-  "author": "zyj",
+  "name": "@tddc/cron",
+  "version": "1.0.0",
+  "description": "cron表达式组件",
+  "author": "kobingogo",
   "license": "ISC",
   "main": "lib/index.js",
   "files": [
@@ -10,10 +10,12 @@
   ],
   "peerDependencies": {
     "antd": ">=3.20.1",
+    "moment": "^2.19.1",
     "react": ">=16.8.0",
     "react-dom": ">=16.8.0"
   },
   "publishConfig": {
     "access": "public"
-  }
+  },
+  "gitHead": "90ef30869e713deda85fa18c15d1a47b2090006e"
 }

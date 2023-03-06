@@ -1,8 +1,8 @@
 {
-  "name": "@tddc/auto-text-align",
+  "name": "@tddc/tree-transfer",
   "version": "1.0.1",
-  "description": "文本自适应",
-  "author": "zyj",
+  "description": "基于antd tree组件实现的树形穿梭框组件",
+  "author": "kobingogo",
   "license": "ISC",
   "main": "lib/index.js",
   "files": [
@@ -15,5 +15,6 @@
   },
   "publishConfig": {
     "access": "public"
-  }
+  },
+  "gitHead": "353f4c9bf5abd4eef5fa1de0a0fb8a9d65a14409"
 }

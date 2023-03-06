@@ -4,6 +4,7 @@ Object.defineProperty(exports, '__esModule', {
   value: true,
 });
 exports.getLayoutPageTitle =
+  exports.getLang =
   exports.getHeader =
   exports.formatOrgApp =
   exports.formatAppList =
@@ -18,6 +19,7 @@ exports.traverseTree =
   exports.getSubAppsFromMenus =
     void 0;
 var _jsencrypt = _interopRequireDefault(require('jsencrypt'));
+var _universalCookie = _interopRequireDefault(require('universal-cookie'));
 var _lodash = require('lodash');
 function _interopRequireDefault(obj) {
   return obj && obj.__esModule ? obj : { default: obj };
@@ -135,6 +137,7 @@ function _arrayLikeToArray(arr, len) {
   }
   return arr2;
 }
+var cookies = new _universalCookie.default();
 var pubKey =
   'MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDNpMKIVmt0u5lx62tRD1O/15EyNLN0lNi3++ytnvLalkQNSrrqU2w3uD5NwdVE/v4OrDznTpBdTl6N1ryXAILU5GDu0bLATC46RKxDlH52LIvaRBU7BZkEGqllEqRJFmwtvtNCVeZD6ekJWc67MLUh4LNa1yMQ9V6Zsf64uY2lgwIDAQAB';
 var rsaPwd = function rsaPwd(pwd) {
@@ -334,8 +337,13 @@ var getSubAppsFromMenus = function getSubAppsFromMenus(menus) {
   walkThroughMenus(menus);
   return (0, _lodash.uniq)(subapps);
 };
-// 获取页面标题
 exports.getSubAppsFromMenus = getSubAppsFromMenus;
+var getLang = function getLang() {
+  return cookies.get('lang') || 'cn';
+};
+
+// 获取页面标题
+exports.getLang = getLang;
 var getLayoutPageTitle = function getLayoutPageTitle(menuTree) {
   var title;
   var pathname = window.location.pathname;
@@ -346,7 +354,7 @@ var getLayoutPageTitle = function getLayoutPageTitle(menuTree) {
         taskList.shift();
         if (item.path) {
           if (pathname.includes(item.path)) {
-            title = item['menuName'];
+            title = getLang() === 'cn' ? item['menuName'] : item['enName'];
           }
         }
         if (item.children) {

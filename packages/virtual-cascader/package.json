@@ -1,6 +1,6 @@
 {
   "name": "@tddc/virtual-cascader",
-  "version": "2.0.4",
+  "version": "2.0.5",
   "description": "同盾cascader",
   "author": "zyj",
   "license": "ISC",
@@ -22,7 +22,7 @@
     "rc-align": "^4.0.0"
   },
   "devDependencies": {
-    "antd": "^3.26.20",
+    "antd": ">=3.20.1",
     "react": ">=16.9.0",
     "react-dom": ">=16.9.0"
   },
