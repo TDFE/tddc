@@ -265,7 +265,7 @@ const AssignModal = (props) => {
           <div className="menu-all-checked">
             <Checkbox onChange={checkedAllApp} checked={allAppChecked} disabled={disabled}>
               {/* 全部渠道可用 */}
-              {getText('allOrgAvailable', props?.lang)}
+              {getText('allAppAvailable', props?.lang)}
             </Checkbox>
           </div>
         </div>
