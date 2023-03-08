@@ -229,7 +229,11 @@ export default () => {
                       tips: null,
                       goName: 'code',
                       columns: [
-                        { title: '指标名称', dataIndex: 'name', expression: null },
+                        {
+                          title: '指标名称指标名称指标名称指标名称指标名称指标名称指标名称指标名称',
+                          dataIndex: 'name',
+                          expression: null,
+                        },
                         { title: '指标标识', dataIndex: 'code', expression: null },
                         { title: '指标版本', dataIndex: 'version', expression: null },
                         { title: '所属指标集标识', dataIndex: 'featureSetCode', expression: null },

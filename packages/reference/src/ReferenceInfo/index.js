@@ -28,7 +28,16 @@ export const ReferenceInfo = (props) => {
         let renderColumns = [];
         if (columns?.length) {
           renderColumns = columns?.map((c, i) => {
-            const newC = { ...c, width: 140, ellipsis: true };
+            const newC = {
+              ...c,
+              title: (
+                <Tooltip title={c?.title} placement="topLeft">
+                  {c?.title}
+                </Tooltip>
+              ),
+              width: 140,
+              ellipsis: true,
+            };
             let fixedWidthLimit = {};
             let fixedMaxWidth = {};
             if (i === columns?.length - 1) {
