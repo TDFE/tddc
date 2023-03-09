@@ -1,5 +1,5 @@
 import ReactDOM from 'react-dom';
-import { Button, Alert, message } from 'antd';
+import { Button, Alert, message } from 'tntd';
 import { Modal } from 'tntd';
 import { ReferenceInfo } from '../ReferenceInfo';
 import { getText } from '../locale';
@@ -14,6 +14,7 @@ const ReferenceCheck = (props) => {
     appList = [],
     cancelText,
     okText,
+    emptyType,
     weakMsg = getText('weakMsg', props?.lang), //'存在弱引用（被下线、禁用、待提交/上线、导入待提交/上线、暂存、保存等相关状态组件引用）关系，谨慎操作',
     strongMsg = getText('strongMsg', props?.lang), //'存在强引用（被上线、启用、上下线审批中和指标初始化等相关状态组件引用）关系，禁止操作',
   } = props || {};
@@ -88,6 +89,7 @@ const ReferenceCheck = (props) => {
           )}
           <div className="relation-reference-detail">
             <ReferenceInfo
+              emptyType={emptyType}
               referenceData={referenceData}
               orgMap={orgMap}
               appList={appList}

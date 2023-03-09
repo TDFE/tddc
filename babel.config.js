@@ -1,19 +1,27 @@
 module.exports = {
   plugins: [
     [
-      "import",
+      'import',
       {
-        "libraryName": "antd",
-        "libraryDirectory": "es",
-        "style": true
+        libraryName: 'antd',
+        libraryDirectory: 'es',
+        style: true,
       },
-      "antd"
+      'antd',
+    ],
+    [
+      'import',
+      {
+        libraryName: 'tntd',
+        libraryDirectory: 'es',
+      },
+      'tntd',
     ],
     [
       '@babel/plugin-proposal-optional-chaining',
       {
         loose: true,
       },
-    ]
-  ]
+    ],
+  ],
 };

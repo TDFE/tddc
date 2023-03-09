@@ -25,11 +25,12 @@ const tailPkgList = pkgList
 
 export default defineConfig({
   title: 'tddc',
-  favicon: 'https://user-images.githubusercontent.com/9554297/83762004-a0761b00-a6a9-11ea-83b4-9c8ff721d4b8.png',
+  favicon:
+    'https://user-images.githubusercontent.com/9554297/83762004-a0761b00-a6a9-11ea-83b4-9c8ff721d4b8.png',
   logo: 'https://user-images.githubusercontent.com/9554297/83762004-a0761b00-a6a9-11ea-83b4-9c8ff721d4b8.png',
   outputPath: 'lerna-resource',
   publicPath: process.env.NODE_ENV === 'production' ? '/tddc/' : '/',
-  base:process.env.NODE_ENV === 'production' ? '/tddc/' : '/',
+  base: process.env.NODE_ENV === 'production' ? '/tddc/' : '/',
   mode: 'site',
   extraBabelPlugins: [
     [
@@ -39,34 +40,52 @@ export default defineConfig({
         libraryDirectory: 'es',
         style: true,
       },
+      'antd',
+    ],
+    [
+      'import',
+      {
+        libraryName: 'tntd',
+        libraryDirectory: 'es',
+      },
+      'tntd',
     ],
   ],
   resolve: {
     includes: [...tailPkgList, 'docs'],
   },
   alias: alias,
-  proxy:{
+  proxy: {
     '/bridgeApi': {
       target: 'https://tiangong.tcloud.tongdun.cn/',
       changeOrigin: true,
-      pathRewrite: {}
+      pathRewrite: {},
     },
   },
-  chainWebpack(memo){
-    memo.plugin('ProvidePlugin').use(webpack.ProvidePlugin,[{
-      React: 'react'
-    }]);
-
-    memo.plugin('DefinePlugin').use(webpack.DefinePlugin,[{
-      'process.env':  JSON.stringify(process.env)
-    }]);
+  lessLoader: {
+    modifyVars: {
+      hack: 'true; @import "~tntd/themes/default/variables.less";',
+    },
   },
-  dynamicImport:{},
+  chainWebpack(memo) {
+    memo.plugin('ProvidePlugin').use(webpack.ProvidePlugin, [
+      {
+        React: 'react',
+      },
+    ]);
+
+    memo.plugin('DefinePlugin').use(webpack.DefinePlugin, [
+      {
+        'process.env': JSON.stringify(process.env),
+      },
+    ]);
+  },
+  dynamicImport: {},
   metas: [
     {
       property: 'og:description',
       content: '🏆 让中后台开发更简单',
-    }
+    },
   ],
   locales: [
     ['zh-CN', '中文'],
@@ -108,6 +127,6 @@ export default defineConfig({
         title: 'General',
         children: pkgList,
       },
-    ]
-  }
+    ],
+  },
 });

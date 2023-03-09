@@ -1,4 +1,4 @@
-import { Tooltip, Icon, Table, Row, Empty } from 'antd';
+import { Tooltip, Icon, Table, Row, Empty } from 'tntd';
 import { Ellipsis } from 'tntd';
 import { getText } from '../locale';
 import AHref from '../AHref';
@@ -13,13 +13,14 @@ export const ReferenceInfo = (props) => {
     description = '',
     unmountHandle,
     imageStyle = {},
+    type,
   } = props;
   return (
     <div className="reference-body">
       {!referenceData?.length && (
         <Empty
           description={description || getText('noData', props?.lang)}
-          image={Empty.PRESENTED_IMAGE_SIMPLE}
+          type={type || 'no-result'}
           imageStyle={{ marginTop: 120, ...imageStyle }}
         />
       )}

@@ -12,7 +12,10 @@ if (type === 'lib') {
     cjs: { type: 'babel', lazy: true },
     esm: false,
     pkgs: [...tailPkgs],
-    extraBabelPlugins: [['babel-plugin-import', { libraryName: 'antd', style: true }, 'antd']],
+    extraBabelPlugins: [
+      ['babel-plugin-import', { libraryName: 'antd', style: true }, 'antd'],
+      ['babel-plugin-import', { libraryName: 'tntd' }, 'tntd'],
+    ],
   };
 }
 
@@ -25,6 +28,7 @@ if (type === 'es') {
     pkgs: [...tailPkgs],
     extraBabelPlugins: [
       ['babel-plugin-import', { libraryName: 'antd', libraryDirectory: 'es', style: true }, 'antd'],
+      ['babel-plugin-import', { libraryName: 'tntd', libraryDirectory: 'es' }, 'tntd'],
       [require('./scripts/replaceLib')],
     ],
   };

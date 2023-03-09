@@ -1,5 +1,5 @@
 import ReactDOM from 'react-dom';
-import { Button, Collapse, message, Tag, Tooltip, Icon, Alert } from 'antd';
+import { Button, Collapse, message, Tag, Tooltip, Icon, Alert } from 'tntd';
 import { Modal } from 'tntd';
 import { getText } from '../locale';
 import { ReferenceInfo } from '../ReferenceInfo';
@@ -24,6 +24,7 @@ const ReferenceBatchCheck = (props) => {
     onChange = () => {},
     cancelText,
     okText,
+    emptyType,
     weakMsg = getText('weakMsg', props?.lang),
     strongMsg = getText('strongMsg', props?.lang),
   } = props || {};
@@ -126,6 +127,7 @@ const ReferenceBatchCheck = (props) => {
                   key={i}
                 >
                   <ReferenceInfo
+                    emptyType={emptyType}
                     from="ReferenceBatchCheck"
                     unmountHandle={removeModal}
                     referenceData={d?.result || []}

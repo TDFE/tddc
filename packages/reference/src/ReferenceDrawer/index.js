@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Drawer, Spin, Tooltip, message } from 'antd';
+import { Drawer, Spin, Tooltip, message } from 'tntd';
 import PropTypes from 'prop-types';
 import { ReferenceInfo } from '../ReferenceInfo';
 import { getText } from '../locale';
@@ -14,6 +14,7 @@ const ReferenceDrawer = (props) => {
     title,
     visible,
     onClose,
+    emptyType,
     ...rest
   } = props;
   const [referenceData, setReferenceData] = useState(data);
@@ -48,6 +49,7 @@ const ReferenceDrawer = (props) => {
       {!referenceLoad && (
         <div className="drawer-reference-body">
           <ReferenceInfo
+            emptyType={emptyType}
             referenceData={referenceData || []}
             appList={appList || []}
             orgMap={orgMap || {}}

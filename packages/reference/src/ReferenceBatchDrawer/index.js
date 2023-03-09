@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Drawer, Spin, Tooltip, message, Collapse, Tag, Empty } from 'antd';
+import { Drawer, Spin, Tooltip, message, Collapse, Tag, Empty } from 'tntd';
 import PropTypes from 'prop-types';
 import { ReferenceInfo } from '../ReferenceInfo';
 import { getText } from '../locale';
@@ -18,6 +18,7 @@ const ReferenceBatchDrawer = (props) => {
     onClose,
     value = undefined,
     onChange = () => {},
+    emptyType,
     ...rest
   } = props;
   const [referenceData, setReferenceData] = useState(data);
@@ -70,6 +71,7 @@ const ReferenceBatchDrawer = (props) => {
                   key={i}
                 >
                   <ReferenceInfo
+                    emptyType={emptyType}
                     from="ReferenceBatchCheck"
                     unmountHandle={() => {}}
                     referenceData={d?.result || []}

@@ -18,7 +18,7 @@ npm install @tddc/reference --save
 ```jsx
 import { useState } from 'react';
 import React from 'react';
-import { Button } from 'antd';
+import { Button } from 'tntd';
 import { ReferenceDrawer } from '@tddc/reference';
 export default () => {
   const [visible, setVisible] = useState(false);
@@ -29,55 +29,7 @@ export default () => {
         title="查看关联引用"
         visible={visible}
         onClose={() => setVisible(false)}
-        data={[
-          {
-            columns: [
-              {
-                title: '策略名称',
-                dataIndex: 'name',
-              },
-              {
-                title: '策略标识',
-                dataIndex: 'code',
-              },
-              {
-                title: '策略名称',
-                dataIndex: 'version',
-              },
-              {
-                title: '所属机构',
-                dataIndex: 'org',
-              },
-              {
-                title: '所属应用',
-                dataIndex: 'app',
-              },
-            ],
-            goName: 'name',
-            rows: [
-              {
-                name: '策略A策略A策略A策略A策略A策略A策略A策略A策略A策略A策略A',
-                code: 'policy_phonepolicy_phonepolicy_phonepolicy_phonepolicy_phonepolicy_phonepolicy_phonepolicy_phonepolicy_phonepolicy_phone',
-                version: 'v2',
-                org: 'TongDun',
-                app: 'TEST',
-                goLink: 'name',
-                referenceCheckType: 'STRONG',
-              },
-              {
-                name: '策略A策略A策略A策略A策略A策略A策略A策略A策略A',
-                code: 'policy_phonepolicy_phonepolicy_phonepolicy_phonepolicy_phonepolicy_phonepolicy_phonepolicy_phonepolicy_phonepolicy_phone',
-                version: 'v2',
-                org: 'TongDun',
-                app: '注意流模式策略判断体现在过程判断的适配的字段注意流模式策略判断体现在过程判断的适配的字段',
-                goLink: 'name',
-                referenceCheckType: 'WEAK',
-              },
-            ],
-            tips: '注意流模式策略判断体现在过程判断的适配的字段',
-            title: '被应用策略【运行区】',
-          },
-        ]}
+        data={[]}
       />
     </>
   );
@@ -88,7 +40,7 @@ export default () => {
 
 ```jsx
 import React from 'react';
-import { Button } from 'antd';
+import { Button } from 'tntd';
 import { ReferenceCheck } from '@tddc/reference';
 export default () => {
   const confirmClick = () => {
@@ -196,7 +148,7 @@ export default () => {
 
 ```jsx
 import React from 'react';
-import { Button } from 'antd';
+import { Button } from 'tntd';
 import { ReferenceBatchCheck } from '@tddc/reference';
 export default () => {
   const confirmClick = () => {
