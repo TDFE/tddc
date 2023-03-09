@@ -4,23 +4,16 @@ Object.defineProperty(exports, '__esModule', {
   value: true,
 });
 exports.ReferenceBatchCheck = void 0;
-require('antd/lib/message/style');
-var _message2 = _interopRequireDefault(require('antd/lib/message'));
-require('antd/lib/tag/style');
-var _tag = _interopRequireDefault(require('antd/lib/tag'));
-require('antd/lib/tooltip/style');
-var _tooltip = _interopRequireDefault(require('antd/lib/tooltip'));
-require('antd/lib/alert/style');
-var _alert = _interopRequireDefault(require('antd/lib/alert'));
-require('antd/lib/button/style');
-var _button = _interopRequireDefault(require('antd/lib/button'));
-require('antd/lib/icon/style');
-var _icon = _interopRequireDefault(require('antd/lib/icon'));
-require('antd/lib/collapse/style');
-var _collapse = _interopRequireDefault(require('antd/lib/collapse'));
+var _message2 = _interopRequireDefault(require('tntd/lib/message'));
+var _modal = _interopRequireDefault(require('tntd/lib/modal'));
+var _tag = _interopRequireDefault(require('tntd/lib/tag'));
+var _tooltip = _interopRequireDefault(require('tntd/lib/tooltip'));
+var _alert = _interopRequireDefault(require('tntd/lib/alert'));
+var _button = _interopRequireDefault(require('tntd/lib/button'));
+var _icon = _interopRequireDefault(require('tntd/lib/icon'));
+var _collapse = _interopRequireDefault(require('tntd/lib/collapse'));
 var _react = _interopRequireDefault(require('react'));
 var _reactDom = _interopRequireDefault(require('react-dom'));
-var _tntd = require('tntd');
 var _locale = require('../locale');
 var _ReferenceInfo = require('../ReferenceInfo');
 require('./index.less');
@@ -61,6 +54,7 @@ var ReferenceBatchCheck = function ReferenceBatchCheck(props) {
     onChange = _ref$onChange === void 0 ? function () {} : _ref$onChange,
     cancelText = _ref.cancelText,
     okText = _ref.okText,
+    emptyType = _ref.emptyType,
     _ref$weakMsg = _ref.weakMsg,
     weakMsg =
       _ref$weakMsg === void 0
@@ -127,7 +121,7 @@ var ReferenceBatchCheck = function ReferenceBatchCheck(props) {
     var canNextOpera = !['STRONG'].includes(type);
     _reactDom.default.render(
       /*#__PURE__*/ _react.default.createElement(
-        _tntd.Modal,
+        _modal.default,
         {
           title: title,
           visible: true,
@@ -274,6 +268,7 @@ var ReferenceBatchCheck = function ReferenceBatchCheck(props) {
                       key: i,
                     },
                     /*#__PURE__*/ _react.default.createElement(_ReferenceInfo.ReferenceInfo, {
+                      emptyType: emptyType,
                       from: 'ReferenceBatchCheck',
                       unmountHandle: removeModal,
                       referenceData: (d === null || d === void 0 ? void 0 : d.result) || [],

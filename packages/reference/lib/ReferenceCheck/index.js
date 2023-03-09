@@ -4,15 +4,12 @@ Object.defineProperty(exports, '__esModule', {
   value: true,
 });
 exports.ReferenceCheck = void 0;
-require('antd/lib/message/style');
-var _message2 = _interopRequireDefault(require('antd/lib/message'));
-require('antd/lib/alert/style');
-var _alert = _interopRequireDefault(require('antd/lib/alert'));
-require('antd/lib/button/style');
-var _button = _interopRequireDefault(require('antd/lib/button'));
+var _message2 = _interopRequireDefault(require('tntd/lib/message'));
+var _modal = _interopRequireDefault(require('tntd/lib/modal'));
+var _alert = _interopRequireDefault(require('tntd/lib/alert'));
+var _button = _interopRequireDefault(require('tntd/lib/button'));
 var _react = _interopRequireDefault(require('react'));
 var _reactDom = _interopRequireDefault(require('react-dom'));
-var _tntd = require('tntd');
 var _ReferenceInfo = require('../ReferenceInfo');
 var _locale = require('../locale');
 require('./index.less');
@@ -37,6 +34,7 @@ var ReferenceCheck = function ReferenceCheck(props) {
     appList = _ref$appList === void 0 ? [] : _ref$appList,
     cancelText = _ref.cancelText,
     okText = _ref.okText,
+    emptyType = _ref.emptyType,
     _ref$weakMsg = _ref.weakMsg,
     weakMsg =
       _ref$weakMsg === void 0
@@ -86,7 +84,7 @@ var ReferenceCheck = function ReferenceCheck(props) {
     var canNextOpera = !['STRONG'].includes(type);
     _reactDom.default.render(
       /*#__PURE__*/ _react.default.createElement(
-        _tntd.Modal,
+        _modal.default,
         {
           title: title,
           visible: true,
@@ -177,6 +175,7 @@ var ReferenceCheck = function ReferenceCheck(props) {
               className: 'relation-reference-detail',
             },
             /*#__PURE__*/ _react.default.createElement(_ReferenceInfo.ReferenceInfo, {
+              emptyType: emptyType,
               referenceData: referenceData,
               orgMap: orgMap,
               appList: appList,

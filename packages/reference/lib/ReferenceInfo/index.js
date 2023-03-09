@@ -1,5 +1,22 @@
 'use strict';
 
+Object.defineProperty(exports, '__esModule', {
+  value: true,
+});
+exports.ReferenceInfo = void 0;
+var _table = _interopRequireDefault(require('tntd/lib/table'));
+var _row = _interopRequireDefault(require('tntd/lib/row'));
+var _icon = _interopRequireDefault(require('tntd/lib/icon'));
+var _ellipsis = _interopRequireDefault(require('tntd/lib/ellipsis'));
+var _tooltip = _interopRequireDefault(require('tntd/lib/tooltip'));
+var _empty = _interopRequireDefault(require('tntd/lib/empty'));
+var _react = _interopRequireDefault(require('react'));
+var _locale = require('../locale');
+var _AHref = _interopRequireDefault(require('../AHref'));
+require('./index.less');
+function _interopRequireDefault(obj) {
+  return obj && obj.__esModule ? obj : { default: obj };
+}
 function _typeof(obj) {
   '@babel/helpers - typeof';
   return (
@@ -18,28 +35,6 @@ function _typeof(obj) {
           }),
     _typeof(obj)
   );
-}
-Object.defineProperty(exports, '__esModule', {
-  value: true,
-});
-exports.ReferenceInfo = void 0;
-require('antd/lib/table/style');
-var _table = _interopRequireDefault(require('antd/lib/table'));
-require('antd/lib/row/style');
-var _row = _interopRequireDefault(require('antd/lib/row'));
-require('antd/lib/icon/style');
-var _icon = _interopRequireDefault(require('antd/lib/icon'));
-require('antd/lib/tooltip/style');
-var _tooltip = _interopRequireDefault(require('antd/lib/tooltip'));
-require('antd/lib/empty/style');
-var _empty = _interopRequireDefault(require('antd/lib/empty'));
-var _react = _interopRequireDefault(require('react'));
-var _tntd = require('tntd');
-var _locale = require('../locale');
-var _AHref = _interopRequireDefault(require('../AHref'));
-require('./index.less');
-function _interopRequireDefault(obj) {
-  return obj && obj.__esModule ? obj : { default: obj };
 }
 function _extends() {
   _extends = Object.assign
@@ -124,7 +119,8 @@ var ReferenceInfo = function ReferenceInfo(props) {
     description = _props$description === void 0 ? '' : _props$description,
     unmountHandle = props.unmountHandle,
     _props$imageStyle = props.imageStyle,
-    imageStyle = _props$imageStyle === void 0 ? {} : _props$imageStyle;
+    imageStyle = _props$imageStyle === void 0 ? {} : _props$imageStyle,
+    type = props.type;
   return /*#__PURE__*/ _react.default.createElement(
     'div',
     {
@@ -135,7 +131,7 @@ var ReferenceInfo = function ReferenceInfo(props) {
         description:
           description ||
           (0, _locale.getText)('noData', props === null || props === void 0 ? void 0 : props.lang),
-        image: _empty.default.PRESENTED_IMAGE_SIMPLE,
+        type: type || 'no-result',
         imageStyle: _objectSpread(
           {
             marginTop: 120,
@@ -160,6 +156,14 @@ var ReferenceInfo = function ReferenceInfo(props) {
                       _objectSpread({}, c),
                       {},
                       {
+                        title: /*#__PURE__*/ _react.default.createElement(
+                          _tooltip.default,
+                          {
+                            title: c === null || c === void 0 ? void 0 : c.title,
+                            placement: 'topLeft',
+                          },
+                          c === null || c === void 0 ? void 0 : c.title,
+                        ),
                         width: 140,
                         ellipsis: true,
                       },
@@ -282,7 +286,7 @@ var ReferenceInfo = function ReferenceInfo(props) {
                       }
                       if (c.dataIndex === goName) {
                         return /*#__PURE__*/ _react.default.createElement(
-                          _tntd.Ellipsis,
+                          _ellipsis.default,
                           _extends(
                             {
                               placement: 'topLeft',

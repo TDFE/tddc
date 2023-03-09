@@ -1,13 +1,13 @@
 {
   "private": true,
   "name": "tddc",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "scripts": {
     "start": "cross-env SYS_ENV=development dumi dev",
     "docs:build": "dumi build",
     "docs:deploy": "gh-pages -d lerna-resource",
     "deploy": "npm run docs:build && npm run docs:deploy",
-    "build": "cross-env BUILD_TYPE=lib father-build",
+    "build": "cross-env BUILD_TYPE=es father-build",
     "prettier": "prettier --write \"**/*.{js,jsx,tsx,ts,less,md,json}\"",
     "prepublishOnly": "npm run build",
     "install": "lerna bootstrap --hoist",

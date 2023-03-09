@@ -23,20 +23,13 @@ Object.defineProperty(exports, '__esModule', {
   value: true,
 });
 exports.ReferenceBatchDrawer = void 0;
-require('antd/lib/drawer/style');
-var _drawer = _interopRequireDefault(require('antd/lib/drawer'));
-require('antd/lib/empty/style');
-var _empty = _interopRequireDefault(require('antd/lib/empty'));
-require('antd/lib/tag/style');
-var _tag = _interopRequireDefault(require('antd/lib/tag'));
-require('antd/lib/spin/style');
-var _spin = _interopRequireDefault(require('antd/lib/spin'));
-require('antd/lib/tooltip/style');
-var _tooltip = _interopRequireDefault(require('antd/lib/tooltip'));
-require('antd/lib/message/style');
-var _message2 = _interopRequireDefault(require('antd/lib/message'));
-require('antd/lib/collapse/style');
-var _collapse = _interopRequireDefault(require('antd/lib/collapse'));
+var _drawer = _interopRequireDefault(require('tntd/lib/drawer'));
+var _empty = _interopRequireDefault(require('tntd/lib/empty'));
+var _tag = _interopRequireDefault(require('tntd/lib/tag'));
+var _spin = _interopRequireDefault(require('tntd/lib/spin'));
+var _tooltip = _interopRequireDefault(require('tntd/lib/tooltip'));
+var _message2 = _interopRequireDefault(require('tntd/lib/message'));
+var _collapse = _interopRequireDefault(require('tntd/lib/collapse'));
 var _react = _interopRequireWildcard(require('react'));
 var _propTypes = _interopRequireDefault(require('prop-types'));
 var _ReferenceInfo = require('../ReferenceInfo');
@@ -52,6 +45,7 @@ var _excluded = [
   'onClose',
   'value',
   'onChange',
+  'emptyType',
 ];
 function _getRequireWildcardCache(nodeInterop) {
   if (typeof WeakMap !== 'function') return null;
@@ -133,9 +127,7 @@ function _unsupportedIterableToArray(o, minLen) {
 }
 function _arrayLikeToArray(arr, len) {
   if (len == null || len > arr.length) len = arr.length;
-  for (var i = 0, arr2 = new Array(len); i < len; i++) {
-    arr2[i] = arr[i];
-  }
+  for (var i = 0, arr2 = new Array(len); i < len; i++) arr2[i] = arr[i];
   return arr2;
 }
 function _iterableToArrayLimit(arr, i) {
@@ -160,7 +152,7 @@ function _iterableToArrayLimit(arr, i) {
           ;
           !(_n = (_s = _x.call(_i)).done) && (_arr.push(_s.value), _arr.length !== i);
           _n = !0
-        ) {}
+        );
     } catch (err) {
       (_d = !0), (_e = err);
     } finally {
@@ -219,6 +211,7 @@ var ReferenceBatchDrawer = function ReferenceBatchDrawer(props) {
     value = _props$value === void 0 ? undefined : _props$value,
     _props$onChange = props.onChange,
     onChange = _props$onChange === void 0 ? function () {} : _props$onChange,
+    emptyType = props.emptyType,
     rest = _objectWithoutProperties(props, _excluded);
   var _useState = (0, _react.useState)(data),
     _useState2 = _slicedToArray(_useState, 2),
@@ -334,6 +327,7 @@ var ReferenceBatchDrawer = function ReferenceBatchDrawer(props) {
                     key: i,
                   },
                   /*#__PURE__*/ _react.default.createElement(_ReferenceInfo.ReferenceInfo, {
+                    emptyType: emptyType,
                     from: 'ReferenceBatchCheck',
                     unmountHandle: function unmountHandle() {},
                     referenceData: (d === null || d === void 0 ? void 0 : d.result) || [],

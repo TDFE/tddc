@@ -23,20 +23,25 @@ Object.defineProperty(exports, '__esModule', {
   value: true,
 });
 exports.ReferenceDrawer = void 0;
-require('antd/lib/drawer/style');
-var _drawer = _interopRequireDefault(require('antd/lib/drawer'));
-require('antd/lib/spin/style');
-var _spin = _interopRequireDefault(require('antd/lib/spin'));
-require('antd/lib/tooltip/style');
-var _tooltip = _interopRequireDefault(require('antd/lib/tooltip'));
-require('antd/lib/message/style');
-var _message2 = _interopRequireDefault(require('antd/lib/message'));
+var _drawer = _interopRequireDefault(require('tntd/lib/drawer'));
+var _spin = _interopRequireDefault(require('tntd/lib/spin'));
+var _tooltip = _interopRequireDefault(require('tntd/lib/tooltip'));
+var _message2 = _interopRequireDefault(require('tntd/lib/message'));
 var _react = _interopRequireWildcard(require('react'));
 var _propTypes = _interopRequireDefault(require('prop-types'));
 var _ReferenceInfo = require('../ReferenceInfo');
 var _locale = require('../locale');
 require('./index.less');
-var _excluded = ['fetchReference', 'data', 'orgMap', 'appList', 'title', 'visible', 'onClose'];
+var _excluded = [
+  'fetchReference',
+  'data',
+  'orgMap',
+  'appList',
+  'title',
+  'visible',
+  'onClose',
+  'emptyType',
+];
 function _getRequireWildcardCache(nodeInterop) {
   if (typeof WeakMap !== 'function') return null;
   var cacheBabelInterop = new WeakMap();
@@ -117,9 +122,7 @@ function _unsupportedIterableToArray(o, minLen) {
 }
 function _arrayLikeToArray(arr, len) {
   if (len == null || len > arr.length) len = arr.length;
-  for (var i = 0, arr2 = new Array(len); i < len; i++) {
-    arr2[i] = arr[i];
-  }
+  for (var i = 0, arr2 = new Array(len); i < len; i++) arr2[i] = arr[i];
   return arr2;
 }
 function _iterableToArrayLimit(arr, i) {
@@ -144,7 +147,7 @@ function _iterableToArrayLimit(arr, i) {
           ;
           !(_n = (_s = _x.call(_i)).done) && (_arr.push(_s.value), _arr.length !== i);
           _n = !0
-        ) {}
+        );
     } catch (err) {
       (_d = !0), (_e = err);
     } finally {
@@ -198,6 +201,7 @@ var ReferenceDrawer = function ReferenceDrawer(props) {
     title = props.title,
     visible = props.visible,
     onClose = props.onClose,
+    emptyType = props.emptyType,
     rest = _objectWithoutProperties(props, _excluded);
   var _useState = (0, _react.useState)(data),
     _useState2 = _slicedToArray(_useState, 2),
@@ -268,6 +272,7 @@ var ReferenceDrawer = function ReferenceDrawer(props) {
           className: 'drawer-reference-body',
         },
         /*#__PURE__*/ _react.default.createElement(_ReferenceInfo.ReferenceInfo, {
+          emptyType: emptyType,
           referenceData: referenceData || [],
           appList: appList || [],
           orgMap: orgMap || {},
