@@ -21,10 +21,11 @@ const searchToObject = (search) => {
 const getParams = (params) => {
   let paramStr = '';
   Object.keys(params).forEach((item) => {
+    const tempParamStr = encodeURIComponent(params[item]);
     if (paramStr === '') {
-      paramStr = `${item}=${params[item]}`;
+      paramStr = `${item}=${tempParamStr}`;
     } else {
-      paramStr = `${paramStr}&${item}=${params[item]}`;
+      paramStr = `${paramStr}&${item}=${tempParamStr}`;
     }
   });
   return paramStr;
