@@ -1,6 +1,6 @@
 {
   "name": "@tddc/bread-crumb",
-  "version": "1.0.10",
+  "version": "1.0.11",
   "description": "react4.0的面包屑",
   "author": "zefei.zhou <zefei.zhou@tongdun.net>",
   "license": "ISC",
@@ -11,8 +11,6 @@
   "peerDependencies": {
     "antd": ">=3.20.1",
     "react": ">=16.8.0",
-    "react-dom": ">=16.8.0",
-    "react-router": ">=4.0.0 && <5.0.0",
-    "react-router-dom": ">=4.3.1 && <5.0.0"
+    "dva": ">=2.4.1"
   }
 }
