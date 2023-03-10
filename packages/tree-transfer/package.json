@@ -4,9 +4,9 @@
   "description": "基于antd tree组件实现的树形穿梭框组件",
   "author": "kobingogo",
   "license": "ISC",
-  "main": "lib/index.js",
+  "main": "es/index.js",
   "files": [
-    "lib"
+    "es"
   ],
   "peerDependencies": {
     "antd": ">=3.20.1",

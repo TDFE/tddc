@@ -10,11 +10,11 @@
       "lib"
     ],
     "peerDependencies": {
-      "antd": "^3.26.20",
+      "antd": ">=3.20.1",
       "react": ">=16.8.0",
       "react-dom": ">=16.8.0",
       "@tddc/tree-view":">=1.0.0",
-      "d3-hierarchy": "^3.1.1"
+      "d3-hierarchy": ">=3.1.1"
     },
     "dependencies": {
       "jsencrypt": "^3.2.1"

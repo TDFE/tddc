@@ -4,9 +4,9 @@
   "description": "基于mmeditor的流",
   "author": "zefei.zhou <zefei.zhou@tongdun.net>",
   "license": "ISC",
-  "main": "lib/index.js",
+  "main": "es/index.js",
   "files": [
-    "lib"
+    "es"
   ],
   "peerDependencies": {
     "antd": "^3.26.20",

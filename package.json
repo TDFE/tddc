@@ -29,6 +29,7 @@
   },
   "dependencies": {
     "antd": "^3.26.20",
+    "react": "^16.8.0",
     "react-sortablejs": "^1.5.1",
     "sortablejs": "^1.15.0",
     "tntd": "^2.0.15",
