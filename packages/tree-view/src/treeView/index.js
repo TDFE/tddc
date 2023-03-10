@@ -263,7 +263,7 @@ class Tree extends Base {
     } else {
       path = d.path;
       currentNode = get(valueTemp, path);
-      currentNode.children = currentNode._children;
+      currentNode.children = currentNode._children || d._children;
       currentNode._children = null;
     }
     this.nodeChange && this.nodeChange(valueTemp);
