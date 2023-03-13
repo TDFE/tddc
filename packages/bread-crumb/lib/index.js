@@ -314,6 +314,7 @@ var _default = function _default(WrapperComponent, rest) {
                       : match.path
                     : props.path,
                 name: props.name,
+                query: props.query,
               });
             });
         var breadCrumbList =
@@ -346,8 +347,8 @@ var _default = function _default(WrapperComponent, rest) {
           },
           BreadCrumbCustom &&
             !!(breadList === null || breadList === void 0 ? void 0 : breadList.length) &&
-            BreadCrumbCustom(breadList),
-          !BreadCrumbCustom &&
+            BreadCrumbCustom(breadList, getParams(newObj)),
+          !(BreadCrumbCustom && BreadCrumbCustom(breadList)) &&
             /*#__PURE__*/ _react.default.createElement(
               _breadcrumb.default,
               _extends(
@@ -360,6 +361,17 @@ var _default = function _default(WrapperComponent, rest) {
               breadList === null || breadList === void 0
                 ? void 0
                 : breadList.map(function (v, i) {
+                    var query = v.query;
+                    if (query && Array.isArray(query)) {
+                      query.forEach(function (q) {
+                        for (var qKey in q) {
+                          var getVKey = q[qKey];
+                          if (newSearchObj[getVKey]) {
+                            newObj[qKey] = newSearchObj[getVKey];
+                          }
+                        }
+                      });
+                    }
                     var href = null;
                     if (
                       i <

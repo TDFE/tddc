@@ -495,7 +495,7 @@ var AssignModal = function AssignModal(props) {
               disabled: disabled,
             },
             (0, _locale.getText)(
-              'allOrgAvailable',
+              'allAppAvailable',
               props === null || props === void 0 ? void 0 : props.lang,
             ),
           ),

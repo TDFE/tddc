@@ -160,6 +160,14 @@ var ReferenceInfo = function ReferenceInfo(props) {
                       _objectSpread({}, c),
                       {},
                       {
+                        title: /*#__PURE__*/ _react.default.createElement(
+                          _tooltip.default,
+                          {
+                            title: c === null || c === void 0 ? void 0 : c.title,
+                            placement: 'topLeft',
+                          },
+                          c === null || c === void 0 ? void 0 : c.title,
+                        ),
                         width: 140,
                         ellipsis: true,
                       },
