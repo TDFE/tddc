@@ -12,7 +12,17 @@ const { TreeNode } = Tree;
 let path = []; // 上级机构到当前机构的路径
 
 const AssignModal = (props) => {
-  const { orgList = [], dataItem = {}, disabled, appList, onChange } = props;
+  const {
+    orgList = [],
+    dataItem = {},
+    disabled,
+    appList,
+    onChange,
+    orgTitle,
+    appTitle,
+    orgCheckboxTitle,
+    appCheckboxTitle,
+  } = props;
   let { appCodes = [], orgCodes = [], orgCode, appCode } = dataItem;
 
   let allOrg = preorder(orgList[0]);
@@ -237,11 +247,11 @@ const AssignModal = (props) => {
       <div className="left">
         <div className="menu-header">
           {/* 授权可用机构列表 */}
-          {getText('authorizesOrgList', props?.lang)}
+          {orgTitle || getText('authorizesOrgList', props?.lang)}
           <div className="menu-all-checked">
             <Checkbox onChange={checkAllOrg} checked={allOrgChecked} disabled={disabled}>
               {/* 全部机构可用 */}
-              {getText('allOrgAvailable', props?.lang)}
+              {orgCheckboxTitle || getText('allOrgAvailable', props?.lang)}
             </Checkbox>
           </div>
         </div>
@@ -261,11 +271,11 @@ const AssignModal = (props) => {
       <div className="right">
         <div className="menu-header">
           {/* 授权可用渠道列表 */}
-          {getText('authorizesAppList', props?.lang)}
+          {appTitle || getText('authorizesAppList', props?.lang)}
           <div className="menu-all-checked">
             <Checkbox onChange={checkedAllApp} checked={allAppChecked} disabled={disabled}>
               {/* 全部渠道可用 */}
-              {getText('allAppAvailable', props?.lang)}
+              {appCheckboxTitle || getText('allAppAvailable', props?.lang)}
             </Checkbox>
           </div>
         </div>
