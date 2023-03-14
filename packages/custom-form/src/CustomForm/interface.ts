@@ -30,7 +30,7 @@ export interface IForm {
   /** 先校验，并将结果返回 */
   validateFields: () => Promise<any>;
   /** 获取form表单的数据 */
-  getFieldsValue: () => [];
+  getFieldsValue: () => object;
   /** 获取formItem的数据 */
   getFieldValue: (field: Array<string>) => any;
   /** 给某些formItem设置数据 */
