@@ -13,38 +13,39 @@ nav:
 npm install @tddc/custom-form --save
 ```
 
-### 二层级动态增删表单
+### 多层动态增删表单
 
 ```jsx
 import React, { useState, useEffect } from 'react';
 import { Button, Row, Col, Input, Icon } from 'antd';
 import CustomForm from '@tddc/custom-form';
+import 'antd/dist/antd.css';
 
 const data = [
   {
-    score: 10,
+    id: 'zhejiang',
     name: '浙江',
     children: [
       {
-        score: 5,
+        id: 'hangzhou',
         name: '杭州',
       },
       {
-        score: 5,
+        id: 'ningbo',
         name: '宁波',
       },
     ],
   },
   {
-    score: 20,
+    id: 'jiangsu',
     name: '江苏',
     children: [
       {
-        score: 10,
+        id: 'nanjing',
         name: '南京',
       },
       {
-        score: 10,
+        id: 'suzhou',
         name: '苏州',
       },
     ],
@@ -82,7 +83,7 @@ const Demo = () => {
                         rules={[
                           {
                             required: true,
-                            message: '请输入请输入请输入请输入请输入请输入请输入',
+                            message: '请输入',
                           },
                           {
                             validator: (rules, value, callback) => {
@@ -100,7 +101,7 @@ const Demo = () => {
                     </Col>
                     <Col span={4}>
                       <CustomForm.Item
-                        name={[fName, 'score']}
+                        name={[fName, 'id']}
                         rules={[
                           {
                             required: true,
@@ -108,7 +109,7 @@ const Demo = () => {
                           },
                         ]}
                       >
-                        <Input placeholder="第一层分数" />
+                        <Input placeholder="第一层id" />
                       </CustomForm.Item>
                     </Col>
 
@@ -140,7 +141,7 @@ const Demo = () => {
                                     </Col>
                                     <Col span={10}>
                                       <CustomForm.Item
-                                        name={[sName, 'score']}
+                                        name={[sName, 'id']}
                                         rules={[
                                           {
                                             required: true,
@@ -148,7 +149,7 @@ const Demo = () => {
                                           },
                                         ]}
                                       >
-                                        <Input placeholder="第二层分数" />
+                                        <Input placeholder="第二层id" />
                                       </CustomForm.Item>
                                     </Col>
                                     <Col span={4}>
@@ -181,12 +182,244 @@ const Demo = () => {
 export default Demo;
 ```
 
+### shouldUpdate,当设置为 true 的时候表单的任意值改动的时候都会触发该单元格 render
+
+```jsx
+import React, { useState, useEffect } from 'react';
+import { Button, Row, Col, Input, InputNumber, Icon } from 'antd';
+import CustomForm from '@tddc/custom-form';
+import 'antd/dist/antd.css';
+
+const data = [
+  {
+    score: 10,
+    name: '数学',
+  },
+  {
+    score: 20,
+    name: '语文',
+  },
+];
+
+const ScoreSum = ({ form, value }) => {
+  const { content } = form.getFieldsValue() || {};
+
+  return (
+    <div>
+      总分：
+      {form.getFieldsValue()?.content?.reduce((total, item) => {
+        return total + (isNaN(Number(item.score)) ? 0 : Number(item.score));
+      }, 0)}
+    </div>
+  );
+};
+
+const Demo = () => {
+  const [initialValues, setInitialValues] = useState([]);
+  const [form] = CustomForm.useForm();
+
+  useEffect(() => {
+    setTimeout(() => {
+      setInitialValues(data);
+    }, 100);
+  }, []);
+
+  const handleSave = () => {
+    form.validateFields().then((values) => {
+      console.log(values, 'values');
+    });
+  };
+
+  return (
+    <CustomForm form={form} initialValues={{ content: initialValues }}>
+      <CustomForm.Item shouldUpdate>
+        <ScoreSum {...{ form }} />
+      </CustomForm.Item>
+      <CustomForm.List name="content">
+        {(fields, { add, remove }) => {
+          return (
+            <div className="content-wrapper">
+              {fields.map(({ key, name }, index) => {
+                return (
+                  <Row key={key} style={{ marginBottom: 15 }}>
+                    <Col span={4}>
+                      <CustomForm.Item
+                        name={[name, 'name']}
+                        rules={[
+                          {
+                            required: true,
+                            message: '请输入',
+                          },
+                          {
+                            validator: (rules, value, callback) => {
+                              if (value.length > 5) {
+                                return callback('5个字符');
+                              }
+
+                              return callback();
+                            },
+                          },
+                        ]}
+                      >
+                        <Input placeholder="name" />
+                      </CustomForm.Item>
+                    </Col>
+                    <Col span={4}>
+                      <CustomForm.Item
+                        name={[name, 'score']}
+                        rules={[
+                          {
+                            required: true,
+                            message: '请输入',
+                          },
+                        ]}
+                      >
+                        <InputNumber placeholder="得分" />
+                      </CustomForm.Item>
+                    </Col>
+
+                    <Col span={2}>
+                      <Icon type="plus-circle" onClick={() => add(index)} />
+                      <Icon type="delete" onClick={() => remove(index)} />
+                    </Col>
+                  </Row>
+                );
+              })}
+
+              <Button onClick={handleSave} style={{ marginRight: 8 }}>
+                提交
+              </Button>
+            </div>
+          );
+        }}
+      </CustomForm.List>
+    </CustomForm>
+  );
+};
+
+export default Demo;
+```
+
+### dependencies,当依赖的字段更新时候，该字段也会同步更新
+
+```jsx
+import React, { useState, useEffect } from 'react';
+import { Button, Row, Col, Input, InputNumber, Icon } from 'antd';
+import CustomForm from '@tddc/custom-form';
+import 'antd/dist/antd.css';
+
+const data = [
+  {
+    score: 10,
+    name: '数学',
+    tt: 11,
+  },
+  {
+    score: 20,
+    name: '语文',
+    tt: 2,
+  },
+];
+
+const Score = ({ form, value, onChange }) => {
+  console.log('依赖修改,触发render了');
+
+  return <InputNumber value={value} onChange={onChange} placeholder="得分" />;
+};
+
+const Demo = () => {
+  const [initialValues, setInitialValues] = useState([]);
+  const [form] = CustomForm.useForm();
+
+  useEffect(() => {
+    setTimeout(() => {
+      setInitialValues(data);
+    }, 100);
+  }, []);
+
+  const handleSave = () => {
+    form.validateFields().then((values) => {
+      console.log(values, 'values');
+    });
+  };
+
+  return (
+    <CustomForm form={form} initialValues={{ content: initialValues }}>
+      <CustomForm.List name="content">
+        {(fields, { add, remove }) => {
+          return (
+            <div className="content-wrapper">
+              {fields.map(({ key, name }, index) => {
+                return (
+                  <Row key={key} style={{ marginBottom: 15 }}>
+                    <Col span={4}>
+                      <CustomForm.Item
+                        name={[name, 'name']}
+                        rules={[
+                          {
+                            required: true,
+                            message: '请输入',
+                          },
+                          {
+                            validator: (rules, value, callback) => {
+                              if (value.length > 5) {
+                                return callback('5个字符');
+                              }
+
+                              return callback();
+                            },
+                          },
+                        ]}
+                      >
+                        <Input placeholder="name" />
+                      </CustomForm.Item>
+                    </Col>
+                    <Col span={4}>
+                      <CustomForm.Item
+                        dependencies={[[name, 'name']]}
+                        name={[name, 'score']}
+                        rules={[
+                          {
+                            required: true,
+                            message: '请输入',
+                          },
+                        ]}
+                      >
+                        <Score />
+                      </CustomForm.Item>
+                    </Col>
+                    <Col span={2}>
+                      <Icon type="plus-circle" onClick={() => add(index)} />
+                      <Icon type="delete" onClick={() => remove(index)} />
+                    </Col>
+                  </Row>
+                );
+              })}
+
+              <Button onClick={handleSave} style={{ marginRight: 8 }}>
+                提交
+              </Button>
+            </div>
+          );
+        }}
+      </CustomForm.List>
+    </CustomForm>
+  );
+};
+
+export default Demo;
+```
+
 #### 🚀 `入参`
 
-| 参数          | 说明                       | 类型                | 默认值 |
-| ------------- | -------------------------- | ------------------- | ------ |
-| list          | 后端返回的数据 key/value   | Array<label, value> | []     |
-| labelFontSize | 标题的 font-size           | String              | 12px   |
-| valueFontSize | 值的 font-size             | String              | 14px   |
-| itemSpace     | 每一项之间自定义调整的宽度 | Number              | 8      |
-| maxColumn     | 最多有几列                 | Number              | 10     |
+- CustomForm
+
+| 参数          | 说明           | 类型       | 默认值 |
+| ------------- | -------------- | ---------- | ------ |
+| initialValues | 初始化设置的值 | Array<any> | []     |
+
+- CustomForm.List | 参数 | 说明 | 类型 | 默认值 | | ------------- | -------------------------- | ------------------- | ------ | | name | 当前 formList 的 name | string | string[] | [] |
+
+CustomForm.Item | 参数 | 说明 | 类型 | 默认值 | | ------------- | -------------------------- | ------------------- | ------ | | name | 当前 formItem 的 name | string[] | [] | | initialValue | 当前 formItem 的初始化值 | string || number || boolean || null || undefined | | style | 自定义样式 | | | rules | 规则校验 | [] | [] | shouldUpdate | 当前字段是否每次 form 修改都更新(与 dependencies 二选一) | boolean | false | dependencies | 依赖字段改动导致本字段改动(与 dependencies 二选一) | namePath[] | false
+
+CustomFormInstance | 参数 | 说明 | 类型 | 默认值 | | ------------- | -------------------------- | ------------------- | ------ | | getFieldsValue | 获取当前所有单元格的值 | Fun | () => {} | getFieldValue | 获取某个单元格的值 | Fun | (field: Array<string>) => any; | setFieldsValue | 给某些单元格设置值 | Fun | (fileds: string[][]) => void; | validateFields | 触发表单验证 | Fun | () => Promise<any>;

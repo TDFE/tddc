@@ -72,6 +72,7 @@ export type IFormItem = {
   rules: ValidationRule;
   shouldUpdate: boolean;
   initialValue: TinitialValueType;
+  dependencies?: Array<string[] | string>;
 } & CustomRequired<IFormContext, 'setCurrentChangeKeys'>;
 
 /** 将某个不可选属性变成必选 */
