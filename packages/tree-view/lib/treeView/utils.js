@@ -3,7 +3,17 @@
 Object.defineProperty(exports, '__esModule', {
   value: true,
 });
-exports.getTextPixelWith = exports.expandTree = exports.colorRgb = exports.collapseTree = void 0;
+exports.getTextPixelWith =
+  exports.expandTree =
+  exports.colorRgb =
+  exports.collapseTree =
+  exports.SVGImage =
+    void 0;
+var _react = _interopRequireDefault(require('react'));
+var _server = require('react-dom/server');
+function _interopRequireDefault(obj) {
+  return obj && obj.__esModule ? obj : { default: obj };
+}
 // 获取单行文本的像素宽度
 var getTextPixelWith = function getTextPixelWith(text) {
   var fontStyle =
@@ -57,3 +67,51 @@ var expandTree = function expandTree(d) {
   return d;
 };
 exports.expandTree = expandTree;
+var SVGImage = function SVGImage(text, bgColor) {
+  // 使用 renderToString 方法将 SVGImage 组件渲染为字符串
+  var svgString = (0, _server.renderToString)(
+    /*#__PURE__*/ _react.default.createElement(
+      'svg',
+      {
+        width: '22px',
+        height: '22px',
+        viewBox: '0 0 22 22',
+        version: '1.1',
+        xmlns: 'http://www.w3.org/2000/svg',
+      },
+      /*#__PURE__*/ _react.default.createElement('circle', {
+        id: 'shape',
+        fill: bgColor,
+        cx: '11',
+        cy: '11',
+        r: '11',
+      }),
+      /*#__PURE__*/ _react.default.createElement(
+        'text',
+        {
+          fontFamily: 'PingFangSC-Regular, PingFang SC',
+          fontSize: '12',
+          fontWeight: 'normal',
+          fill: '#FFFFFF',
+        },
+        /*#__PURE__*/ _react.default.createElement(
+          'tspan',
+          {
+            x: '5',
+            y: '15',
+          },
+          text,
+        ),
+      ),
+    ),
+  );
+
+  // 对 svgString 进行 URL 编码
+  var encodedSvgString = encodeURIComponent(svgString);
+  // 使用 btoa 函数将 SVG 字符串转换为 base64 编码的字符串
+  var base64 = btoa(encodedSvgString);
+  // 生成base64
+  var imgSrc = 'data:image/svg+xml;base64,'.concat(base64);
+  return imgSrc;
+};
+exports.SVGImage = SVGImage;
