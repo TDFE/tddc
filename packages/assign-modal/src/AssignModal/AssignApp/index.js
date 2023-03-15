@@ -59,7 +59,7 @@ const AssignModal = (props) => {
 
     setCheckedKeys(initOrgs);
     setAppKeys(initApps || []);
-
+    console.log({ initApps });
     onChange &&
       onChange({
         appKeys: appCodes.includes('all') ? ['all'] : initApps,

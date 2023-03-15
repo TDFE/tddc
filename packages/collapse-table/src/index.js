@@ -1,7 +1,8 @@
 import { useEffect, useState, useRef } from 'react';
-import { Table, Icon } from 'antd';
+import cn from 'classnames';
+import { Spin, Table, Icon } from 'antd';
 
-import { makeRandomCode } from './utils';
+import { makeRandomCode } from '@/utils/utils';
 
 import './index.less';
 
@@ -22,7 +23,7 @@ const CollapseTable = (props) => {
 
     observer.current = new MutationObserver(expand);
     observer.current.observe(container.current, {
-      childList: true, // 子节点的变动
+      // childList: true // 子节点的变动
       attributes: true,
     });
   };
@@ -48,9 +49,7 @@ const CollapseTable = (props) => {
         `display: block; height: ${main.offsetHeight || 0}px; overflow: hidden;`,
       );
     }
-    if (main) {
-      main.setAttribute('style', 'position: relative; z-index: 100;');
-    }
+
     if (left) {
       left.setAttribute(
         'style',
@@ -99,7 +98,7 @@ const CollapseTable = (props) => {
 
   const trigger = () => {
     if (!className) return;
-    let dom = document.querySelector(
+    let dom = document?.querySelector(
       `.${className}.ant-table-wrapper.collapse-panel > .ant-spin-nested-loading > .ant-spin-container > .ant-table`,
     );
     dom?.setAttribute('c-data', 'Mutation');

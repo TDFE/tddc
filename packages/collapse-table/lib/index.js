@@ -28,7 +28,8 @@ var _table = _interopRequireDefault(require('antd/lib/table'));
 require('antd/lib/icon/style');
 var _icon = _interopRequireDefault(require('antd/lib/icon'));
 var _react = _interopRequireWildcard(require('react'));
-var _utils = require('./utils');
+var _classnames = _interopRequireDefault(require('classnames'));
+var _utils = require('@/utils/utils');
 require('./index.less');
 var _excluded = ['className'];
 function _getRequireWildcardCache(nodeInterop) {
@@ -203,8 +204,7 @@ var CollapseTable = function CollapseTable(props) {
     );
     observer.current = new MutationObserver(expand);
     observer.current.observe(container.current, {
-      childList: true,
-      // 子节点的变动
+      // childList: true // 子节点的变动
       attributes: true,
     });
   };
@@ -235,9 +235,6 @@ var CollapseTable = function CollapseTable(props) {
         'style',
         'display: block; height: '.concat(main.offsetHeight || 0, 'px; overflow: hidden;'),
       );
-    }
-    if (main) {
-      main.setAttribute('style', 'position: relative; z-index: 100;');
     }
     if (left) {
       left.setAttribute(
@@ -296,13 +293,17 @@ var CollapseTable = function CollapseTable(props) {
     );
   };
   var trigger = function trigger() {
+    var _document;
     if (!className) return;
-    var dom = document.querySelector(
-      '.'.concat(
-        className,
-        '.ant-table-wrapper.collapse-panel > .ant-spin-nested-loading > .ant-spin-container > .ant-table',
-      ),
-    );
+    var dom =
+      (_document = document) === null || _document === void 0
+        ? void 0
+        : _document.querySelector(
+            '.'.concat(
+              className,
+              '.ant-table-wrapper.collapse-panel > .ant-spin-nested-loading > .ant-spin-container > .ant-table',
+            ),
+          );
     dom === null || dom === void 0 ? void 0 : dom.setAttribute('c-data', 'Mutation');
   };
   return /*#__PURE__*/ _react.default.createElement(

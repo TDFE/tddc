@@ -227,10 +227,11 @@ var searchToObject = function searchToObject(search) {
 var getParams = function getParams(params) {
   var paramStr = '';
   Object.keys(params).forEach(function (item) {
+    var tempParamStr = encodeURIComponent(params[item]);
     if (paramStr === '') {
-      paramStr = ''.concat(item, '=').concat(params[item]);
+      paramStr = ''.concat(item, '=').concat(tempParamStr);
     } else {
-      paramStr = ''.concat(paramStr, '&').concat(item, '=').concat(params[item]);
+      paramStr = ''.concat(paramStr, '&').concat(item, '=').concat(tempParamStr);
     }
   });
   return paramStr;

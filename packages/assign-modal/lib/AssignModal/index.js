@@ -35,6 +35,16 @@ var _react = _interopRequireWildcard(require('react'));
 var _AssignApp = _interopRequireDefault(require('./AssignApp'));
 require('./index.less');
 var _universalCookie = _interopRequireDefault(require('universal-cookie'));
+var _excluded = [
+  'visible',
+  'orgList',
+  'dataItem',
+  'close',
+  'disabled',
+  'title',
+  'onSubmit',
+  'appList',
+];
 function _getRequireWildcardCache(nodeInterop) {
   if (typeof WeakMap !== 'function') return null;
   var cacheBabelInterop = new WeakMap();
@@ -74,6 +84,22 @@ function _interopRequireWildcard(obj, nodeInterop) {
 }
 function _interopRequireDefault(obj) {
   return obj && obj.__esModule ? obj : { default: obj };
+}
+function _extends() {
+  _extends = Object.assign
+    ? Object.assign.bind()
+    : function (target) {
+        for (var i = 1; i < arguments.length; i++) {
+          var source = arguments[i];
+          for (var key in source) {
+            if (Object.prototype.hasOwnProperty.call(source, key)) {
+              target[key] = source[key];
+            }
+          }
+        }
+        return target;
+      };
+  return _extends.apply(this, arguments);
 }
 function _slicedToArray(arr, i) {
   return (
@@ -142,6 +168,33 @@ function _iterableToArrayLimit(arr, i) {
 function _arrayWithHoles(arr) {
   if (Array.isArray(arr)) return arr;
 }
+function _objectWithoutProperties(source, excluded) {
+  if (source == null) return {};
+  var target = _objectWithoutPropertiesLoose(source, excluded);
+  var key, i;
+  if (Object.getOwnPropertySymbols) {
+    var sourceSymbolKeys = Object.getOwnPropertySymbols(source);
+    for (i = 0; i < sourceSymbolKeys.length; i++) {
+      key = sourceSymbolKeys[i];
+      if (excluded.indexOf(key) >= 0) continue;
+      if (!Object.prototype.propertyIsEnumerable.call(source, key)) continue;
+      target[key] = source[key];
+    }
+  }
+  return target;
+}
+function _objectWithoutPropertiesLoose(source, excluded) {
+  if (source == null) return {};
+  var target = {};
+  var sourceKeys = Object.keys(source);
+  var key, i;
+  for (i = 0; i < sourceKeys.length; i++) {
+    key = sourceKeys[i];
+    if (excluded.indexOf(key) >= 0) continue;
+    target[key] = source[key];
+  }
+  return target;
+}
 var cookies = new _universalCookie.default();
 var AssignModal = function AssignModal(props) {
   var visible = props.visible,
@@ -153,12 +206,16 @@ var AssignModal = function AssignModal(props) {
     _props$title = props.title,
     title = _props$title === void 0 ? '' : _props$title,
     onSubmit = props.onSubmit,
-    appList = props.appList;
+    appList = props.appList,
+    restProps = _objectWithoutProperties(props, _excluded);
   var _useState = (0, _react.useState)({}),
     _useState2 = _slicedToArray(_useState, 2),
     assignData = _useState2[0],
     setAssignData = _useState2[1];
   var submit = function submit() {
+    console.log({
+      assignData: assignData,
+    });
     onSubmit(assignData);
   };
   return /*#__PURE__*/ _react.default.createElement(
@@ -176,17 +233,25 @@ var AssignModal = function AssignModal(props) {
         disabled: disabled,
       },
     },
-    /*#__PURE__*/ _react.default.createElement(_AssignApp.default, {
-      dataItem: dataItem,
-      orgList: orgList,
-      appList: appList,
-      onChange: function onChange(data) {
-        setAssignData(data);
-      },
-      disabled: disabled,
-      lang:
-        (props === null || props === void 0 ? void 0 : props.lang) || cookies.get('lang') || 'cn',
-    }),
+    /*#__PURE__*/ _react.default.createElement(
+      _AssignApp.default,
+      _extends(
+        {
+          dataItem: dataItem,
+          orgList: orgList,
+          appList: appList,
+          onChange: function onChange(data) {
+            setAssignData(data);
+          },
+          disabled: disabled,
+          lang:
+            (props === null || props === void 0 ? void 0 : props.lang) ||
+            cookies.get('lang') ||
+            'cn',
+        },
+        restProps,
+      ),
+    ),
   );
 };
 var _default = AssignModal;
