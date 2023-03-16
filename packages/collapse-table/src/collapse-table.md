@@ -1,4 +1,23 @@
-### 示例
+---
+title: collapse-table表格
+group:
+  path: /
+nav:
+  title: 组件
+  path: /components
+---
+
+### 安装和初始化
+
+```
+npm install @tddc/collapse-table --save
+```
+
+### 说明
+
+- 此组件是为了解决 antd3.x 版本的`columns.fixed` 和`expandedRowRender`不能共用的问题；
+
+### 使用
 
 ```jsx
 import CollapseTable from '@tddc/collapse-table';
@@ -116,3 +135,8 @@ const Demo = () => {
 
 export default Demo;
 ```
+
+| 参数       | 说明              | 是否必填 | 类型 | 默认值 |
+| ---------- | ----------------- | -------- | ---- | ------ |
+| dataSource |                   |          |      |
+| columns    | expandedRowRender |

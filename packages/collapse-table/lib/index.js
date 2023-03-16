@@ -29,7 +29,7 @@ require('antd/lib/icon/style');
 var _icon = _interopRequireDefault(require('antd/lib/icon'));
 var _react = _interopRequireWildcard(require('react'));
 var _classnames = _interopRequireDefault(require('classnames'));
-var _utils = require('@/utils/utils');
+var _utils = require('./utils');
 require('./index.less');
 var _excluded = ['className'];
 function _getRequireWildcardCache(nodeInterop) {
@@ -204,7 +204,8 @@ var CollapseTable = function CollapseTable(props) {
     );
     observer.current = new MutationObserver(expand);
     observer.current.observe(container.current, {
-      // childList: true // 子节点的变动
+      childList: true,
+      // 子节点的变动
       attributes: true,
     });
   };
@@ -295,6 +296,9 @@ var CollapseTable = function CollapseTable(props) {
   var trigger = function trigger() {
     var _document;
     if (!className) return;
+    console.log({
+      className: className,
+    });
     var dom =
       (_document = document) === null || _document === void 0
         ? void 0
