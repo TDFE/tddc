@@ -22,29 +22,16 @@ function _typeof(obj) {
 Object.defineProperty(exports, '__esModule', {
   value: true,
 });
-Object.defineProperty(exports, 'AssignApp', {
-  enumerable: true,
-  get: function get() {
-    return _AssignApp.default;
-  },
-});
 exports.default = void 0;
-require('antd/lib/modal/style');
-var _modal = _interopRequireDefault(require('antd/lib/modal'));
+require('antd/lib/table/style');
+var _table = _interopRequireDefault(require('antd/lib/table'));
+require('antd/lib/icon/style');
+var _icon = _interopRequireDefault(require('antd/lib/icon'));
 var _react = _interopRequireWildcard(require('react'));
-var _AssignApp = _interopRequireDefault(require('./AssignApp'));
+var _classnames = _interopRequireDefault(require('classnames'));
+var _utils = require('./utils');
 require('./index.less');
-var _universalCookie = _interopRequireDefault(require('universal-cookie'));
-var _excluded = [
-  'visible',
-  'orgList',
-  'dataItem',
-  'close',
-  'disabled',
-  'title',
-  'onSubmit',
-  'appList',
-];
+var _excluded = ['className'];
 function _getRequireWildcardCache(nodeInterop) {
   if (typeof WeakMap !== 'function') return null;
   var cacheBabelInterop = new WeakMap();
@@ -195,64 +182,160 @@ function _objectWithoutPropertiesLoose(source, excluded) {
   }
   return target;
 }
-var cookies = new _universalCookie.default();
-var AssignModal = function AssignModal(props) {
-  var visible = props.visible,
-    orgList = props.orgList,
-    _props$dataItem = props.dataItem,
-    dataItem = _props$dataItem === void 0 ? {} : _props$dataItem,
-    close = props.close,
-    disabled = props.disabled,
-    _props$title = props.title,
-    title = _props$title === void 0 ? '' : _props$title,
-    onSubmit = props.onSubmit,
-    appList = props.appList,
+var CollapseTable = function CollapseTable(props) {
+  var className = props.className,
     restProps = _objectWithoutProperties(props, _excluded);
-  var _useState = (0, _react.useState)({}),
+  var expandIconColumnIndex = (props === null || props === void 0 ? void 0 : props.rowSelection)
+    ? 1
+    : props.expandIconColumnIndex || 0;
+  var _useState = (0, _react.useState)((0, _utils.makeRandomCode)()),
     _useState2 = _slicedToArray(_useState, 2),
-    assignData = _useState2[0],
-    setAssignData = _useState2[1];
-  var submit = function submit() {
-    console.log({
-      assignData: assignData,
+    randomCode = _useState2[0],
+    setRandomCode = _useState2[1];
+  var activeKeyRef = (0, _react.useRef)(null);
+  var container = (0, _react.useRef)(null);
+  var observer = (0, _react.useRef)(null);
+  var ob = function ob(className) {
+    container.current = document.querySelector(
+      '.'.concat(
+        className,
+        '.ant-table-wrapper.collapse-panel > .ant-spin-nested-loading > .ant-spin-container > .ant-table',
+      ),
+    );
+    observer.current = new MutationObserver(expand);
+    observer.current.observe(container.current, {
+      childList: true,
+      // 子节点的变动
+      attributes: true,
     });
-    onSubmit(assignData);
+  };
+  (0, _react.useEffect)(
+    function () {
+      ob(randomCode);
+    },
+    [randomCode],
+  );
+  var expand = function expand() {
+    var main = document.querySelector(
+      '.'
+        .concat(randomCode, ' .ant-table-scroll [data-row-key="')
+        .concat(activeKeyRef.current, '-extra-row"]'),
+    );
+    var right = document.querySelector(
+      '.'
+        .concat(randomCode, ' .ant-table-fixed-right [data-row-key="')
+        .concat(activeKeyRef.current, '-extra-row"]'),
+    );
+    var left = document.querySelector(
+      '.'
+        .concat(randomCode, ' .ant-table-fixed-left [data-row-key="')
+        .concat(activeKeyRef.current, '-extra-row"]'),
+    );
+    if (right) {
+      right.setAttribute(
+        'style',
+        'display: block; height: '.concat(main.offsetHeight || 0, 'px; overflow: hidden;'),
+      );
+    }
+    if (left) {
+      left.setAttribute(
+        'style',
+        'display: block; height: '.concat(main.offsetHeight || 0, 'px; overflow: hidden;'),
+      );
+    }
+  };
+
+  // 自定义展开收起
+  var customExpandIcon = function customExpandIcon(p) {
+    var expanded = p.expanded;
+    if (expanded) {
+      return /*#__PURE__*/ _react.default.createElement(
+        'a',
+        {
+          style: {
+            marginLeft: !props.rowSelection && '0px',
+            paddingLeft: !props.rowSelection && '0px',
+          },
+          className: 'expand',
+          onClick: function onClick(e) {
+            p === null || p === void 0 ? void 0 : p.onExpand(p.record, e);
+            if (props === null || props === void 0 ? void 0 : props.onExpand)
+              props === null || props === void 0 ? void 0 : props.onExpand(p.expanded, p.record);
+          },
+        },
+        /*#__PURE__*/ _react.default.createElement(_icon.default, {
+          type: 'minus-square',
+          style: {
+            fontSize: 14,
+          },
+        }),
+      );
+    }
+    return /*#__PURE__*/ _react.default.createElement(
+      'a',
+      {
+        style: {
+          marginLeft: !props.rowSelection && '0px',
+          paddingLeft: !props.rowSelection && '0px',
+        },
+        className: 'expand',
+        onClick: function onClick(e) {
+          p === null || p === void 0 ? void 0 : p.onExpand(p.record, e);
+          if (props === null || props === void 0 ? void 0 : props.onExpand)
+            props === null || props === void 0 ? void 0 : props.onExpand(p.expanded, p.record);
+        },
+      },
+      /*#__PURE__*/ _react.default.createElement(_icon.default, {
+        type: 'plus-square',
+        style: {
+          fontSize: 14,
+        },
+      }),
+    );
+  };
+  var trigger = function trigger() {
+    var _document;
+    if (!className) return;
+    console.log({
+      className: className,
+    });
+    var dom =
+      (_document = document) === null || _document === void 0
+        ? void 0
+        : _document.querySelector(
+            '.'.concat(
+              className,
+              '.ant-table-wrapper.collapse-panel > .ant-spin-nested-loading > .ant-spin-container > .ant-table',
+            ),
+          );
+    dom === null || dom === void 0 ? void 0 : dom.setAttribute('c-data', 'Mutation');
   };
   return /*#__PURE__*/ _react.default.createElement(
-    _modal.default,
+    'div',
     {
-      className: 'modelTool-assign',
-      title: title,
-      visible: visible,
-      width: '65%',
-      onCancel: close,
-      onOk: submit,
-      maskClosable: false,
-      destroyOnClose: true,
-      okButtonProps: {
-        disabled: disabled,
-      },
+      className: 'collapse-table',
     },
     /*#__PURE__*/ _react.default.createElement(
-      _AssignApp.default,
-      _extends(
-        {
-          dataItem: dataItem,
-          orgList: orgList,
-          appList: appList,
-          onChange: function onChange(data) {
-            setAssignData(data);
-          },
-          disabled: disabled,
-          lang:
-            (props === null || props === void 0 ? void 0 : props.lang) ||
-            cookies.get('lang') ||
-            'cn',
+      _table.default,
+      _extends({}, restProps, {
+        className: ''.concat(randomCode, ' collapse-panel ').concat(className),
+        expandIconColumnIndex: expandIconColumnIndex,
+        onExpandedRowsChange: function onExpandedRowsChange(arg) {
+          var key = (arg && arg[arg.length - 1]) || null;
+          activeKeyRef.current = key;
+          props.onExpandedRowsChange && props.onExpandedRowsChange([key]);
+          // 触发MutationObserver监听
+          trigger();
         },
-        restProps,
-      ),
+        expandIconAsCell: false,
+        expandable: true,
+        expandRowByClick: true,
+        expandIcon: function expandIcon(props) {
+          return customExpandIcon(props);
+        },
+      }),
     ),
   );
 };
-var _default = AssignModal;
+var _default = CollapseTable;
 exports.default = _default;

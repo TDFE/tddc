@@ -1,0 +1,132 @@
+.collapse-table {
+  .ant-table-row .expand {
+    position: relative;
+    top: 2px;
+    display: inline-block;
+    margin: 0px 10.5px 0 -23.5px;
+    padding-left: 11px;
+    color: #17233d;
+  }
+
+  .ant-table-tbody > tr > td:nth-child(2):has(.expand) {
+    padding: 0 50px 0 0px;
+    white-space: nowrap !important;
+  }
+
+  .ant-table-content {
+    background: #ffffff;
+    border: none !important;
+    box-shadow: none;
+    .ant-table-expand-icon-th,
+    .ant-table-row-expand-icon-cell {
+      width: 30px;
+      min-width: 35px;
+      padding: 0;
+      padding-left: 10px;
+      .ant-table-row-expand-icon.ant-table-row-collapsed,
+      .ant-table-row-expand-icon.ant-table-row-expanded {
+        width: 14.5px;
+        height: 14.5px;
+        border: 1px solid #17233d;
+      }
+      .ant-table-row-collapsed::after,
+      .ant-table-row-expanded::after {
+        position: relative;
+        top: -1px;
+        color: #17233d;
+        font-weight: 500;
+      }
+      .anticon-plus-square,
+      .anticon-minus-square {
+        position: relative;
+        top: 0px;
+      }
+      .expand {
+        color: #17233d;
+      }
+    }
+
+    .ant-table-expand-icon-th,
+    .ant-table-selection-column {
+      padding: 0;
+    }
+    .ant-table-thead {
+      font-weight: 500;
+      font-size: 14px;
+      font-family: PingFangSC-Medium;
+    }
+  }
+
+  &.collapse-table-expaned {
+    .collapse-panel {
+      .collapse-td-tags {
+        white-space: normal;
+        text-overflow: clip;
+        // text-overflow: ellipsis;
+        // white-space: nowrap;
+      }
+    }
+  }
+
+  .collapse-panel {
+    .collapse-td-tags {
+      overflow: hidden;
+      white-space: normal;
+      white-space: nowrap;
+      text-overflow: clip;
+      text-overflow: ellipsis;
+    }
+  }
+
+  .ant-table-scroll,
+  .ant-table-content {
+    .ant-table-body {
+      .ant-table-expanded-row.ant-table-expanded-row-level-1 {
+        position: relative;
+        z-index: 1000;
+        background: #f3f4f6;
+        box-shadow: inset 0 0 8px 0 #d1d5e3;
+
+        // 兼容低版本浏览器
+        > td {
+          position: sticky;
+          z-index: 1000;
+          background: inherit;
+          box-shadow: inset 0 0 8px 0 #d1d5e3;
+        }
+      }
+    }
+  }
+
+  .metric-name {
+    max-width: calc(100% - 50px);
+    .ant-tag.td-tag {
+      border-radius: 0;
+    }
+  }
+  .ant-pagination.ant-table-pagination {
+    float: none;
+    text-align: right;
+    .ant-pagination-total-text {
+      float: left;
+    }
+  }
+
+  .ant-table-thead > tr > th,
+  .ant-table-tbody > tr > td {
+    padding: 8px 10px;
+  }
+  .ant-divider,
+  .ant-divider-vertical {
+    margin: 0 8px;
+  }
+
+  // tr.ant-table-row > td{
+  //     cursor: pointer;
+  // }
+
+  .ant-table-fixed-left table,
+  .ant-table-fixed-right table {
+    width: min-content;
+  }
+}

@@ -225,6 +225,8 @@ export default Assign;
 | [dataItem](#-dataitem-决策中台数据结构) | 授权列表项({ appCode, appCodes, orgCode, orgCodes}) | Object |  |
 | onSubmit | 确定操作回调 | function(data) |  |
 | close | 关闭操作回调 | function |  |
+| appTitle | 渠道列表标题 | String |  |
+| orgTitle | 机构列表标题 | String |  |
 
 #### 🚀 `orgList 决策中台数据结构`
 

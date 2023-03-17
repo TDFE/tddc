@@ -22,29 +22,15 @@ function _typeof(obj) {
 Object.defineProperty(exports, '__esModule', {
   value: true,
 });
-Object.defineProperty(exports, 'AssignApp', {
-  enumerable: true,
-  get: function get() {
-    return _AssignApp.default;
-  },
-});
 exports.default = void 0;
-require('antd/lib/modal/style');
-var _modal = _interopRequireDefault(require('antd/lib/modal'));
 var _react = _interopRequireWildcard(require('react'));
-var _AssignApp = _interopRequireDefault(require('./AssignApp'));
-require('./index.less');
-var _universalCookie = _interopRequireDefault(require('universal-cookie'));
-var _excluded = [
-  'visible',
-  'orgList',
-  'dataItem',
-  'close',
-  'disabled',
-  'title',
-  'onSubmit',
-  'appList',
-];
+var _utils = require('./utils');
+var _store = require('./store');
+var _List = _interopRequireDefault(require('./components/List'));
+var _Item = _interopRequireDefault(require('./components/Item'));
+function _interopRequireDefault(obj) {
+  return obj && obj.__esModule ? obj : { default: obj };
+}
 function _getRequireWildcardCache(nodeInterop) {
   if (typeof WeakMap !== 'function') return null;
   var cacheBabelInterop = new WeakMap();
@@ -81,25 +67,6 @@ function _interopRequireWildcard(obj, nodeInterop) {
     cache.set(obj, newObj);
   }
   return newObj;
-}
-function _interopRequireDefault(obj) {
-  return obj && obj.__esModule ? obj : { default: obj };
-}
-function _extends() {
-  _extends = Object.assign
-    ? Object.assign.bind()
-    : function (target) {
-        for (var i = 1; i < arguments.length; i++) {
-          var source = arguments[i];
-          for (var key in source) {
-            if (Object.prototype.hasOwnProperty.call(source, key)) {
-              target[key] = source[key];
-            }
-          }
-        }
-        return target;
-      };
-  return _extends.apply(this, arguments);
 }
 function _slicedToArray(arr, i) {
   return (
@@ -168,91 +135,52 @@ function _iterableToArrayLimit(arr, i) {
 function _arrayWithHoles(arr) {
   if (Array.isArray(arr)) return arr;
 }
-function _objectWithoutProperties(source, excluded) {
-  if (source == null) return {};
-  var target = _objectWithoutPropertiesLoose(source, excluded);
-  var key, i;
-  if (Object.getOwnPropertySymbols) {
-    var sourceSymbolKeys = Object.getOwnPropertySymbols(source);
-    for (i = 0; i < sourceSymbolKeys.length; i++) {
-      key = sourceSymbolKeys[i];
-      if (excluded.indexOf(key) >= 0) continue;
-      if (!Object.prototype.propertyIsEnumerable.call(source, key)) continue;
-      target[key] = source[key];
-    }
-  }
-  return target;
-}
-function _objectWithoutPropertiesLoose(source, excluded) {
-  if (source == null) return {};
-  var target = {};
-  var sourceKeys = Object.keys(source);
-  var key, i;
-  for (i = 0; i < sourceKeys.length; i++) {
-    key = sourceKeys[i];
-    if (excluded.indexOf(key) >= 0) continue;
-    target[key] = source[key];
-  }
-  return target;
-}
-var cookies = new _universalCookie.default();
-var AssignModal = function AssignModal(props) {
-  var visible = props.visible,
-    orgList = props.orgList,
-    _props$dataItem = props.dataItem,
-    dataItem = _props$dataItem === void 0 ? {} : _props$dataItem,
-    close = props.close,
-    disabled = props.disabled,
-    _props$title = props.title,
-    title = _props$title === void 0 ? '' : _props$title,
-    onSubmit = props.onSubmit,
-    appList = props.appList,
-    restProps = _objectWithoutProperties(props, _excluded);
-  var _useState = (0, _react.useState)({}),
+var CustomForm = function CustomForm(_ref) {
+  var form = _ref.form,
+    initialValues = _ref.initialValues,
+    children = _ref.children;
+  // 这个是为了获取当前是哪一个单元格在输入
+  var _useState = (0, _react.useState)([]),
     _useState2 = _slicedToArray(_useState, 2),
-    assignData = _useState2[0],
-    setAssignData = _useState2[1];
-  var submit = function submit() {
-    console.log({
-      assignData: assignData,
-    });
-    onSubmit(assignData);
-  };
+    currentChangeKeys = _useState2[0],
+    setCurrentChangeKeys = _useState2[1];
   return /*#__PURE__*/ _react.default.createElement(
-    _modal.default,
+    _store.FormContext.Provider,
     {
-      className: 'modelTool-assign',
-      title: title,
-      visible: visible,
-      width: '65%',
-      onCancel: close,
-      onOk: submit,
-      maskClosable: false,
-      destroyOnClose: true,
-      okButtonProps: {
-        disabled: disabled,
+      value: {
+        form: form,
+        initialValues: initialValues,
+        currentChangeKeys: currentChangeKeys,
+        setCurrentChangeKeys: setCurrentChangeKeys,
       },
     },
-    /*#__PURE__*/ _react.default.createElement(
-      _AssignApp.default,
-      _extends(
-        {
-          dataItem: dataItem,
-          orgList: orgList,
-          appList: appList,
-          onChange: function onChange(data) {
-            setAssignData(data);
-          },
-          disabled: disabled,
-          lang:
-            (props === null || props === void 0 ? void 0 : props.lang) ||
-            cookies.get('lang') ||
-            'cn',
-        },
-        restProps,
-      ),
-    ),
+    children,
   );
 };
-var _default = AssignModal;
+CustomForm.useForm = function () {
+  var form = (0, _react.useRef)({
+    dataLevel: [],
+    formData: {},
+    validateFields: function validateFields() {
+      return (0, _utils.validateFields)(form.current);
+    },
+    getFieldsValue: function getFieldsValue() {
+      return (0, _utils.getFieldsValue)(form.current);
+    },
+    getFieldValue: function getFieldValue(field) {
+      return (0, _utils.getFieldValue)(form.current, field);
+    },
+    setFieldsValue: function setFieldsValue(obj) {
+      for (var i in obj) {
+        for (var attr in obj[i]) {
+          form.current.formData[i][attr].setItemValue(obj[i][attr]);
+        }
+      }
+    },
+  });
+  return [form.current];
+};
+CustomForm.List = _List.default;
+CustomForm.Item = _Item.default;
+var _default = CustomForm;
 exports.default = _default;

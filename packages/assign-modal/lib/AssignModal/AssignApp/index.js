@@ -173,7 +173,11 @@ var AssignModal = function AssignModal(props) {
     dataItem = _props$dataItem === void 0 ? {} : _props$dataItem,
     disabled = props.disabled,
     appList = props.appList,
-    onChange = props.onChange;
+    onChange = props.onChange,
+    orgTitle = props.orgTitle,
+    appTitle = props.appTitle,
+    orgCheckboxTitle = props.orgCheckboxTitle,
+    appCheckboxTitle = props.appCheckboxTitle;
   var _dataItem$appCodes = dataItem.appCodes,
     appCodes = _dataItem$appCodes === void 0 ? [] : _dataItem$appCodes,
     _dataItem$orgCodes = dataItem.orgCodes,
@@ -226,6 +230,9 @@ var AssignModal = function AssignModal(props) {
       }
       setCheckedKeys(initOrgs);
       setAppKeys(initApps || []);
+      console.log({
+        initApps: initApps,
+      });
       onChange &&
         onChange({
           appKeys: appCodes.includes('all') ? ['all'] : initApps,
@@ -430,10 +437,11 @@ var AssignModal = function AssignModal(props) {
         {
           className: 'menu-header',
         },
-        (0, _locale.getText)(
-          'authorizesOrgList',
-          props === null || props === void 0 ? void 0 : props.lang,
-        ),
+        orgTitle ||
+          (0, _locale.getText)(
+            'authorizesOrgList',
+            props === null || props === void 0 ? void 0 : props.lang,
+          ),
         /*#__PURE__*/ _react.default.createElement(
           'div',
           {
@@ -446,10 +454,11 @@ var AssignModal = function AssignModal(props) {
               checked: allOrgChecked,
               disabled: disabled,
             },
-            (0, _locale.getText)(
-              'allOrgAvailable',
-              props === null || props === void 0 ? void 0 : props.lang,
-            ),
+            orgCheckboxTitle ||
+              (0, _locale.getText)(
+                'allOrgAvailable',
+                props === null || props === void 0 ? void 0 : props.lang,
+              ),
           ),
         ),
       ),
@@ -478,10 +487,11 @@ var AssignModal = function AssignModal(props) {
         {
           className: 'menu-header',
         },
-        (0, _locale.getText)(
-          'authorizesAppList',
-          props === null || props === void 0 ? void 0 : props.lang,
-        ),
+        appTitle ||
+          (0, _locale.getText)(
+            'authorizesAppList',
+            props === null || props === void 0 ? void 0 : props.lang,
+          ),
         /*#__PURE__*/ _react.default.createElement(
           'div',
           {
@@ -494,10 +504,11 @@ var AssignModal = function AssignModal(props) {
               checked: allAppChecked,
               disabled: disabled,
             },
-            (0, _locale.getText)(
-              'allOrgAvailable',
-              props === null || props === void 0 ? void 0 : props.lang,
-            ),
+            appCheckboxTitle ||
+              (0, _locale.getText)(
+                'allAppAvailable',
+                props === null || props === void 0 ? void 0 : props.lang,
+              ),
           ),
         ),
       ),

@@ -7,10 +7,21 @@ import Cookies from 'universal-cookie';
 const cookies = new Cookies();
 
 const AssignModal = (props) => {
-  const { visible, orgList, dataItem = {}, close, disabled, title = '', onSubmit, appList } = props;
+  const {
+    visible,
+    orgList,
+    dataItem = {},
+    close,
+    disabled,
+    title = '',
+    onSubmit,
+    appList,
+    ...restProps
+  } = props;
   const [assignData, setAssignData] = useState({});
 
   const submit = () => {
+    console.log({ assignData });
     onSubmit(assignData);
   };
 
@@ -35,6 +46,7 @@ const AssignModal = (props) => {
         }}
         disabled={disabled}
         lang={props?.lang || cookies.get('lang') || 'cn'}
+        {...restProps}
       />
     </Modal>
   );

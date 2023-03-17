@@ -19,7 +19,7 @@
   "defaultTranslateKeyApi": "Pinyin",
   "importI18N": "import I18N from 'src/locale';",
   "include": ["./src"],
-  "exclude": ["./src/.octopus", "./src/img", "./src/locale.js"],
+  "exclude": ["./src/octopus", "./src/img", "./src/locale.js"],
   "regPath": "locale",
   "resourcePath": ["./src/constants/locale"],
   "reservedKey": ["template", "case"]

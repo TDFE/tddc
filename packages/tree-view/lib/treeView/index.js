@@ -1049,7 +1049,7 @@ var Tree = /*#__PURE__*/ (function (_Base) {
         } else {
           path = d.path;
           currentNode = (0, _lodash.get)(valueTemp, path);
-          currentNode.children = currentNode._children;
+          currentNode.children = currentNode._children || d._children;
           currentNode._children = null;
         }
         this.nodeChange && this.nodeChange(valueTemp);
