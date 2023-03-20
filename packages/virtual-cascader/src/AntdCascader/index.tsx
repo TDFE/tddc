@@ -29,7 +29,7 @@ import {
 } from './config/utils';
 import type { InputStatus } from './interface';
 import warning from './config/warning';
-import './index.css';
+import './index.less';
 
 // Align the design since we use `rc-select` in root. This help:
 // - List search content will show all content

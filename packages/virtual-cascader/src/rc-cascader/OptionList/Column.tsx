@@ -83,7 +83,6 @@ export default function Column({
         window.clearTimeout(timer);
       }
       timer = null;
-      console.log(timer, 'timer');
     };
   }, [multiple, activeValue, options, fieldNames, dropdownVisible]);
 

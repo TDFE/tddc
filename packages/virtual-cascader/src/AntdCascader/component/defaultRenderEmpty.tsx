@@ -3,7 +3,7 @@
  * @Author: 郑泳健
  * @Date: 2022-12-19 16:45:16
  * @LastEditors: 郑泳健
- * @LastEditTime: 2023-01-31 17:36:32
+ * @LastEditTime: 2023-03-17 14:47:56
  */
 // @ts-ignore
 import I18N from '../../locale';
@@ -16,7 +16,7 @@ const defaultRenderEmpty = (componentName?: string) => (
       const prefix = getPrefixCls('empty');
 
       return (
-        <div>
+        <div className={`tntd-cascader-no-data-wrapper ${prefix}`}>
           <img
             style={{ width: 80, height: 50, marginTop: 35 }}
             src={require('../../img/no-data-s.png')}
