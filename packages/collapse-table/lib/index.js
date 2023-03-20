@@ -88,73 +88,6 @@ function _extends() {
       };
   return _extends.apply(this, arguments);
 }
-function _slicedToArray(arr, i) {
-  return (
-    _arrayWithHoles(arr) ||
-    _iterableToArrayLimit(arr, i) ||
-    _unsupportedIterableToArray(arr, i) ||
-    _nonIterableRest()
-  );
-}
-function _nonIterableRest() {
-  throw new TypeError(
-    'Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.',
-  );
-}
-function _unsupportedIterableToArray(o, minLen) {
-  if (!o) return;
-  if (typeof o === 'string') return _arrayLikeToArray(o, minLen);
-  var n = Object.prototype.toString.call(o).slice(8, -1);
-  if (n === 'Object' && o.constructor) n = o.constructor.name;
-  if (n === 'Map' || n === 'Set') return Array.from(o);
-  if (n === 'Arguments' || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n))
-    return _arrayLikeToArray(o, minLen);
-}
-function _arrayLikeToArray(arr, len) {
-  if (len == null || len > arr.length) len = arr.length;
-  for (var i = 0, arr2 = new Array(len); i < len; i++) {
-    arr2[i] = arr[i];
-  }
-  return arr2;
-}
-function _iterableToArrayLimit(arr, i) {
-  var _i =
-    null == arr
-      ? null
-      : ('undefined' != typeof Symbol && arr[Symbol.iterator]) || arr['@@iterator'];
-  if (null != _i) {
-    var _s,
-      _e,
-      _x,
-      _r,
-      _arr = [],
-      _n = !0,
-      _d = !1;
-    try {
-      if (((_x = (_i = _i.call(arr)).next), 0 === i)) {
-        if (Object(_i) !== _i) return;
-        _n = !1;
-      } else
-        for (
-          ;
-          !(_n = (_s = _x.call(_i)).done) && (_arr.push(_s.value), _arr.length !== i);
-          _n = !0
-        ) {}
-    } catch (err) {
-      (_d = !0), (_e = err);
-    } finally {
-      try {
-        if (!_n && null != _i.return && ((_r = _i.return()), Object(_r) !== _r)) return;
-      } finally {
-        if (_d) throw _e;
-      }
-    }
-    return _arr;
-  }
-}
-function _arrayWithHoles(arr) {
-  if (Array.isArray(arr)) return arr;
-}
 function _objectWithoutProperties(source, excluded) {
   if (source == null) return {};
   var target = _objectWithoutPropertiesLoose(source, excluded);
@@ -187,14 +120,18 @@ var CollapseTable = function CollapseTable(props) {
     restProps = _objectWithoutProperties(props, _excluded);
   var expandIconColumnIndex = (props === null || props === void 0 ? void 0 : props.rowSelection)
     ? 1
-    : props.expandIconColumnIndex || 0;
-  var _useState = (0, _react.useState)((0, _utils.makeRandomCode)()),
-    _useState2 = _slicedToArray(_useState, 2),
-    randomCode = _useState2[0],
-    setRandomCode = _useState2[1];
+    : props.expandIconColumnIndex || 0; // 确定checkbox框位置
+
+  var randomCode = (0, _react.useRef)((0, _utils.makeRandomCode)());
   var activeKeyRef = (0, _react.useRef)(null);
   var container = (0, _react.useRef)(null);
   var observer = (0, _react.useRef)(null);
+  (0, _react.useEffect)(
+    function () {
+      ob(randomCode.current);
+    },
+    [randomCode.current],
+  );
   var ob = function ob(className) {
     container.current = document.querySelector(
       '.'.concat(
@@ -202,6 +139,7 @@ var CollapseTable = function CollapseTable(props) {
         '.ant-table-wrapper.collapse-panel > .ant-spin-nested-loading > .ant-spin-container > .ant-table',
       ),
     );
+    console.log(2);
     observer.current = new MutationObserver(expand);
     observer.current.observe(container.current, {
       childList: true,
@@ -209,91 +147,7 @@ var CollapseTable = function CollapseTable(props) {
       attributes: true,
     });
   };
-  (0, _react.useEffect)(
-    function () {
-      ob(randomCode);
-    },
-    [randomCode],
-  );
-  var expand = function expand() {
-    var main = document.querySelector(
-      '.'
-        .concat(randomCode, ' .ant-table-scroll [data-row-key="')
-        .concat(activeKeyRef.current, '-extra-row"]'),
-    );
-    var right = document.querySelector(
-      '.'
-        .concat(randomCode, ' .ant-table-fixed-right [data-row-key="')
-        .concat(activeKeyRef.current, '-extra-row"]'),
-    );
-    var left = document.querySelector(
-      '.'
-        .concat(randomCode, ' .ant-table-fixed-left [data-row-key="')
-        .concat(activeKeyRef.current, '-extra-row"]'),
-    );
-    if (right) {
-      right.setAttribute(
-        'style',
-        'display: block; height: '.concat(main.offsetHeight || 0, 'px; overflow: hidden;'),
-      );
-    }
-    if (left) {
-      left.setAttribute(
-        'style',
-        'display: block; height: '.concat(main.offsetHeight || 0, 'px; overflow: hidden;'),
-      );
-    }
-  };
-
-  // 自定义展开收起
-  var customExpandIcon = function customExpandIcon(p) {
-    var expanded = p.expanded;
-    if (expanded) {
-      return /*#__PURE__*/ _react.default.createElement(
-        'a',
-        {
-          style: {
-            marginLeft: !props.rowSelection && '0px',
-            paddingLeft: !props.rowSelection && '0px',
-          },
-          className: 'expand',
-          onClick: function onClick(e) {
-            p === null || p === void 0 ? void 0 : p.onExpand(p.record, e);
-            if (props === null || props === void 0 ? void 0 : props.onExpand)
-              props === null || props === void 0 ? void 0 : props.onExpand(p.expanded, p.record);
-          },
-        },
-        /*#__PURE__*/ _react.default.createElement(_icon.default, {
-          type: 'minus-square',
-          style: {
-            fontSize: 14,
-          },
-        }),
-      );
-    }
-    return /*#__PURE__*/ _react.default.createElement(
-      'a',
-      {
-        style: {
-          marginLeft: !props.rowSelection && '0px',
-          paddingLeft: !props.rowSelection && '0px',
-        },
-        className: 'expand',
-        onClick: function onClick(e) {
-          p === null || p === void 0 ? void 0 : p.onExpand(p.record, e);
-          if (props === null || props === void 0 ? void 0 : props.onExpand)
-            props === null || props === void 0 ? void 0 : props.onExpand(p.expanded, p.record);
-        },
-      },
-      /*#__PURE__*/ _react.default.createElement(_icon.default, {
-        type: 'plus-square',
-        style: {
-          fontSize: 14,
-        },
-      }),
-    );
-  };
-  var trigger = function trigger() {
+  var trigger = function trigger(className) {
     var _document;
     if (!className) return;
     console.log({
@@ -310,6 +164,87 @@ var CollapseTable = function CollapseTable(props) {
           );
     dom === null || dom === void 0 ? void 0 : dom.setAttribute('c-data', 'Mutation');
   };
+  var expand = function expand() {
+    var main = document.querySelector(
+      '.'
+        .concat(randomCode.current, ' .ant-table-scroll [data-row-key="')
+        .concat(activeKeyRef.current, '-extra-row"]'),
+    );
+    var right = document.querySelector(
+      '.'
+        .concat(randomCode.current, ' .ant-table-fixed-right [data-row-key="')
+        .concat(activeKeyRef.current, '-extra-row"]'),
+    );
+    var left = document.querySelector(
+      '.'
+        .concat(randomCode.current, ' .ant-table-fixed-left [data-row-key="')
+        .concat(activeKeyRef.current, '-extra-row"]'),
+    );
+    console.log(1);
+    if (right) {
+      right.setAttribute(
+        'style',
+        'display: inline-block; height: '.concat(main.offsetHeight || 0, 'px; overflow: hidden;'),
+      );
+    }
+    if (left) {
+      left.setAttribute(
+        'style',
+        'display: inline-block; height: '.concat(main.offsetHeight || 0, 'px; overflow: hidden;'),
+      );
+    }
+  };
+
+  // 自定义展开收起
+  var customExpandIcon = function customExpandIcon(p) {
+    var expanded = p.expanded;
+    if (expanded) {
+      return /*#__PURE__*/ _react.default.createElement(
+        'span',
+        {
+          style: {
+            marginLeft: !props.rowSelection && '0px',
+            paddingLeft: !props.rowSelection && '0px',
+          },
+          className: 'expand',
+          onClick: function onClick(e) {
+            e.stopPropagation();
+            p === null || p === void 0 ? void 0 : p.onExpand(p.record, e);
+            if (props === null || props === void 0 ? void 0 : props.onExpand)
+              props === null || props === void 0 ? void 0 : props.onExpand(p.expanded, p.record);
+          },
+        },
+        /*#__PURE__*/ _react.default.createElement(_icon.default, {
+          type: 'minus-square',
+          style: {
+            fontSize: 14,
+          },
+        }),
+      );
+    }
+    return /*#__PURE__*/ _react.default.createElement(
+      'span',
+      {
+        style: {
+          marginLeft: !props.rowSelection && '0px',
+          paddingLeft: !props.rowSelection && '0px',
+        },
+        className: 'expand',
+        onClick: function onClick(e) {
+          e.stopPropagation();
+          p === null || p === void 0 ? void 0 : p.onExpand(p.record, e);
+          if (props === null || props === void 0 ? void 0 : props.onExpand)
+            props === null || props === void 0 ? void 0 : props.onExpand(p.expanded, p.record);
+        },
+      },
+      /*#__PURE__*/ _react.default.createElement(_icon.default, {
+        type: 'plus-square',
+        style: {
+          fontSize: 14,
+        },
+      }),
+    );
+  };
   return /*#__PURE__*/ _react.default.createElement(
     'div',
     {
@@ -317,23 +252,30 @@ var CollapseTable = function CollapseTable(props) {
     },
     /*#__PURE__*/ _react.default.createElement(
       _table.default,
-      _extends({}, restProps, {
-        className: ''.concat(randomCode, ' collapse-panel ').concat(className),
-        expandIconColumnIndex: expandIconColumnIndex,
-        onExpandedRowsChange: function onExpandedRowsChange(arg) {
-          var key = (arg && arg[arg.length - 1]) || null;
-          activeKeyRef.current = key;
-          props.onExpandedRowsChange && props.onExpandedRowsChange([key]);
-          // 触发MutationObserver监听
-          trigger();
+      _extends(
+        {
+          // antd.Table 部分props的默认值 expandIcon, expandIconColumnIndex, expandRowByClick
+          expandIcon: function expandIcon(props) {
+            return customExpandIcon(props);
+          },
+          expandIconColumnIndex: expandIconColumnIndex,
+          expandRowByClick: true,
+          expandIconAsCell: false,
+          // antd.Table props
         },
-        expandIconAsCell: false,
-        expandable: true,
-        expandRowByClick: true,
-        expandIcon: function expandIcon(props) {
-          return customExpandIcon(props);
+        restProps,
+        {
+          //  antd.Table 改动过的props
+          className: ''.concat(randomCode.current, ' collapse-panel ').concat(className),
+          onExpandedRowsChange: function onExpandedRowsChange(arg) {
+            var key = (arg && arg[arg.length - 1]) || null;
+            activeKeyRef.current = key;
+            props.onExpandedRowsChange && props.onExpandedRowsChange([key]);
+            // 触发MutationObserver监听
+            trigger(randomCode.current);
+          },
         },
-      }),
+      ),
     ),
   );
 };

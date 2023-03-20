@@ -6,6 +6,7 @@
     margin: 0px 10.5px 0 -23.5px;
     padding-left: 11px;
     color: #17233d;
+    cursor: pointer;
   }
 
   .ant-table-tbody > tr > td:nth-child(2):has(.expand) {
@@ -83,14 +84,14 @@
     .ant-table-body {
       .ant-table-expanded-row.ant-table-expanded-row-level-1 {
         position: relative;
-        z-index: 1000;
+        z-index: 10;
         background: #f3f4f6;
         box-shadow: inset 0 0 8px 0 #d1d5e3;
 
         // 兼容低版本浏览器
         > td {
           position: sticky;
-          z-index: 1000;
+          z-index: 100;
           background: inherit;
           box-shadow: inset 0 0 8px 0 #d1d5e3;
         }
