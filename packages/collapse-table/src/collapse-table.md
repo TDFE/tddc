@@ -72,7 +72,15 @@ const columns = [
     key: 'action',
     fixed: 'right',
     width: 150,
-    render: () => <a>Delete</a>,
+    render: () => (
+      <a
+        onClick={(e) => {
+          e.stopPropagation();
+        }}
+      >
+        Delete
+      </a>
+    ),
   },
 ];
 
@@ -136,7 +144,9 @@ const Demo = () => {
 export default Demo;
 ```
 
-| 参数       | 说明              | 是否必填 | 类型 | 默认值 |
-| ---------- | ----------------- | -------- | ---- | ------ |
-| dataSource |                   |          |      |
-| columns    | expandedRowRender |
+| 参数 | 说明 | 是否必填 | 类型 | 默认值 |
+| --- | --- | --- | --- | --- |
+| expandedRowRender | 额外的展开行 | 必填 | Function(record, index, indent, expanded):ReactNode | - |
+| expandRowByClick | 通过点击行来展开子行 | 非必填 | boolean | true |
+
+- 其他参数同 antd `Table` 组件

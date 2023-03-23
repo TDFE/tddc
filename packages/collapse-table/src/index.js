@@ -8,7 +8,6 @@ import './index.less';
 
 const CollapseTable = (props) => {
   let { className, ...restProps } = props;
-  let expandIconColumnIndex = props?.rowSelection ? 1 : props.expandIconColumnIndex || 0; // 确定checkbox框位置
 
   const randomCode = useRef(makeRandomCode());
   const activeKeyRef = useRef(null);
@@ -107,17 +106,26 @@ const CollapseTable = (props) => {
     );
   };
 
+  let expandIconColumnIndex = props?.rowSelection ? 1 : props.expandIconColumnIndex || 0; // 确定checkbox框位置
+  // 设置expandIcon的默认值
+  let expandIcon = props.expandIcon;
+  if (props.expandedRowRender && !restProps.expandIcon) {
+    expandIcon = (props) => customExpandIcon(props);
+  } else if (!props.expandedRowRender) {
+    expandIcon = null;
+  }
+
   return (
     <div className="collapse-table">
       <Table
         // antd.Table 部分props的默认值 expandIcon, expandIconColumnIndex, expandRowByClick
-        expandIcon={(props) => customExpandIcon(props)}
         expandIconColumnIndex={expandIconColumnIndex}
         expandRowByClick={true}
         expandIconAsCell={false}
         // antd.Table props
         {...restProps}
         //  antd.Table 改动过的props
+        expandIcon={expandIcon}
         className={`${randomCode.current} collapse-panel ${className}`}
         onExpandedRowsChange={(arg) => {
           let key = (arg && arg[arg.length - 1]) || null;
