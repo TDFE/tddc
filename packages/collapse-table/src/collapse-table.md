@@ -15,7 +15,7 @@ npm install @tddc/collapse-table --save
 
 ### 说明
 
-- 此组件是为了解决 antd3.x 版本的`columns.fixed` 和`expandedRowRender`不能共用的问题；
+- 此组件是为了解决 antd3.x 版本的`columns.fixed` 和`expandedRowRender` 不能共用的问题；
 
 ### 使用
 
