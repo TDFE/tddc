@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="100px" height="100px" viewBox="0 0 100 100" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 63.1 (92452) - https://sketch.com -->
+    <title>bubble</title>
+    <desc>Created with Sketch.</desc>
+    <g id="bubble" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="logo" transform="translate(0.000000, 5.000000)" fill-rule="nonzero">
+            <circle id="Oval" fill="#2984FD" cx="27.6748971" cy="27.6748971" r="27.6748971"></circle>
+            <circle id="Oval" fill="#FE2A25" cx="72.7366255" cy="41.0493827" r="13.8888889"></circle>
+            <circle id="Oval" fill="#FFBC00" cx="72.6337449" cy="75.1028807" r="15.8436214"></circle>
+            <circle id="Oval" fill="#00AC48" cx="93.1069959" cy="25.2057613" r="6.89300412"></circle>
+        </g>
+    </g>
+</svg>
