@@ -118,10 +118,6 @@ function _objectWithoutPropertiesLoose(source, excluded) {
 var CollapseTable = function CollapseTable(props) {
   var className = props.className,
     restProps = _objectWithoutProperties(props, _excluded);
-  var expandIconColumnIndex = (props === null || props === void 0 ? void 0 : props.rowSelection)
-    ? 1
-    : props.expandIconColumnIndex || 0; // 确定checkbox框位置
-
   var randomCode = (0, _react.useRef)((0, _utils.makeRandomCode)());
   var activeKeyRef = (0, _react.useRef)(null);
   var container = (0, _react.useRef)(null);
@@ -245,6 +241,18 @@ var CollapseTable = function CollapseTable(props) {
       }),
     );
   };
+  var expandIconColumnIndex = (props === null || props === void 0 ? void 0 : props.rowSelection)
+    ? 1
+    : props.expandIconColumnIndex || 0; // 确定checkbox框位置
+  // 设置expandIcon的默认值
+  var expandIcon = props.expandIcon;
+  if (props.expandedRowRender && !restProps.expandIcon) {
+    expandIcon = function expandIcon(props) {
+      return customExpandIcon(props);
+    };
+  } else if (!props.expandedRowRender) {
+    expandIcon = null;
+  }
   return /*#__PURE__*/ _react.default.createElement(
     'div',
     {
@@ -255,9 +263,6 @@ var CollapseTable = function CollapseTable(props) {
       _extends(
         {
           // antd.Table 部分props的默认值 expandIcon, expandIconColumnIndex, expandRowByClick
-          expandIcon: function expandIcon(props) {
-            return customExpandIcon(props);
-          },
           expandIconColumnIndex: expandIconColumnIndex,
           expandRowByClick: true,
           expandIconAsCell: false,
@@ -266,6 +271,7 @@ var CollapseTable = function CollapseTable(props) {
         restProps,
         {
           //  antd.Table 改动过的props
+          expandIcon: expandIcon,
           className: ''.concat(randomCode.current, ' collapse-panel ').concat(className),
           onExpandedRowsChange: function onExpandedRowsChange(arg) {
             var key = (arg && arg[arg.length - 1]) || null;
