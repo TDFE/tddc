@@ -13,6 +13,7 @@ import DefaultNode from './DefaultNode';
 import Link from './Link';
 import { collapseTree, expandTree, getTextPixelWith } from './utils';
 import WrapNode from './WrapNode';
+import GenerateDom from './GenerateDom';
 
 class Tree extends Base {
   constructor() {
@@ -37,16 +38,20 @@ class Tree extends Base {
     this.constant.COMPONENT_SPACE_VERTICAL = COMPONENT_SPACE_VERTICAL; // 节点垂直之间的间隙
     this.constant.COMPONENT_SPACE_HORIZONTAL = COMPONENT_SPACE_HORIZONTAL; // 节点水平之间的间隙
     this.constant.ROOT_WIDTH = ROOT_WIDTH; // 根节点宽度
+
+    this.isFirst = true;
+    this.linesAndDoms = [];
+    this.linesAndDomsNums = 0;
   }
 
   init(props) {
     let { data, options, styleOptions, container } = props;
-    let { initType, onChange, customPosition, fixed, nodeDom, lineType } = options || {};
+    let { initType, onChange, customPosition, fixed, nodeDom, lineType, onFinish } = options || {};
     let { nodeWidth, nodeHeight, spaceVertical, spaceHorizontal, rootWidth } = styleOptions || {};
 
     this.initType = initType || false;
     this.nodeDom = nodeDom || DefaultNode || null;
-    this.onChange = onChange;
+    this.onChange = onChange || (() => {});
     this.customPosition = customPosition;
     this.fixed = fixed;
     this.lineType = lineType || 2;
@@ -62,10 +67,11 @@ class Tree extends Base {
     this.constant.COMPONENT_SPACE_HORIZONTAL = spaceHorizontal || COMPONENT_SPACE_HORIZONTAL; // 节点水平之间的间隙
     this.constant.ROOT_WIDTH = rootWidth || ROOT_WIDTH; // 根节点宽度
 
-    // this.data = data || null;
+    this.onFinish = onFinish || (() => {});
+
     this.setData(data || null);
     if (!this.data) return;
-
+    this.isFirst = false;
     this.render();
   }
 
@@ -245,6 +251,7 @@ class Tree extends Base {
   nodeChange(data) {
     this.data.nodeName = data.nodeName;
     this.data.children = data.children;
+    this.onChange(this.data);
     this.initData(this.data);
     this.render();
   }
@@ -270,12 +277,14 @@ class Tree extends Base {
   }
 
   async expand() {
+    this.onChange(this.data);
     await this.data.children.forEach(expandTree);
     await this.initData();
     await this.render();
   }
 
   async packUp() {
+    this.onChange(this.data);
     await this.data.children.forEach(collapseTree);
     await this.initData();
     await this.render();
@@ -283,21 +292,31 @@ class Tree extends Base {
 
   render() {
     this.buildPosition(this.hierarchyData);
-    ReactDOM.render(
-      <div
-        style={{
-          position: 'relative',
-          zIndex: 9,
-          width: this.domWidth + 100,
-          height: this.domHeight,
-          margin: '80px 0 0 20px',
-        }}
-      >
-        {this.drawNode()}
-        {this.drawLine()}
-      </div>,
-      this.dom,
-    );
+
+    let nodeDoms = this.drawNode();
+    let lineDoms = this.drawLine();
+
+    if (this.linesAndDomsNums !== nodeDoms.length + lineDoms.length) {
+      this.linesAndDomsNums = nodeDoms.length + lineDoms.length;
+      ReactDOM.render(
+        <div
+          style={{
+            position: 'relative',
+            zIndex: 9,
+            width: this.domWidth + 100,
+            height: this.domHeight,
+            margin: '80px 0 0 20px',
+          }}
+        >
+          <GenerateDom
+            doms={nodeDoms.concat(lineDoms)}
+            linesAndDomsNums={this.linesAndDomsNums}
+            onFinish={this.onFinish}
+          />
+        </div>,
+        this.dom,
+      );
+    }
   }
 }
 
