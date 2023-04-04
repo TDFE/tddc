@@ -32,6 +32,7 @@ var _DefaultNode = _interopRequireDefault(require('./DefaultNode'));
 var _Link = _interopRequireDefault(require('./Link'));
 var _utils = require('./utils');
 var _WrapNode = _interopRequireDefault(require('./WrapNode'));
+var _GenerateDom = _interopRequireDefault(require('./GenerateDom'));
 function _getRequireWildcardCache(nodeInterop) {
   if (typeof WeakMap !== 'function') return null;
   var cacheBabelInterop = new WeakMap();
@@ -733,6 +734,10 @@ var Tree = /*#__PURE__*/ (function (_Base) {
     _this.constant.COMPONENT_SPACE_VERTICAL = _constants.COMPONENT_SPACE_VERTICAL; // 节点垂直之间的间隙
     _this.constant.COMPONENT_SPACE_HORIZONTAL = _constants.COMPONENT_SPACE_HORIZONTAL; // 节点水平之间的间隙
     _this.constant.ROOT_WIDTH = _constants.ROOT_WIDTH; // 根节点宽度
+
+    _this.isFirst = true;
+    _this.linesAndDoms = [];
+    _this.linesAndDomsNums = 0;
     return _this;
   }
   _createClass(Tree, [
@@ -749,7 +754,8 @@ var Tree = /*#__PURE__*/ (function (_Base) {
           customPosition = _ref.customPosition,
           fixed = _ref.fixed,
           nodeDom = _ref.nodeDom,
-          lineType = _ref.lineType;
+          lineType = _ref.lineType,
+          onFinish = _ref.onFinish;
         var _ref2 = styleOptions || {},
           nodeWidth = _ref2.nodeWidth,
           nodeHeight = _ref2.nodeHeight,
@@ -758,7 +764,7 @@ var Tree = /*#__PURE__*/ (function (_Base) {
           rootWidth = _ref2.rootWidth;
         this.initType = initType || false;
         this.nodeDom = nodeDom || _DefaultNode.default || null;
-        this.onChange = onChange;
+        this.onChange = onChange || function () {};
         this.customPosition = customPosition;
         this.fixed = fixed;
         this.lineType = lineType || 2;
@@ -775,9 +781,10 @@ var Tree = /*#__PURE__*/ (function (_Base) {
           spaceHorizontal || _constants.COMPONENT_SPACE_HORIZONTAL; // 节点水平之间的间隙
         this.constant.ROOT_WIDTH = rootWidth || _constants.ROOT_WIDTH; // 根节点宽度
 
-        // this.data = data || null;
+        this.onFinish = onFinish || function () {};
         this.setData(data || null);
         if (!this.data) return;
+        this.isFirst = false;
         this.render();
       },
     },
@@ -1026,6 +1033,7 @@ var Tree = /*#__PURE__*/ (function (_Base) {
       value: function nodeChange(data) {
         this.data.nodeName = data.nodeName;
         this.data.children = data.children;
+        this.onChange(this.data);
         this.initData(this.data);
         this.render();
       },
@@ -1065,15 +1073,16 @@ var Tree = /*#__PURE__*/ (function (_Base) {
                 while (1) {
                   switch ((_context.prev = _context.next)) {
                     case 0:
-                      _context.next = 2;
+                      this.onChange(this.data);
+                      _context.next = 3;
                       return this.data.children.forEach(_utils.expandTree);
-                    case 2:
-                      _context.next = 4;
+                    case 3:
+                      _context.next = 5;
                       return this.initData();
-                    case 4:
-                      _context.next = 6;
+                    case 5:
+                      _context.next = 7;
                       return this.render();
-                    case 6:
+                    case 7:
                     case 'end':
                       return _context.stop();
                   }
@@ -1100,15 +1109,16 @@ var Tree = /*#__PURE__*/ (function (_Base) {
                 while (1) {
                   switch ((_context2.prev = _context2.next)) {
                     case 0:
-                      _context2.next = 2;
+                      this.onChange(this.data);
+                      _context2.next = 3;
                       return this.data.children.forEach(_utils.collapseTree);
-                    case 2:
-                      _context2.next = 4;
+                    case 3:
+                      _context2.next = 5;
                       return this.initData();
-                    case 4:
-                      _context2.next = 6;
+                    case 5:
+                      _context2.next = 7;
                       return this.render();
-                    case 6:
+                    case 7:
                     case 'end':
                       return _context2.stop();
                   }
@@ -1129,23 +1139,31 @@ var Tree = /*#__PURE__*/ (function (_Base) {
       key: 'render',
       value: function render() {
         this.buildPosition(this.hierarchyData);
-        _reactDom.default.render(
-          /*#__PURE__*/ _react.default.createElement(
-            'div',
-            {
-              style: {
-                position: 'relative',
-                zIndex: 9,
-                width: this.domWidth + 100,
-                height: this.domHeight,
-                margin: '80px 0 0 20px',
+        var nodeDoms = this.drawNode();
+        var lineDoms = this.drawLine();
+        if (this.linesAndDomsNums !== nodeDoms.length + lineDoms.length) {
+          this.linesAndDomsNums = nodeDoms.length + lineDoms.length;
+          _reactDom.default.render(
+            /*#__PURE__*/ _react.default.createElement(
+              'div',
+              {
+                style: {
+                  position: 'relative',
+                  zIndex: 9,
+                  width: this.domWidth + 100,
+                  height: this.domHeight,
+                  margin: '80px 0 0 20px',
+                },
               },
-            },
-            this.drawNode(),
-            this.drawLine(),
-          ),
-          this.dom,
-        );
+              /*#__PURE__*/ _react.default.createElement(_GenerateDom.default, {
+                doms: nodeDoms.concat(lineDoms),
+                linesAndDomsNums: this.linesAndDomsNums,
+                onFinish: this.onFinish,
+              }),
+            ),
+            this.dom,
+          );
+        }
       },
     },
   ]);
