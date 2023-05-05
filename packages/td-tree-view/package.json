@@ -15,6 +15,5 @@
     "@tddc/virtual-cascader": "^2.0.6",
     "universal-cookie": "^2.2.0",
     "tntd": "^2.0.23"
-  },
-  "gitHead": "c1fa2e53786d52348ea8b748ce924abf9239bafb"
+  }
 }
