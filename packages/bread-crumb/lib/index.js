@@ -112,9 +112,7 @@ function _unsupportedIterableToArray(o, minLen) {
 }
 function _arrayLikeToArray(arr, len) {
   if (len == null || len > arr.length) len = arr.length;
-  for (var i = 0, arr2 = new Array(len); i < len; i++) {
-    arr2[i] = arr[i];
-  }
+  for (var i = 0, arr2 = new Array(len); i < len; i++) arr2[i] = arr[i];
   return arr2;
 }
 function _iterableToArrayLimit(arr, i) {
@@ -139,7 +137,7 @@ function _iterableToArrayLimit(arr, i) {
           ;
           !(_n = (_s = _x.call(_i)).done) && (_arr.push(_s.value), _arr.length !== i);
           _n = !0
-        ) {}
+        );
     } catch (err) {
       (_d = !0), (_e = err);
     } finally {
@@ -296,9 +294,7 @@ var _default = function _default(WrapperComponent, rest) {
     var newSearchObj = searchToObject(search);
     var newObj = {};
     for (var i in newSearchObj) {
-      if (includesSearch.includes(i)) {
-        newObj[i] = newSearchObj[i];
-      }
+      newObj[i] = newSearchObj[i];
     }
     (0, _react.useEffect)(
       function () {
@@ -330,6 +326,25 @@ var _default = function _default(WrapperComponent, rest) {
         breadCrumbList.sort(function (a, b) {
           return a.path.length - b.path.length;
         });
+        breadCrumbList === null || breadCrumbList === void 0
+          ? void 0
+          : breadCrumbList.map(function (item) {
+              if (item === null || item === void 0 ? void 0 : item.query) {
+                var _item$query;
+                item.path += '?';
+                (_item$query = item.query) === null || _item$query === void 0
+                  ? void 0
+                  : _item$query.map(function (item1, index1) {
+                      item.path += Object.keys(item1)[0] + '=' + newObj[Object.values(item1)[0]];
+                      if (index1 !== item.query.length - 1) {
+                        item.path += '&';
+                      }
+                    });
+              }
+              if (item.path === pathname) {
+                item.path = pathname + search;
+              }
+            });
         setBreadList(breadCrumbList);
       },
       [pathname],
