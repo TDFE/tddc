@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Breadcrumb, Icon } from 'antd';
-import { withRouter, matchPath } from 'react-router';
-import { Link } from 'react-router-dom';
+import { withRouter, matchPath, Link } from 'dva/router';
 import './index.less';
 const searchToObject = (search) => {
   let pairs = search.substring(1).split('&');
