@@ -10,8 +10,7 @@ var _breadcrumb = _interopRequireDefault(require('antd/lib/breadcrumb'));
 require('antd/lib/icon/style');
 var _icon = _interopRequireDefault(require('antd/lib/icon'));
 var _react = _interopRequireWildcard(require('react'));
-var _reactRouter = require('react-router');
-var _reactRouterDom = require('react-router-dom');
+var _router = require('dva/router');
 require('./index.less');
 function _getRequireWildcardCache(nodeInterop) {
   if (typeof WeakMap !== 'function') return null;
@@ -112,7 +111,9 @@ function _unsupportedIterableToArray(o, minLen) {
 }
 function _arrayLikeToArray(arr, len) {
   if (len == null || len > arr.length) len = arr.length;
-  for (var i = 0, arr2 = new Array(len); i < len; i++) arr2[i] = arr[i];
+  for (var i = 0, arr2 = new Array(len); i < len; i++) {
+    arr2[i] = arr[i];
+  }
   return arr2;
 }
 function _iterableToArrayLimit(arr, i) {
@@ -137,7 +138,7 @@ function _iterableToArrayLimit(arr, i) {
           ;
           !(_n = (_s = _x.call(_i)).done) && (_arr.push(_s.value), _arr.length !== i);
           _n = !0
-        );
+        ) {}
     } catch (err) {
       (_d = !0), (_e = err);
     } finally {
@@ -276,7 +277,7 @@ var _default = function _default(WrapperComponent, rest) {
     _ref$BreadCrumbProtot = _ref.BreadCrumbPrototype,
     BreadCrumbPrototype = _ref$BreadCrumbProtot === void 0 ? {} : _ref$BreadCrumbProtot,
     showHeader = _ref.showHeader;
-  return (0, _reactRouter.withRouter)(function (props) {
+  return (0, _router.withRouter)(function (props) {
     var _ref2 = props || {},
       match = _ref2.match,
       location = _ref2.location,
@@ -319,7 +320,7 @@ var _default = function _default(WrapperComponent, rest) {
             ? void 0
             : routerArr.filter(function (_ref4) {
                 var path = _ref4.path;
-                return (0, _reactRouter.matchPath)(pathname, {
+                return (0, _router.matchPath)(pathname, {
                   path: path,
                 });
               });
@@ -414,7 +415,7 @@ var _default = function _default(WrapperComponent, rest) {
                         },
                         href
                           ? /*#__PURE__*/ _react.default.createElement(
-                              _reactRouterDom.Link,
+                              _router.Link,
                               {
                                 to: href,
                               },
@@ -430,7 +431,7 @@ var _default = function _default(WrapperComponent, rest) {
                       },
                       href
                         ? /*#__PURE__*/ _react.default.createElement(
-                            _reactRouterDom.Link,
+                            _router.Link,
                             {
                               to: href,
                             },
