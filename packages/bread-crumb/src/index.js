@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Breadcrumb, Icon } from 'antd';
-import { withRouter, matchPath } from 'react-router';
-import { Link } from 'react-router-dom';
+import { withRouter, matchPath, Link } from 'dva/router';
 import './index.less';
 const searchToObject = (search) => {
   let pairs = search.substring(1).split('&');
@@ -62,9 +61,7 @@ export default (WrapperComponent, rest) => {
     const newSearchObj = searchToObject(search);
     const newObj = {};
     for (let i in newSearchObj) {
-      if (includesSearch.includes(i)) {
-        newObj[i] = newSearchObj[i];
-      }
+      newObj[i] = newSearchObj[i];
     }
 
     useEffect(() => {
@@ -82,7 +79,21 @@ export default (WrapperComponent, rest) => {
       breadCrumbList.sort((a, b) => {
         return a.path.length - b.path.length;
       });
+      breadCrumbList?.map((item) => {
+        if (item?.query) {
+          item.path += '?';
+          item.query?.map((item1, index1) => {
+            item.path += Object.keys(item1)[0] + '=' + newObj[Object.values(item1)[0]];
+            if (index1 !== item.query.length - 1) {
+              item.path += '&';
+            }
+          });
+        }
 
+        if (item.path === pathname) {
+          item.path = pathname + search;
+        }
+      });
       setBreadList(breadCrumbList);
     }, [pathname]);
 
