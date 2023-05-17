@@ -1,6 +1,6 @@
 {
   "name": "@tddc/td-tree-view",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "TdTreeView",
   "author": "zj",
   "license": "ISC",
@@ -9,11 +9,12 @@
   "peerDependencies": {
     "antd": ">=3.20.1",
     "react": ">=16.8.0",
-    "react-dom": ">=16.8.0"
+    "react-dom": ">=16.8.0",
+    "tntd": "^1.4.9"
   },
   "dependencies": {
     "@tddc/virtual-cascader": "^2.0.6",
     "universal-cookie": "^2.2.0",
-    "tntd": "^2.0.23"
+    "@tddc/tree-view": "2.0.0"
   }
 }
