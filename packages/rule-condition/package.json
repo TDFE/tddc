@@ -1,0 +1,35 @@
+{
+  "name": "@tddc/rule-condition",
+  "version": "1.0.4",
+  "description": "同盾规则条件组",
+  "author": "zyj",
+  "license": "ISC",
+  "main": "es/index.js",
+  "files": [
+    "es"
+  ],
+  "dependencies": {
+    "@babel/runtime": "^7.12.5",
+    "rc-util": "^5.25.2",
+    "rc-motion": "^2.6.1",
+    "array-tree-filter": "^2.1.0",
+    "classnames": "^2.3.1",
+    "rc-select": "~14.2.0",
+    "rc-tree": "~5.7.0",
+    "rc-overflow": "^1.0.0",
+    "rc-trigger": "^5.0.4",
+    "rc-virtual-list": "^3.4.13",
+    "rc-align": "^4.0.0"
+  },
+  "peerDependencies": {
+    "antd": ">=3.20.1",
+    "react": ">=16.9.0",
+    "react-dom": ">=16.9.0",
+    "@tddc/rule-condition": ">=1.0.1",
+    "@tntd/tooltip-select": ">=1.0.4"
+  },
+
+  "publishConfig": {
+    "access": "public"
+  }
+}
