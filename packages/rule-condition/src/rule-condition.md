@@ -10,7 +10,7 @@ nav:
 ### 安装和初始化
 
 ```
-npm install @tddc/cron --save
+npm install @tddc/rule-condition --save
 ```
 
 ### 说明
