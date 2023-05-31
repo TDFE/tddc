@@ -1,10 +1,11 @@
 import React from 'react';
-import { connect } from 'dva';
 import { cloneDeep } from 'lodash';
 import { Input, Icon, Tooltip, Row, Col, TntdSelect as Select } from 'tntd';
 import IndicatorsCascader from '../IndicatorsCascader';
 // import conditionOperator from '../constants';
 import { dataTypeSpecialConvert } from '../utils/index';
+
+import './index.less';
 
 const Option = Select.Option;
 const InputGroup = Input.Group;
@@ -545,292 +546,155 @@ class OneCondition extends React.PureComponent {
     }
     const { type: leftOptionDataType, customPlaceholder } =
       dataTypeSpecialConvert(conditionSingleData);
+
+    let style = {
+      display: 'inline-block',
+      width: 60,
+      marginRight: 70,
+    };
+
+    if (conditionType === 'group') {
+      style = {
+        ...style,
+        position: 'absolute',
+        top: 'calc(50% - 17px)',
+      };
+    }
+
+    console.log(conditionArr[1], 'conditionArr[1]');
     return (
-      <div
-        className={conditionType === 'group' ? 'group-item' : ''}
-        style={{ display: 'flex', justifyContent: 'center' }}
-      >
-        {((conditionType === 'group' && conditionArr[1] === 0) || conditionType === 'single') && (
-          <Col
-            style={{
-              display: 'inline-block',
-              position: 'absolute',
-              left: 'calc(12% - 60px)',
-              // top: 'calc(50% - 13px)'
-            }}
-          >
+      <div className={`${conditionType === 'group' ? 'group-item' : ''} condition-group-item`}>
+        {(conditionArr[1] === 0 || !conditionArr[1]) && (
+          <Col style={style}>
             <span className="letters">{conditionArr[0] + 1}</span>
           </Col>
         )}
-        <Row gutter={4} style={{ width: 800, display: 'flex' }}>
-          {conditionType === 'group' && conditionArr[1] === 0 && (
-            <Col style={{ width: 70 }}>
-              <Select
-                value={conditionData.logicOperator || undefined}
-                onChange={this.changeLogicOperator.bind(this)}
-                dropdownMatchSelectWidth={false}
-                disabled={disabled}
-              >
-                <Option value="&&" title={'与'}>
-                  {'与'}
-                </Option>
-                <Option value="||" title={'或'}>
-                  {'或'}
-                </Option>
-              </Select>
-            </Col>
-          )}
-          {conditionType === 'group' && conditionArr[1] !== 0 && (
-            <Col span={3} className="basic-info-title" style={{ width: '70px' }} />
-          )}
-          {/* {conditionType === 'single' && <Col span={3} className="basic-info-title" />} */}
-          <Col style={{ width: conditionType === 'group' ? 220 : 290 }}>
-            <IndicatorsCascader
-              options={childOption['all']}
-              fieldNames={{ label: 'dName', value: 'name', children: 'data' }}
+
+        {/* <Row gutter={4} style={{ width: 800, display: 'flex' }}> */}
+        {conditionType === 'group' && conditionArr[1] === 0 && (
+          <Col className={`link-from${conditionArr[0]} link-line`}>
+            <Select
+              value={conditionData.logicOperator || undefined}
+              onChange={this.changeLogicOperator.bind(this)}
+              dropdownMatchSelectWidth={false}
+              disabled={disabled}
+            >
+              <Option value="&&" title={'与'}>
+                {'与'}
+              </Option>
+              <Option value="||" title={'或'}>
+                {'或'}
+              </Option>
+            </Select>
+          </Col>
+        )}
+        {conditionType === 'group' && <div className="group-placeholder" />}
+        <Col style={{ width: 200 }} className={'link-to' + conditionArr[0] + conditionArr[1]}>
+          <IndicatorsCascader
+            options={childOption['all']}
+            fieldNames={{ label: 'dName', value: 'name', children: 'data' }}
+            value={
+              conditionSingleData && conditionSingleData['property']
+                ? conditionSingleData['property']
+                : undefined
+            }
+            placeholder="请选择"
+            onChange={async (value, selectObj) => {
+              const { enumTypeValues, name } = selectObj;
+
+              await this.changeConditionField('property', 'select', name);
+
+              if (enumTypeValues && enumTypeValues.length) {
+                await this.changeConditionField('enumTypeValues', 'select', enumTypeValues || name);
+              }
+              if (selectObj.type === 'ENUM' || selectObj.type === 'BOOLEAN') {
+                await this.changeConditionField('rightValueType', 'select', 'input');
+              }
+            }}
+            showSearch
+            setTitle={(option = []) => {
+              let isLink = false;
+              let value = conditionSingleData?.property;
+              isLink = value?.includes('offlinezb') || value?.includes('salaxyzb');
+              let dom = option;
+              let tab = option && option[0].props?.data?.metricArea === 'EDIT' ? 2 : 1;
+              if (isLink) {
+                let text = option[1];
+                let url = value.includes('offlinezb')
+                  ? `/index/offIndexManage?currentTab=${tab}&featureSetName=${text}`
+                  : `/index/realtime?currentTab=${tab}&metricName=${text}`;
+                dom = (
+                  <a
+                    className="link-zb"
+                    onClick={() => {
+                      history.push(url);
+                    }}
+                  >
+                    {dom}
+                  </a>
+                );
+              }
+              return dom;
+            }}
+          />
+        </Col>
+        <Col className="gutter-row" style={{ width: 100 }}>
+          <div className="gutter-box">
+            <Select
               value={
-                conditionSingleData && conditionSingleData['property']
-                  ? conditionSingleData['property']
+                conditionSingleData && conditionSingleData['op']
+                  ? conditionSingleData['op']
                   : undefined
               }
               placeholder="请选择"
-              onChange={async (value, selectObj) => {
-                const { enumTypeValues, name } = selectObj;
-
-                await this.changeConditionField('property', 'select', name);
-
-                if (enumTypeValues && enumTypeValues.length) {
-                  await this.changeConditionField(
-                    'enumTypeValues',
-                    'select',
-                    enumTypeValues || name,
-                  );
-                }
-                if (selectObj.type === 'ENUM' || selectObj.type === 'BOOLEAN') {
-                  await this.changeConditionField('rightValueType', 'select', 'input');
-                }
-              }}
-              showSearch
-              setTitle={(option = []) => {
-                let isLink = false;
-                let value = conditionSingleData?.property;
-                isLink = value?.includes('offlinezb') || value?.includes('salaxyzb');
-                let dom = option;
-                let tab = option && option[0].props?.data?.metricArea === 'EDIT' ? 2 : 1;
-                if (isLink) {
-                  let text = option[1];
-                  let url = value.includes('offlinezb')
-                    ? `/index/offIndexManage?currentTab=${tab}&featureSetName=${text}`
-                    : `/index/realtime?currentTab=${tab}&metricName=${text}`;
-                  dom = (
-                    <a
-                      className="link-zb"
-                      onClick={() => {
-                        history.push(url);
-                      }}
-                    >
-                      {dom}
-                    </a>
-                  );
-                }
-                return dom;
-              }}
-            />
-          </Col>
-          <Col className="gutter-row" style={{ width: 100 }}>
-            <div className="gutter-box">
-              <Select
-                value={
-                  conditionSingleData && conditionSingleData['op']
-                    ? conditionSingleData['op']
-                    : undefined
-                }
-                placeholder="请选择"
-                onChange={this.changeConditionField.bind(this, 'op', 'select')}
-                dropdownMatchSelectWidth={false}
-              >
-                {conditionOperator[
-                  conditionSingleData?.propertyDataType
-                    ? conditionSingleData?.propertyDataType.toUpperCase()
-                    : 'STRING'
-                ].map((item, index) => {
-                  return (
-                    <Option value={item.name} key={index} title={item.dName}>
-                      {item.dName}
-                    </Option>
-                  );
-                })}
-              </Select>
-            </div>
-          </Col>
-          {conditionSingleData &&
-            conditionSingleData['op'] &&
-            conditionSingleData['op'] !== 'isnull' &&
-            conditionSingleData['op'] !== 'notnull' && (
-              <Col className="gutter-row" span={9}>
-                <div className="gutter-box">
-                  {conditionSingleData['rightValueType'] === 'input' &&
-                    leftOptionDataType === 'ENUM' && (
-                      <InputGroup compact>
+              onChange={this.changeConditionField.bind(this, 'op', 'select')}
+              dropdownMatchSelectWidth={false}
+            >
+              {conditionOperator[
+                conditionSingleData?.propertyDataType
+                  ? conditionSingleData?.propertyDataType.toUpperCase()
+                  : 'STRING'
+              ].map((item, index) => {
+                return (
+                  <Option value={item.name} key={index} title={item.dName}>
+                    {item.dName}
+                  </Option>
+                );
+              })}
+            </Select>
+          </div>
+        </Col>
+        {conditionSingleData &&
+          conditionSingleData['op'] &&
+          conditionSingleData['op'] !== 'isnull' &&
+          conditionSingleData['op'] !== 'notnull' && (
+            <Col className="gutter-row" style={{ width: 375 }}>
+              <div className="gutter-box">
+                {conditionSingleData['rightValueType'] === 'input' &&
+                  leftOptionDataType === 'ENUM' && (
+                    <InputGroup compact>
+                      <Select
+                        value={
+                          conditionSingleData && conditionSingleData['rightValueType']
+                            ? conditionSingleData['rightValueType']
+                            : undefined
+                        }
+                        style={{ width: '30%' }}
+                        onChange={this.changeConditionField.bind(this, 'rightValueType', 'select')}
+                        dropdownMatchSelectWidth={false}
+                      >
+                        <Option value="input" title={'常量'}>
+                          {/* 常量 */}
+                          {'常量'}
+                        </Option>
+                        <Option value="context" title={'变量'}>
+                          {/* 变量 */}
+                          {'变量'}
+                        </Option>
+                      </Select>
+                      {(leftOptionDataType === 'BOOLEAN' && (
                         <Select
-                          value={
-                            conditionSingleData && conditionSingleData['rightValueType']
-                              ? conditionSingleData['rightValueType']
-                              : undefined
-                          }
-                          style={{ width: '30%' }}
-                          onChange={this.changeConditionField.bind(
-                            this,
-                            'rightValueType',
-                            'select',
-                          )}
-                          dropdownMatchSelectWidth={false}
-                        >
-                          <Option value="input" title={'常量'}>
-                            {/* 常量 */}
-                            {'常量'}
-                          </Option>
-                          <Option value="context" title={'变量'}>
-                            {/* 变量 */}
-                            {'变量'}
-                          </Option>
-                        </Select>
-                        {(leftOptionDataType === 'BOOLEAN' && (
-                          <Select
-                            style={{ width: '70%' }}
-                            value={
-                              conditionSingleData && conditionSingleData['value']
-                                ? conditionSingleData['value']
-                                : undefined
-                            }
-                            placeholder={customPlaceholder || '请选择'} // 请选择
-                            onChange={this.changeConditionField.bind(this, 'value', 'select')}
-                            showSearch
-                            optionFilterProp="children"
-                            dropdownMatchSelectWidth={false}
-                          >
-                            <Option value="true">{'是[true]'}</Option>
-                            <Option value="false">{'否[false]'}</Option>
-                          </Select>
-                        )) || (
-                          <Select
-                            // conditionSingleData["value"] || undefined
-                            value={enumValue || undefined}
-                            style={{ width: '70%' }}
-                            placeholder={customPlaceholder || '请选择'} // lang:请选择
-                            onChange={this.changeConditionField.bind(this, 'value', 'select')}
-                            showSearch
-                            optionFilterProp="children"
-                            dropdownMatchSelectWidth={false}
-                            mode={operaTypeInOrNot ? 'multiple' : null}
-                          >
-                            {conditionSingleData &&
-                              conditionSingleData['enumTypeValues']?.map((item, index) => {
-                                return (
-                                  <Option
-                                    value={item.value}
-                                    key={index}
-                                    title={`${item.description} [${item.value}]`}
-                                  >
-                                    {item.description} [{item.value}]
-                                  </Option>
-                                );
-                              })}
-                          </Select>
-                        )}
-                      </InputGroup>
-                    )}
-                  {conditionSingleData['rightValueType'] === 'input' &&
-                    leftOptionDataType !== 'ENUM' && (
-                      <InputGroup compact>
-                        <Select
-                          value={
-                            conditionSingleData && conditionSingleData['rightValueType']
-                              ? conditionSingleData['rightValueType']
-                              : undefined
-                          }
-                          style={{ width: '30%' }}
-                          onChange={this.changeConditionField.bind(
-                            this,
-                            'rightValueType',
-                            'select',
-                          )}
-                          dropdownMatchSelectWidth={false}
-                        >
-                          <Option value="input" title={'常量'}>
-                            {/* 常量 */}
-                            {'常量'}
-                          </Option>
-                          <Option value="context" title={'变量'}>
-                            {/* 变量 */}
-                            {'变量'}
-                          </Option>
-                        </Select>
-                        {(leftOptionDataType === 'BOOLEAN' && (
-                          <Select
-                            style={{ width: '70%' }}
-                            value={
-                              conditionSingleData && conditionSingleData['value']
-                                ? conditionSingleData['value']
-                                : undefined
-                            }
-                            placeholder={customPlaceholder || '请选择'} // 请选择
-                            onChange={this.changeConditionField.bind(this, 'value', 'select')}
-                            showSearch
-                            optionFilterProp="children"
-                            dropdownMatchSelectWidth={false}
-                          >
-                            <Option value="true">{'是[true]'}</Option>
-                            <Option value="false">{'否[false]'}</Option>
-                          </Select>
-                        )) || (
-                          <Input
-                            style={{ width: '70%' }}
-                            value={
-                              conditionSingleData && conditionSingleData['value']
-                                ? conditionSingleData['value']
-                                : undefined
-                            }
-                            placeholder={
-                              customPlaceholder ||
-                              (operaTypeInOrNot ? '英文逗号分隔，例如1,2' : '请输入常量内容')
-                            } // 请输入常量内容
-                            onChange={this.changeConditionField.bind(this, 'value', 'input')}
-                          />
-                        )}
-                      </InputGroup>
-                    )}
-                  {conditionSingleData &&
-                    conditionSingleData['rightValueType'] === 'context' &&
-                    leftOptionDataType !== 'ENUM' && (
-                      <InputGroup compact>
-                        <Select
-                          value={
-                            conditionSingleData && conditionSingleData['rightValueType']
-                              ? conditionSingleData['rightValueType']
-                              : undefined
-                          }
-                          style={{ width: '30%' }}
-                          onChange={this.changeConditionField.bind(
-                            this,
-                            'rightValueType',
-                            'select',
-                          )}
-                          dropdownMatchSelectWidth={false}
-                        >
-                          <Option value="input" title={'常量'}>
-                            {/* 常量 */}
-                            {'常量'}
-                          </Option>
-                          <Option value="context" title={'变量'}>
-                            {/* 变量 */}
-                            {'变量'}
-                          </Option>
-                        </Select>
-                        <IndicatorsCascader
                           style={{ width: '70%' }}
-                          options={NOEnumChildOption[leftOptionDataType] || []}
-                          fieldNames={{ label: 'dName', value: 'name', children: 'data' }}
                           value={
                             conditionSingleData && conditionSingleData['value']
                               ? conditionSingleData['value']
@@ -839,33 +703,157 @@ class OneCondition extends React.PureComponent {
                           placeholder={customPlaceholder || '请选择'} // 请选择
                           onChange={this.changeConditionField.bind(this, 'value', 'select')}
                           showSearch
-                          setTitle={(option = []) => {
-                            let isLink = false;
-                            let value = conditionSingleData?.property;
-                            isLink = value?.includes('offlinezb') || value?.includes('salaxyzb');
-                            let dom = option;
-                            let tab =
-                              option && option[0].props?.data?.metricArea === 'EDIT' ? 2 : 1;
-                            if (isLink) {
-                              let text = option[1];
-                              let url = value.includes('offlinezb')
-                                ? `/index/offIndexManage?currentTab=${tab}&featureSetName=${text}`
-                                : `/index/realtime?currentTab=${tab}&metricName=${text}`;
-                              dom = (
-                                <a
-                                  className="link-zb"
-                                  onClick={() => {
-                                    history.push(url);
-                                  }}
+                          optionFilterProp="children"
+                          dropdownMatchSelectWidth={false}
+                        >
+                          <Option value="true">{'是[true]'}</Option>
+                          <Option value="false">{'否[false]'}</Option>
+                        </Select>
+                      )) || (
+                        <Select
+                          // conditionSingleData["value"] || undefined
+                          value={enumValue || undefined}
+                          style={{ width: '70%' }}
+                          placeholder={customPlaceholder || '请选择'} // lang:请选择
+                          onChange={this.changeConditionField.bind(this, 'value', 'select')}
+                          showSearch
+                          optionFilterProp="children"
+                          dropdownMatchSelectWidth={false}
+                          mode={operaTypeInOrNot ? 'multiple' : null}
+                        >
+                          {conditionSingleData &&
+                            conditionSingleData['enumTypeValues']?.map((item, index) => {
+                              return (
+                                <Option
+                                  value={item.value}
+                                  key={index}
+                                  title={`${item.description} [${item.value}]`}
                                 >
-                                  {dom}
-                                </a>
+                                  {item.description} [{item.value}]
+                                </Option>
                               );
-                            }
-                            return dom;
-                          }}
+                            })}
+                        </Select>
+                      )}
+                    </InputGroup>
+                  )}
+                {conditionSingleData['rightValueType'] === 'input' &&
+                  leftOptionDataType !== 'ENUM' && (
+                    <InputGroup compact>
+                      <Select
+                        value={
+                          conditionSingleData && conditionSingleData['rightValueType']
+                            ? conditionSingleData['rightValueType']
+                            : undefined
+                        }
+                        style={{ width: '30%' }}
+                        onChange={this.changeConditionField.bind(this, 'rightValueType', 'select')}
+                        dropdownMatchSelectWidth={false}
+                      >
+                        <Option value="input" title={'常量'}>
+                          {/* 常量 */}
+                          {'常量'}
+                        </Option>
+                        <Option value="context" title={'变量'}>
+                          {/* 变量 */}
+                          {'变量'}
+                        </Option>
+                      </Select>
+                      {(leftOptionDataType === 'BOOLEAN' && (
+                        <Select
+                          style={{ width: '70%' }}
+                          value={
+                            conditionSingleData && conditionSingleData['value']
+                              ? conditionSingleData['value']
+                              : undefined
+                          }
+                          placeholder={customPlaceholder || '请选择'} // 请选择
+                          onChange={this.changeConditionField.bind(this, 'value', 'select')}
+                          showSearch
+                          optionFilterProp="children"
+                          dropdownMatchSelectWidth={false}
+                        >
+                          <Option value="true">{'是[true]'}</Option>
+                          <Option value="false">{'否[false]'}</Option>
+                        </Select>
+                      )) || (
+                        <Input
+                          style={{ width: '70%' }}
+                          value={
+                            conditionSingleData && conditionSingleData['value']
+                              ? conditionSingleData['value']
+                              : undefined
+                          }
+                          placeholder={
+                            customPlaceholder ||
+                            (operaTypeInOrNot ? '英文逗号分隔，例如1,2' : '请输入常量内容')
+                          } // 请输入常量内容
+                          onChange={this.changeConditionField.bind(this, 'value', 'input')}
                         />
-                        {/* <TooltipSelect
+                      )}
+                    </InputGroup>
+                  )}
+                {conditionSingleData &&
+                  conditionSingleData['rightValueType'] === 'context' &&
+                  leftOptionDataType !== 'ENUM' && (
+                    <InputGroup compact>
+                      <Select
+                        value={
+                          conditionSingleData && conditionSingleData['rightValueType']
+                            ? conditionSingleData['rightValueType']
+                            : undefined
+                        }
+                        style={{ width: '30%' }}
+                        onChange={this.changeConditionField.bind(this, 'rightValueType', 'select')}
+                        dropdownMatchSelectWidth={false}
+                      >
+                        <Option value="input" title={'常量'}>
+                          {/* 常量 */}
+                          {'常量'}
+                        </Option>
+                        <Option value="context" title={'变量'}>
+                          {/* 变量 */}
+                          {'变量'}
+                        </Option>
+                      </Select>
+                      <IndicatorsCascader
+                        style={{ width: '70%' }}
+                        options={NOEnumChildOption[leftOptionDataType] || []}
+                        fieldNames={{ label: 'dName', value: 'name', children: 'data' }}
+                        value={
+                          conditionSingleData && conditionSingleData['value']
+                            ? conditionSingleData['value']
+                            : undefined
+                        }
+                        placeholder={customPlaceholder || '请选择'} // 请选择
+                        onChange={this.changeConditionField.bind(this, 'value', 'select')}
+                        showSearch
+                        setTitle={(option = []) => {
+                          let isLink = false;
+                          let value = conditionSingleData?.property;
+                          isLink = value?.includes('offlinezb') || value?.includes('salaxyzb');
+                          let dom = option;
+                          let tab = option && option[0].props?.data?.metricArea === 'EDIT' ? 2 : 1;
+                          if (isLink) {
+                            let text = option[1];
+                            let url = value.includes('offlinezb')
+                              ? `/index/offIndexManage?currentTab=${tab}&featureSetName=${text}`
+                              : `/index/realtime?currentTab=${tab}&metricName=${text}`;
+                            dom = (
+                              <a
+                                className="link-zb"
+                                onClick={() => {
+                                  history.push(url);
+                                }}
+                              >
+                                {dom}
+                              </a>
+                            );
+                          }
+                          return dom;
+                        }}
+                      />
+                      {/* <TooltipSelect
                                                     groupIndex={this.props.groupIndex}
                                                     updateIndex={this.props.updateIndex}
                                                     isMemo={true}
@@ -915,70 +903,65 @@ class OneCondition extends React.PureComponent {
                                                     isVirtual={true}>
                                                     {NOEnumChildOption && NOEnumChildOption[leftOptionDataType]}
                                                 </TooltipSelect> */}
-                      </InputGroup>
-                    )}
-                  {conditionSingleData &&
-                    conditionSingleData['rightValueType'] === 'context' &&
-                    leftOptionDataType === 'ENUM' && (
-                      <InputGroup compact>
-                        <Select
-                          value={
-                            conditionSingleData && conditionSingleData['rightValueType']
-                              ? conditionSingleData['rightValueType']
-                              : undefined
+                    </InputGroup>
+                  )}
+                {conditionSingleData &&
+                  conditionSingleData['rightValueType'] === 'context' &&
+                  leftOptionDataType === 'ENUM' && (
+                    <InputGroup compact>
+                      <Select
+                        value={
+                          conditionSingleData && conditionSingleData['rightValueType']
+                            ? conditionSingleData['rightValueType']
+                            : undefined
+                        }
+                        style={{ width: '30%' }}
+                        onChange={this.changeConditionField.bind(this, 'rightValueType', 'select')}
+                        dropdownMatchSelectWidth={false}
+                      >
+                        <Option value="input" title={'常量'}>
+                          {/* 常量 */}
+                          {'常量'}
+                        </Option>
+                        <Option value="context" title={'变量'}>
+                          {/* 变量 */}
+                          {'变量'}
+                        </Option>
+                      </Select>
+                      <IndicatorsCascader
+                        style={{ width: '70%' }}
+                        options={EnumChildOption[leftOptionDataType] || []}
+                        fieldNames={{ label: 'dName', value: 'name', children: 'data' }}
+                        value={
+                          conditionSingleData && conditionSingleData['value']
+                            ? conditionSingleData['value']
+                            : undefined
+                        }
+                        placeholder={customPlaceholder || '请选择'} // 请选择
+                        onChange={this.changeConditionField.bind(this, 'value', 'select')}
+                        showSearch
+                        setTitle={(option = []) => {
+                          let isLink = false;
+                          let value = conditionSingleData?.value;
+                          isLink = value?.includes('offlinezb') || value?.includes('salaxyzb');
+                          let dom = option;
+                          let tab = option && option[0].props?.data?.metricArea === 'EDIT' ? 2 : 1;
+                          if (isLink) {
+                            let text = option[1];
+                            let url = value.includes('offlinezb')
+                              ? `/index/offIndexManage?currentTab=${tab}&featureSetName=${text}`
+                              : `/index/realtime?currentTab=${tab}&metricName=${text}`;
+                            dom = (
+                              <a href={url} className="link-zb">
+                                {dom}
+                              </a>
+                            );
                           }
-                          style={{ width: '30%' }}
-                          onChange={this.changeConditionField.bind(
-                            this,
-                            'rightValueType',
-                            'select',
-                          )}
-                          dropdownMatchSelectWidth={false}
-                        >
-                          <Option value="input" title={'常量'}>
-                            {/* 常量 */}
-                            {'常量'}
-                          </Option>
-                          <Option value="context" title={'变量'}>
-                            {/* 变量 */}
-                            {'变量'}
-                          </Option>
-                        </Select>
-                        <IndicatorsCascader
-                          style={{ width: '70%' }}
-                          options={EnumChildOption[leftOptionDataType] || []}
-                          fieldNames={{ label: 'dName', value: 'name', children: 'data' }}
-                          value={
-                            conditionSingleData && conditionSingleData['value']
-                              ? conditionSingleData['value']
-                              : undefined
-                          }
-                          placeholder={customPlaceholder || '请选择'} // 请选择
-                          onChange={this.changeConditionField.bind(this, 'value', 'select')}
-                          showSearch
-                          setTitle={(option = []) => {
-                            let isLink = false;
-                            let value = conditionSingleData?.value;
-                            isLink = value?.includes('offlinezb') || value?.includes('salaxyzb');
-                            let dom = option;
-                            let tab =
-                              option && option[0].props?.data?.metricArea === 'EDIT' ? 2 : 1;
-                            if (isLink) {
-                              let text = option[1];
-                              let url = value.includes('offlinezb')
-                                ? `/index/offIndexManage?currentTab=${tab}&featureSetName=${text}`
-                                : `/index/realtime?currentTab=${tab}&metricName=${text}`;
-                              dom = (
-                                <a href={url} className="link-zb">
-                                  {dom}
-                                </a>
-                              );
-                            }
-                            return dom;
-                          }}
-                        />
+                          return dom;
+                        }}
+                      />
 
-                        {/* <TooltipSelect
+                      {/* <TooltipSelect
                                                     groupIndex={this.props.groupIndex}
                                                     updateIndex={this.props.updateIndex}
                                                     isMemo={true}
@@ -1032,35 +1015,36 @@ class OneCondition extends React.PureComponent {
                                                         EnumChildOption &&
                                                         EnumChildOption[leftOptionDataType]}
                                                 </TooltipSelect> */}
-                      </InputGroup>
-                    )}
-                </div>
-              </Col>
-            )}
-          {/* marginTop: 5, */}
-          <Col
-            className="basic-info-oper"
-            style={{ width: 5, display: 'flex', alignItems: 'center' }}
-          >
-            {conditionType === 'group' && !disabled && (
-              // 添加一项
-              <Tooltip title={'添加一项'} placement="left">
-                <Icon
-                  className="add"
-                  type="plus-circle-o"
-                  onClick={this.addCondition.bind(this)}
-                  style={{ marginRight: '5px' }}
-                />
-              </Tooltip>
-            )}
-            {/* 删除当前行 */}
-            {!disabled && (
-              <Tooltip title={'删除当前行'} placement="right">
-                <Icon className="delete" type="delete" onClick={this.deleteCondition.bind(this)} />
-              </Tooltip>
-            )}
-          </Col>
-        </Row>
+                    </InputGroup>
+                  )}
+              </div>
+            </Col>
+          )}
+        {/* marginTop: 5, */}
+        <Col
+          className="basic-info-oper"
+          style={{ width: 50 }}
+          // style={{ width: 50, display: 'flex', alignItems: 'center' }}
+        >
+          {conditionType === 'group' && !disabled && (
+            // 添加一项
+            <Tooltip title={'添加一项'} placement="left">
+              <Icon
+                className="add"
+                type="plus-circle-o"
+                onClick={this.addCondition.bind(this)}
+                style={{ marginRight: '5px' }}
+              />
+            </Tooltip>
+          )}
+          {/* 删除当前行 */}
+          {!disabled && (
+            <Tooltip title={'删除当前行'} placement="right">
+              <Icon className="delete" type="delete" onClick={this.deleteCondition.bind(this)} />
+            </Tooltip>
+          )}
+        </Col>
+        {/* </Row> */}
       </div>
     );
   }

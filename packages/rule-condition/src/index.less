@@ -12,19 +12,34 @@
       & {
         // border-top: 1px dashed #cccccc; //#cccccc;
         padding: 10px 0;
+        overflow: hidden;
       }
+
+      .condition-group-item {
+        min-width: 890px;
+
+        > div {
+          float: left;
+        }
+        .group-placeholder {
+          display: inline-block;
+          width: 130px;
+          height: 1px;
+        }
+      }
+
       &.group-condition {
         .group-item {
-          display: flex;
-          justify-content: center;
+          display: inline-block;
           margin-bottom: 10px; // 15px
+
           &:last-child {
             margin-bottom: 0;
           }
         }
+
         .item {
-          display: flex;
-          justify-content: center;
+          display: inline-block;
         }
       }
       .ant-select {

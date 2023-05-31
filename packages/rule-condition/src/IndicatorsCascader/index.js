@@ -125,7 +125,6 @@ const IndicatorsCascader = ({
 
   const renderItem = (data, level) => {
     const isLast = !data?.children?.length;
-    debugger;
     if (!data.dName) {
       return <EnptyContent />;
     }

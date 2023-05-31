@@ -26,7 +26,7 @@ class RuleConditon extends React.PureComponent {
     this.containerRef = React.createRef();
   }
   componentDidMount() {
-    this.containerRef.current = document.querySelector('.rule-condition');
+    this.containerRef.current = document.querySelector('.score-rule-condition');
     let { value } = this.props;
     if (value && this.isJSON(value)) {
       value = JSON.parse(value);
@@ -234,7 +234,10 @@ class RuleConditon extends React.PureComponent {
                   if (item.type !== 'alias') {
                     if (item?.children && item?.children.length) {
                       return (
-                        <div className="custom-condition-item group-condition has-line" key={index}>
+                        <div
+                          className={`custom-condition-item group-condition has-line group-index${index}`}
+                          key={index}
+                        >
                           {item.children.map((groupItem, groupIndex) => {
                             return (
                               <>
