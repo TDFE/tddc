@@ -1,19 +1,16 @@
-'use strict';
+"use strict";
 
-Object.defineProperty(exports, '__esModule', {
-  value: true,
+Object.defineProperty(exports, "__esModule", {
+  value: true
 });
 exports.default = initShapes;
 exports.sliceName = exports.getTextPixelWith = void 0;
-var _flowExclusivity = _interopRequireDefault(require('../Images/flow-exclusivity.svg'));
-var _flowParallel = _interopRequireDefault(require('../Images/flow-parallel.svg'));
-function _interopRequireDefault(obj) {
-  return obj && obj.__esModule ? obj : { default: obj };
-}
+var _flowExclusivity = _interopRequireDefault(require("../Images/flow-exclusivity.svg"));
+var _flowParallel = _interopRequireDefault(require("../Images/flow-parallel.svg"));
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 // 获取单行文本的像素宽度
 var getTextPixelWith = function getTextPixelWith(text) {
-  var fontStyle =
-    arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 'normal 12px Robot';
+  var fontStyle = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 'normal 12px Robot';
   var canvas = document.createElement('canvas'); // 创建 canvas 画布
   var context = canvas.getContext('2d'); // 获取 canvas 绘图上下文环境
   context.font = fontStyle; // 设置字体样式，使用前设置好对应的 font 样式才能准确获取文字的像素长度
@@ -58,10 +55,10 @@ function initShapes(editor, flowNodes) {
     var circle = snapPaper.circle(15, 14, 11);
     text1.attr({
       fill: '#fff',
-      fontSize: 12,
+      fontSize: 12
     });
     circle.attr({
-      fill: opt.color,
+      fill: opt.color
     });
     var circleGroup = snapPaper.group(circle, text1);
     var text = snapPaper.text(30, 15, name);
@@ -72,14 +69,14 @@ function initShapes(editor, flowNodes) {
       fill: '#eaeefa',
       stroke: '#d0dcfd',
       class: 'flow-icon-node',
-      strokeWidth: 1,
+      strokeWidth: 1
     });
     text.attr({
       fill: '#454f64',
       textAnchor: 'start',
       data: name,
       class: 'flow-txt-node',
-      fontSize: 12,
+      fontSize: 12
     });
     if (!showMiniMap) {
       var obj = document.createElementNS('http://www.w3.org/2000/svg', 'foreignObject');
@@ -89,7 +86,7 @@ function initShapes(editor, flowNodes) {
         width: 14,
         height: 14,
         x: node.getBBox().width - 14,
-        y: 0,
+        y: 0
       });
       return snapPaper.group(node, circleGroup, text, statusIcon);
     }
@@ -100,203 +97,148 @@ function initShapes(editor, flowNodes) {
   var initEditorShape = function initEditorShape() {
     var _loop = function _loop() {
       var node = flowNodes[i];
-      var nodeType =
-        (node === null || node === void 0 ? void 0 : node.type) ||
-        (node === null || node === void 0 ? void 0 : node.code);
+      var nodeType = (node === null || node === void 0 ? void 0 : node.type) || (node === null || node === void 0 ? void 0 : node.code);
       var typeLow = nodeType === null || nodeType === void 0 ? void 0 : nodeType.toLowerCase();
       if (typeLow.startsWith('start')) {
         // 开始
-        editor.graph.node.registeNode(
-          nodeType,
-          {
-            render: function render(data, snapPaper) {
-              var node = snapPaper.circle(25, 25, 25);
-              var text = snapPaper.text(25, 25, data.name);
-              node.attr({
-                fill: '#628FE4',
-                class: 'flow-icon-node',
-              });
-              text.attr({
-                fill: '#fff',
-                class: 'flow-txt-node',
-              });
-              return snapPaper.group(node, text);
-            },
-            linkPoints: [
-              {
-                x: 0.5,
-                y: 0,
-              },
-              {
-                x: 1,
-                y: 0.5,
-              },
-              {
-                x: 0.5,
-                y: 1,
-              },
-              {
-                x: 0,
-                y: 0.5,
-              },
-            ],
+        editor.graph.node.registeNode(nodeType, {
+          render: function render(data, snapPaper) {
+            var node = snapPaper.circle(25, 25, 25);
+            var text = snapPaper.text(25, 25, data.name);
+            node.attr({
+              fill: '#628FE4',
+              class: 'flow-icon-node'
+            });
+            text.attr({
+              fill: '#fff',
+              class: 'flow-txt-node'
+            });
+            return snapPaper.group(node, text);
           },
-          'default',
-        );
+          linkPoints: [{
+            x: 0.5,
+            y: 0
+          }, {
+            x: 1,
+            y: 0.5
+          }, {
+            x: 0.5,
+            y: 1
+          }, {
+            x: 0,
+            y: 0.5
+          }]
+        }, 'default');
       } else if (typeLow.startsWith('end')) {
         //  结束
-        editor.graph.node.registeNode(
-          nodeType,
-          {
-            render: function render(data, snapPaper) {
-              var node = snapPaper.circle(25, 25, 25);
-              var text = snapPaper.text(25, 25, data.name);
-              node.attr({
-                fill: '#869FBE',
-                class: 'flow-icon-node',
-              });
-              text.attr({
-                fill: '#fff',
-                class: 'flow-txt-node',
-              });
-              return snapPaper.group(node, text);
-            },
-            linkPoints: [
-              {
-                x: 0.5,
-                y: 0,
-              },
-              {
-                x: 1,
-                y: 0.5,
-              },
-              {
-                x: 0.5,
-                y: 1,
-              },
-              {
-                x: 0,
-                y: 0.5,
-              },
-            ],
+        editor.graph.node.registeNode(nodeType, {
+          render: function render(data, snapPaper) {
+            var node = snapPaper.circle(25, 25, 25);
+            var text = snapPaper.text(25, 25, data.name);
+            node.attr({
+              fill: '#869FBE',
+              class: 'flow-icon-node'
+            });
+            text.attr({
+              fill: '#fff',
+              class: 'flow-txt-node'
+            });
+            return snapPaper.group(node, text);
           },
-          'default',
-        );
+          linkPoints: [{
+            x: 0.5,
+            y: 0
+          }, {
+            x: 1,
+            y: 0.5
+          }, {
+            x: 0.5,
+            y: 1
+          }, {
+            x: 0,
+            y: 0.5
+          }]
+        }, 'default');
       } else if (typeLow.startsWith('parallel')) {
         // 并行
-        editor.graph.node.registeNode(
-          nodeType,
-          {
-            render: function render(data, snapPaper) {
-              var _text$node;
-              var image = snapPaper.image(_flowParallel.default, 0, 0, 60, 56);
-              image.node.setAttribute('xmlns:xlink', 'http://www.w3.org/1999/xlink');
-              var text = snapPaper.text(30, 28, data.name);
-              text.attr({
-                fill: '#24AF95',
-                class: 'flow-txt-node',
-              });
-              text === null || text === void 0
-                ? void 0
-                : (_text$node = text.node) === null || _text$node === void 0
-                ? void 0
-                : _text$node.setAttribute('font-size', '12px');
-              return snapPaper.group(image, text);
-            },
-            linkPoints: [
-              {
-                x: 0.5,
-                y: 0,
-              },
-              {
-                x: 1,
-                y: 0.5,
-              },
-              {
-                x: 0.5,
-                y: 1,
-              },
-              {
-                x: 0,
-                y: 0.5,
-              },
-            ],
+        editor.graph.node.registeNode(nodeType, {
+          render: function render(data, snapPaper) {
+            var _text$node;
+            var image = snapPaper.image(_flowParallel.default, 0, 0, 60, 56);
+            image.node.setAttribute('xmlns:xlink', 'http://www.w3.org/1999/xlink');
+            var text = snapPaper.text(30, 28, data.name);
+            text.attr({
+              fill: '#24AF95',
+              class: 'flow-txt-node'
+            });
+            text === null || text === void 0 ? void 0 : (_text$node = text.node) === null || _text$node === void 0 ? void 0 : _text$node.setAttribute('font-size', '12px');
+            return snapPaper.group(image, text);
           },
-          'default',
-        );
+          linkPoints: [{
+            x: 0.5,
+            y: 0
+          }, {
+            x: 1,
+            y: 0.5
+          }, {
+            x: 0.5,
+            y: 1
+          }, {
+            x: 0,
+            y: 0.5
+          }]
+        }, 'default');
       } else if (typeLow.startsWith('exclusive')) {
         // 判断
-        editor.graph.node.registeNode(
-          nodeType,
-          {
-            render: function render(data, snapPaper) {
-              var _text$node2;
-              var image = snapPaper.image(_flowExclusivity.default, 0, 0, 60, 56);
-              image.node.setAttribute('xmlns:xlink', 'http://www.w3.org/1999/xlink');
-              var text = snapPaper.text(30, 28, data.name);
-              text.attr({
-                fill: '#F67613',
-                class: 'flow-txt-node',
-              });
-              text === null || text === void 0
-                ? void 0
-                : (_text$node2 = text.node) === null || _text$node2 === void 0
-                ? void 0
-                : _text$node2.setAttribute('font-size', '12px');
-              return snapPaper.group(image, text);
-            },
-            linkPoints: [
-              {
-                x: 0.5,
-                y: 0,
-              },
-              {
-                x: 1,
-                y: 0.5,
-              },
-              {
-                x: 0.5,
-                y: 1,
-              },
-              {
-                x: 0,
-                y: 0.5,
-              },
-            ],
+        editor.graph.node.registeNode(nodeType, {
+          render: function render(data, snapPaper) {
+            var _text$node2;
+            var image = snapPaper.image(_flowExclusivity.default, 0, 0, 60, 56);
+            image.node.setAttribute('xmlns:xlink', 'http://www.w3.org/1999/xlink');
+            var text = snapPaper.text(30, 28, data.name);
+            text.attr({
+              fill: '#F67613',
+              class: 'flow-txt-node'
+            });
+            text === null || text === void 0 ? void 0 : (_text$node2 = text.node) === null || _text$node2 === void 0 ? void 0 : _text$node2.setAttribute('font-size', '12px');
+            return snapPaper.group(image, text);
           },
-          'default',
-        );
+          linkPoints: [{
+            x: 0.5,
+            y: 0
+          }, {
+            x: 1,
+            y: 0.5
+          }, {
+            x: 0.5,
+            y: 1
+          }, {
+            x: 0,
+            y: 0.5
+          }]
+        }, 'default');
       } else {
-        editor.graph.node.registeNode(
-          nodeType,
-          {
-            render: function render(data, snapPaper) {
-              return renderNode(data, snapPaper, {
-                iconText: node.iconText || '?',
-                color: node.iconColor || '#E6B55E',
-              });
-            },
-            linkPoints: [
-              {
-                x: 0.5,
-                y: 0,
-              },
-              {
-                x: 1,
-                y: 0.5,
-              },
-              {
-                x: 0.5,
-                y: 1,
-              },
-              {
-                x: 0,
-                y: 0.5,
-              },
-            ],
+        editor.graph.node.registeNode(nodeType, {
+          render: function render(data, snapPaper) {
+            return renderNode(data, snapPaper, {
+              iconText: node.iconText || '?',
+              color: node.iconColor || '#E6B55E'
+            });
           },
-          'iconNode',
-        );
+          linkPoints: [{
+            x: 0.5,
+            y: 0
+          }, {
+            x: 1,
+            y: 0.5
+          }, {
+            x: 0.5,
+            y: 1
+          }, {
+            x: 0,
+            y: 0.5
+          }]
+        }, 'iconNode');
       }
     };
     for (var i in flowNodes) {

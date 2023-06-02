@@ -1,7 +1,7 @@
-'use strict';
+"use strict";
 
-Object.defineProperty(exports, '__esModule', {
-  value: true,
+Object.defineProperty(exports, "__esModule", {
+  value: true
 });
 exports.ruleOp = exports.excludeRuleTemplate = void 0;
 var ruleOp = {
@@ -18,7 +18,7 @@ var ruleOp = {
   isnull: '为空',
   notnull: '不为空',
   in: '存在',
-  notin: '不存在',
+  notin: '不存在'
 };
 exports.ruleOp = ruleOp;
 var excludeRuleTemplate = ['multiDimList/customList'];

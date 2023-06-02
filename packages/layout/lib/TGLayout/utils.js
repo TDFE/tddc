@@ -1,143 +1,29 @@
-'use strict';
+"use strict";
 
-Object.defineProperty(exports, '__esModule', {
-  value: true,
+Object.defineProperty(exports, "__esModule", {
+  value: true
 });
-exports.getLayoutPageTitle =
-  exports.getLang =
-  exports.getHeader =
-  exports.formatOrgApp =
-  exports.formatAppList =
-    void 0;
+exports.getLayoutPageTitle = exports.getLang = exports.getHeader = exports.formatOrgApp = exports.formatAppList = void 0;
 exports.getStrLength = getStrLength;
-exports.traverseTree =
-  exports.rsaPwd =
-  exports.openInNewTab =
-  exports.isNewTabMenu =
-  exports.isJSON =
-  exports.goToLogin =
-  exports.getSubAppsFromMenus =
-    void 0;
-var _jsencrypt = _interopRequireDefault(require('jsencrypt'));
-var _universalCookie = _interopRequireDefault(require('universal-cookie'));
-var _lodash = require('lodash');
-function _interopRequireDefault(obj) {
-  return obj && obj.__esModule ? obj : { default: obj };
-}
-function ownKeys(object, enumerableOnly) {
-  var keys = Object.keys(object);
-  if (Object.getOwnPropertySymbols) {
-    var symbols = Object.getOwnPropertySymbols(object);
-    enumerableOnly &&
-      (symbols = symbols.filter(function (sym) {
-        return Object.getOwnPropertyDescriptor(object, sym).enumerable;
-      })),
-      keys.push.apply(keys, symbols);
-  }
-  return keys;
-}
-function _objectSpread(target) {
-  for (var i = 1; i < arguments.length; i++) {
-    var source = null != arguments[i] ? arguments[i] : {};
-    i % 2
-      ? ownKeys(Object(source), !0).forEach(function (key) {
-          _defineProperty(target, key, source[key]);
-        })
-      : Object.getOwnPropertyDescriptors
-      ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source))
-      : ownKeys(Object(source)).forEach(function (key) {
-          Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key));
-        });
-  }
-  return target;
-}
-function _defineProperty(obj, key, value) {
-  key = _toPropertyKey(key);
-  if (key in obj) {
-    Object.defineProperty(obj, key, {
-      value: value,
-      enumerable: true,
-      configurable: true,
-      writable: true,
-    });
-  } else {
-    obj[key] = value;
-  }
-  return obj;
-}
-function _toPropertyKey(arg) {
-  var key = _toPrimitive(arg, 'string');
-  return _typeof(key) === 'symbol' ? key : String(key);
-}
-function _toPrimitive(input, hint) {
-  if (_typeof(input) !== 'object' || input === null) return input;
-  var prim = input[Symbol.toPrimitive];
-  if (prim !== undefined) {
-    var res = prim.call(input, hint || 'default');
-    if (_typeof(res) !== 'object') return res;
-    throw new TypeError('@@toPrimitive must return a primitive value.');
-  }
-  return (hint === 'string' ? String : Number)(input);
-}
-function _typeof(obj) {
-  '@babel/helpers - typeof';
-  return (
-    (_typeof =
-      'function' == typeof Symbol && 'symbol' == typeof Symbol.iterator
-        ? function (obj) {
-            return typeof obj;
-          }
-        : function (obj) {
-            return obj &&
-              'function' == typeof Symbol &&
-              obj.constructor === Symbol &&
-              obj !== Symbol.prototype
-              ? 'symbol'
-              : typeof obj;
-          }),
-    _typeof(obj)
-  );
-}
-function _toConsumableArray(arr) {
-  return (
-    _arrayWithoutHoles(arr) ||
-    _iterableToArray(arr) ||
-    _unsupportedIterableToArray(arr) ||
-    _nonIterableSpread()
-  );
-}
-function _nonIterableSpread() {
-  throw new TypeError(
-    'Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.',
-  );
-}
-function _unsupportedIterableToArray(o, minLen) {
-  if (!o) return;
-  if (typeof o === 'string') return _arrayLikeToArray(o, minLen);
-  var n = Object.prototype.toString.call(o).slice(8, -1);
-  if (n === 'Object' && o.constructor) n = o.constructor.name;
-  if (n === 'Map' || n === 'Set') return Array.from(o);
-  if (n === 'Arguments' || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n))
-    return _arrayLikeToArray(o, minLen);
-}
-function _iterableToArray(iter) {
-  if (
-    (typeof Symbol !== 'undefined' && iter[Symbol.iterator] != null) ||
-    iter['@@iterator'] != null
-  )
-    return Array.from(iter);
-}
-function _arrayWithoutHoles(arr) {
-  if (Array.isArray(arr)) return _arrayLikeToArray(arr);
-}
-function _arrayLikeToArray(arr, len) {
-  if (len == null || len > arr.length) len = arr.length;
-  for (var i = 0, arr2 = new Array(len); i < len; i++) arr2[i] = arr[i];
-  return arr2;
-}
+exports.traverseTree = exports.rsaPwd = exports.openInNewTab = exports.isNewTabMenu = exports.isJSON = exports.goToLogin = exports.getSubAppsFromMenus = void 0;
+var _jsencrypt = _interopRequireDefault(require("jsencrypt"));
+var _universalCookie = _interopRequireDefault(require("universal-cookie"));
+var _lodash = require("lodash");
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? ownKeys(Object(source), !0).forEach(function (key) { _defineProperty(target, key, source[key]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } return target; }
+function _defineProperty(obj, key, value) { key = _toPropertyKey(key); if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+function _toPropertyKey(arg) { var key = _toPrimitive(arg, "string"); return _typeof(key) === "symbol" ? key : String(key); }
+function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input === null) return input; var prim = input[Symbol.toPrimitive]; if (prim !== undefined) { var res = prim.call(input, hint || "default"); if (_typeof(res) !== "object") return res; throw new TypeError("@@toPrimitive must return a primitive value."); } return (hint === "string" ? String : Number)(input); }
+function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (obj) { return typeof obj; } : function (obj) { return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }, _typeof(obj); }
+function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread(); }
+function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+function _iterableToArray(iter) { if (typeof Symbol !== "undefined" && iter[Symbol.iterator] != null || iter["@@iterator"] != null) return Array.from(iter); }
+function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) return _arrayLikeToArray(arr); }
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) arr2[i] = arr[i]; return arr2; }
 var cookies = new _universalCookie.default();
-var pubKey =
-  'MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDNpMKIVmt0u5lx62tRD1O/15EyNLN0lNi3++ytnvLalkQNSrrqU2w3uD5NwdVE/v4OrDznTpBdTl6N1ryXAILU5GDu0bLATC46RKxDlH52LIvaRBU7BZkEGqllEqRJFmwtvtNCVeZD6ekJWc67MLUh4LNa1yMQ9V6Zsf64uY2lgwIDAQAB';
+var pubKey = 'MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDNpMKIVmt0u5lx62tRD1O/15EyNLN0lNi3++ytnvLalkQNSrrqU2w3uD5NwdVE/v4OrDznTpBdTl6N1ryXAILU5GDu0bLATC46RKxDlH52LIvaRBU7BZkEGqllEqRJFmwtvtNCVeZD6ekJWc67MLUh4LNa1yMQ9V6Zsf64uY2lgwIDAQAB';
 var rsaPwd = function rsaPwd(pwd) {
   var encrypt = new _jsencrypt.default();
   encrypt.setPublicKey(pubKey);
@@ -152,7 +38,7 @@ var goToLogin = function goToLogin() {
 exports.goToLogin = goToLogin;
 var getHeader = function getHeader() {
   return {
-    'X-Cf-Random': sessionStorage.getItem('_csrf_'),
+    'X-Cf-Random': sessionStorage.getItem('_csrf_')
   };
 };
 exports.getHeader = getHeader;
@@ -164,7 +50,7 @@ var isNewTabMenu = function isNewTabMenu(menu) {
   var _ref = menu || {},
     target = _ref.target,
     path = _ref.path;
-  return target === '_blank' || (/^http/i.test(path) && /blankType=newTarget/.test(path));
+  return target === '_blank' || /^http/i.test(path) && /blankType=newTarget/.test(path);
 };
 exports.isNewTabMenu = isNewTabMenu;
 var openInNewTab = function openInNewTab(menu) {
@@ -176,25 +62,12 @@ var traverseTree = function traverseTree(treeData, callback, pnode) {
   (treeData || []).every(function (node, index) {
     var result;
     if (callback) {
-      result = callback(
-        node,
-        pnode,
-        (pnodes === null || pnodes === void 0 ? void 0 : pnodes.length)
-          ? pnodes
-          : [pnode].filter(function (item) {
-              return !!item;
-            }),
-        index,
-      );
+      result = callback(node, pnode, (pnodes === null || pnodes === void 0 ? void 0 : pnodes.length) ? pnodes : [pnode].filter(function (item) {
+        return !!item;
+      }), index);
     }
     if (result !== false) {
-      node &&
-        traverseTree(
-          node.children || [],
-          callback,
-          node,
-          [node].concat(_toConsumableArray(pnodes)),
-        );
+      node && traverseTree(node.children || [], callback, node, [node].concat(_toConsumableArray(pnodes)));
     }
     return result !== false;
   });
@@ -216,25 +89,15 @@ var isJSON = function isJSON(str) {
 };
 exports.isJSON = isJSON;
 var formatAppList = function formatAppList(apps) {
-  return [
-    {
-      key: '',
-      name: '全部渠道',
-    },
-  ].concat(
-    _toConsumableArray(
-      (apps || []).map(function (item) {
-        return _objectSpread(
-          _objectSpread({}, item),
-          {},
-          {
-            key: item.name,
-            name: item.displayName,
-          },
-        );
-      }),
-    ),
-  );
+  return [{
+    key: '',
+    name: '全部渠道'
+  }].concat(_toConsumableArray((apps || []).map(function (item) {
+    return _objectSpread(_objectSpread({}, item), {}, {
+      key: item.name,
+      name: item.displayName
+    });
+  })));
 };
 exports.formatAppList = formatAppList;
 var formatOrgApp = function formatOrgApp(orgGroup) {
@@ -247,13 +110,9 @@ var formatOrgApp = function formatOrgApp(orgGroup) {
     item.value = item.code;
     item.key = item.code;
     orgCodeMap[item.code] = item;
-    orgUuidMap[item.uuid] = _objectSpread(
-      _objectSpread({}, item),
-      {},
-      {
-        children: undefined,
-      },
-    );
+    orgUuidMap[item.uuid] = _objectSpread(_objectSpread({}, item), {}, {
+      children: undefined
+    });
     return item;
   });
   var orgUuidTree = traverseTree([(0, _lodash.cloneDeep)(orgGroup)], function (item) {
@@ -264,23 +123,19 @@ var formatOrgApp = function formatOrgApp(orgGroup) {
   });
 
   // 用户下有权限的全渠道
-  var appList = [
-    {
-      key: '',
-      name: '全部渠道',
-    },
-  ].concat(
-    apps.map(function (app) {
-      appMap[app.name] = app.displayName;
-      return {
-        key: app.name,
-        name: app.displayName,
-      };
-    }),
-  );
+  var appList = [{
+    key: '',
+    name: '全部渠道'
+  }].concat(apps.map(function (app) {
+    appMap[app.name] = app.displayName;
+    return {
+      key: app.name,
+      name: app.displayName
+    };
+  }));
   var allTempObj = {
     name: '全部渠道',
-    key: '',
+    key: ''
   };
   var currentApp = allTempObj;
   if (localStorage.hasOwnProperty('currentApp_new')) {
@@ -297,7 +152,7 @@ var formatOrgApp = function formatOrgApp(orgGroup) {
         // 判断currentApp是否是标准格式
         currentApp = {
           key: currentAppJson.name,
-          name: currentAppJson.dName,
+          name: currentAppJson.dName
         };
       }
     } else {
@@ -313,7 +168,7 @@ var formatOrgApp = function formatOrgApp(orgGroup) {
     orgCodeMap: orgCodeMap,
     currentApp: currentApp,
     appList: appList,
-    appMap: appMap,
+    appMap: appMap
   };
 };
 exports.formatOrgApp = formatOrgApp;
