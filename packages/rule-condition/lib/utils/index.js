@@ -1,7 +1,7 @@
-'use strict';
+"use strict";
 
-Object.defineProperty(exports, '__esModule', {
-  value: true,
+Object.defineProperty(exports, "__esModule", {
+  value: true
 });
 exports.filterAvailableFieldList = exports.dataTypeSpecialConvert = void 0;
 // 授权过滤ruleAndIndexFieldList
@@ -16,28 +16,22 @@ var filterAvailableFieldList = function filterAvailableFieldList(_ref) {
     return [];
   }
   var newFieldList = [];
-  newFieldList =
-    ruleAndIndexFieldList === null || ruleAndIndexFieldList === void 0
-      ? void 0
-      : ruleAndIndexFieldList.filter(function (item) {
-          // 排除的字段或指标
-          if (exclude.includes(item.name)) {
-            return false;
-          }
-          var showOption = !item.apps;
-          if (!showOption && item.apps) {
-            showOption =
-              item.apps.indexOf(appCode) > -1 ||
-              item.apps.includes('all') ||
-              [null, undefined, ''].includes(appCode);
-          }
-          if (showOption && orgCode && item.orgs && Array.isArray(item.orgs)) {
-            showOption = item.orgs.includes(orgCode);
-          }
-          if (showOption) {
-            return item;
-          }
-        });
+  newFieldList = ruleAndIndexFieldList === null || ruleAndIndexFieldList === void 0 ? void 0 : ruleAndIndexFieldList.filter(function (item) {
+    // 排除的字段或指标
+    if (exclude.includes(item.name)) {
+      return false;
+    }
+    var showOption = !item.apps;
+    if (!showOption && item.apps) {
+      showOption = item.apps.indexOf(appCode) > -1 || item.apps.includes('all') || [null, undefined, ''].includes(appCode);
+    }
+    if (showOption && orgCode && item.orgs && Array.isArray(item.orgs)) {
+      showOption = item.orgs.includes(orgCode);
+    }
+    if (showOption) {
+      return item;
+    }
+  });
   return newFieldList;
 };
 
@@ -46,11 +40,7 @@ exports.filterAvailableFieldList = filterAvailableFieldList;
 var dataTypeSpecialConvert = function dataTypeSpecialConvert() {
   var item = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
   var rightValueType = item === null || item === void 0 ? void 0 : item.rightValueType;
-  var type =
-    (item === null || item === void 0 ? void 0 : item.dataType) ||
-    (item === null || item === void 0 ? void 0 : item.datatype) ||
-    (item === null || item === void 0 ? void 0 : item.type) ||
-    '';
+  var type = (item === null || item === void 0 ? void 0 : item.dataType) || (item === null || item === void 0 ? void 0 : item.datatype) || (item === null || item === void 0 ? void 0 : item.type) || '';
   if (item === null || item === void 0 ? void 0 : item.hasOwnProperty('propertyDataType')) {
     type = item === null || item === void 0 ? void 0 : item.propertyDataType;
   }
@@ -63,7 +53,7 @@ var dataTypeSpecialConvert = function dataTypeSpecialConvert() {
   }
   return {
     type: type,
-    customPlaceholder: customPlaceholder,
+    customPlaceholder: customPlaceholder
   };
 };
 exports.dataTypeSpecialConvert = dataTypeSpecialConvert;

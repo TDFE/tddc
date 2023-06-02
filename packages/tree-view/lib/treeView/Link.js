@@ -1,14 +1,12 @@
-'use strict';
+"use strict";
 
-Object.defineProperty(exports, '__esModule', {
-  value: true,
+Object.defineProperty(exports, "__esModule", {
+  value: true
 });
 exports.default = void 0;
-var _react = _interopRequireDefault(require('react'));
-var _constants = require('./constants');
-function _interopRequireDefault(obj) {
-  return obj && obj.__esModule ? obj : { default: obj };
-}
+var _react = _interopRequireDefault(require("react"));
+var _constants = require("./constants");
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 var _default = function _default(props) {
   var source = props.source,
     target = props.target,
@@ -27,15 +25,15 @@ var _default = function _default(props) {
       left: x1,
       top: (isH ? y1 : Math.min(y1, y2)) + _constants.COMPONENT_HEIGHT / 2,
       zIndex: highlight ? 1 : 0,
-      borderBottom: '1px '.concat(linkType || 'solid', ' ').concat(color || '#c7d0d9'),
-      borderLeft: '1px '.concat(linkType || 'solid', ' ').concat(color || '#c7d0d9'),
+      borderBottom: "1px ".concat(linkType || 'solid', " ").concat(color || '#c7d0d9'),
+      borderLeft: "1px ".concat(linkType || 'solid', " ").concat(color || '#c7d0d9')
     };
     var clsNames = 'link ' + (highlight ? ['link-highlight'] : '');
-    return /*#__PURE__*/ _react.default.createElement('div', {
+    return /*#__PURE__*/_react.default.createElement("div", {
       className: clsNames,
       style: style,
-      'data-key': genKey([x1, y1, x2, y2]),
-      key: genKey([x1, y1, x2, y2]),
+      "data-key": genKey([x1, y1, x2, y2]),
+      key: genKey([x1, y1, x2, y2])
     });
   };
   var isHorizontal = function isHorizontal(x1, x2) {
@@ -85,6 +83,6 @@ var _default = function _default(props) {
       }
     }
   }
-  return /*#__PURE__*/ _react.default.createElement(_react.default.Fragment, null, lines);
+  return /*#__PURE__*/_react.default.createElement(_react.default.Fragment, null, lines);
 };
 exports.default = _default;

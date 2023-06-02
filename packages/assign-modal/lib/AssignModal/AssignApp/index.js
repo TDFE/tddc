@@ -1,166 +1,33 @@
-'use strict';
+"use strict";
 
-function _typeof(obj) {
-  '@babel/helpers - typeof';
-  return (
-    (_typeof =
-      'function' == typeof Symbol && 'symbol' == typeof Symbol.iterator
-        ? function (obj) {
-            return typeof obj;
-          }
-        : function (obj) {
-            return obj &&
-              'function' == typeof Symbol &&
-              obj.constructor === Symbol &&
-              obj !== Symbol.prototype
-              ? 'symbol'
-              : typeof obj;
-          }),
-    _typeof(obj)
-  );
-}
-Object.defineProperty(exports, '__esModule', {
-  value: true,
+function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (obj) { return typeof obj; } : function (obj) { return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }, _typeof(obj); }
+Object.defineProperty(exports, "__esModule", {
+  value: true
 });
 exports.default = void 0;
-require('antd/lib/checkbox/style');
-var _checkbox = _interopRequireDefault(require('antd/lib/checkbox'));
-require('antd/lib/tree/style');
-var _tree = _interopRequireDefault(require('antd/lib/tree'));
-var _react = _interopRequireWildcard(require('react'));
-var _tntd = require('tntd');
-var _lodash = require('lodash');
-require('./index.less');
-var _utils = require('./utils');
-var _locale = require('../../locale');
-function _getRequireWildcardCache(nodeInterop) {
-  if (typeof WeakMap !== 'function') return null;
-  var cacheBabelInterop = new WeakMap();
-  var cacheNodeInterop = new WeakMap();
-  return (_getRequireWildcardCache = function _getRequireWildcardCache(nodeInterop) {
-    return nodeInterop ? cacheNodeInterop : cacheBabelInterop;
-  })(nodeInterop);
-}
-function _interopRequireWildcard(obj, nodeInterop) {
-  if (!nodeInterop && obj && obj.__esModule) {
-    return obj;
-  }
-  if (obj === null || (_typeof(obj) !== 'object' && typeof obj !== 'function')) {
-    return { default: obj };
-  }
-  var cache = _getRequireWildcardCache(nodeInterop);
-  if (cache && cache.has(obj)) {
-    return cache.get(obj);
-  }
-  var newObj = {};
-  var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor;
-  for (var key in obj) {
-    if (key !== 'default' && Object.prototype.hasOwnProperty.call(obj, key)) {
-      var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null;
-      if (desc && (desc.get || desc.set)) {
-        Object.defineProperty(newObj, key, desc);
-      } else {
-        newObj[key] = obj[key];
-      }
-    }
-  }
-  newObj.default = obj;
-  if (cache) {
-    cache.set(obj, newObj);
-  }
-  return newObj;
-}
-function _interopRequireDefault(obj) {
-  return obj && obj.__esModule ? obj : { default: obj };
-}
-function _toConsumableArray(arr) {
-  return (
-    _arrayWithoutHoles(arr) ||
-    _iterableToArray(arr) ||
-    _unsupportedIterableToArray(arr) ||
-    _nonIterableSpread()
-  );
-}
-function _nonIterableSpread() {
-  throw new TypeError(
-    'Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.',
-  );
-}
-function _iterableToArray(iter) {
-  if (
-    (typeof Symbol !== 'undefined' && iter[Symbol.iterator] != null) ||
-    iter['@@iterator'] != null
-  )
-    return Array.from(iter);
-}
-function _arrayWithoutHoles(arr) {
-  if (Array.isArray(arr)) return _arrayLikeToArray(arr);
-}
-function _slicedToArray(arr, i) {
-  return (
-    _arrayWithHoles(arr) ||
-    _iterableToArrayLimit(arr, i) ||
-    _unsupportedIterableToArray(arr, i) ||
-    _nonIterableRest()
-  );
-}
-function _nonIterableRest() {
-  throw new TypeError(
-    'Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.',
-  );
-}
-function _unsupportedIterableToArray(o, minLen) {
-  if (!o) return;
-  if (typeof o === 'string') return _arrayLikeToArray(o, minLen);
-  var n = Object.prototype.toString.call(o).slice(8, -1);
-  if (n === 'Object' && o.constructor) n = o.constructor.name;
-  if (n === 'Map' || n === 'Set') return Array.from(o);
-  if (n === 'Arguments' || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n))
-    return _arrayLikeToArray(o, minLen);
-}
-function _arrayLikeToArray(arr, len) {
-  if (len == null || len > arr.length) len = arr.length;
-  for (var i = 0, arr2 = new Array(len); i < len; i++) arr2[i] = arr[i];
-  return arr2;
-}
-function _iterableToArrayLimit(arr, i) {
-  var _i =
-    null == arr
-      ? null
-      : ('undefined' != typeof Symbol && arr[Symbol.iterator]) || arr['@@iterator'];
-  if (null != _i) {
-    var _s,
-      _e,
-      _x,
-      _r,
-      _arr = [],
-      _n = !0,
-      _d = !1;
-    try {
-      if (((_x = (_i = _i.call(arr)).next), 0 === i)) {
-        if (Object(_i) !== _i) return;
-        _n = !1;
-      } else
-        for (
-          ;
-          !(_n = (_s = _x.call(_i)).done) && (_arr.push(_s.value), _arr.length !== i);
-          _n = !0
-        );
-    } catch (err) {
-      (_d = !0), (_e = err);
-    } finally {
-      try {
-        if (!_n && null != _i.return && ((_r = _i.return()), Object(_r) !== _r)) return;
-      } finally {
-        if (_d) throw _e;
-      }
-    }
-    return _arr;
-  }
-}
-function _arrayWithHoles(arr) {
-  if (Array.isArray(arr)) return arr;
-}
+require("antd/lib/checkbox/style");
+var _checkbox = _interopRequireDefault(require("antd/lib/checkbox"));
+require("antd/lib/tree/style");
+var _tree = _interopRequireDefault(require("antd/lib/tree"));
+var _react = _interopRequireWildcard(require("react"));
+var _tntd = require("tntd");
+var _lodash = require("lodash");
+require("./index.less");
+var _utils = require("./utils");
+var _locale = require("../../locale");
+function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== "function") return null; var cacheBabelInterop = new WeakMap(); var cacheNodeInterop = new WeakMap(); return (_getRequireWildcardCache = function _getRequireWildcardCache(nodeInterop) { return nodeInterop ? cacheNodeInterop : cacheBabelInterop; })(nodeInterop); }
+function _interopRequireWildcard(obj, nodeInterop) { if (!nodeInterop && obj && obj.__esModule) { return obj; } if (obj === null || _typeof(obj) !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(nodeInterop); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread(); }
+function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+function _iterableToArray(iter) { if (typeof Symbol !== "undefined" && iter[Symbol.iterator] != null || iter["@@iterator"] != null) return Array.from(iter); }
+function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) return _arrayLikeToArray(arr); }
+function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
+function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) arr2[i] = arr[i]; return arr2; }
+function _iterableToArrayLimit(arr, i) { var _i = null == arr ? null : "undefined" != typeof Symbol && arr[Symbol.iterator] || arr["@@iterator"]; if (null != _i) { var _s, _e, _x, _r, _arr = [], _n = !0, _d = !1; try { if (_x = (_i = _i.call(arr)).next, 0 === i) { if (Object(_i) !== _i) return; _n = !1; } else for (; !(_n = (_s = _x.call(_i)).done) && (_arr.push(_s.value), _arr.length !== i); _n = !0); } catch (err) { _d = !0, _e = err; } finally { try { if (!_n && null != _i.return && (_r = _i.return(), Object(_r) !== _r)) return; } finally { if (_d) throw _e; } } return _arr; } }
+function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 var TreeNode = _tree.default.TreeNode;
 var path = []; // 上级机构到当前机构的路径
 
@@ -206,84 +73,70 @@ var AssignModal = function AssignModal(props) {
     (0, _utils.addPath)(orgList[0], []); // 添加 上级机构到子机构的路径
   }
 
-  (0, _react.useEffect)(
-    function () {
-      // path 和 allOrgList 赋值
-      path = (0, _utils.findSameCodePath)(orgList[0], orgCode);
-      var initOrgs = [];
-      var initApps = [];
-      if (orgCodes.includes('all')) {
-        setAllOrgChecked(orgCodes.includes('all'));
-        initOrgs = allOrg;
-      } else {
-        initOrgs = Array.from(
-          new Set([].concat(_toConsumableArray(orgCodes || []), _toConsumableArray(path))),
-        );
+  (0, _react.useEffect)(function () {
+    // path 和 allOrgList 赋值
+    path = (0, _utils.findSameCodePath)(orgList[0], orgCode);
+    var initOrgs = [];
+    var initApps = [];
+    if (orgCodes.includes('all')) {
+      setAllOrgChecked(orgCodes.includes('all'));
+      initOrgs = allOrg;
+    } else {
+      initOrgs = Array.from(new Set([].concat(_toConsumableArray(orgCodes || []), _toConsumableArray(path))));
+    }
+    if (appCodes.includes('all')) {
+      setAllAppChecked(appCodes.includes('all'));
+      initApps = allApp;
+    } else {
+      initApps = Array.from(new Set([].concat(_toConsumableArray(appCodes || []), [appCode])));
+    }
+    setCheckedKeys(initOrgs);
+    setAppKeys(initApps || []);
+    console.log({
+      initApps: initApps
+    });
+    onChange && onChange({
+      appKeys: appCodes.includes('all') ? ['all'] : initApps,
+      checkedKeys: orgCodes.includes('all') ? ['all'] : initOrgs,
+      appCheckAll: appCodes.includes('all'),
+      orgCheckAll: orgCodes.includes('all'),
+      checkData: {
+        apps: initApps,
+        orgs: initOrgs
       }
-      if (appCodes.includes('all')) {
-        setAllAppChecked(appCodes.includes('all'));
-        initApps = allApp;
-      } else {
-        initApps = Array.from(new Set([].concat(_toConsumableArray(appCodes || []), [appCode])));
-      }
-      setCheckedKeys(initOrgs);
-      setAppKeys(initApps || []);
-      console.log({
-        initApps: initApps,
-      });
-      onChange &&
-        onChange({
-          appKeys: appCodes.includes('all') ? ['all'] : initApps,
-          checkedKeys: orgCodes.includes('all') ? ['all'] : initOrgs,
-          appCheckAll: appCodes.includes('all'),
-          orgCheckAll: orgCodes.includes('all'),
-          checkData: {
-            apps: initApps,
-            orgs: initOrgs,
-          },
-        });
-    },
-    [dataItem],
-  );
+    });
+  }, [dataItem]);
   var loopTreeNodes = function loopTreeNodes(data) {
     var level = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 0;
     var NodeTitle = function NodeTitle(_ref) {
       var node = _ref.node;
-      return /*#__PURE__*/ _react.default.createElement(
-        'div',
-        {
-          className: 'node-title',
-        },
-        node.title,
-      );
+      return /*#__PURE__*/_react.default.createElement("div", {
+        className: "node-title"
+      }, node.title);
     };
     return data.map(function (item) {
       var orgDisabled = path.includes(item.code);
       if (item.children) {
-        return /*#__PURE__*/ _react.default.createElement(
-          TreeNode,
-          {
-            key: item.code,
-            title: /*#__PURE__*/ _react.default.createElement(NodeTitle, {
-              node: item,
-            }),
-            item: item,
-            disabled: orgDisabled || disabled || allOrgChecked,
-          },
-          loopTreeNodes(item.children, level + 1),
-        );
+        return /*#__PURE__*/_react.default.createElement(TreeNode, {
+          key: item.code,
+          title: /*#__PURE__*/_react.default.createElement(NodeTitle, {
+            node: item
+          }),
+          item: item,
+          disabled: orgDisabled || disabled || allOrgChecked
+        }, loopTreeNodes(item.children, level + 1));
       }
-      return /*#__PURE__*/ _react.default.createElement(TreeNode, {
+      return /*#__PURE__*/_react.default.createElement(TreeNode, {
         style: {
-          paddingLeft: ''.concat((level + 1) * 14, 'px'),
-          marginLeft: '-'.concat(level * 14, 'px'),
+          paddingLeft: "".concat((level + 1) * 14, "px"),
+          marginLeft: "-".concat(level * 14, "px")
         },
         key: item.code,
-        title: /*#__PURE__*/ _react.default.createElement(NodeTitle, {
-          node: item,
+        title: /*#__PURE__*/_react.default.createElement(NodeTitle, {
+          node: item
         }),
         item: item,
-        disabled: orgDisabled || disabled,
+        disabled: orgDisabled || disabled
       });
     });
   };
@@ -303,9 +156,7 @@ var AssignModal = function AssignModal(props) {
       });
     }
     if (info.checked) {
-      checked = Array.from(
-        new Set([].concat(_toConsumableArray(checked), _toConsumableArray(path))),
-      );
+      checked = Array.from(new Set([].concat(_toConsumableArray(checked), _toConsumableArray(path))));
     }
     setCheckedKeys(checked);
     onChange({
@@ -315,8 +166,8 @@ var AssignModal = function AssignModal(props) {
       orgCheckAll: allOrgChecked,
       checkData: {
         apps: appKeys,
-        orgs: checked,
-      },
+        orgs: checked
+      }
     });
   };
   var assignApp = function assignApp(e) {
@@ -342,8 +193,8 @@ var AssignModal = function AssignModal(props) {
       orgCheckAll: allOrgChecked,
       checkData: {
         apps: newAppKeys,
-        orgs: checkedKeys,
-      },
+        orgs: checkedKeys
+      }
     });
   };
 
@@ -361,15 +212,13 @@ var AssignModal = function AssignModal(props) {
         orgCheckAll: true,
         checkData: {
           apps: appKeys,
-          orgs: checkedKeys,
-        },
+          orgs: checkedKeys
+        }
       });
     } else {
       setAllOrgChecked(false);
       var arr = orgCodes.includes('all') ? allOrg : orgCodes;
-      orgChecks = Array.from(
-        new Set([].concat(_toConsumableArray(arr || []), _toConsumableArray(path))),
-      );
+      orgChecks = Array.from(new Set([].concat(_toConsumableArray(arr || []), _toConsumableArray(path))));
       setCheckedKeys(orgChecks);
       onChange({
         appKeys: allAppChecked ? ['all'] : appKeys,
@@ -378,8 +227,8 @@ var AssignModal = function AssignModal(props) {
         orgCheckAll: false,
         checkData: {
           apps: appKeys,
-          orgs: orgChecks,
-        },
+          orgs: orgChecks
+        }
       });
     }
   };
@@ -400,8 +249,8 @@ var AssignModal = function AssignModal(props) {
         orgCheckAll: allOrgChecked,
         checkData: {
           apps: appChecks,
-          orgs: checkedKeys,
-        },
+          orgs: checkedKeys
+        }
       });
     } else {
       setAllAppChecked(false);
@@ -415,136 +264,62 @@ var AssignModal = function AssignModal(props) {
         orgCheckAll: allOrgChecked,
         checkData: {
           apps: appChecks,
-          orgs: checkedKeys,
-        },
+          orgs: checkedKeys
+        }
       });
     }
   };
-  return /*#__PURE__*/ _react.default.createElement(
-    'div',
-    {
-      className: 'assign-box-container',
-    },
-    /*#__PURE__*/ _react.default.createElement(
-      'div',
-      {
-        className: 'left',
-      },
-      /*#__PURE__*/ _react.default.createElement(
-        'div',
-        {
-          className: 'menu-header',
-        },
-        orgTitle ||
-          (0, _locale.getText)(
-            'authorizesOrgList',
-            props === null || props === void 0 ? void 0 : props.lang,
-          ),
-        /*#__PURE__*/ _react.default.createElement(
-          'div',
-          {
-            className: 'menu-all-checked',
-          },
-          /*#__PURE__*/ _react.default.createElement(
-            _checkbox.default,
-            {
-              onChange: checkAllOrg,
-              checked: allOrgChecked,
-              disabled: disabled,
-            },
-            orgCheckboxTitle ||
-              (0, _locale.getText)(
-                'allOrgAvailable',
-                props === null || props === void 0 ? void 0 : props.lang,
-              ),
-          ),
-        ),
-      ),
-      /*#__PURE__*/ _react.default.createElement(
-        _tree.default,
-        {
-          blockNode: true,
-          className: 'tree-list',
-          checkable: true,
-          checkStrictly: true,
-          checkedKeys: checkedKeys,
-          defaultExpandAll: true,
-          onCheck: onCheck,
-          disabled: true,
-        },
-        loopTreeNodes(orgList, 0),
-      ),
-    ),
-    /*#__PURE__*/ _react.default.createElement(
-      'div',
-      {
-        className: 'right',
-      },
-      /*#__PURE__*/ _react.default.createElement(
-        'div',
-        {
-          className: 'menu-header',
-        },
-        appTitle ||
-          (0, _locale.getText)(
-            'authorizesAppList',
-            props === null || props === void 0 ? void 0 : props.lang,
-          ),
-        /*#__PURE__*/ _react.default.createElement(
-          'div',
-          {
-            className: 'menu-all-checked',
-          },
-          /*#__PURE__*/ _react.default.createElement(
-            _checkbox.default,
-            {
-              onChange: checkedAllApp,
-              checked: allAppChecked,
-              disabled: disabled,
-            },
-            appCheckboxTitle ||
-              (0, _locale.getText)(
-                'allAppAvailable',
-                props === null || props === void 0 ? void 0 : props.lang,
-              ),
-          ),
-        ),
-      ),
-      /*#__PURE__*/ _react.default.createElement(
-        'div',
-        {
-          className: 'menu-body',
-        },
-        appList.map(function (item, index) {
-          var isCheck =
-            appKeys === null || appKeys === void 0 ? void 0 : appKeys.includes(item.value);
-          var isOwnAppCode = appCode === item.value;
-          return /*#__PURE__*/ _react.default.createElement(
-            _checkbox.default,
-            {
-              checked: isCheck,
-              disabled: disabled || isOwnAppCode || allAppChecked,
-              onChange: assignApp,
-              value: item.value,
-              key: index,
-            },
-            /*#__PURE__*/ _react.default.createElement(
-              'span',
-              {
-                style: {
-                  display: 'inline-block',
-                },
-              },
-              /*#__PURE__*/ _react.default.createElement(_tntd.Ellipsis, {
-                widthLimit: 100,
-                title: item.label,
-              }),
-            ),
-          );
-        }),
-      ),
-    ),
-  );
+  return /*#__PURE__*/_react.default.createElement("div", {
+    className: "assign-box-container"
+  }, /*#__PURE__*/_react.default.createElement("div", {
+    className: "left"
+  }, /*#__PURE__*/_react.default.createElement("div", {
+    className: "menu-header"
+  }, orgTitle || (0, _locale.getText)('authorizesOrgList', props === null || props === void 0 ? void 0 : props.lang), /*#__PURE__*/_react.default.createElement("div", {
+    className: "menu-all-checked"
+  }, /*#__PURE__*/_react.default.createElement(_checkbox.default, {
+    onChange: checkAllOrg,
+    checked: allOrgChecked,
+    disabled: disabled
+  }, orgCheckboxTitle || (0, _locale.getText)('allOrgAvailable', props === null || props === void 0 ? void 0 : props.lang)))), /*#__PURE__*/_react.default.createElement(_tree.default, {
+    blockNode: true,
+    className: "tree-list",
+    checkable: true,
+    checkStrictly: true,
+    checkedKeys: checkedKeys,
+    defaultExpandAll: true,
+    onCheck: onCheck,
+    disabled: true
+  }, loopTreeNodes(orgList, 0))), /*#__PURE__*/_react.default.createElement("div", {
+    className: "right"
+  }, /*#__PURE__*/_react.default.createElement("div", {
+    className: "menu-header"
+  }, appTitle || (0, _locale.getText)('authorizesAppList', props === null || props === void 0 ? void 0 : props.lang), /*#__PURE__*/_react.default.createElement("div", {
+    className: "menu-all-checked"
+  }, /*#__PURE__*/_react.default.createElement(_checkbox.default, {
+    onChange: checkedAllApp,
+    checked: allAppChecked,
+    disabled: disabled
+  }, appCheckboxTitle || (0, _locale.getText)('allAppAvailable', props === null || props === void 0 ? void 0 : props.lang)))), /*#__PURE__*/_react.default.createElement("div", {
+    className: "menu-body"
+  }, appList.map(function (item, index) {
+    var isCheck = appKeys === null || appKeys === void 0 ? void 0 : appKeys.includes(item.value);
+    var isOwnAppCode = appCode === item.value;
+    return /*#__PURE__*/_react.default.createElement(_checkbox.default, {
+      checked: isCheck,
+      disabled: disabled || isOwnAppCode || allAppChecked,
+      onChange: assignApp,
+      value: item.value,
+      key: index
+    }, /*#__PURE__*/_react.default.createElement("span", {
+      style: {
+        display: 'inline-block'
+      }
+    }, /*#__PURE__*/_react.default.createElement(_tntd.Ellipsis, {
+      widthLimit: 100,
+      title: item.label
+    })));
+  }))));
 };
 var _default = AssignModal;
 exports.default = _default;

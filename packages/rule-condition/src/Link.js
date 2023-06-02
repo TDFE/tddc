@@ -113,6 +113,7 @@ export default (props) => {
   const { x: x1, y: y1 } = from;
   const { x: x2, y: y2 } = to;
   let lines = [];
+  console.log(Math.abs(y1 - y2), 'abs');
   if (x1 === x2 || y1 === y2 || Math.abs(y1 - y2) < 1) {
     // 一条直线
     lines = [drawLine(x1, y1, x2, y2)];

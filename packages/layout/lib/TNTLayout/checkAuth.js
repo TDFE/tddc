@@ -1,10 +1,10 @@
-'use strict';
+"use strict";
 
-Object.defineProperty(exports, '__esModule', {
-  value: true,
+Object.defineProperty(exports, "__esModule", {
+  value: true
 });
 exports.default = void 0;
-var _lodash = require('lodash');
+var _lodash = require("lodash");
 var _default = function _default(menus) {
   var getAuthMap = function getAuthMap() {
     var menus = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
@@ -28,10 +28,7 @@ var _default = function _default(menus) {
   };
   var authMap = getAuthMap(menus);
   return function (menuCode, funCode) {
-    return !!(0, _lodash.get)(
-      authMap,
-      ''.concat(menuCode).concat(funCode ? '.'.concat(funCode) : ''),
-    );
+    return !!(0, _lodash.get)(authMap, "".concat(menuCode).concat(funCode ? ".".concat(funCode) : ''));
   };
 };
 exports.default = _default;

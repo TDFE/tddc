@@ -1,34 +1,26 @@
-'use strict';
+"use strict";
 
-Object.defineProperty(exports, '__esModule', {
-  value: true,
+Object.defineProperty(exports, "__esModule", {
+  value: true
 });
 exports.ReferenceCheck = void 0;
-require('antd/lib/message/style');
-var _message2 = _interopRequireDefault(require('antd/lib/message'));
-require('antd/lib/alert/style');
-var _alert = _interopRequireDefault(require('antd/lib/alert'));
-require('antd/lib/button/style');
-var _button = _interopRequireDefault(require('antd/lib/button'));
-var _react = _interopRequireDefault(require('react'));
-var _reactDom = _interopRequireDefault(require('react-dom'));
-var _tntd = require('tntd');
-var _ReferenceInfo = require('../ReferenceInfo');
-var _locale = require('../locale');
-require('./index.less');
-function _interopRequireDefault(obj) {
-  return obj && obj.__esModule ? obj : { default: obj };
-}
+require("antd/lib/message/style");
+var _message2 = _interopRequireDefault(require("antd/lib/message"));
+require("antd/lib/alert/style");
+var _alert = _interopRequireDefault(require("antd/lib/alert"));
+require("antd/lib/button/style");
+var _button = _interopRequireDefault(require("antd/lib/button"));
+var _react = _interopRequireDefault(require("react"));
+var _reactDom = _interopRequireDefault(require("react-dom"));
+var _tntd = require("tntd");
+var _ReferenceInfo = require("../ReferenceInfo");
+var _locale = require("../locale");
+require("./index.less");
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 var ReferenceCheck = function ReferenceCheck(props) {
   var _ref = props || {},
     _ref$title = _ref.title,
-    title =
-      _ref$title === void 0
-        ? (0, _locale.getText)(
-            'viewReference',
-            props === null || props === void 0 ? void 0 : props.lang,
-          )
-        : _ref$title,
+    title = _ref$title === void 0 ? (0, _locale.getText)('viewReference', props === null || props === void 0 ? void 0 : props.lang) : _ref$title,
     rq = _ref.rq,
     checkReferResponse = _ref.checkReferResponse,
     _ref$orgMap = _ref.orgMap,
@@ -38,18 +30,9 @@ var ReferenceCheck = function ReferenceCheck(props) {
     cancelText = _ref.cancelText,
     okText = _ref.okText,
     _ref$weakMsg = _ref.weakMsg,
-    weakMsg =
-      _ref$weakMsg === void 0
-        ? (0, _locale.getText)('weakMsg', props === null || props === void 0 ? void 0 : props.lang)
-        : _ref$weakMsg,
+    weakMsg = _ref$weakMsg === void 0 ? (0, _locale.getText)('weakMsg', props === null || props === void 0 ? void 0 : props.lang) : _ref$weakMsg,
     _ref$strongMsg = _ref.strongMsg,
-    strongMsg =
-      _ref$strongMsg === void 0
-        ? (0, _locale.getText)(
-            'strongMsg',
-            props === null || props === void 0 ? void 0 : props.lang,
-          )
-        : _ref$strongMsg;
+    strongMsg = _ref$strongMsg === void 0 ? (0, _locale.getText)('strongMsg', props === null || props === void 0 ? void 0 : props.lang) : _ref$strongMsg;
   var appendModal = function appendModal(resolve, _ref2) {
     var type = _ref2.type,
       _ref2$result = _ref2.result,
@@ -62,20 +45,10 @@ var ReferenceCheck = function ReferenceCheck(props) {
       if (tddcModal) {
         tddcModal.forEach(function (ele) {
           var _ele$parentNode;
-          return ele === null || ele === void 0
-            ? void 0
-            : (_ele$parentNode = ele.parentNode) === null || _ele$parentNode === void 0
-            ? void 0
-            : _ele$parentNode.removeChild(ele);
+          return ele === null || ele === void 0 ? void 0 : (_ele$parentNode = ele.parentNode) === null || _ele$parentNode === void 0 ? void 0 : _ele$parentNode.removeChild(ele);
         });
       }
-      modalWrap &&
-        (modalWrap === null || modalWrap === void 0
-          ? void 0
-          : (_modalWrap$parentNode = modalWrap.parentNode) === null ||
-            _modalWrap$parentNode === void 0
-          ? void 0
-          : _modalWrap$parentNode.removeChild(modalWrap));
+      modalWrap && (modalWrap === null || modalWrap === void 0 ? void 0 : (_modalWrap$parentNode = modalWrap.parentNode) === null || _modalWrap$parentNode === void 0 ? void 0 : _modalWrap$parentNode.removeChild(modalWrap));
       if (document.body.getAttribute('style')) {
         document.body.removeAttribute('style');
       }
@@ -84,109 +57,46 @@ var ReferenceCheck = function ReferenceCheck(props) {
 
     // 能进行下一步操作
     var canNextOpera = !['STRONG'].includes(type);
-    _reactDom.default.render(
-      /*#__PURE__*/ _react.default.createElement(
-        _tntd.Modal,
-        {
-          title: title,
-          visible: true,
-          width: 1000,
-          destroyOnClose: true,
-          getContainer: modalWrap,
-          onCancel: removeModal,
-          footer: [
-            /*#__PURE__*/ _react.default.createElement(
-              _button.default,
-              {
-                key: 'back',
-                onClick: removeModal,
-              },
-              cancelText ||
-                (0, _locale.getText)(
-                  'cancel',
-                  props === null || props === void 0 ? void 0 : props.lang,
-                ),
-            ),
-            canNextOpera &&
-              /*#__PURE__*/ _react.default.createElement(
-                _button.default,
-                {
-                  key: 'submit',
-                  type: 'primary',
-                  onClick: function onClick() {
-                    removeModal();
-                    resolve(type);
-                  },
-                },
-                okText ||
-                  (0, _locale.getText)(
-                    'next',
-                    props === null || props === void 0 ? void 0 : props.lang,
-                  ),
-              ),
-          ],
-        },
-        /*#__PURE__*/ _react.default.createElement(
-          'div',
-          {
-            className: 'reference-check-modal',
-          },
-          canNextOpera &&
-            /*#__PURE__*/ _react.default.createElement(
-              'div',
-              {
-                className: 'mb10',
-              },
-              /*#__PURE__*/ _react.default.createElement(_alert.default, {
-                type: 'warning',
-                message:
-                  weakMsg ||
-                  (referenceData === null || referenceData === void 0
-                    ? void 0
-                    : referenceData.message) ||
-                  (0, _locale.getText)(
-                    'weakMsg',
-                    props === null || props === void 0 ? void 0 : props.lang,
-                  ),
-                // '存在弱引用（被下线、禁用、待提交/上线、导入待提交/上线、暂存、保存等相关状态组件引用）关系，谨慎操作'
-              }),
-            ),
-          !canNextOpera &&
-            /*#__PURE__*/ _react.default.createElement(
-              'div',
-              {
-                className: 'mb10',
-              },
-              /*#__PURE__*/ _react.default.createElement(_alert.default, {
-                type: 'error',
-                message:
-                  strongMsg ||
-                  (referenceData === null || referenceData === void 0
-                    ? void 0
-                    : referenceData.message) ||
-                  (0, _locale.getText)(
-                    'strongMsg',
-                    props === null || props === void 0 ? void 0 : props.lang,
-                  ),
-                // '存在强引用（被上线、启用、上下线审批中和指标初始化等相关状态组件引用）关系，禁止操作'
-              }),
-            ),
-          /*#__PURE__*/ _react.default.createElement(
-            'div',
-            {
-              className: 'relation-reference-detail',
-            },
-            /*#__PURE__*/ _react.default.createElement(_ReferenceInfo.ReferenceInfo, {
-              referenceData: referenceData,
-              orgMap: orgMap,
-              appList: appList,
-              unmountHandle: removeModal,
-            }),
-          ),
-        ),
-      ),
-      modalWrap,
-    );
+    _reactDom.default.render( /*#__PURE__*/_react.default.createElement(_tntd.Modal, {
+      title: title,
+      visible: true,
+      width: 1000,
+      destroyOnClose: true,
+      getContainer: modalWrap,
+      onCancel: removeModal,
+      footer: [/*#__PURE__*/_react.default.createElement(_button.default, {
+        key: "back",
+        onClick: removeModal
+      }, cancelText || (0, _locale.getText)('cancel', props === null || props === void 0 ? void 0 : props.lang)), canNextOpera && /*#__PURE__*/_react.default.createElement(_button.default, {
+        key: "submit",
+        type: "primary",
+        onClick: function onClick() {
+          removeModal();
+          resolve(type);
+        }
+      }, okText || (0, _locale.getText)('next', props === null || props === void 0 ? void 0 : props.lang))]
+    }, /*#__PURE__*/_react.default.createElement("div", {
+      className: "reference-check-modal"
+    }, canNextOpera && /*#__PURE__*/_react.default.createElement("div", {
+      className: "mb10"
+    }, /*#__PURE__*/_react.default.createElement(_alert.default, {
+      type: "warning",
+      message: weakMsg || (referenceData === null || referenceData === void 0 ? void 0 : referenceData.message) || (0, _locale.getText)('weakMsg', props === null || props === void 0 ? void 0 : props.lang)
+      // '存在弱引用（被下线、禁用、待提交/上线、导入待提交/上线、暂存、保存等相关状态组件引用）关系，谨慎操作'
+    })), !canNextOpera && /*#__PURE__*/_react.default.createElement("div", {
+      className: "mb10"
+    }, /*#__PURE__*/_react.default.createElement(_alert.default, {
+      type: "error",
+      message: strongMsg || (referenceData === null || referenceData === void 0 ? void 0 : referenceData.message) || (0, _locale.getText)('strongMsg', props === null || props === void 0 ? void 0 : props.lang)
+      // '存在强引用（被上线、启用、上下线审批中和指标初始化等相关状态组件引用）关系，禁止操作'
+    })), /*#__PURE__*/_react.default.createElement("div", {
+      className: "relation-reference-detail"
+    }, /*#__PURE__*/_react.default.createElement(_ReferenceInfo.ReferenceInfo, {
+      referenceData: referenceData,
+      orgMap: orgMap,
+      appList: appList,
+      unmountHandle: removeModal
+    })))), modalWrap);
     document.body.appendChild(modalWrap);
   };
   if (rq && typeof rq === 'function') {
@@ -206,22 +116,12 @@ var ReferenceCheck = function ReferenceCheck(props) {
           }
         } else {
           // reject('查询关联关系失败');
-          reject(
-            (0, _locale.getText)(
-              'relationFail',
-              props === null || props === void 0 ? void 0 : props.lang,
-            ),
-          );
+          reject((0, _locale.getText)('relationFail', props === null || props === void 0 ? void 0 : props.lang));
         }
       });
     });
   } else {
-    _message2.default.error(
-      (0, _locale.getText)(
-        'reliableQuery',
-        props === null || props === void 0 ? void 0 : props.lang,
-      ),
-    ); // '请提供一个可靠的查询请求!!!'
+    _message2.default.error((0, _locale.getText)('reliableQuery', props === null || props === void 0 ? void 0 : props.lang)); // '请提供一个可靠的查询请求!!!'
   }
 };
 exports.ReferenceCheck = ReferenceCheck;
