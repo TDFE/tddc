@@ -92,9 +92,7 @@ function _unsupportedIterableToArray(o, minLen) {
 }
 function _arrayLikeToArray(arr, len) {
   if (len == null || len > arr.length) len = arr.length;
-  for (var i = 0, arr2 = new Array(len); i < len; i++) {
-    arr2[i] = arr[i];
-  }
+  for (var i = 0, arr2 = new Array(len); i < len; i++) arr2[i] = arr[i];
   return arr2;
 }
 function _iterableToArrayLimit(arr, i) {
@@ -119,7 +117,7 @@ function _iterableToArrayLimit(arr, i) {
           ;
           !(_n = (_s = _x.call(_i)).done) && (_arr.push(_s.value), _arr.length !== i);
           _n = !0
-        ) {}
+        );
     } catch (err) {
       (_d = !0), (_e = err);
     } finally {
@@ -135,6 +133,13 @@ function _iterableToArrayLimit(arr, i) {
 function _arrayWithHoles(arr) {
   if (Array.isArray(arr)) return arr;
 }
+/*
+ * @Descripttion: 高性能动态增删form表单
+ * @Author: 郑泳健
+ * @Date: 2023-02-16 10:43:03
+ * @LastEditors: 郑泳健
+ * @LastEditTime: 2023-03-10 13:49:36
+ */
 var CustomForm = function CustomForm(_ref) {
   var form = _ref.form,
     initialValues = _ref.initialValues,

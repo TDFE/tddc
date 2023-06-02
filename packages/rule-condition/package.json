@@ -1,12 +1,12 @@
 {
   "name": "@tddc/rule-condition",
-  "version": "1.0.11",
+  "version": "1.0.12",
   "description": "同盾规则条件组",
   "author": "zyj",
   "license": "ISC",
-  "main": "es/index.js",
+  "main": "lib/index.js",
   "files": [
-    "es"
+    "lib"
   ],
   "dependencies": {
     "@babel/runtime": "^7.12.5",

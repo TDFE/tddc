@@ -8,6 +8,13 @@ var _react = _interopRequireDefault(require('react'));
 var _tntd = require('tntd');
 require('./index.less');
 var _excluded = ['data', 'showSourceName', 'bool', 'inputValue'];
+/*
+ * @Description: copy from TdTag,  有部分逻辑改动
+ * @Author: 郑泳健
+ * @Date: 2022-11-17 17:31:31
+ * @LastEditors: 郑泳健
+ * @LastEditTime: 2022-12-29 19:55:37
+ */
 function _interopRequireDefault(obj) {
   return obj && obj.__esModule ? obj : { default: obj };
 }

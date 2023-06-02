@@ -140,9 +140,7 @@ function _unsupportedIterableToArray(o, minLen) {
 }
 function _arrayLikeToArray(arr, len) {
   if (len == null || len > arr.length) len = arr.length;
-  for (var i = 0, arr2 = new Array(len); i < len; i++) {
-    arr2[i] = arr[i];
-  }
+  for (var i = 0, arr2 = new Array(len); i < len; i++) arr2[i] = arr[i];
   return arr2;
 }
 function _iterableToArrayLimit(arr, i) {
@@ -167,7 +165,7 @@ function _iterableToArrayLimit(arr, i) {
           ;
           !(_n = (_s = _x.call(_i)).done) && (_arr.push(_s.value), _arr.length !== i);
           _n = !0
-        ) {}
+        );
     } catch (err) {
       (_d = !0), (_e = err);
     } finally {
@@ -183,6 +181,13 @@ function _iterableToArrayLimit(arr, i) {
 function _arrayWithHoles(arr) {
   if (Array.isArray(arr)) return arr;
 }
+/*
+ * @Descripttion: FormList
+ * @Author: 郑泳健
+ * @Date: 2023-03-06 18:42:08
+ * @LastEditors: 郑泳健
+ * @LastEditTime: 2023-03-09 21:53:21
+ */
 var List = function List(_ref) {
   var name = _ref.name,
     children = _ref.children;

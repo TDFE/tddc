@@ -31,6 +31,13 @@ var _CascaderTag = _interopRequireDefault(require('./CascaderTag'));
 require('./index.less');
 var _excluded = ['options', 'value', 'setTitle', 'onChange', 'allowClear', 'disabled'],
   _excluded2 = ['sourceName', 'sourceKey', 'name'];
+/*
+ * @Description: 指标的级联
+ * @Author: 郑泳健
+ * @Date: 2022-11-17 15:17:59
+ * @LastEditors: 郑泳健
+ * @LastEditTime: 2023-03-24 18:25:32
+ */
 function _interopRequireDefault(obj) {
   return obj && obj.__esModule ? obj : { default: obj };
 }
@@ -150,9 +157,7 @@ function _unsupportedIterableToArray(o, minLen) {
 }
 function _arrayLikeToArray(arr, len) {
   if (len == null || len > arr.length) len = arr.length;
-  for (var i = 0, arr2 = new Array(len); i < len; i++) {
-    arr2[i] = arr[i];
-  }
+  for (var i = 0, arr2 = new Array(len); i < len; i++) arr2[i] = arr[i];
   return arr2;
 }
 function _iterableToArrayLimit(arr, i) {
@@ -177,7 +182,7 @@ function _iterableToArrayLimit(arr, i) {
           ;
           !(_n = (_s = _x.call(_i)).done) && (_arr.push(_s.value), _arr.length !== i);
           _n = !0
-        ) {}
+        );
     } catch (err) {
       (_d = !0), (_e = err);
     } finally {

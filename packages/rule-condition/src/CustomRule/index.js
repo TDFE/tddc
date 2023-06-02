@@ -1,6 +1,5 @@
 import { useState, useEffect } from 'react';
 import { Row, Col, Popover, Icon, Input } from 'antd';
-import { connect } from 'dva';
 
 import './index.less';
 

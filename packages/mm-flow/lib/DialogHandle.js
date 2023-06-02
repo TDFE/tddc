@@ -242,10 +242,9 @@ function _regeneratorRuntime() {
       if (!isNaN(iterable.length)) {
         var i = -1,
           next = function next() {
-            for (; ++i < iterable.length; ) {
+            for (; ++i < iterable.length; )
               if (hasOwn.call(iterable, i))
                 return (next.value = iterable[i]), (next.done = !1), next;
-            }
             return (next.value = undefined), (next.done = !0), next;
           };
         return (next.next = next);
@@ -313,9 +312,7 @@ function _regeneratorRuntime() {
     (exports.keys = function (val) {
       var object = Object(val),
         keys = [];
-      for (var key in object) {
-        keys.push(key);
-      }
+      for (var key in object) keys.push(key);
       return (
         keys.reverse(),
         function next() {
@@ -342,12 +339,11 @@ function _regeneratorRuntime() {
           this.tryEntries.forEach(resetTryEntry),
           !skipTempReset)
         )
-          for (var name in this) {
+          for (var name in this)
             't' === name.charAt(0) &&
               hasOwn.call(this, name) &&
               !isNaN(+name.slice(1)) &&
               (this[name] = undefined);
-          }
       },
       stop: function stop() {
         this.done = !0;
@@ -541,7 +537,7 @@ var DialogHandle = /*#__PURE__*/ (function () {
             var _node$data;
             var data;
             return _regeneratorRuntime().wrap(function _callee$(_context) {
-              while (1) {
+              while (1)
                 switch ((_context.prev = _context.next)) {
                   case 0:
                     data = node.data;
@@ -562,7 +558,6 @@ var DialogHandle = /*#__PURE__*/ (function () {
                   case 'end':
                     return _context.stop();
                 }
-              }
             }, _callee);
           }),
         );

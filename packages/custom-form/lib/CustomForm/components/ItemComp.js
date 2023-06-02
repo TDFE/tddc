@@ -157,9 +157,7 @@ function _unsupportedIterableToArray(o, minLen) {
 }
 function _arrayLikeToArray(arr, len) {
   if (len == null || len > arr.length) len = arr.length;
-  for (var i = 0, arr2 = new Array(len); i < len; i++) {
-    arr2[i] = arr[i];
-  }
+  for (var i = 0, arr2 = new Array(len); i < len; i++) arr2[i] = arr[i];
   return arr2;
 }
 function _iterableToArrayLimit(arr, i) {
@@ -184,7 +182,7 @@ function _iterableToArrayLimit(arr, i) {
           ;
           !(_n = (_s = _x.call(_i)).done) && (_arr.push(_s.value), _arr.length !== i);
           _n = !0
-        ) {}
+        );
     } catch (err) {
       (_d = !0), (_e = err);
     } finally {
@@ -200,6 +198,13 @@ function _iterableToArrayLimit(arr, i) {
 function _arrayWithHoles(arr) {
   if (Array.isArray(arr)) return arr;
 }
+/*
+ * @Descripttion: 对CustomForm.Item进行性能优化
+ * @Author: 郑泳健
+ * @Date: 2023-02-23 12:47:28
+ * @LastEditors: 郑泳健
+ * @LastEditTime: 2023-03-14 14:27:16
+ */
 var ItemComp = function ItemComp(_ref) {
   var form = _ref.form,
     name = _ref.name,

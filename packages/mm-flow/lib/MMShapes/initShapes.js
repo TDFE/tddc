@@ -98,7 +98,7 @@ function initShapes(editor, flowNodes) {
 
   // 初始化组件
   var initEditorShape = function initEditorShape() {
-    var _loop = function _loop(i) {
+    var _loop = function _loop() {
       var node = flowNodes[i];
       var nodeType =
         (node === null || node === void 0 ? void 0 : node.type) ||
@@ -300,7 +300,7 @@ function initShapes(editor, flowNodes) {
       }
     };
     for (var i in flowNodes) {
-      _loop(i);
+      _loop();
     }
   };
   initEditorShape();

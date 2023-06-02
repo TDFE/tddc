@@ -34,7 +34,6 @@ var _input = _interopRequireDefault(require('antd/lib/input'));
 require('antd/lib/col/style');
 var _col = _interopRequireDefault(require('antd/lib/col'));
 var _react = _interopRequireWildcard(require('react'));
-var _dva = require('dva');
 require('./index.less');
 function _getRequireWildcardCache(nodeInterop) {
   if (typeof WeakMap !== 'function') return null;
