@@ -1287,6 +1287,9 @@ var OneCondition = /*#__PURE__*/ (function (_React$PureComponent) {
             },
             /*#__PURE__*/ _react.default.createElement(_virtualCascader.default, {
               options: childOption['all'],
+              style: {
+                width: '100%',
+              },
               fieldNames: {
                 label: 'dName',
                 value: 'name',

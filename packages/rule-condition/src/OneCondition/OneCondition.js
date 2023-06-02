@@ -592,6 +592,7 @@ class OneCondition extends React.PureComponent {
         <Col style={{ width: 200 }} className={'link-to' + conditionArr[0] + conditionArr[1]}>
           <IndicatorsCascader
             options={childOption['all']}
+            style={{ width: '100%' }}
             fieldNames={{ label: 'dName', value: 'name', children: 'data' }}
             value={
               conditionSingleData && conditionSingleData['property']
