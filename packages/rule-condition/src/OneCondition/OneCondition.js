@@ -2,6 +2,8 @@ import React from 'react';
 import { cloneDeep } from 'lodash';
 import { Input, Icon, Tooltip, Row, Col, Select } from 'antd';
 import IndicatorsCascader from '../../IndicatorsCascader';
+// import IndicatorsCascader from '@tddc/virtual-cascader';
+
 // import conditionOperator from '../constants';
 import { dataTypeSpecialConvert } from '../utils/index';
 
@@ -592,6 +594,7 @@ class OneCondition extends React.PureComponent {
         <Col style={{ width: 200 }} className={'link-to' + conditionArr[0] + conditionArr[1]}>
           <IndicatorsCascader
             options={childOption['all']}
+            style={{ width: '100%' }}
             fieldNames={{ label: 'dName', value: 'name', children: 'data' }}
             value={
               conditionSingleData && conditionSingleData['property']

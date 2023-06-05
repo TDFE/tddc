@@ -18,6 +18,12 @@ const CollapseTable = (props) => {
     ob(randomCode.current);
   }, [randomCode.current]);
 
+  useEffect(() => {
+    if (props.expandedRowKeys && props.expandedRowKeys.length > 0) {
+      activeKeyRef.current = props.expandedRowKeys[0];
+    }
+  }, [props.expandedRowKeys]);
+
   const ob = (className) => {
     container.current = document.querySelector(
       `.${className}.ant-table-wrapper.collapse-panel > .ant-spin-nested-loading > .ant-spin-container > .ant-table`,

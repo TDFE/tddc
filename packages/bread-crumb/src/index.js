@@ -50,6 +50,7 @@ export default (WrapperComponent, rest) => {
     BreadCrumbCustom,
     BreadCrumbPrototype = {},
     showHeader,
+    forceNoHeader,
   } = rest || {};
   return withRouter((props) => {
     const { match, location, separator } = props || {};
@@ -101,7 +102,7 @@ export default (WrapperComponent, rest) => {
 
     return (
       <>
-        {(breadList?.length > 1 || showHeader) && (
+        {(breadList?.length > 1 || showHeader) && !forceNoHeader && (
           <div className="page-global-header bread-crumb-head">
             {BreadCrumbCustom &&
               !!breadList?.length &&

@@ -274,7 +274,8 @@ var _default = function _default(WrapperComponent, rest) {
     BreadCrumbCustom = _ref.BreadCrumbCustom,
     _ref$BreadCrumbProtot = _ref.BreadCrumbPrototype,
     BreadCrumbPrototype = _ref$BreadCrumbProtot === void 0 ? {} : _ref$BreadCrumbProtot,
-    showHeader = _ref.showHeader;
+    showHeader = _ref.showHeader,
+    forceNoHeader = _ref.forceNoHeader;
   return (0, _router.withRouter)(function (props) {
     var _ref2 = props || {},
       match = _ref2.match,
@@ -355,6 +356,7 @@ var _default = function _default(WrapperComponent, rest) {
       null,
       ((breadList === null || breadList === void 0 ? void 0 : breadList.length) > 1 ||
         showHeader) &&
+        !forceNoHeader &&
         /*#__PURE__*/ _react.default.createElement(
           'div',
           {

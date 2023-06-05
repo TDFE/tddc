@@ -128,6 +128,14 @@ var CollapseTable = function CollapseTable(props) {
     },
     [randomCode.current],
   );
+  (0, _react.useEffect)(
+    function () {
+      if (props.expandedRowKeys && props.expandedRowKeys.length > 0) {
+        activeKeyRef.current = props.expandedRowKeys[0];
+      }
+    },
+    [props.expandedRowKeys],
+  );
   var ob = function ob(className) {
     container.current = document.querySelector(
       '.'.concat(

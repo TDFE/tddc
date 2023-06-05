@@ -35,7 +35,7 @@ require('antd/lib/select/style');
 var _select = _interopRequireDefault(require('antd/lib/select'));
 var _react = _interopRequireDefault(require('react'));
 var _lodash = require('lodash');
-var _IndicatorsCascader = _interopRequireDefault(require('../../IndicatorsCascader'));
+var _virtualCascader = _interopRequireDefault(require('@tddc/virtual-cascader'));
 var _index = require('../utils/index');
 require('./index.less');
 function _interopRequireDefault(obj) {
@@ -1285,8 +1285,11 @@ var OneCondition = /*#__PURE__*/ (function (_React$PureComponent) {
               },
               className: 'link-to' + conditionArr[0] + conditionArr[1],
             },
-            /*#__PURE__*/ _react.default.createElement(_IndicatorsCascader.default, {
+            /*#__PURE__*/ _react.default.createElement(_virtualCascader.default, {
               options: childOption['all'],
+              style: {
+                width: '100%',
+              },
               fieldNames: {
                 label: 'dName',
                 value: 'name',
@@ -1674,7 +1677,7 @@ var OneCondition = /*#__PURE__*/ (function (_React$PureComponent) {
                         '变量',
                       ),
                     ),
-                    /*#__PURE__*/ _react.default.createElement(_IndicatorsCascader.default, {
+                    /*#__PURE__*/ _react.default.createElement(_virtualCascader.default, {
                       style: {
                         width: '70%',
                       },
@@ -1781,7 +1784,7 @@ var OneCondition = /*#__PURE__*/ (function (_React$PureComponent) {
                         '变量',
                       ),
                     ),
-                    /*#__PURE__*/ _react.default.createElement(_IndicatorsCascader.default, {
+                    /*#__PURE__*/ _react.default.createElement(_virtualCascader.default, {
                       style: {
                         width: '70%',
                       },

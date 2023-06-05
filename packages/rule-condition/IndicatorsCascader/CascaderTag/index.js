@@ -5,7 +5,7 @@
  * @LastEditors: 郑泳健
  * @LastEditTime: 2022-12-29 19:55:37
  */
-import { Tooltip } from 'tntd';
+import { Tooltip } from 'antd';
 import './index.less';
 
 const TYPE_MAP = {

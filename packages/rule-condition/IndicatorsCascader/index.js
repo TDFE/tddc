@@ -6,7 +6,8 @@
  * @LastEditTime: 2023-03-24 18:25:32
  */
 import React, { memo, useEffect, useState, useCallback } from 'react';
-import { Tooltip, Select, Ellipsis } from 'tntd';
+import { Tooltip, Select } from 'antd';
+import { Ellipsis } from 'tntd';
 import { isEmpty, isEqual } from 'lodash';
 import VirtualCascader from '@tddc/virtual-cascader';
 import TdTag from './CascaderTag';
