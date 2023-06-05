@@ -22,8 +22,8 @@ npm install @tddc/rule-condition --save
 ```jsx
 import React, { Fragment, useState } from 'react';
 import { Button } from 'antd';
-import RuleCondition from '@tddc/rule-condition';
-// import RuleCondition from './index.js';
+// import RuleCondition from '@tddc/rule-condition';
+import RuleCondition from './index.js';
 
 const ml10 = { marginLeft: 10 };
 const mt20 = { marginTop: 20 };

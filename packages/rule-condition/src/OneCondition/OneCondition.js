@@ -1,7 +1,7 @@
 import React from 'react';
 import { cloneDeep } from 'lodash';
 import { Input, Icon, Tooltip, Row, Col, Select } from 'antd';
-import IndicatorsCascader from '@tddc/virtual-cascader';
+import IndicatorsCascader from '../../IndicatorsCascader';
 // import conditionOperator from '../constants';
 import { dataTypeSpecialConvert } from '../utils/index';
 
