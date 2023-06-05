@@ -595,7 +595,8 @@ class OneCondition extends React.PureComponent {
       };
     }
 
-    console.log(conditionArr[1], 'conditionArr[1]');
+    let optionsData = NOEnumChildOption['all'] || [];
+
     return (
       <div className={`${conditionType === 'group' ? 'group-item' : ''} condition-group-item`}>
         {(conditionArr[1] === 0 || !conditionArr[1]) && (
@@ -853,7 +854,7 @@ class OneCondition extends React.PureComponent {
                       </Select>
                       <IndicatorsCascader
                         style={{ width: '70%' }}
-                        options={NOEnumChildOption[leftOptionDataType] || []}
+                        options={optionsData || []}
                         fieldNames={{ label: 'dName', value: 'name', children: 'data' }}
                         value={
                           conditionSingleData && conditionSingleData['value']
@@ -965,7 +966,7 @@ class OneCondition extends React.PureComponent {
                       </Select>
                       <IndicatorsCascader
                         style={{ width: '70%' }}
-                        options={EnumChildOption[leftOptionDataType] || []}
+                        options={optionsData || []}
                         fieldNames={{ label: 'dName', value: 'name', children: 'data' }}
                         value={
                           conditionSingleData && conditionSingleData['value']

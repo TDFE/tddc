@@ -39,10 +39,32 @@ class RuleConditon extends React.PureComponent {
     this.getChildOption();
   }
 
+  formatData = (options) => {
+    const loop = (node, parentPath) => {
+      if (!node?.data?.length) {
+        return node;
+      }
+      node?.data?.forEach((item) => {
+        let { name: sourceKey, dName: sourceName, bizType } = node;
+        item.sourceKey = sourceKey;
+        item.sourceName = sourceName;
+        item.bizType = bizType;
+        item.path = parentPath + '/' + item.name;
+        return loop(item, item.path);
+      });
+
+      return node;
+    };
+    return options.map((item) => {
+      return loop(item, item.name);
+    });
+  };
+
   getChildOption = () => {
     const { ruleAndIndexFieldList, appCode, orgCode } = this.props;
     const list = filterAvailableFieldList({ ruleAndIndexFieldList, appCode, orgCode });
-    const childOption = list?.reduce(
+    let optionsList = this.formatData(list);
+    const childOption = optionsList?.reduce(
       (total, item) => {
         // 获取转换后的数据类型
         const { type: convertDataType } = dataTypeSpecialConvert(item);
@@ -199,7 +221,7 @@ class RuleConditon extends React.PureComponent {
 
     let { conditionData: cData = {}, EnumChildOption, NOEnumChildOption, childOption } = this.state;
     let conditionData = cloneDeep(cData);
-    console.log(cData);
+
     return (
       <div className="score-rule-condition">
         {

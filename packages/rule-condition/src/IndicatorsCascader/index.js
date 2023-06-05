@@ -52,9 +52,10 @@ const IndicatorsCascader = ({
   // 将value 改为cascader要求的value结构
   useEffect(() => {
     if (value) {
-      const { sourceKey } = filterMapOption[value] || {};
-      if (sourceKey) {
-        setCascader([sourceKey, value]);
+      const { sourceKey, path } = filterMapOption[value] || {};
+      if (path) {
+        let pathArr = path.split('/');
+        setCascader(pathArr);
         setChoosedItem(filterMapOption[value]);
       } else {
         setCascader(['', value]);
@@ -67,7 +68,7 @@ const IndicatorsCascader = ({
   }, [value, filterMapOption]);
   const formatData = (options) => {
     let map = {};
-    const loop = (node) => {
+    const loop = (node, parentPath) => {
       if (!node?.data) {
         return;
       }
@@ -76,20 +77,20 @@ const IndicatorsCascader = ({
         item.sourceKey = sourceKey;
         item.sourceName = sourceName;
         item.bizType = bizType;
+        item.path = parentPath + '/' + item.name;
         map[item.name] = item;
-        return loop(item);
+        return loop(item, item.path);
       });
     };
     options.map((item) => {
       map[item.name] = item;
-      return loop(item);
+      return loop(item, item.name);
     });
-    debugger;
     setFilterOptions(options);
     setFilterMapOption(map);
   };
   const handleChange = useCallback(
-    (value) => {
+    (value, sl) => {
       // 一定要选中第二个才会修改回显
       if (Array.isArray(value) && value.length > 1) {
         const lastValue = value[value.length - 1];
