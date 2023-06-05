@@ -35,7 +35,7 @@ require('antd/lib/select/style');
 var _select = _interopRequireDefault(require('antd/lib/select'));
 var _react = _interopRequireDefault(require('react'));
 var _lodash = require('lodash');
-var _virtualCascader = _interopRequireDefault(require('@tddc/virtual-cascader'));
+var _IndicatorsCascader = _interopRequireDefault(require('../IndicatorsCascader'));
 var _index = require('../utils/index');
 require('./index.less');
 function _interopRequireDefault(obj) {
@@ -647,7 +647,8 @@ function _getPrototypeOf(o) {
         return o.__proto__ || Object.getPrototypeOf(o);
       };
   return _getPrototypeOf(o);
-} // import conditionOperator from '../constants';
+} // import IndicatorsCascader from '@tddc/virtual-cascader';
+// import conditionOperator from '../constants';
 var Option = _select.default.Option;
 var InputGroup = _input.default.Group;
 var OneCondition = /*#__PURE__*/ (function (_React$PureComponent) {
@@ -778,6 +779,9 @@ var OneCondition = /*#__PURE__*/ (function (_React$PureComponent) {
             mapItem = ruleAndIndexFieldList.filter(function (item) {
               return item.name === value;
             })[0];
+          }
+          if (!value) {
+            return;
           }
           if (value.startsWith('salaxyzb')) {
             currentLine['type'] = 'gaea_indicatrix';
@@ -1285,7 +1289,7 @@ var OneCondition = /*#__PURE__*/ (function (_React$PureComponent) {
               },
               className: 'link-to' + conditionArr[0] + conditionArr[1],
             },
-            /*#__PURE__*/ _react.default.createElement(_virtualCascader.default, {
+            /*#__PURE__*/ _react.default.createElement(_IndicatorsCascader.default, {
               options: childOption['all'],
               style: {
                 width: '100%',
@@ -1677,7 +1681,7 @@ var OneCondition = /*#__PURE__*/ (function (_React$PureComponent) {
                         '变量',
                       ),
                     ),
-                    /*#__PURE__*/ _react.default.createElement(_virtualCascader.default, {
+                    /*#__PURE__*/ _react.default.createElement(_IndicatorsCascader.default, {
                       style: {
                         width: '70%',
                       },
@@ -1784,7 +1788,7 @@ var OneCondition = /*#__PURE__*/ (function (_React$PureComponent) {
                         '变量',
                       ),
                     ),
-                    /*#__PURE__*/ _react.default.createElement(_virtualCascader.default, {
+                    /*#__PURE__*/ _react.default.createElement(_IndicatorsCascader.default, {
                       style: {
                         width: '70%',
                       },

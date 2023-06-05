@@ -1,7 +1,7 @@
 import React from 'react';
 import { cloneDeep } from 'lodash';
 import { Input, Icon, Tooltip, Row, Col, Select } from 'antd';
-import IndicatorsCascader from '../../IndicatorsCascader';
+import IndicatorsCascader from '../IndicatorsCascader';
 // import IndicatorsCascader from '@tddc/virtual-cascader';
 
 // import conditionOperator from '../constants';
@@ -13,6 +13,9 @@ const Option = Select.Option;
 const InputGroup = Input.Group;
 
 class OneCondition extends React.PureComponent {
+  state = {
+    mapOption: {},
+  };
   constructor(props) {
     super(props);
     this.deleteCondition = this.deleteCondition.bind(this);
@@ -20,6 +23,35 @@ class OneCondition extends React.PureComponent {
     this.changeLogicOperator = this.changeLogicOperator.bind(this);
     this.changeConditionField = this.changeConditionField.bind(this);
   }
+
+  componentDidMount() {
+    let { ruleAndIndexFieldList } = this.props;
+
+    const _filterMapOption = this.formatData(ruleAndIndexFieldList);
+    this.setState({ mapOption: _filterMapOption });
+  }
+  formatData = (options) => {
+    let map = {};
+    const loop = (node) => {
+      if (!node?.data) {
+        return;
+      }
+
+      node?.data?.forEach((item) => {
+        let { name: sourceKey, dName: sourceName, bizType } = node;
+        item.sourceKey = sourceKey;
+        item.sourceName = sourceName;
+        item.bizType = bizType;
+        map[item.name] = item;
+        return loop(item);
+      });
+    };
+    options.map((item) => {
+      map[item.name] = item;
+      return loop(item);
+    });
+    return map;
+  };
 
   addCondition() {
     let { conditionArr, setCondition, allCondition } = this.props;
@@ -91,6 +123,7 @@ class OneCondition extends React.PureComponent {
       ruleSetExtendSelect,
       ruleAndIndexFieldList,
     } = this.props;
+    const { mapOption } = this.state;
     let newAllCondition = cloneDeep(allCondition);
     let conditionSingleData = cloneDeep(cgDada);
 
@@ -110,7 +143,7 @@ class OneCondition extends React.PureComponent {
       let groupList = newAllCondition[conditionArr[0]];
       currentLine = groupList['children'][conditionArr[1]];
     }
-
+    debugger;
     currentLine[field] = value;
 
     if (
@@ -123,13 +156,13 @@ class OneCondition extends React.PureComponent {
     if (field === 'property') {
       let mapItem;
       if (this.props.type === 'link') {
-        mapItem = ruleAndIndexFieldList
-          .concat(ruleSetExtendSelect)
-          .filter((item) => item.name === value)[0];
+        mapItem = mapOption[value];
       } else {
-        mapItem = ruleAndIndexFieldList.filter((item) => item.name === value)[0];
+        mapItem = mapOption[value];
       }
-
+      if (!value) {
+        return;
+      }
       if (value.startsWith('salaxyzb')) {
         currentLine['type'] = 'gaea_indicatrix';
       } else if (value.startsWith('offlinezb')) {

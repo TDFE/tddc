@@ -44,30 +44,9 @@ const IndicatorsCascader = ({
     if (!Array.isArray(options)) {
       return;
     }
-    const { _filterOptions, _filterMapOption } = options.reduce(
-      (total, item) => {
-        const { sourceName, sourceKey, name, ...rest } = item;
-
-        const index = total['_filterOptions'].findIndex((i) => i.name === sourceKey);
-        if (index >= 0) {
-          if (Array.isArray(total['_filterOptions'][index].data)) {
-            total['_filterOptions'][index].data.push({ ...rest, name, sourceName });
-          }
-        } else {
-          total['_filterOptions'].push({
-            name: sourceKey,
-            dName: sourceName,
-            data: !!name ? [{ ...rest, sourceName, name }] : [{ name: '', dName: '' }],
-          });
-        }
-        total['_filterMapOption'][item.name] = item;
-        return total;
-      },
-      { _filterOptions: [], _filterMapOption: {} },
-    );
-
-    setFilterOptions(_filterOptions);
-    setFilterMapOption(_filterMapOption);
+    if (filterOptions?.length === 0) {
+      formatData(options);
+    }
   }, [options]);
 
   // 将value 改为cascader要求的value结构
@@ -86,7 +65,29 @@ const IndicatorsCascader = ({
       setChoosedItem({});
     }
   }, [value, filterMapOption]);
-
+  const formatData = (options) => {
+    let map = {};
+    const loop = (node) => {
+      if (!node?.data) {
+        return;
+      }
+      node?.data?.forEach((item) => {
+        let { name: sourceKey, dName: sourceName, bizType } = node;
+        item.sourceKey = sourceKey;
+        item.sourceName = sourceName;
+        item.bizType = bizType;
+        map[item.name] = item;
+        return loop(item);
+      });
+    };
+    options.map((item) => {
+      map[item.name] = item;
+      return loop(item);
+    });
+    debugger;
+    setFilterOptions(options);
+    setFilterMapOption(map);
+  };
   const handleChange = useCallback(
     (value) => {
       // 一定要选中第二个才会修改回显
