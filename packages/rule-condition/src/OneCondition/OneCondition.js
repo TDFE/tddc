@@ -143,7 +143,6 @@ class OneCondition extends React.PureComponent {
       let groupList = newAllCondition[conditionArr[0]];
       currentLine = groupList['children'][conditionArr[1]];
     }
-    debugger;
     currentLine[field] = value;
 
     if (
