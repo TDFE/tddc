@@ -658,6 +658,37 @@ var OneCondition = /*#__PURE__*/ (function (_React$PureComponent) {
     var _this;
     _classCallCheck(this, OneCondition);
     _this = _super.call(this, props);
+    _this.state = {
+      mapOption: {},
+    };
+    _this.formatData = function (options) {
+      var map = {};
+      var loop = function loop(node) {
+        var _node$data;
+        if (!(node === null || node === void 0 ? void 0 : node.data)) {
+          return;
+        }
+        node === null || node === void 0
+          ? void 0
+          : (_node$data = node.data) === null || _node$data === void 0
+          ? void 0
+          : _node$data.forEach(function (item) {
+              var sourceKey = node.name,
+                sourceName = node.dName,
+                bizType = node.bizType;
+              item.sourceKey = sourceKey;
+              item.sourceName = sourceName;
+              item.bizType = bizType;
+              map[item.name] = item;
+              return loop(item);
+            });
+      };
+      options.map(function (item) {
+        map[item.name] = item;
+        return loop(item);
+      });
+      return map;
+    };
     _this.deleteCondition = _this.deleteCondition.bind(_assertThisInitialized(_this));
     _this.addCondition = _this.addCondition.bind(_assertThisInitialized(_this));
     _this.changeLogicOperator = _this.changeLogicOperator.bind(_assertThisInitialized(_this));
@@ -665,6 +696,16 @@ var OneCondition = /*#__PURE__*/ (function (_React$PureComponent) {
     return _this;
   }
   _createClass(OneCondition, [
+    {
+      key: 'componentDidMount',
+      value: function componentDidMount() {
+        var ruleAndIndexFieldList = this.props.ruleAndIndexFieldList;
+        var _filterMapOption = this.formatData(ruleAndIndexFieldList);
+        this.setState({
+          mapOption: _filterMapOption,
+        });
+      },
+    },
     {
       key: 'addCondition',
       value: function addCondition() {
@@ -745,6 +786,7 @@ var OneCondition = /*#__PURE__*/ (function (_React$PureComponent) {
           conditionSelectOptions = _this$props4.conditionSelectOptions,
           ruleSetExtendSelect = _this$props4.ruleSetExtendSelect,
           ruleAndIndexFieldList = _this$props4.ruleAndIndexFieldList;
+        var mapOption = this.state.mapOption;
         var newAllCondition = (0, _lodash.cloneDeep)(allCondition);
         var conditionSingleData = (0, _lodash.cloneDeep)(cgDada);
         var value = '';
@@ -772,13 +814,9 @@ var OneCondition = /*#__PURE__*/ (function (_React$PureComponent) {
         if (field === 'property') {
           var mapItem;
           if (this.props.type === 'link') {
-            mapItem = ruleAndIndexFieldList.concat(ruleSetExtendSelect).filter(function (item) {
-              return item.name === value;
-            })[0];
+            mapItem = mapOption[value];
           } else {
-            mapItem = ruleAndIndexFieldList.filter(function (item) {
-              return item.name === value;
-            })[0];
+            mapItem = mapOption[value];
           }
           if (!value) {
             return;
@@ -1221,7 +1259,7 @@ var OneCondition = /*#__PURE__*/ (function (_React$PureComponent) {
             },
           );
         }
-        console.log(conditionArr[1], 'conditionArr[1]');
+        var optionsData = NOEnumChildOption['all'] || [];
         return /*#__PURE__*/ _react.default.createElement(
           'div',
           {
@@ -1685,7 +1723,7 @@ var OneCondition = /*#__PURE__*/ (function (_React$PureComponent) {
                       style: {
                         width: '70%',
                       },
-                      options: NOEnumChildOption[leftOptionDataType] || [],
+                      options: optionsData || [],
                       fieldNames: {
                         label: 'dName',
                         value: 'name',
@@ -1792,7 +1830,7 @@ var OneCondition = /*#__PURE__*/ (function (_React$PureComponent) {
                       style: {
                         width: '70%',
                       },
-                      options: EnumChildOption[leftOptionDataType] || [],
+                      options: optionsData || [],
                       fieldNames: {
                         label: 'dName',
                         value: 'name',

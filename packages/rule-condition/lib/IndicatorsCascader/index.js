@@ -33,8 +33,7 @@ var _lodash = require('lodash');
 var _virtualCascader = _interopRequireDefault(require('@tddc/virtual-cascader'));
 var _CascaderTag = _interopRequireDefault(require('./CascaderTag'));
 require('./index.less');
-var _excluded = ['options', 'value', 'setTitle', 'onChange', 'allowClear', 'disabled'],
-  _excluded2 = ['sourceName', 'sourceKey', 'name'];
+var _excluded = ['options', 'value', 'setTitle', 'onChange', 'allowClear', 'disabled'];
 /*
  * @Description: 指标的级联
  * @Author: 郑泳健
@@ -285,63 +284,11 @@ var IndicatorsCascader = function IndicatorsCascader(_ref2) {
       if (!Array.isArray(options)) {
         return;
       }
-      var _options$reduce = options.reduce(
-          function (total, item) {
-            var sourceName = item.sourceName,
-              sourceKey = item.sourceKey,
-              name = item.name,
-              rest = _objectWithoutProperties(item, _excluded2);
-            var index = total['_filterOptions'].findIndex(function (i) {
-              return i.name === sourceKey;
-            });
-            if (index >= 0) {
-              if (Array.isArray(total['_filterOptions'][index].data)) {
-                total['_filterOptions'][index].data.push(
-                  _objectSpread(
-                    _objectSpread({}, rest),
-                    {},
-                    {
-                      name: name,
-                      sourceName: sourceName,
-                    },
-                  ),
-                );
-              }
-            } else {
-              total['_filterOptions'].push({
-                name: sourceKey,
-                dName: sourceName,
-                data: !!name
-                  ? [
-                      _objectSpread(
-                        _objectSpread({}, rest),
-                        {},
-                        {
-                          sourceName: sourceName,
-                          name: name,
-                        },
-                      ),
-                    ]
-                  : [
-                      {
-                        name: '',
-                        dName: '',
-                      },
-                    ],
-              });
-            }
-            total['_filterMapOption'][item.name] = item;
-            return total;
-          },
-          {
-            _filterOptions: [],
-            _filterMapOption: {},
-          },
-        ),
-        _filterOptions = _options$reduce._filterOptions,
-        _filterMapOption = _options$reduce._filterMapOption;
-      setFilterOptions(_filterOptions);
-      setFilterMapOption(_filterMapOption);
+      if (
+        (filterOptions === null || filterOptions === void 0 ? void 0 : filterOptions.length) === 0
+      ) {
+        formatData(options);
+      }
     },
     [options],
   );
@@ -351,9 +298,11 @@ var IndicatorsCascader = function IndicatorsCascader(_ref2) {
     function () {
       if (value) {
         var _ref3 = filterMapOption[value] || {},
-          sourceKey = _ref3.sourceKey;
-        if (sourceKey) {
-          setCascader([sourceKey, value]);
+          sourceKey = _ref3.sourceKey,
+          path = _ref3.path;
+        if (path) {
+          var pathArr = path.split('/');
+          setCascader(pathArr);
           setChoosedItem(filterMapOption[value]);
         } else {
           setCascader(['', value]);
@@ -366,8 +315,38 @@ var IndicatorsCascader = function IndicatorsCascader(_ref2) {
     },
     [value, filterMapOption],
   );
+  var formatData = function formatData(options) {
+    var map = {};
+    var loop = function loop(node, parentPath) {
+      var _node$data;
+      if (!(node === null || node === void 0 ? void 0 : node.data)) {
+        return;
+      }
+      node === null || node === void 0
+        ? void 0
+        : (_node$data = node.data) === null || _node$data === void 0
+        ? void 0
+        : _node$data.forEach(function (item) {
+            var sourceKey = node.name,
+              sourceName = node.dName,
+              bizType = node.bizType;
+            item.sourceKey = sourceKey;
+            item.sourceName = sourceName;
+            item.bizType = bizType;
+            item.path = parentPath + '/' + item.name;
+            map[item.name] = item;
+            return loop(item, item.path);
+          });
+    };
+    options.map(function (item) {
+      map[item.name] = item;
+      return loop(item, item.name);
+    });
+    setFilterOptions(options);
+    setFilterMapOption(map);
+  };
   var handleChange = (0, _react.useCallback)(
-    function (value) {
+    function (value, sl) {
       // 一定要选中第二个才会修改回显
       if (Array.isArray(value) && value.length > 1) {
         var lastValue = value[value.length - 1];

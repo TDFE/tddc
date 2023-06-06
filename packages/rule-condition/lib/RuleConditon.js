@@ -661,6 +661,38 @@ var RuleConditon = /*#__PURE__*/ (function (_React$PureComponent) {
       },
       addRuleTemplate: false,
     };
+    _this.formatData = function (options) {
+      var loop = function loop(node, parentPath) {
+        var _node$data, _node$data2;
+        if (
+          !(node === null || node === void 0
+            ? void 0
+            : (_node$data = node.data) === null || _node$data === void 0
+            ? void 0
+            : _node$data.length)
+        ) {
+          return node;
+        }
+        node === null || node === void 0
+          ? void 0
+          : (_node$data2 = node.data) === null || _node$data2 === void 0
+          ? void 0
+          : _node$data2.forEach(function (item) {
+              var sourceKey = node.name,
+                sourceName = node.dName,
+                bizType = node.bizType;
+              item.sourceKey = sourceKey;
+              item.sourceName = sourceName;
+              item.bizType = bizType;
+              item.path = parentPath + '/' + item.name;
+              return loop(item, item.path);
+            });
+        return node;
+      };
+      return options.map(function (item) {
+        return loop(item, item.name);
+      });
+    };
     _this.getChildOption = function () {
       var _this$props = _this.props,
         ruleAndIndexFieldList = _this$props.ruleAndIndexFieldList,
@@ -671,10 +703,11 @@ var RuleConditon = /*#__PURE__*/ (function (_React$PureComponent) {
         appCode: appCode,
         orgCode: orgCode,
       });
+      var optionsList = _this.formatData(list);
       var childOption =
-        list === null || list === void 0
+        optionsList === null || optionsList === void 0
           ? void 0
-          : list.reduce(
+          : optionsList.reduce(
               function (total, item) {
                 // 获取转换后的数据类型
                 var _dataTypeSpecialConve = (0, _index.dataTypeSpecialConvert)(item),
@@ -886,7 +919,6 @@ var RuleConditon = /*#__PURE__*/ (function (_React$PureComponent) {
           NOEnumChildOption = _this$state.NOEnumChildOption,
           childOption = _this$state.childOption;
         var conditionData = (0, _lodash.cloneDeep)(cData);
-        console.log(cData);
         return /*#__PURE__*/ _react.default.createElement(
           'div',
           {
