@@ -861,6 +861,7 @@ var RuleConditon = /*#__PURE__*/ (function (_React$PureComponent) {
           type: 'context',
           rightValueType: 'context',
         };
+        conditionData['children'] = conditionData['children'] || [];
         conditionData['children'].push(_objectSpread({}, singleConditionTemp));
         this.setState({
           conditionData: conditionData,
@@ -889,6 +890,7 @@ var RuleConditon = /*#__PURE__*/ (function (_React$PureComponent) {
             },
           ],
         };
+        conditionData['children'] = conditionData['children'] || [];
         conditionData['children'].push(_objectSpread({}, groupConditionTemp));
         this.setState({
           conditionData: conditionData,
