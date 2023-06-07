@@ -167,6 +167,7 @@ class RuleConditon extends React.PureComponent {
       type: 'context',
       rightValueType: 'context',
     };
+    conditionData['children'] = conditionData['children'] || [];
     conditionData['children'].push({ ...singleConditionTemp });
 
     this.setState({
@@ -195,6 +196,7 @@ class RuleConditon extends React.PureComponent {
         },
       ],
     };
+    conditionData['children'] = conditionData['children'] || [];
     conditionData['children'].push({ ...groupConditionTemp });
 
     this.setState({
