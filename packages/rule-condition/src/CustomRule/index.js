@@ -5,8 +5,8 @@ import './index.less';
 
 const CustomRule = (props) => {
   let { onChange, disabled, currentCondition } = props;
-  let { customLogicOperator, logicOperator, children } = currentCondition;
-  let len = children.length;
+  let { customLogicOperator, logicOperator, children = [] } = currentCondition;
+  let len = children?.length || 0;
   const [error, setError] = useState(false);
   const [errorMessage, setErrorMessage] = useState(false);
 
