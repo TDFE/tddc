@@ -169,8 +169,9 @@ var CustomRule = function CustomRule(props) {
     currentCondition = props.currentCondition;
   var customLogicOperator = currentCondition.customLogicOperator,
     logicOperator = currentCondition.logicOperator,
-    children = currentCondition.children;
-  var len = children.length;
+    _currentCondition$chi = currentCondition.children,
+    children = _currentCondition$chi === void 0 ? [] : _currentCondition$chi;
+  var len = (children === null || children === void 0 ? void 0 : children.length) || 0;
   var _useState = (0, _react.useState)(false),
     _useState2 = _slicedToArray(_useState, 2),
     error = _useState2[0],
