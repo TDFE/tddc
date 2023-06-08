@@ -135,8 +135,8 @@ const RuleConditionTemplate = (props) => {
       {/* 判断当前指标模板不在排除列表 */}
       {property &&
         !excludeRuleTemplate.includes(property) &&
-        cfgJson.params &&
-        cfgJson.params.map((item, index) => {
+        cfgJson?.params &&
+        cfgJson?.params.map((item, index) => {
           return (
             <span className="rule-condition-template" key={index}>
               {lang === 'en' ? item.enLabelText : item.labelText} ：
