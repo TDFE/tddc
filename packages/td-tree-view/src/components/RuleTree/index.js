@@ -9,7 +9,7 @@ const RuleTreeComponent = (props) => {
   let {
     rules,
     value,
-    dataSourceList,
+    allMap,
     ruleTemplateList,
     logicOperator,
     lang,
