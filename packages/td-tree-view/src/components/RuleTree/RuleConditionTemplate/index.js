@@ -1,9 +1,11 @@
+import { Fragment } from 'react';
 import { Popover, Ellipsis } from 'tntd';
 import { excludeRuleTemplate } from '../constants';
 import { getRuleCfgList, getHandleType, isJSON } from '../utils';
 import CustomRuleConfig from './CustomRuleConfig';
 
 import './index.less';
+import { Tooltip } from 'antd';
 
 const sourceName = (field, lang) => {
   let params = {
@@ -29,7 +31,7 @@ const InputContext = {
 };
 
 const RuleConditionTemplate = (props) => {
-  const { allMap, ruleTemplateListObj, data, lang = 'en' } = props;
+  const { allMap, ruleTemplateListObj, data, lang = 'cn' } = props;
 
   const { description, property } = data || {};
   let { params = [] } = data || {};
@@ -38,6 +40,7 @@ const RuleConditionTemplate = (props) => {
   }
 
   const currentTemplate = ruleTemplateListObj && property ? ruleTemplateListObj[property] : null;
+  console.log(!!(currentTemplate && currentTemplate.description), 'currentTemplate');
   const cfgJson =
     currentTemplate && currentTemplate.cfgJson && isJSON(currentTemplate.cfgJson)
       ? JSON.parse(currentTemplate.cfgJson)
@@ -272,11 +275,11 @@ const RuleConditionTemplate = (props) => {
   return (
     <>
       {currentTemplate && currentTemplate.description && (
-        <Popover content={dom} overlayClassName="template-node">
+        <Tooltip title={dom} overlayClassName="template-node">
           <span className="template-des">
-            <Ellipsis title={`规则描述：${description}`} placement="bottom" />
+            <Ellipsis title={`规则描述：${description}`} placement="bottom" widthLimit={450} />
           </span>
-        </Popover>
+        </Tooltip>
       )}
     </>
   );

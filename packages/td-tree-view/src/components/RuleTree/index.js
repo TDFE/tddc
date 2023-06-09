@@ -50,7 +50,7 @@ const RuleTreeComponent = (props) => {
       <Node
         node={node}
         lang={lang}
-        allMap={dataSourceList}
+        allMap={allMap}
         ruleTemplateListObj={ruleTemplateList}
         IFCondition={IFCondition}
       />

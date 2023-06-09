@@ -251,7 +251,7 @@ const Demo1 = () => {
       value={data.logicCondition} // 逻辑表达式
       rules={data.children || []} // 规则列表
       logicOperator={data.logicOperator} // 逻辑运算符
-      dataSourceList={{
+      allMap={{
         // 数据源列表
         ruleAndIndexFieldList: [
           {
@@ -350,43 +350,43 @@ const Demo1 = () => {
             sourceName: '系统字段',
           },
         ],
-      }}
-      ruleTemplateList={{
-        // 规则模板列表
-        'common/custom': {
-          uuid: '6f9ae83a096a11ec9f3efa6532887f00',
-          name: 'common/custom',
-          parentUuid: '6f9af145096a11ec9f3efa6532887f00',
-          advanceConfig: {},
-          cfgJson: '{"description":"","type":"alias","params":[]}',
-          description: '这是通用模板规则描述',
-          displayName: '自定义规则',
-          enDescription: 'Description of general rules.',
-          enDisplayName: 'generalRule',
-          gmtCreate: '2021-08-30 16:15:28',
-          gmtModify: '2022-02-10 15:40:16',
-          sort: 1,
-          type: 1,
+        ruleTemplateList: {
+          // 规则模板列表
+          'common/custom': {
+            uuid: '6f9ae83a096a11ec9f3efa6532887f00',
+            name: 'common/custom',
+            parentUuid: '6f9af145096a11ec9f3efa6532887f00',
+            advanceConfig: {},
+            cfgJson: '{"description":"","type":"alias","params":[]}',
+            description: '这是通用模板规则描述',
+            displayName: '自定义规则',
+            enDescription: 'Description of general rules.',
+            enDisplayName: 'generalRule',
+            gmtCreate: '2021-08-30 16:15:28',
+            gmtModify: '2022-02-10 15:40:16',
+            sort: 1,
+            type: 1,
+          },
+          'pattern/terminated': {
+            uuid: '6f9af776096a11ec9f3efa6532887f00',
+            name: 'pattern/terminated',
+            parentUuid: '6f9af279096a11ec9f3efa6532887f00',
+            advanceConfig: {},
+            cfgJson: '{"description":"","type":"alias","params":[]}',
+            description:
+              '在满足if规则的条件下，执行中断规则，则后边的规则都将不执行。Terminated与IF绑定使用，单独使用无效。',
+            displayName: 'Terminated',
+            enDescription:
+              'Execute the Terminate Rule when IF Rule was met and rules behind will not be executed.Terminated is used in combination with if. It is invalid to use it alone.',
+            enDisplayName: 'Terminate',
+            gmtCreate: '2021-08-30 16:15:28',
+            gmtModify: '2023-04-13 12:13:33',
+            sort: 2,
+            type: 1,
+          },
         },
-        'pattern/terminated': {
-          uuid: '6f9af776096a11ec9f3efa6532887f00',
-          name: 'pattern/terminated',
-          parentUuid: '6f9af279096a11ec9f3efa6532887f00',
-          advanceConfig: {},
-          cfgJson: '{"description":"","type":"alias","params":[]}',
-          description:
-            '在满足if规则的条件下，执行中断规则，则后边的规则都将不执行。Terminated与IF绑定使用，单独使用无效。',
-          displayName: 'Terminated',
-          enDescription:
-            'Execute the Terminate Rule when IF Rule was met and rules behind will not be executed.Terminated is used in combination with if. It is invalid to use it alone.',
-          enDisplayName: 'Terminate',
-          gmtCreate: '2021-08-30 16:15:28',
-          gmtModify: '2023-04-13 12:13:33',
-          sort: 2,
-          type: 1,
-        },
       }}
-      lang={'en'} // 语言
+      lang={'cn'} // 语言
       showLogic={true} // 是否显示逻辑运算符
     />
   );
