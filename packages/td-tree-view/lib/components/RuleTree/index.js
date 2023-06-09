@@ -239,7 +239,7 @@ var RuleTreeComponent = function RuleTreeComponent(props) {
     return /*#__PURE__*/ _react.default.createElement(_Node.default, {
       node: node,
       lang: lang,
-      allMap: dataSourceList,
+      allMap: allMap,
       ruleTemplateListObj: ruleTemplateList,
       IFCondition: IFCondition,
     });

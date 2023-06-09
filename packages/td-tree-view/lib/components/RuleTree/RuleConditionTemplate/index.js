@@ -1,15 +1,73 @@
 'use strict';
 
+function _typeof(obj) {
+  '@babel/helpers - typeof';
+  return (
+    (_typeof =
+      'function' == typeof Symbol && 'symbol' == typeof Symbol.iterator
+        ? function (obj) {
+            return typeof obj;
+          }
+        : function (obj) {
+            return obj &&
+              'function' == typeof Symbol &&
+              obj.constructor === Symbol &&
+              obj !== Symbol.prototype
+              ? 'symbol'
+              : typeof obj;
+          }),
+    _typeof(obj)
+  );
+}
 Object.defineProperty(exports, '__esModule', {
   value: true,
 });
 exports.default = void 0;
-var _react = _interopRequireDefault(require('react'));
+require('antd/lib/tooltip/style');
+var _tooltip = _interopRequireDefault(require('antd/lib/tooltip'));
+var _react = _interopRequireWildcard(require('react'));
 var _tntd = require('tntd');
 var _constants = require('../constants');
 var _utils = require('../utils');
 var _CustomRuleConfig = _interopRequireDefault(require('./CustomRuleConfig'));
 require('./index.less');
+function _getRequireWildcardCache(nodeInterop) {
+  if (typeof WeakMap !== 'function') return null;
+  var cacheBabelInterop = new WeakMap();
+  var cacheNodeInterop = new WeakMap();
+  return (_getRequireWildcardCache = function _getRequireWildcardCache(nodeInterop) {
+    return nodeInterop ? cacheNodeInterop : cacheBabelInterop;
+  })(nodeInterop);
+}
+function _interopRequireWildcard(obj, nodeInterop) {
+  if (!nodeInterop && obj && obj.__esModule) {
+    return obj;
+  }
+  if (obj === null || (_typeof(obj) !== 'object' && typeof obj !== 'function')) {
+    return { default: obj };
+  }
+  var cache = _getRequireWildcardCache(nodeInterop);
+  if (cache && cache.has(obj)) {
+    return cache.get(obj);
+  }
+  var newObj = {};
+  var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor;
+  for (var key in obj) {
+    if (key !== 'default' && Object.prototype.hasOwnProperty.call(obj, key)) {
+      var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null;
+      if (desc && (desc.get || desc.set)) {
+        Object.defineProperty(newObj, key, desc);
+      } else {
+        newObj[key] = obj[key];
+      }
+    }
+  }
+  newObj.default = obj;
+  if (cache) {
+    cache.set(obj, newObj);
+  }
+  return newObj;
+}
 function _interopRequireDefault(obj) {
   return obj && obj.__esModule ? obj : { default: obj };
 }
@@ -44,7 +102,7 @@ var RuleConditionTemplate = function RuleConditionTemplate(props) {
     ruleTemplateListObj = props.ruleTemplateListObj,
     data = props.data,
     _props$lang = props.lang,
-    lang = _props$lang === void 0 ? 'en' : _props$lang;
+    lang = _props$lang === void 0 ? 'cn' : _props$lang;
   var _ref = data || {},
     description = _ref.description,
     property = _ref.property;
@@ -55,6 +113,7 @@ var RuleConditionTemplate = function RuleConditionTemplate(props) {
     params = JSON.parse(params);
   }
   var currentTemplate = ruleTemplateListObj && property ? ruleTemplateListObj[property] : null;
+  console.log(!!(currentTemplate && currentTemplate.description), 'currentTemplate');
   var cfgJson =
     currentTemplate && currentTemplate.cfgJson && (0, _utils.isJSON)(currentTemplate.cfgJson)
       ? JSON.parse(currentTemplate.cfgJson)
@@ -328,9 +387,9 @@ var RuleConditionTemplate = function RuleConditionTemplate(props) {
     currentTemplate &&
       currentTemplate.description &&
       /*#__PURE__*/ _react.default.createElement(
-        _tntd.Popover,
+        _tooltip.default,
         {
-          content: dom,
+          title: dom,
           overlayClassName: 'template-node',
         },
         /*#__PURE__*/ _react.default.createElement(
@@ -341,6 +400,7 @@ var RuleConditionTemplate = function RuleConditionTemplate(props) {
           /*#__PURE__*/ _react.default.createElement(_tntd.Ellipsis, {
             title: '\u89C4\u5219\u63CF\u8FF0\uFF1A'.concat(description),
             placement: 'bottom',
+            widthLimit: 450,
           }),
         ),
       ),
