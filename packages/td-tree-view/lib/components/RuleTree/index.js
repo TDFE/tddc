@@ -192,7 +192,7 @@ function _arrayWithHoles(arr) {
 var RuleTreeComponent = function RuleTreeComponent(props) {
   var rules = props.rules,
     value = props.value,
-    dataSourceList = props.dataSourceList,
+    allMap = props.allMap,
     ruleTemplateList = props.ruleTemplateList,
     logicOperator = props.logicOperator,
     lang = props.lang,
