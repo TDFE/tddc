@@ -86,15 +86,15 @@ const CustomRule = (props) => {
         hitLogicError = true;
       }
     } else {
-      hitLogicHasEmpty = true;
+      // hitLogicHasEmpty = true;
     }
 
-    if (hitLogicHasEmpty) {
-      setErrorMessage('命中逻辑为空！');
-      setError(true);
+    // if (hitLogicHasEmpty) {
+    //   setErrorMessage('命中逻辑为空！');
+    //   setError(true);
 
-      return;
-    }
+    //   return;
+    // }
     if (hitLogicError) {
       setErrorMessage('命中逻辑格式错误！');
       setError(true);
