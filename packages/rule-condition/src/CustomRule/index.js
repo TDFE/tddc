@@ -89,25 +89,25 @@ const CustomRule = (props) => {
       // hitLogicHasEmpty = true;
     }
 
-    // if (hitLogicHasEmpty) {
-    //   setErrorMessage('命中逻辑为空！');
-    //   setError(true);
+    if (hitLogicHasEmpty) {
+      setErrorMessage('命中逻辑为空！');
+      setError(true);
 
-    //   return;
-    // }
+      return false;
+    }
     if (hitLogicError) {
       setErrorMessage('命中逻辑格式错误！');
       setError(true);
 
-      return;
+      return false;
     }
     setError(false);
     setErrorMessage(null);
+    return true;
   };
 
   const expressionOnchange = (e) => {
-    onChange(e.target.value);
-    checkExpression(e?.target.value);
+    onChange(e.target.value, checkExpression(e?.target.value));
   };
 
   let value = !isCustom ? translationStr() : customLogicOperator || null;

@@ -358,8 +358,9 @@ class RuleConditon extends React.PureComponent {
               <CustomRule
                 currentCondition={conditionData || {}}
                 disabled={true}
-                onChange={async (value) => {
+                onChange={async (value, customRuleStatus) => {
                   conditionData.customLogicOperator = value;
+                  conditionData.customRuleStatus = customRuleStatus;
                   await this.setState({
                     conditionData: {
                       ...conditionData,
