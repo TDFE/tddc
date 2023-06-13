@@ -260,24 +260,22 @@ var CustomRule = function CustomRule(props) {
     } else {
       // hitLogicHasEmpty = true;
     }
-
-    // if (hitLogicHasEmpty) {
-    //   setErrorMessage('命中逻辑为空！');
-    //   setError(true);
-
-    //   return;
-    // }
+    if (hitLogicHasEmpty) {
+      setErrorMessage('命中逻辑为空！');
+      setError(true);
+      return false;
+    }
     if (hitLogicError) {
       setErrorMessage('命中逻辑格式错误！');
       setError(true);
-      return;
+      return false;
     }
     setError(false);
     setErrorMessage(null);
+    return true;
   };
   var expressionOnchange = function expressionOnchange(e) {
-    onChange(e.target.value);
-    checkExpression(e === null || e === void 0 ? void 0 : e.target.value);
+    onChange(e.target.value, checkExpression(e === null || e === void 0 ? void 0 : e.target.value));
   };
   var value = !isCustom ? translationStr() : customLogicOperator || null;
   return /*#__PURE__*/ _react.default.createElement(

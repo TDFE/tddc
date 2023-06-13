@@ -1197,34 +1197,38 @@ var RuleConditon = /*#__PURE__*/ (function (_React$PureComponent) {
                 disabled: true,
                 onChange: /*#__PURE__*/ (function () {
                   var _ref3 = _asyncToGenerator(
-                    /*#__PURE__*/ _regeneratorRuntime().mark(function _callee3(value) {
+                    /*#__PURE__*/ _regeneratorRuntime().mark(function _callee3(
+                      value,
+                      customRuleStatus,
+                    ) {
                       return _regeneratorRuntime().wrap(function _callee3$(_context3) {
                         while (1)
                           switch ((_context3.prev = _context3.next)) {
                             case 0:
                               conditionData.customLogicOperator = value;
-                              _context3.next = 3;
+                              conditionData.customRuleStatus = customRuleStatus;
+                              _context3.next = 4;
                               return _this2.setState({
                                 conditionData: _objectSpread({}, conditionData),
                               });
-                            case 3:
-                              _context3.next = 5;
+                            case 4:
+                              _context3.next = 6;
                               return onChange;
-                            case 5:
+                            case 6:
                               _context3.t0 = _context3.sent;
                               if (!_context3.t0) {
-                                _context3.next = 8;
+                                _context3.next = 9;
                                 break;
                               }
                               _this2.changeAfterAddPriority(_objectSpread({}, conditionData));
-                            case 8:
+                            case 9:
                             case 'end':
                               return _context3.stop();
                           }
                       }, _callee3);
                     }),
                   );
-                  return function (_x3) {
+                  return function (_x3, _x4) {
                     return _ref3.apply(this, arguments);
                   };
                 })(),
