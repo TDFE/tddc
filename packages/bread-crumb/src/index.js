@@ -31,7 +31,7 @@ const getParams = (params) => {
   return paramStr;
 };
 
-export function flatten(arr) {
+const flatten = (arr) => {
   let res = [];
   const curArr = arr?.props?.children;
   for (let i = 0, length = curArr?.length; i < length; i++) {
@@ -42,11 +42,12 @@ export function flatten(arr) {
     }
   }
   return res;
-}
+};
 
+let memoryKey = {};
 export default (WrapperComponent, rest) => {
   const {
-    includesSearch = ['currentTab'],
+    defaultSearch = ['currentTab', 'current'],
     BreadCrumbCustom,
     BreadCrumbPrototype = {},
     showHeader,
@@ -59,11 +60,7 @@ export default (WrapperComponent, rest) => {
     const [breadList, setBreadList] = useState([]);
 
     // 记录链接上需要保留的query参数
-    const newSearchObj = searchToObject(search);
-    const newObj = {};
-    for (let i in newSearchObj) {
-      newObj[i] = newSearchObj[i];
-    }
+    const searchObj = searchToObject(search);
 
     useEffect(() => {
       const routerArr = [];
@@ -74,27 +71,46 @@ export default (WrapperComponent, rest) => {
           query: props.query,
         });
       });
+
       const breadCrumbList = routerArr?.filter(({ path }) => {
         return matchPath(pathname, { path });
       });
+
       breadCrumbList.sort((a, b) => {
         return a.path.length - b.path.length;
       });
+
       breadCrumbList?.map((item) => {
-        if (item?.query) {
-          item.path += '?';
-          item.query?.map((item1, index1) => {
-            item.path += Object.keys(item1)[0] + '=' + newObj[Object.values(item1)[0]];
-            if (index1 !== item.query.length - 1) {
-              item.path += '&';
-            }
-          });
-        }
+        const querySet = new Set();
+        let curQuery = [];
+        item.query?.map((item1) => {
+          const curKey = Object.keys(item1)[0];
+          const sourceKey = Object.values(item1)[0];
+          curQuery.push(curKey + '=' + searchObj[sourceKey]);
+          querySet.add(curKey);
+        });
 
         if (item.path === pathname) {
-          item.path = pathname + search;
+          if (defaultSearch?.length) {
+            defaultSearch.forEach((defaultKey) => {
+              if (!querySet.has(defaultKey) && !memoryKey[defaultKey]) {
+                if (searchObj[defaultKey]) {
+                  curQuery.push(`${defaultKey}=${searchObj[defaultKey]}`);
+                  memoryKey[defaultKey] = `${defaultKey}=${searchObj[defaultKey]}`;
+                }
+              }
+            });
+          }
+        }
+        if (Object.values(memoryKey)) {
+          curQuery = curQuery.concat(Object.values(memoryKey));
+        }
+
+        if (curQuery?.length) {
+          item.path += '?' + curQuery.join('&');
         }
       });
+
       setBreadList(breadCrumbList);
     }, [pathname]);
 
@@ -114,24 +130,7 @@ export default (WrapperComponent, rest) => {
                 {...(BreadCrumbPrototype || {})}
               >
                 {breadList?.map((v, i) => {
-                  const { query } = v;
-
-                  if (query && Array.isArray(query)) {
-                    query.forEach((q) => {
-                      for (let qKey in q) {
-                        const getVKey = q[qKey];
-                        if (newSearchObj[getVKey]) {
-                          newObj[qKey] = newSearchObj[getVKey];
-                        }
-                      }
-                    });
-                  }
-
-                  let href = null;
-                  if (i < breadList?.length - 1) {
-                    href = v?.path + (getParams(newObj) ? `?${getParams(newObj)}` : '');
-                  }
-
+                  const href = v?.path;
                   if (onlyTwoLevels && i === 0) {
                     const dom = (
                       <>
