@@ -122,7 +122,7 @@ export default (WrapperComponent, rest) => {
           <div className="page-global-header bread-crumb-head">
             {BreadCrumbCustom &&
               !!breadList?.length &&
-              BreadCrumbCustom(breadList, getParams(newObj))}
+              BreadCrumbCustom(breadList, getParams(searchObj))}
             {!(BreadCrumbCustom && BreadCrumbCustom(breadList)) && (
               <Breadcrumb
                 separator={!onlyTwoLevels ? separator || '>' : ' '}
