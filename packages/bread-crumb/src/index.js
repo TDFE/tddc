@@ -44,7 +44,6 @@ const flatten = (arr) => {
   return res;
 };
 
-let memoryKey = {};
 export default (WrapperComponent, rest) => {
   const {
     defaultSearch = ['currentTab', 'current'],
@@ -58,7 +57,6 @@ export default (WrapperComponent, rest) => {
     const { pathname, search } = location || {};
     const children = WrapperComponent({ ...props });
     const [breadList, setBreadList] = useState([]);
-
     // 记录链接上需要保留的query参数
     const searchObj = searchToObject(search);
 
@@ -72,8 +70,16 @@ export default (WrapperComponent, rest) => {
         });
       });
 
-      const breadCrumbList = routerArr?.filter(({ path }) => {
-        return matchPath(pathname, { path });
+      const breadCrumbList = [];
+      routerArr?.filter((routeObj) => {
+        const { path } = routeObj || {};
+        const pathObj = matchPath(pathname, { path });
+        if (pathObj) {
+          breadCrumbList.push({
+            ...pathObj,
+            ...(routeObj || {}),
+          });
+        }
       });
 
       breadCrumbList.sort((a, b) => {
@@ -90,24 +96,18 @@ export default (WrapperComponent, rest) => {
           querySet.add(curKey);
         });
 
-        if (item.path === pathname) {
-          if (defaultSearch?.length) {
-            defaultSearch.forEach((defaultKey) => {
-              if (!querySet.has(defaultKey) && !memoryKey[defaultKey]) {
-                if (searchObj[defaultKey]) {
-                  curQuery.push(`${defaultKey}=${searchObj[defaultKey]}`);
-                  memoryKey[defaultKey] = `${defaultKey}=${searchObj[defaultKey]}`;
-                }
+        // const matched = matchPath(pathname, { path: item.path, exact: true });
+        if (defaultSearch?.length) {
+          defaultSearch.forEach((defaultKey) => {
+            if (!querySet.has(defaultKey)) {
+              if (searchObj[defaultKey]) {
+                curQuery.push(`${defaultKey}=${searchObj[defaultKey]}`);
               }
-            });
-          }
+            }
+          });
         }
-        if (Object.values(memoryKey)) {
-          curQuery = curQuery.concat(Object.values(memoryKey));
-        }
-
         if (curQuery?.length) {
-          item.path += '?' + curQuery.join('&');
+          item.url += '?' + curQuery.join('&');
         }
       });
 
@@ -130,7 +130,7 @@ export default (WrapperComponent, rest) => {
                 {...(BreadCrumbPrototype || {})}
               >
                 {breadList?.map((v, i) => {
-                  const href = v?.path;
+                  const href = v?.url;
                   if (onlyTwoLevels && i === 0) {
                     const dom = (
                       <>
