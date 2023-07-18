@@ -165,6 +165,7 @@ var TreeNode = _tree.default.TreeNode;
 var path = []; // 上级机构到当前机构的路径
 
 var AssignModal = function AssignModal(props) {
+  var _orgList$;
   var _props$orgList = props.orgList,
     orgList = _props$orgList === void 0 ? [] : _props$orgList,
     _props$dataItem = props.dataItem,
@@ -202,7 +203,7 @@ var AssignModal = function AssignModal(props) {
     _useState8 = _slicedToArray(_useState7, 2),
     allAppChecked = _useState8[0],
     setAllAppChecked = _useState8[1];
-  if (!orgList[0].path) {
+  if (!((_orgList$ = orgList[0]) === null || _orgList$ === void 0 ? void 0 : _orgList$.path)) {
     (0, _utils.addPath)(orgList[0], []); // 添加 上级机构到子机构的路径
   }
 
