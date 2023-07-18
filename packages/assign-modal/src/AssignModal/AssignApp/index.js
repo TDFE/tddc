@@ -34,7 +34,7 @@ const AssignModal = (props) => {
   const [allOrgChecked, setAllOrgChecked] = useState(false);
   const [allAppChecked, setAllAppChecked] = useState(false);
 
-  if (!orgList[0].path) {
+  if (!orgList[0]?.path) {
     addPath(orgList[0], []); // 添加 上级机构到子机构的路径
   }
 
