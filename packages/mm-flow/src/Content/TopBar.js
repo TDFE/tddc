@@ -2,20 +2,10 @@ import { useState, useEffect, useRef } from 'react';
 import { Row, Button, Icon, Menu, Dropdown, Tooltip } from 'antd';
 import DefaultDataConvert from '../DefaultDataConvert';
 import './TopBar.less';
-export const toolBarTypeNameMap = {
-  redo: '重做',
-  undo: '撤销',
-  'zoom-in': '放大',
-  'zoom-out': '缩小',
-  delete: '删除',
-  'deployment-unit': '排序',
-  copy: '拷贝规则流',
-  reset: '原比例',
-  'auto-fit': '适应画布',
-  fullscreen: '最大化',
-};
+import { getText } from '../locale';
+
 export default (props) => {
-  const { editor, previewMode, operateGroup, DataConvert, commandAction } = props || {};
+  const { editor, previewMode, operateGroup, DataConvert, commandAction, lang } = props || {};
   const [canRedo, setCanRedo] = useState(false);
   const [canUndo, setCanUndo] = useState(false);
   const [canDelete, setCanDelete] = useState(false);
@@ -27,6 +17,20 @@ export default (props) => {
     controller,
     paper,
   } = editor || {};
+
+  const toolBarTypeNameMap = {
+    redo: getText('redo', lang) || '重做',
+    undo: getText('undo', lang) || '撤销',
+    'zoom-in': getText('zoom-in', lang) || '放大',
+    'zoom-out': getText('zoom-out', lang) || '缩小',
+    delete: getText('delete', lang) || '删除',
+    'deployment-unit': getText('deployment-unit', lang) || '排序',
+    copy: getText('copy', lang) || '拷贝规则流',
+    reset: getText('reset', lang) || '原比例',
+    'auto-fit': getText('auto-fit', lang) || '适应画布',
+    fullscreen: getText('fullscreen', lang) || '最大化',
+  };
+
   useEffect(() => {
     if (editor) {
       if (curEditor.current !== editor) {
@@ -200,29 +204,38 @@ export default (props) => {
       if (type) {
         child.push(
           <span
+            key={type}
             className={`${getClassName(type)} command-item`}
-            onClick={click || clickEvent(type)}
+            onClick={click || clickEvent(type) || void 0}
           >
             {!['auto-fit', 'reset'].includes(type) && <Icon type={type} />}
             {['auto-fit', 'reset'].includes(type) && (
               <span className={`flow-iconfont icon-${type}`} />
             )}
-            {toolBarTypeNameMap[type]}
+            {toolBarTypeNameMap?.[type]}
           </span>,
         );
       }
     });
     const menu = (
       <Menu>
-        <Menu.Item onClick={() => format('y')}>纵向排序</Menu.Item>
-        <Menu.Item onClick={() => format('x')}>横向排序</Menu.Item>
+        <Menu.Item key="y" onClick={() => format('y')}>
+          {getText('zongXiangPaiXu', lang) || '纵向排序'}
+        </Menu.Item>
+        <Menu.Item key="x" onClick={() => format('x')}>
+          {getText('hengXiangPaiXu', lang) || '横向排序'}
+        </Menu.Item>
       </Menu>
     );
     child.push(
-      <Dropdown overlay={menu} placement="bottomLeft">
+      <Dropdown
+        overlay={menu}
+        placement="bottomLeft"
+        getPopupContainer={(triggerNode) => triggerNode?.parentNode}
+      >
         <label className="command-item">
           <Icon type="deployment-unit" />
-          格式化排序
+          {getText('formatSort', lang) || '格式化排序'}
         </label>
       </Dropdown>,
     );
@@ -246,8 +259,8 @@ export default (props) => {
         <Button.Group className="flow-btn-wrap" size="small">
           {commandActions?.map((type) => {
             return (
-              <Tooltip title={toolBarTypeNameMap[type]} key={type}>
-                <Button onClick={clickEvent(type)}>
+              <Tooltip title={toolBarTypeNameMap?.[type]} key={type}>
+                <Button onClick={clickEvent(type) || void 0}>
                   {!['auto-fit', 'reset'].includes(type) && <Icon type={type} />}
                   {['auto-fit', 'reset'].includes(type) && (
                     <span className={`flow-iconfont icon-${type}`} />

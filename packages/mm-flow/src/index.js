@@ -6,6 +6,7 @@ import LeftBar from './Content/LeftBar';
 import initShapes, { sliceName } from './MMShapes/initShapes';
 import DefaultDataConvert from './DefaultDataConvert';
 import DialogHandle from './DialogHandle';
+import { getText } from './locale';
 import './index.less';
 
 export { sliceName };
@@ -35,6 +36,7 @@ export default forwardRef((props, ref) => {
     showLengend,
     LengendDom,
     autoDiffAuditNodes = true,
+    lang,
   } = props;
   const previewMode = type === 'view';
 
@@ -65,12 +67,12 @@ export default forwardRef((props, ref) => {
     } = toNode || {};
 
     if (['start'].includes(toType) && targetToLines && targetToLines.size) {
-      message.error(toName + '不能设置输入流');
+      message.error(toName + (getText('bunengshezhishuruliu', lang) || '不能设置输入流'));
       return false;
     }
     // 不能设置输出流
     if (['end'].includes(fromType) && sourceFromLines && sourceFromLines.size) {
-      message.error(fromName + '不能设置输出流');
+      message.error(fromName + (getText('bunengshezhishuchuliu', lang) || '不能设置输出流'));
       return false;
     }
     checkLineExtendFn && checkLineExtendFn({ data, editor });
@@ -292,15 +294,15 @@ export default forwardRef((props, ref) => {
             <Row type="flex" className="mm-lengend">
               <span className="success">
                 <i />
-                运行完成
+                {getText('yunxingwancheng', lang) || '运行完成'}
               </span>
               <span className="running">
                 <i />
-                运行中
+                {getText('yunxingzhong', lang) || '运行中'}
               </span>
               <span className="fail">
                 <i />
-                运行失败
+                {getText('yunxingshibai', lang) || '运行失败'}
               </span>
             </Row>
           ))}
