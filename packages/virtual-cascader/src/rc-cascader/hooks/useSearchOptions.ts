@@ -18,7 +18,7 @@ export default (
   config: ShowSearchType,
   changeOnSelect: boolean,
 ) => {
-  const { filter = defaultFilter, render = defaultRender, limit = 50, sort } = config;
+  const { filter = defaultFilter, render = defaultRender, limit = false, sort } = config;
 
   return React.useMemo(() => {
     const filteredOptions: DefaultOptionType[] = [];
