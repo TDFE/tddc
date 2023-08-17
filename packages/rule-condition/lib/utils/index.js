@@ -4,7 +4,12 @@ Object.defineProperty(exports, '__esModule', {
   value: true,
 });
 exports.filterAvailableFieldList = exports.dataTypeSpecialConvert = void 0;
+var _locale = _interopRequireDefault(require('../locale.js'));
+function _interopRequireDefault(obj) {
+  return obj && obj.__esModule ? obj : { default: obj };
+}
 // 授权过滤ruleAndIndexFieldList
+
 var filterAvailableFieldList = function filterAvailableFieldList(_ref) {
   var _ref$ruleAndIndexFiel = _ref.ruleAndIndexFieldList,
     ruleAndIndexFieldList = _ref$ruleAndIndexFiel === void 0 ? {} : _ref$ruleAndIndexFiel,
@@ -58,7 +63,7 @@ var dataTypeSpecialConvert = function dataTypeSpecialConvert() {
   if (['ARRAY'].includes(type)) {
     type = 'STRING';
     if (rightValueType !== 'context') {
-      customPlaceholder = '请输入指标结果，英文逗号分隔';
+      customPlaceholder = _locale.default.utils.index.qingShuRuZhiBiao;
     }
   }
   return {

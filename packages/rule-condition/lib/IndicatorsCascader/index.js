@@ -27,6 +27,7 @@ require('antd/lib/tooltip/style');
 var _tooltip = _interopRequireDefault(require('antd/lib/tooltip'));
 require('antd/lib/select/style');
 var _select = _interopRequireDefault(require('antd/lib/select'));
+var _locale = _interopRequireDefault(require('../locale'));
 var _react = _interopRequireWildcard(require('react'));
 var _tntd = require('tntd');
 var _lodash = require('lodash');
@@ -230,7 +231,10 @@ function _objectWithoutPropertiesLoose(source, excluded) {
 }
 var EnptyContent = function EnptyContent(_ref) {
   var _ref$text = _ref.text,
-    text = _ref$text === void 0 ? '当前类型暂无可选变量,若有需要请联系管理员添加。' : _ref$text;
+    text =
+      _ref$text === void 0
+        ? _locale.default.indicatorscascader.index.dangQianLeiXingZan
+        : _ref$text;
   return /*#__PURE__*/ _react.default.createElement(
     'div',
     {
@@ -528,7 +532,7 @@ var IndicatorsCascader = function IndicatorsCascader(_ref2) {
               renderItem: renderItem,
               allowClear: allowClear || false,
               notFoundContent: /*#__PURE__*/ _react.default.createElement(EnptyContent, {
-                text: '暂无数据',
+                text: _locale.default.indicatorscascader.index.zanWuShuJu,
               }),
               showSearch: rest.showSearch || {
                 render: handleSearchRender,

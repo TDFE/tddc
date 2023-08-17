@@ -7,6 +7,7 @@ exports.default = void 0;
 require('antd/lib/tooltip/style');
 var _tooltip = _interopRequireDefault(require('antd/lib/tooltip'));
 var _react = _interopRequireDefault(require('react'));
+var _locale = _interopRequireDefault(require('../../locale.js'));
 require('./index.less');
 var _excluded = ['data', 'showSourceName', 'bool', 'inputValue'];
 /*
@@ -64,47 +65,47 @@ function _objectWithoutPropertiesLoose(source, excluded) {
 }
 var TYPE_MAP = {
   INT: {
-    displayName: '整数',
+    displayName: _locale.default.cascadertag.index.zhengShu,
     color: '#5262C7',
   },
   DOUBLE: {
-    displayName: '小数',
+    displayName: _locale.default.cascadertag.index.xiaoShu,
     color: '#00D2C2',
   },
   STRING: {
-    displayName: '字符',
+    displayName: _locale.default.cascadertag.index.ziFu,
     color: '#826AF9',
   },
   ENUM: {
-    displayName: '枚举',
+    displayName: _locale.default.cascadertag.index.meiJu,
     color: '#00C5DC',
   },
   BOOLEAN: {
-    displayName: '布尔',
+    displayName: _locale.default.cascadertag.index.buEr,
     color: '#4A9AF7',
   },
   DATETIME: {
-    displayName: '日期',
+    displayName: _locale.default.cascadertag.index.riQi,
     color: '#826AF9',
   },
   INTEGER: {
-    displayName: '整数',
+    displayName: _locale.default.cascadertag.index.zhengShu,
     color: '#5262C7',
   },
   FLOAT: {
-    displayName: '小数',
+    displayName: _locale.default.cascadertag.index.xiaoShu,
     color: '#00D2C2',
   },
   BOOL: {
-    displayName: '布尔',
+    displayName: _locale.default.cascadertag.index.buEr,
     color: '#4A9AF7',
   },
   DATE: {
-    displayName: '日期',
+    displayName: _locale.default.cascadertag.index.riQi,
     color: '#826AF9',
   },
   ARRAY: {
-    displayName: '数组',
+    displayName: _locale.default.cascadertag.index.shuZu,
     color: '#00D2C2',
   },
 };
@@ -162,7 +163,7 @@ var Tag = function Tag(props) {
       /*#__PURE__*/ _react.default.createElement(
         _tooltip.default,
         {
-          title: '导入待提交',
+          title: _locale.default.cascadertag.index.daoRuDaiTiJiao,
           placement: 'top',
         },
         /*#__PURE__*/ _react.default.createElement('img', {

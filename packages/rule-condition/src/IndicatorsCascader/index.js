@@ -5,6 +5,7 @@
  * @LastEditors: 郑泳健
  * @LastEditTime: 2023-03-24 18:25:32
  */
+import I18N from '../locale';
 import React, { memo, useEffect, useState, useCallback } from 'react';
 import { Tooltip, Select } from 'antd';
 import { Ellipsis } from 'tntd';
@@ -13,7 +14,7 @@ import VirtualCascader from '@tddc/virtual-cascader';
 import TdTag from './CascaderTag';
 import './index.less';
 
-export const EnptyContent = ({ text = '当前类型暂无可选变量,若有需要请联系管理员添加。' }) => {
+export const EnptyContent = ({ text = I18N.indicatorscascader.index.dangQianLeiXingZan }) => {
   return (
     <div className="virtual-cascader-enpty-wrapper">
       <div className="virtual-cascader-enpty-content">
@@ -209,7 +210,7 @@ const IndicatorsCascader = ({
             onChange: handleChange,
             renderItem,
             allowClear: allowClear || false,
-            notFoundContent: <EnptyContent text={'暂无数据'} />,
+            notFoundContent: <EnptyContent text={I18N.indicatorscascader.index.zanWuShuJu} />,
             showSearch: rest.showSearch || {
               render: handleSearchRender,
             },

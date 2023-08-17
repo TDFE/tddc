@@ -5,52 +5,53 @@
  * @LastEditors: 郑泳健
  * @LastEditTime: 2022-12-29 19:55:37
  */
+import I18N from '../../locale.js';
 import { Tooltip } from 'antd';
 import './index.less';
 
 const TYPE_MAP = {
   INT: {
-    displayName: '整数',
+    displayName: I18N.cascadertag.index.zhengShu,
     color: '#5262C7',
   },
   DOUBLE: {
-    displayName: '小数',
+    displayName: I18N.cascadertag.index.xiaoShu,
     color: '#00D2C2',
   },
   STRING: {
-    displayName: '字符',
+    displayName: I18N.cascadertag.index.ziFu,
     color: '#826AF9',
   },
   ENUM: {
-    displayName: '枚举',
+    displayName: I18N.cascadertag.index.meiJu,
     color: '#00C5DC',
   },
   BOOLEAN: {
-    displayName: '布尔',
+    displayName: I18N.cascadertag.index.buEr,
     color: '#4A9AF7',
   },
   DATETIME: {
-    displayName: '日期',
+    displayName: I18N.cascadertag.index.riQi,
     color: '#826AF9',
   },
   INTEGER: {
-    displayName: '整数',
+    displayName: I18N.cascadertag.index.zhengShu,
     color: '#5262C7',
   },
   FLOAT: {
-    displayName: '小数',
+    displayName: I18N.cascadertag.index.xiaoShu,
     color: '#00D2C2',
   },
   BOOL: {
-    displayName: '布尔',
+    displayName: I18N.cascadertag.index.buEr,
     color: '#4A9AF7',
   },
   DATE: {
-    displayName: '日期',
+    displayName: I18N.cascadertag.index.riQi,
     color: '#826AF9',
   },
   ARRAY: {
-    displayName: '数组',
+    displayName: I18N.cascadertag.index.shuZu,
     color: '#00D2C2',
   },
 };
@@ -75,7 +76,7 @@ const Tag = (props) => {
         <sup style={{ color: dataTypeObj.color }}>{dataTypeObj.displayName} </sup>
       )}
       {showImg && (
-        <Tooltip title={'导入待提交'} placement="top">
+        <Tooltip title={I18N.cascadertag.index.daoRuDaiTiJiao} placement="top">
           <img src={require('./imgs/import_export.svg')} className="tag-img" />
         </Tooltip>
       )}

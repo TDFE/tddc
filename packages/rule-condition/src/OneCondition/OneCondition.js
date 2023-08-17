@@ -1,3 +1,4 @@
+import I18N from '../locale.js';
 import React from 'react';
 import { cloneDeep } from 'lodash';
 import { Input, Icon, Tooltip, Row, Col, Select } from 'antd';
@@ -216,294 +217,294 @@ class OneCondition extends React.PureComponent {
       STRING: [
         {
           name: '==',
-          dName: '等于',
+          dName: I18N.onecondition.dengYu,
           enDName: 'equal',
         },
         {
           name: '!=',
-          dName: '不等于',
+          dName: I18N.onecondition.buDengYu,
           enDName: 'unequal',
         },
         {
           name: 'include',
-          dName: '包含',
+          dName: I18N.onecondition.baoHan,
           enDName: 'include',
         },
         {
           name: 'exclude',
-          dName: '不包含',
+          dName: I18N.onecondition.buBaoHan,
           enDName: 'exclude',
         },
         {
           name: 'prefix',
-          dName: '前缀',
+          dName: I18N.onecondition.qianZhui,
           enDName: 'prefix',
         },
         {
           name: 'suffix',
-          dName: '后缀',
+          dName: I18N.onecondition.houZhui,
           enDName: 'suffix',
         },
         {
           name: 'isnull',
-          dName: '为空',
+          dName: I18N.onecondition.weiKong,
           enDName: 'isnull',
         },
         {
           name: 'notnull',
-          dName: '不为空',
+          dName: I18N.onecondition.buWeiKong,
           enDName: 'notnull',
         },
         {
           name: 'in',
-          dName: '存在于',
+          dName: I18N.onecondition.cunZaiYu,
           enDName: 'in',
         },
         {
           name: 'notin',
-          dName: '不存在于',
+          dName: I18N.onecondition.buCunZaiYu,
           enDName: 'notin',
         },
       ],
       DOUBLE: [
         {
           name: '==',
-          dName: '等于',
+          dName: I18N.onecondition.dengYu,
           enDName: 'equal',
         },
         {
           name: '!=',
-          dName: '不等于',
+          dName: I18N.onecondition.buDengYu,
           enDName: 'unequal',
         },
         {
           name: '>',
-          dName: '大于',
+          dName: I18N.onecondition.daYu,
           enDName: 'greater than',
         },
         {
           name: '>=',
-          dName: '大于等于',
+          dName: I18N.onecondition.daYuDengYu,
           enDName: 'equal or greater than',
         },
         {
           name: '<',
-          dName: '小于',
+          dName: I18N.onecondition.xiaoYu,
           enDName: 'less than',
         },
         {
           name: '<=',
-          dName: '小于等于',
+          dName: I18N.onecondition.xiaoYuDengYu,
           enDName: 'equal or less than',
         },
         {
           name: 'isnull',
-          dName: '为空',
+          dName: I18N.onecondition.weiKong,
           enDName: 'isnull',
         },
         {
           name: 'notnull',
-          dName: '不为空',
+          dName: I18N.onecondition.buWeiKong,
           enDName: 'notnull',
         },
       ],
       INT: [
         {
           name: '==',
-          dName: '等于',
+          dName: I18N.onecondition.dengYu,
           enDName: 'equal',
         },
         {
           name: '!=',
-          dName: '不等于',
+          dName: I18N.onecondition.buDengYu,
           enDName: 'unequal',
         },
         {
           name: '>',
-          dName: '大于',
+          dName: I18N.onecondition.daYu,
           enDName: 'greater than',
         },
         {
           name: '>=',
-          dName: '大于等于',
+          dName: I18N.onecondition.daYuDengYu,
           enDName: 'equal or greater than',
         },
         {
           name: '<',
-          dName: '小于',
+          dName: I18N.onecondition.xiaoYu,
           enDName: 'less than',
         },
         {
           name: '<=',
-          dName: '小于等于',
+          dName: I18N.onecondition.xiaoYuDengYu,
           enDName: 'equal or less than',
         },
         {
           name: 'isnull',
-          dName: '为空',
+          dName: I18N.onecondition.weiKong,
           enDName: 'isnull',
         },
         {
           name: 'notnull',
-          dName: '不为空',
+          dName: I18N.onecondition.buWeiKong,
           enDName: 'notnull',
         },
         {
           name: 'in',
-          dName: '存在于',
+          dName: I18N.onecondition.cunZaiYu,
           enDName: 'in',
         },
         {
           name: 'notin',
-          dName: '不存在于',
+          dName: I18N.onecondition.buCunZaiYu,
           enDName: 'notin',
         },
       ],
       LONG: [
         {
           name: '==',
-          dName: '等于',
+          dName: I18N.onecondition.dengYu,
           enDName: 'equal',
         },
         {
           name: '!=',
-          dName: '不等于',
+          dName: I18N.onecondition.buDengYu,
           enDName: 'unequal',
         },
         {
           name: '>',
-          dName: '大于',
+          dName: I18N.onecondition.daYu,
           enDName: 'greater than',
         },
         {
           name: '>=',
-          dName: '大于等于',
+          dName: I18N.onecondition.daYuDengYu,
           enDName: 'equal or greater than',
         },
         {
           name: '<',
-          dName: '小于',
+          dName: I18N.onecondition.xiaoYu,
           enDName: 'less than',
         },
         {
           name: '<=',
-          dName: '小于等于',
+          dName: I18N.onecondition.xiaoYuDengYu,
           enDName: 'equal or less than',
         },
         {
           name: 'isnull',
-          dName: '为空',
+          dName: I18N.onecondition.weiKong,
           enDName: 'isnull',
         },
         {
           name: 'notnull',
-          dName: '不为空',
+          dName: I18N.onecondition.buWeiKong,
           enDName: 'notnull',
         },
         {
           name: 'in',
-          dName: '存在于',
+          dName: I18N.onecondition.cunZaiYu,
           enDName: 'in',
         },
         {
           name: 'notin',
-          dName: '不存在于',
+          dName: I18N.onecondition.buCunZaiYu,
           enDName: 'notin',
         },
       ],
       DATETIME: [
         {
           name: '==',
-          dName: '等于',
+          dName: I18N.onecondition.dengYu,
           enDName: 'equal',
         },
         {
           name: '!=',
-          dName: '不等于',
+          dName: I18N.onecondition.buDengYu,
           enDName: 'unequal',
         },
         {
           name: '>',
-          dName: '大于',
+          dName: I18N.onecondition.daYu,
           enDName: 'greater than',
         },
         {
           name: '>=',
-          dName: '大于等于',
+          dName: I18N.onecondition.daYuDengYu,
           enDName: 'equal or greater than',
         },
         {
           name: '<',
-          dName: '小于',
+          dName: I18N.onecondition.xiaoYu,
           enDName: 'less than',
         },
         {
           name: '<=',
-          dName: '小于等于',
+          dName: I18N.onecondition.xiaoYuDengYu,
           enDName: 'equal or less than',
         },
         {
           name: 'isnull',
-          dName: '为空',
+          dName: I18N.onecondition.weiKong,
           enDName: 'isnull',
         },
         {
           name: 'notnull',
-          dName: '不为空',
+          dName: I18N.onecondition.buWeiKong,
           enDName: 'notnull',
         },
       ],
       BOOLEAN: [
         {
           name: '==',
-          dName: '等于',
+          dName: I18N.onecondition.dengYu,
           enDName: 'equal',
         },
         {
           name: '!=',
-          dName: '不等于',
+          dName: I18N.onecondition.buDengYu,
           enDName: 'unequal',
         },
         {
           name: 'isnull',
-          dName: '为空',
+          dName: I18N.onecondition.weiKong,
           enDName: 'isnull',
         },
         {
           name: 'notnull',
-          dName: '不为空',
+          dName: I18N.onecondition.buWeiKong,
           enDName: 'notnull',
         },
       ],
       ENUM: [
         {
           name: '==',
-          dName: '等于',
+          dName: I18N.onecondition.dengYu,
           enDName: 'equal',
         },
         {
           name: '!=',
-          dName: '不等于',
+          dName: I18N.onecondition.buDengYu,
           enDName: 'unequal',
         },
         {
           name: 'isnull',
-          dName: '为空',
+          dName: I18N.onecondition.weiKong,
           enDName: 'isnull',
         },
         {
           name: 'notnull',
-          dName: '不为空',
+          dName: I18N.onecondition.buWeiKong,
           enDName: 'notnull',
         },
         {
           name: 'in',
-          dName: '存在于',
+          dName: I18N.onecondition.cunZaiYu,
           enDName: 'in',
         },
         {
           name: 'notin',
-          dName: '不存在于',
+          dName: I18N.onecondition.buCunZaiYu,
           enDName: 'notin',
         },
       ],
@@ -511,34 +512,34 @@ class OneCondition extends React.PureComponent {
       ARRAY: [
         {
           name: '==',
-          dName: '等于',
+          dName: I18N.onecondition.dengYu,
           enDName: 'equal',
         },
         {
           name: '!=',
-          dName: '不等于',
+          dName: I18N.onecondition.buDengYu,
           enDName: 'unequal',
         },
         {
           name: 'include',
-          dName: '包含',
+          dName: I18N.onecondition.baoHan,
           enDName: 'include',
         },
         {
           name: 'exclude',
-          dName: '不包含',
+          dName: I18N.onecondition.buBaoHan,
           enDName: 'exclude',
         },
       ],
       POLICY: [
         {
           name: '==',
-          dName: '等于',
+          dName: I18N.onecondition.dengYu,
           enDName: 'equal',
         },
         {
           name: '!=',
-          dName: '不等于',
+          dName: I18N.onecondition.buDengYu,
           enDName: 'unequal',
         },
       ],
@@ -546,12 +547,12 @@ class OneCondition extends React.PureComponent {
       ADDRESS_FIELD: [
         {
           name: 'similarityMatch',
-          dName: '相似度匹配',
+          dName: I18N.onecondition.xiangSiDuPiPei,
           enDName: 'similarityMatch',
         },
         {
           name: 'similarityUnMatch',
-          dName: '相似度不匹配',
+          dName: I18N.onecondition.xiangSiDuBuPi,
           enDName: 'similarityUnMatch',
         },
       ],
@@ -559,12 +560,12 @@ class OneCondition extends React.PureComponent {
       FIELD: [
         {
           name: 'match',
-          dName: '匹配',
+          dName: I18N.onecondition.piPei,
           enDName: 'match',
         },
         {
           name: 'unmatch',
-          dName: '不匹配',
+          dName: I18N.onecondition.buPiPei,
           enDName: 'unmatch',
         },
       ],
@@ -614,11 +615,11 @@ class OneCondition extends React.PureComponent {
               dropdownMatchSelectWidth={false}
               disabled={disabled}
             >
-              <Option value="&&" title={'与'}>
-                {'与'}
+              <Option value="&&" title={I18N.onecondition.yu}>
+                {I18N.onecondition.yu}
               </Option>
-              <Option value="||" title={'或'}>
-                {'或'}
+              <Option value="||" title={I18N.onecondition.huo}>
+                {I18N.onecondition.huo}
               </Option>
             </Select>
           </Col>
@@ -634,7 +635,7 @@ class OneCondition extends React.PureComponent {
                 ? conditionSingleData['property']
                 : undefined
             }
-            placeholder="请选择"
+            placeholder={I18N.onecondition.qingXuanZe}
             onChange={async (value, selectObj) => {
               const { enumTypeValues, name } = selectObj;
 
@@ -682,7 +683,7 @@ class OneCondition extends React.PureComponent {
                   ? conditionSingleData['op']
                   : undefined
               }
-              placeholder="请选择"
+              placeholder={I18N.onecondition.qingXuanZe}
               onChange={this.changeConditionField.bind(this, 'op', 'select')}
               dropdownMatchSelectWidth={false}
             >
@@ -719,13 +720,13 @@ class OneCondition extends React.PureComponent {
                         onChange={this.changeConditionField.bind(this, 'rightValueType', 'select')}
                         dropdownMatchSelectWidth={false}
                       >
-                        <Option value="input" title={'常量'}>
+                        <Option value="input" title={I18N.onecondition.changLiang}>
                           {/* 常量 */}
-                          {'常量'}
+                          {I18N.onecondition.changLiang}
                         </Option>
-                        <Option value="context" title={'变量'}>
+                        <Option value="context" title={I18N.onecondition.bianLiang}>
                           {/* 变量 */}
-                          {'变量'}
+                          {I18N.onecondition.bianLiang}
                         </Option>
                       </Select>
                       {(leftOptionDataType === 'BOOLEAN' && (
@@ -736,21 +737,21 @@ class OneCondition extends React.PureComponent {
                               ? conditionSingleData['value']
                               : undefined
                           }
-                          placeholder={customPlaceholder || '请选择'} // 请选择
+                          placeholder={customPlaceholder || I18N.onecondition.qingXuanZe} // 请选择
                           onChange={this.changeConditionField.bind(this, 'value', 'select')}
                           showSearch
                           optionFilterProp="children"
                           dropdownMatchSelectWidth={false}
                         >
-                          <Option value="true">{'是[true]'}</Option>
-                          <Option value="false">{'否[false]'}</Option>
+                          <Option value="true">{I18N.onecondition.shiTRUE}</Option>
+                          <Option value="false">{I18N.onecondition.fouFALS}</Option>
                         </Select>
                       )) || (
                         <Select
                           // conditionSingleData["value"] || undefined
                           value={enumValue || undefined}
                           style={{ width: '70%' }}
-                          placeholder={customPlaceholder || '请选择'} // lang:请选择
+                          placeholder={customPlaceholder || I18N.onecondition.qingXuanZe} // lang:请选择
                           onChange={this.changeConditionField.bind(this, 'value', 'select')}
                           showSearch
                           optionFilterProp="children"
@@ -786,13 +787,13 @@ class OneCondition extends React.PureComponent {
                         onChange={this.changeConditionField.bind(this, 'rightValueType', 'select')}
                         dropdownMatchSelectWidth={false}
                       >
-                        <Option value="input" title={'常量'}>
+                        <Option value="input" title={I18N.onecondition.changLiang}>
                           {/* 常量 */}
-                          {'常量'}
+                          {I18N.onecondition.changLiang}
                         </Option>
-                        <Option value="context" title={'变量'}>
+                        <Option value="context" title={I18N.onecondition.bianLiang}>
                           {/* 变量 */}
-                          {'变量'}
+                          {I18N.onecondition.bianLiang}
                         </Option>
                       </Select>
                       {(leftOptionDataType === 'BOOLEAN' && (
@@ -803,14 +804,14 @@ class OneCondition extends React.PureComponent {
                               ? conditionSingleData['value']
                               : undefined
                           }
-                          placeholder={customPlaceholder || '请选择'} // 请选择
+                          placeholder={customPlaceholder || I18N.onecondition.qingXuanZe} // 请选择
                           onChange={this.changeConditionField.bind(this, 'value', 'select')}
                           showSearch
                           optionFilterProp="children"
                           dropdownMatchSelectWidth={false}
                         >
-                          <Option value="true">{'是[true]'}</Option>
-                          <Option value="false">{'否[false]'}</Option>
+                          <Option value="true">{I18N.onecondition.shiTRUE}</Option>
+                          <Option value="false">{I18N.onecondition.fouFALS}</Option>
                         </Select>
                       )) || (
                         <Input
@@ -822,7 +823,9 @@ class OneCondition extends React.PureComponent {
                           }
                           placeholder={
                             customPlaceholder ||
-                            (operaTypeInOrNot ? '英文逗号分隔，例如1,2' : '请输入常量内容')
+                            (operaTypeInOrNot
+                              ? I18N.onecondition.yingWenDouHaoFen
+                              : I18N.onecondition.qingShuRuChangLiang)
                           } // 请输入常量内容
                           onChange={this.changeConditionField.bind(this, 'value', 'input')}
                         />
@@ -843,13 +846,13 @@ class OneCondition extends React.PureComponent {
                         onChange={this.changeConditionField.bind(this, 'rightValueType', 'select')}
                         dropdownMatchSelectWidth={false}
                       >
-                        <Option value="input" title={'常量'}>
+                        <Option value="input" title={I18N.onecondition.changLiang}>
                           {/* 常量 */}
-                          {'常量'}
+                          {I18N.onecondition.changLiang}
                         </Option>
-                        <Option value="context" title={'变量'}>
+                        <Option value="context" title={I18N.onecondition.bianLiang}>
                           {/* 变量 */}
-                          {'变量'}
+                          {I18N.onecondition.bianLiang}
                         </Option>
                       </Select>
                       <IndicatorsCascader
@@ -861,7 +864,7 @@ class OneCondition extends React.PureComponent {
                             ? conditionSingleData['value']
                             : undefined
                         }
-                        placeholder={customPlaceholder || '请选择'} // 请选择
+                        placeholder={customPlaceholder || I18N.onecondition.qingXuanZe} // 请选择
                         onChange={this.changeConditionField.bind(this, 'value', 'select')}
                         showSearch
                         setTitle={(option = []) => {
@@ -955,13 +958,13 @@ class OneCondition extends React.PureComponent {
                         onChange={this.changeConditionField.bind(this, 'rightValueType', 'select')}
                         dropdownMatchSelectWidth={false}
                       >
-                        <Option value="input" title={'常量'}>
+                        <Option value="input" title={I18N.onecondition.changLiang}>
                           {/* 常量 */}
-                          {'常量'}
+                          {I18N.onecondition.changLiang}
                         </Option>
-                        <Option value="context" title={'变量'}>
+                        <Option value="context" title={I18N.onecondition.bianLiang}>
                           {/* 变量 */}
-                          {'变量'}
+                          {I18N.onecondition.bianLiang}
                         </Option>
                       </Select>
                       <IndicatorsCascader
@@ -973,7 +976,7 @@ class OneCondition extends React.PureComponent {
                             ? conditionSingleData['value']
                             : undefined
                         }
-                        placeholder={customPlaceholder || '请选择'} // 请选择
+                        placeholder={customPlaceholder || I18N.onecondition.qingXuanZe} // 请选择
                         onChange={this.changeConditionField.bind(this, 'value', 'select')}
                         showSearch
                         setTitle={(option = []) => {
@@ -1064,7 +1067,7 @@ class OneCondition extends React.PureComponent {
         >
           {conditionType === 'group' && !disabled && (
             // 添加一项
-            <Tooltip title={'添加一项'} placement="left">
+            <Tooltip title={I18N.onecondition.tianJiaYiXiang} placement="left">
               <Icon
                 className="add"
                 type="plus-circle-o"
@@ -1075,7 +1078,7 @@ class OneCondition extends React.PureComponent {
           )}
           {/* 删除当前行 */}
           {!disabled && (
-            <Tooltip title={'删除当前行'} placement="right">
+            <Tooltip title={I18N.onecondition.shanChuDangQianXing} placement="right">
               <Icon className="delete" type="delete" onClick={this.deleteCondition.bind(this)} />
             </Tooltip>
           )}

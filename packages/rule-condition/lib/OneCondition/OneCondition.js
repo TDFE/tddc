@@ -33,6 +33,7 @@ require('antd/lib/input/style');
 var _input = _interopRequireDefault(require('antd/lib/input'));
 require('antd/lib/select/style');
 var _select = _interopRequireDefault(require('antd/lib/select'));
+var _locale = _interopRequireDefault(require('../locale.js'));
 var _react = _interopRequireDefault(require('react'));
 var _lodash = require('lodash');
 var _IndicatorsCascader = _interopRequireDefault(require('../IndicatorsCascader'));
@@ -880,328 +881,328 @@ var OneCondition = /*#__PURE__*/ (function (_React$PureComponent) {
           STRING: [
             {
               name: '==',
-              dName: '等于',
+              dName: _locale.default.onecondition.dengYu,
               enDName: 'equal',
             },
             {
               name: '!=',
-              dName: '不等于',
+              dName: _locale.default.onecondition.buDengYu,
               enDName: 'unequal',
             },
             {
               name: 'include',
-              dName: '包含',
+              dName: _locale.default.onecondition.baoHan,
               enDName: 'include',
             },
             {
               name: 'exclude',
-              dName: '不包含',
+              dName: _locale.default.onecondition.buBaoHan,
               enDName: 'exclude',
             },
             {
               name: 'prefix',
-              dName: '前缀',
+              dName: _locale.default.onecondition.qianZhui,
               enDName: 'prefix',
             },
             {
               name: 'suffix',
-              dName: '后缀',
+              dName: _locale.default.onecondition.houZhui,
               enDName: 'suffix',
             },
             {
               name: 'isnull',
-              dName: '为空',
+              dName: _locale.default.onecondition.weiKong,
               enDName: 'isnull',
             },
             {
               name: 'notnull',
-              dName: '不为空',
+              dName: _locale.default.onecondition.buWeiKong,
               enDName: 'notnull',
             },
             {
               name: 'in',
-              dName: '存在于',
+              dName: _locale.default.onecondition.cunZaiYu,
               enDName: 'in',
             },
             {
               name: 'notin',
-              dName: '不存在于',
+              dName: _locale.default.onecondition.buCunZaiYu,
               enDName: 'notin',
             },
           ],
           DOUBLE: [
             {
               name: '==',
-              dName: '等于',
+              dName: _locale.default.onecondition.dengYu,
               enDName: 'equal',
             },
             {
               name: '!=',
-              dName: '不等于',
+              dName: _locale.default.onecondition.buDengYu,
               enDName: 'unequal',
             },
             {
               name: '>',
-              dName: '大于',
+              dName: _locale.default.onecondition.daYu,
               enDName: 'greater than',
             },
             {
               name: '>=',
-              dName: '大于等于',
+              dName: _locale.default.onecondition.daYuDengYu,
               enDName: 'equal or greater than',
             },
             {
               name: '<',
-              dName: '小于',
+              dName: _locale.default.onecondition.xiaoYu,
               enDName: 'less than',
             },
             {
               name: '<=',
-              dName: '小于等于',
+              dName: _locale.default.onecondition.xiaoYuDengYu,
               enDName: 'equal or less than',
             },
             {
               name: 'isnull',
-              dName: '为空',
+              dName: _locale.default.onecondition.weiKong,
               enDName: 'isnull',
             },
             {
               name: 'notnull',
-              dName: '不为空',
+              dName: _locale.default.onecondition.buWeiKong,
               enDName: 'notnull',
             },
           ],
           INT: [
             {
               name: '==',
-              dName: '等于',
+              dName: _locale.default.onecondition.dengYu,
               enDName: 'equal',
             },
             {
               name: '!=',
-              dName: '不等于',
+              dName: _locale.default.onecondition.buDengYu,
               enDName: 'unequal',
             },
             {
               name: '>',
-              dName: '大于',
+              dName: _locale.default.onecondition.daYu,
               enDName: 'greater than',
             },
             {
               name: '>=',
-              dName: '大于等于',
+              dName: _locale.default.onecondition.daYuDengYu,
               enDName: 'equal or greater than',
             },
             {
               name: '<',
-              dName: '小于',
+              dName: _locale.default.onecondition.xiaoYu,
               enDName: 'less than',
             },
             {
               name: '<=',
-              dName: '小于等于',
+              dName: _locale.default.onecondition.xiaoYuDengYu,
               enDName: 'equal or less than',
             },
             {
               name: 'isnull',
-              dName: '为空',
+              dName: _locale.default.onecondition.weiKong,
               enDName: 'isnull',
             },
             {
               name: 'notnull',
-              dName: '不为空',
+              dName: _locale.default.onecondition.buWeiKong,
               enDName: 'notnull',
             },
             {
               name: 'in',
-              dName: '存在于',
+              dName: _locale.default.onecondition.cunZaiYu,
               enDName: 'in',
             },
             {
               name: 'notin',
-              dName: '不存在于',
+              dName: _locale.default.onecondition.buCunZaiYu,
               enDName: 'notin',
             },
           ],
           LONG: [
             {
               name: '==',
-              dName: '等于',
+              dName: _locale.default.onecondition.dengYu,
               enDName: 'equal',
             },
             {
               name: '!=',
-              dName: '不等于',
+              dName: _locale.default.onecondition.buDengYu,
               enDName: 'unequal',
             },
             {
               name: '>',
-              dName: '大于',
+              dName: _locale.default.onecondition.daYu,
               enDName: 'greater than',
             },
             {
               name: '>=',
-              dName: '大于等于',
+              dName: _locale.default.onecondition.daYuDengYu,
               enDName: 'equal or greater than',
             },
             {
               name: '<',
-              dName: '小于',
+              dName: _locale.default.onecondition.xiaoYu,
               enDName: 'less than',
             },
             {
               name: '<=',
-              dName: '小于等于',
+              dName: _locale.default.onecondition.xiaoYuDengYu,
               enDName: 'equal or less than',
             },
             {
               name: 'isnull',
-              dName: '为空',
+              dName: _locale.default.onecondition.weiKong,
               enDName: 'isnull',
             },
             {
               name: 'notnull',
-              dName: '不为空',
+              dName: _locale.default.onecondition.buWeiKong,
               enDName: 'notnull',
             },
             {
               name: 'in',
-              dName: '存在于',
+              dName: _locale.default.onecondition.cunZaiYu,
               enDName: 'in',
             },
             {
               name: 'notin',
-              dName: '不存在于',
+              dName: _locale.default.onecondition.buCunZaiYu,
               enDName: 'notin',
             },
           ],
           DATETIME: [
             {
               name: '==',
-              dName: '等于',
+              dName: _locale.default.onecondition.dengYu,
               enDName: 'equal',
             },
             {
               name: '!=',
-              dName: '不等于',
+              dName: _locale.default.onecondition.buDengYu,
               enDName: 'unequal',
             },
             {
               name: '>',
-              dName: '大于',
+              dName: _locale.default.onecondition.daYu,
               enDName: 'greater than',
             },
             {
               name: '>=',
-              dName: '大于等于',
+              dName: _locale.default.onecondition.daYuDengYu,
               enDName: 'equal or greater than',
             },
             {
               name: '<',
-              dName: '小于',
+              dName: _locale.default.onecondition.xiaoYu,
               enDName: 'less than',
             },
             {
               name: '<=',
-              dName: '小于等于',
+              dName: _locale.default.onecondition.xiaoYuDengYu,
               enDName: 'equal or less than',
             },
             {
               name: 'isnull',
-              dName: '为空',
+              dName: _locale.default.onecondition.weiKong,
               enDName: 'isnull',
             },
             {
               name: 'notnull',
-              dName: '不为空',
+              dName: _locale.default.onecondition.buWeiKong,
               enDName: 'notnull',
             },
           ],
           BOOLEAN: [
             {
               name: '==',
-              dName: '等于',
+              dName: _locale.default.onecondition.dengYu,
               enDName: 'equal',
             },
             {
               name: '!=',
-              dName: '不等于',
+              dName: _locale.default.onecondition.buDengYu,
               enDName: 'unequal',
             },
             {
               name: 'isnull',
-              dName: '为空',
+              dName: _locale.default.onecondition.weiKong,
               enDName: 'isnull',
             },
             {
               name: 'notnull',
-              dName: '不为空',
+              dName: _locale.default.onecondition.buWeiKong,
               enDName: 'notnull',
             },
           ],
           ENUM: [
             {
               name: '==',
-              dName: '等于',
+              dName: _locale.default.onecondition.dengYu,
               enDName: 'equal',
             },
             {
               name: '!=',
-              dName: '不等于',
+              dName: _locale.default.onecondition.buDengYu,
               enDName: 'unequal',
             },
             {
               name: 'isnull',
-              dName: '为空',
+              dName: _locale.default.onecondition.weiKong,
               enDName: 'isnull',
             },
             {
               name: 'notnull',
-              dName: '不为空',
+              dName: _locale.default.onecondition.buWeiKong,
               enDName: 'notnull',
             },
             {
               name: 'in',
-              dName: '存在于',
+              dName: _locale.default.onecondition.cunZaiYu,
               enDName: 'in',
             },
             {
               name: 'notin',
-              dName: '不存在于',
+              dName: _locale.default.onecondition.buCunZaiYu,
               enDName: 'notin',
             },
           ],
           ARRAY: [
             {
               name: '==',
-              dName: '等于',
+              dName: _locale.default.onecondition.dengYu,
               enDName: 'equal',
             },
             {
               name: '!=',
-              dName: '不等于',
+              dName: _locale.default.onecondition.buDengYu,
               enDName: 'unequal',
             },
             {
               name: 'include',
-              dName: '包含',
+              dName: _locale.default.onecondition.baoHan,
               enDName: 'include',
             },
             {
               name: 'exclude',
-              dName: '不包含',
+              dName: _locale.default.onecondition.buBaoHan,
               enDName: 'exclude',
             },
           ],
           POLICY: [
             {
               name: '==',
-              dName: '等于',
+              dName: _locale.default.onecondition.dengYu,
               enDName: 'equal',
             },
             {
               name: '!=',
-              dName: '不等于',
+              dName: _locale.default.onecondition.buDengYu,
               enDName: 'unequal',
             },
           ],
@@ -1209,12 +1210,12 @@ var OneCondition = /*#__PURE__*/ (function (_React$PureComponent) {
           ADDRESS_FIELD: [
             {
               name: 'similarityMatch',
-              dName: '相似度匹配',
+              dName: _locale.default.onecondition.xiangSiDuPiPei,
               enDName: 'similarityMatch',
             },
             {
               name: 'similarityUnMatch',
-              dName: '相似度不匹配',
+              dName: _locale.default.onecondition.xiangSiDuBuPi,
               enDName: 'similarityUnMatch',
             },
           ],
@@ -1222,12 +1223,12 @@ var OneCondition = /*#__PURE__*/ (function (_React$PureComponent) {
           FIELD: [
             {
               name: 'match',
-              dName: '匹配',
+              dName: _locale.default.onecondition.piPei,
               enDName: 'match',
             },
             {
               name: 'unmatch',
-              dName: '不匹配',
+              dName: _locale.default.onecondition.buPiPei,
               enDName: 'unmatch',
             },
           ],
@@ -1301,17 +1302,17 @@ var OneCondition = /*#__PURE__*/ (function (_React$PureComponent) {
                   Option,
                   {
                     value: '&&',
-                    title: '与',
+                    title: _locale.default.onecondition.yu,
                   },
-                  '与',
+                  _locale.default.onecondition.yu,
                 ),
                 /*#__PURE__*/ _react.default.createElement(
                   Option,
                   {
                     value: '||',
-                    title: '或',
+                    title: _locale.default.onecondition.huo,
                   },
-                  '或',
+                  _locale.default.onecondition.huo,
                 ),
               ),
             ),
@@ -1341,7 +1342,7 @@ var OneCondition = /*#__PURE__*/ (function (_React$PureComponent) {
                 conditionSingleData && conditionSingleData['property']
                   ? conditionSingleData['property']
                   : undefined,
-              placeholder: '\u8BF7\u9009\u62E9',
+              placeholder: _locale.default.onecondition.qingXuanZe,
               onChange: /*#__PURE__*/ (function () {
                 var _ref = _asyncToGenerator(
                   /*#__PURE__*/ _regeneratorRuntime().mark(function _callee(value, selectObj) {
@@ -1447,7 +1448,7 @@ var OneCondition = /*#__PURE__*/ (function (_React$PureComponent) {
                     conditionSingleData && conditionSingleData['op']
                       ? conditionSingleData['op']
                       : undefined,
-                  placeholder: '\u8BF7\u9009\u62E9',
+                  placeholder: _locale.default.onecondition.qingXuanZe,
                   onChange: this.changeConditionField.bind(this, 'op', 'select'),
                   dropdownMatchSelectWidth: false,
                 },
@@ -1516,17 +1517,17 @@ var OneCondition = /*#__PURE__*/ (function (_React$PureComponent) {
                         Option,
                         {
                           value: 'input',
-                          title: '常量',
+                          title: _locale.default.onecondition.changLiang,
                         },
-                        '常量',
+                        _locale.default.onecondition.changLiang,
                       ),
                       /*#__PURE__*/ _react.default.createElement(
                         Option,
                         {
                           value: 'context',
-                          title: '变量',
+                          title: _locale.default.onecondition.bianLiang,
                         },
-                        '变量',
+                        _locale.default.onecondition.bianLiang,
                       ),
                     ),
                     (leftOptionDataType === 'BOOLEAN' &&
@@ -1540,7 +1541,7 @@ var OneCondition = /*#__PURE__*/ (function (_React$PureComponent) {
                             conditionSingleData && conditionSingleData['value']
                               ? conditionSingleData['value']
                               : undefined,
-                          placeholder: customPlaceholder || '请选择', // 请选择
+                          placeholder: customPlaceholder || _locale.default.onecondition.qingXuanZe, // 请选择
                           onChange: this.changeConditionField.bind(this, 'value', 'select'),
                           showSearch: true,
                           optionFilterProp: 'children',
@@ -1551,14 +1552,14 @@ var OneCondition = /*#__PURE__*/ (function (_React$PureComponent) {
                           {
                             value: 'true',
                           },
-                          '是[true]',
+                          _locale.default.onecondition.shiTRUE,
                         ),
                         /*#__PURE__*/ _react.default.createElement(
                           Option,
                           {
                             value: 'false',
                           },
-                          '否[false]',
+                          _locale.default.onecondition.fouFALS,
                         ),
                       )) ||
                       /*#__PURE__*/ _react.default.createElement(
@@ -1569,7 +1570,7 @@ var OneCondition = /*#__PURE__*/ (function (_React$PureComponent) {
                           style: {
                             width: '70%',
                           },
-                          placeholder: customPlaceholder || '请选择', // lang:请选择
+                          placeholder: customPlaceholder || _locale.default.onecondition.qingXuanZe, // lang:请选择
                           onChange: this.changeConditionField.bind(this, 'value', 'select'),
                           showSearch: true,
                           optionFilterProp: 'children',
@@ -1622,17 +1623,17 @@ var OneCondition = /*#__PURE__*/ (function (_React$PureComponent) {
                         Option,
                         {
                           value: 'input',
-                          title: '常量',
+                          title: _locale.default.onecondition.changLiang,
                         },
-                        '常量',
+                        _locale.default.onecondition.changLiang,
                       ),
                       /*#__PURE__*/ _react.default.createElement(
                         Option,
                         {
                           value: 'context',
-                          title: '变量',
+                          title: _locale.default.onecondition.bianLiang,
                         },
-                        '变量',
+                        _locale.default.onecondition.bianLiang,
                       ),
                     ),
                     (leftOptionDataType === 'BOOLEAN' &&
@@ -1646,7 +1647,7 @@ var OneCondition = /*#__PURE__*/ (function (_React$PureComponent) {
                             conditionSingleData && conditionSingleData['value']
                               ? conditionSingleData['value']
                               : undefined,
-                          placeholder: customPlaceholder || '请选择', // 请选择
+                          placeholder: customPlaceholder || _locale.default.onecondition.qingXuanZe, // 请选择
                           onChange: this.changeConditionField.bind(this, 'value', 'select'),
                           showSearch: true,
                           optionFilterProp: 'children',
@@ -1657,14 +1658,14 @@ var OneCondition = /*#__PURE__*/ (function (_React$PureComponent) {
                           {
                             value: 'true',
                           },
-                          '是[true]',
+                          _locale.default.onecondition.shiTRUE,
                         ),
                         /*#__PURE__*/ _react.default.createElement(
                           Option,
                           {
                             value: 'false',
                           },
-                          '否[false]',
+                          _locale.default.onecondition.fouFALS,
                         ),
                       )) ||
                       /*#__PURE__*/ _react.default.createElement(_input.default, {
@@ -1677,7 +1678,9 @@ var OneCondition = /*#__PURE__*/ (function (_React$PureComponent) {
                             : undefined,
                         placeholder:
                           customPlaceholder ||
-                          (operaTypeInOrNot ? '英文逗号分隔，例如1,2' : '请输入常量内容'), // 请输入常量内容
+                          (operaTypeInOrNot
+                            ? _locale.default.onecondition.yingWenDouHaoFen
+                            : _locale.default.onecondition.qingShuRuChangLiang), // 请输入常量内容
                         onChange: this.changeConditionField.bind(this, 'value', 'input'),
                       }),
                   ),
@@ -1706,17 +1709,17 @@ var OneCondition = /*#__PURE__*/ (function (_React$PureComponent) {
                         Option,
                         {
                           value: 'input',
-                          title: '常量',
+                          title: _locale.default.onecondition.changLiang,
                         },
-                        '常量',
+                        _locale.default.onecondition.changLiang,
                       ),
                       /*#__PURE__*/ _react.default.createElement(
                         Option,
                         {
                           value: 'context',
-                          title: '变量',
+                          title: _locale.default.onecondition.bianLiang,
                         },
-                        '变量',
+                        _locale.default.onecondition.bianLiang,
                       ),
                     ),
                     /*#__PURE__*/ _react.default.createElement(_IndicatorsCascader.default, {
@@ -1733,7 +1736,7 @@ var OneCondition = /*#__PURE__*/ (function (_React$PureComponent) {
                         conditionSingleData && conditionSingleData['value']
                           ? conditionSingleData['value']
                           : undefined,
-                      placeholder: customPlaceholder || '请选择', // 请选择
+                      placeholder: customPlaceholder || _locale.default.onecondition.qingXuanZe, // 请选择
                       onChange: this.changeConditionField.bind(this, 'value', 'select'),
                       showSearch: true,
                       setTitle: function setTitle() {
@@ -1813,17 +1816,17 @@ var OneCondition = /*#__PURE__*/ (function (_React$PureComponent) {
                         Option,
                         {
                           value: 'input',
-                          title: '常量',
+                          title: _locale.default.onecondition.changLiang,
                         },
-                        '常量',
+                        _locale.default.onecondition.changLiang,
                       ),
                       /*#__PURE__*/ _react.default.createElement(
                         Option,
                         {
                           value: 'context',
-                          title: '变量',
+                          title: _locale.default.onecondition.bianLiang,
                         },
-                        '变量',
+                        _locale.default.onecondition.bianLiang,
                       ),
                     ),
                     /*#__PURE__*/ _react.default.createElement(_IndicatorsCascader.default, {
@@ -1840,7 +1843,7 @@ var OneCondition = /*#__PURE__*/ (function (_React$PureComponent) {
                         conditionSingleData && conditionSingleData['value']
                           ? conditionSingleData['value']
                           : undefined,
-                      placeholder: customPlaceholder || '请选择', // 请选择
+                      placeholder: customPlaceholder || _locale.default.onecondition.qingXuanZe, // 请选择
                       onChange: this.changeConditionField.bind(this, 'value', 'select'),
                       showSearch: true,
                       setTitle: function setTitle() {
@@ -1911,7 +1914,7 @@ var OneCondition = /*#__PURE__*/ (function (_React$PureComponent) {
               _react.default.createElement(
                 _tooltip.default,
                 {
-                  title: '添加一项',
+                  title: _locale.default.onecondition.tianJiaYiXiang,
                   placement: 'left',
                 },
                 /*#__PURE__*/ _react.default.createElement(_icon.default, {
@@ -1927,7 +1930,7 @@ var OneCondition = /*#__PURE__*/ (function (_React$PureComponent) {
               /*#__PURE__*/ _react.default.createElement(
                 _tooltip.default,
                 {
-                  title: '删除当前行',
+                  title: _locale.default.onecondition.shanChuDangQianXing,
                   placement: 'right',
                 },
                 /*#__PURE__*/ _react.default.createElement(_icon.default, {

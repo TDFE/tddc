@@ -1,3 +1,4 @@
+import I18N from './locale.js';
 import React from 'react';
 import { Radio, Row, Col } from 'antd';
 import { cloneDeep, isEqual } from 'lodash';
@@ -239,10 +240,10 @@ class RuleConditon extends React.PureComponent {
                 }
                 disabled={disabled}
               >
-                <Radio value="&&">{'满足以下所有条件'}</Radio>
-                <Radio value="||">{'满足以下任意条件'}</Radio>
-                {mode === 3 && <Radio value="!||">{'以下条件均不满足'}</Radio>}
-                <Radio value="##">{'自定义'}</Radio>
+                <Radio value="&&">{I18N.src.ruleconditon.manZuYiXiaSuo}</Radio>
+                <Radio value="||">{I18N.src.ruleconditon.manZuYiXiaRen}</Radio>
+                {mode === 3 && <Radio value="!||">{I18N.src.ruleconditon.yiXiaTiaoJianJun}</Radio>}
+                <Radio value="##">{I18N.src.ruleconditon.ziDingYi}</Radio>
               </RadioGroup>
             </Col>
             <Col span={2} />
@@ -350,8 +351,12 @@ class RuleConditon extends React.PureComponent {
               {!disabled && (
                 <div className="custom-condition-item add-condition">
                   <Col span={18} className="add-condition-handle">
-                    <a onClick={this.addSingleCondition.bind(this)}>{'添加单条条件'}</a>
-                    <a onClick={this.addGroupCondition.bind(this)}>{'添加条件组'}</a>
+                    <a onClick={this.addSingleCondition.bind(this)}>
+                      {I18N.src.ruleconditon.tianJiaDanTiaoTiao}
+                    </a>
+                    <a onClick={this.addGroupCondition.bind(this)}>
+                      {I18N.src.ruleconditon.tianJiaTiaoJianZu}
+                    </a>
                   </Col>
                 </div>
               )}

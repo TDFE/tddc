@@ -1,3 +1,4 @@
+import I18N from '../locale.js';
 import { useState, useEffect } from 'react';
 import { Row, Col, Popover, Icon, Input } from 'antd';
 
@@ -90,13 +91,13 @@ const CustomRule = (props) => {
     }
 
     if (hitLogicHasEmpty) {
-      setErrorMessage('命中逻辑为空！');
+      setErrorMessage(I18N.customrule.index.mingZhongLuoJiWei);
       setError(true);
 
       return false;
     }
     if (hitLogicError) {
-      setErrorMessage('命中逻辑格式错误！');
+      setErrorMessage(I18N.customrule.index.mingZhongLuoJiGe);
       setError(true);
 
       return false;
@@ -117,7 +118,7 @@ const CustomRule = (props) => {
       <div className="custom-condition-item add-condition" style={{ marginTop: '20px' }}>
         <Row gutter={10}>
           <Col span={3} className="basic-info-title">
-            {'命中逻辑'}
+            {I18N.customrule.index.mingZhongLuoJi}
           </Col>
           <Col span={10} className="add-condition-handle">
             <Input value={value} onChange={expressionOnchange} disabled={disabled && !isCustom} />
@@ -126,16 +127,14 @@ const CustomRule = (props) => {
             <Popover
               popupClassName="custom-pop-tip"
               placement="top"
-              title={'逻辑判断符使用说明：'}
+              title={I18N.customrule.index.luoJiPanDuanFu}
               content={
                 <div>
-                  {'·多个条件均满足：“&”，如A&B&C；'}
+                  {I18N.customrule.index.duoGeTiaoJianJun}
                   <br />
-                  {'·多个条件任意一个满足：“|”，如A|B|C；'}
+                  {I18N.customrule.index.duoGeTiaoJianRen}
                   <br />
-                  {
-                    '·规则执行时，按从左往右的顺序进行条件判断，若需先判断某几条条件，可使用“()“进行框选，如A&(B|C)'
-                  }
+                  {I18N.customrule.index.guiZeZhiXingShi}
                 </div>
               }
             >

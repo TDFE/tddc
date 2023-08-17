@@ -1,4 +1,5 @@
 // 授权过滤ruleAndIndexFieldList
+import I18N from '../locale.js';
 const filterAvailableFieldList = ({
   ruleAndIndexFieldList = {},
   appCode,
@@ -42,7 +43,7 @@ const dataTypeSpecialConvert = (item = {}) => {
   if (['ARRAY'].includes(type)) {
     type = 'STRING';
     if (rightValueType !== 'context') {
-      customPlaceholder = '请输入指标结果，英文逗号分隔';
+      customPlaceholder = I18N.utils.index.qingShuRuZhiBiao;
     }
   }
   return {

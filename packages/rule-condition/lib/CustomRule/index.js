@@ -34,6 +34,7 @@ var _input = _interopRequireDefault(require('antd/lib/input'));
 require('antd/lib/col/style');
 var _col = _interopRequireDefault(require('antd/lib/col'));
 var _react = _interopRequireWildcard(require('react'));
+var _locale = _interopRequireDefault(require('../locale.js'));
 require('./index.less');
 function _getRequireWildcardCache(nodeInterop) {
   if (typeof WeakMap !== 'function') return null;
@@ -261,12 +262,12 @@ var CustomRule = function CustomRule(props) {
       // hitLogicHasEmpty = true;
     }
     if (hitLogicHasEmpty) {
-      setErrorMessage('命中逻辑为空！');
+      setErrorMessage(_locale.default.customrule.index.mingZhongLuoJiWei);
       setError(true);
       return false;
     }
     if (hitLogicError) {
-      setErrorMessage('命中逻辑格式错误！');
+      setErrorMessage(_locale.default.customrule.index.mingZhongLuoJiGe);
       setError(true);
       return false;
     }
@@ -300,7 +301,7 @@ var CustomRule = function CustomRule(props) {
             span: 3,
             className: 'basic-info-title',
           },
-          '命中逻辑',
+          _locale.default.customrule.index.mingZhongLuoJi,
         ),
         /*#__PURE__*/ _react.default.createElement(
           _col.default,
@@ -324,15 +325,15 @@ var CustomRule = function CustomRule(props) {
             {
               popupClassName: 'custom-pop-tip',
               placement: 'top',
-              title: '逻辑判断符使用说明：',
+              title: _locale.default.customrule.index.luoJiPanDuanFu,
               content: /*#__PURE__*/ _react.default.createElement(
                 'div',
                 null,
-                '·多个条件均满足：“&”，如A&B&C；',
+                _locale.default.customrule.index.duoGeTiaoJianJun,
                 /*#__PURE__*/ _react.default.createElement('br', null),
-                '·多个条件任意一个满足：“|”，如A|B|C；',
+                _locale.default.customrule.index.duoGeTiaoJianRen,
                 /*#__PURE__*/ _react.default.createElement('br', null),
-                '·规则执行时，按从左往右的顺序进行条件判断，若需先判断某几条条件，可使用“()“进行框选，如A&(B|C)',
+                _locale.default.customrule.index.guiZeZhiXingShi,
               ),
             },
             /*#__PURE__*/ _react.default.createElement(_icon.default, {

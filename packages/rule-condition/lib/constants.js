@@ -4,332 +4,336 @@ Object.defineProperty(exports, '__esModule', {
   value: true,
 });
 exports.default = void 0;
+var _locale = _interopRequireDefault(require('./locale.js'));
+function _interopRequireDefault(obj) {
+  return obj && obj.__esModule ? obj : { default: obj };
+}
 var conditionOperator = {
   STRING: [
     {
       name: '==',
-      dName: '等于',
+      dName: _locale.default.src.constants.dengYu,
       enDName: 'equal',
     },
     {
       name: '!=',
-      dName: '不等于',
+      dName: _locale.default.src.constants.buDengYu,
       enDName: 'unequal',
     },
     {
       name: 'include',
-      dName: '包含',
+      dName: _locale.default.src.constants.baoHan,
       enDName: 'include',
     },
     {
       name: 'exclude',
-      dName: '不包含',
+      dName: _locale.default.src.constants.buBaoHan,
       enDName: 'exclude',
     },
     {
       name: 'prefix',
-      dName: '前缀',
+      dName: _locale.default.src.constants.qianZhui,
       enDName: 'prefix',
     },
     {
       name: 'suffix',
-      dName: '后缀',
+      dName: _locale.default.src.constants.houZhui,
       enDName: 'suffix',
     },
     {
       name: 'isnull',
-      dName: '为空',
+      dName: _locale.default.src.constants.weiKong,
       enDName: 'isnull',
     },
     {
       name: 'notnull',
-      dName: '不为空',
+      dName: _locale.default.src.constants.buWeiKong,
       enDName: 'notnull',
     },
     {
       name: 'in',
-      dName: '存在于',
+      dName: _locale.default.src.constants.cunZaiYu,
       enDName: 'in',
     },
     {
       name: 'notin',
-      dName: '不存在于',
+      dName: _locale.default.src.constants.buCunZaiYu,
       enDName: 'notin',
     },
   ],
   DOUBLE: [
     {
       name: '==',
-      dName: '等于',
+      dName: _locale.default.src.constants.dengYu,
       enDName: 'equal',
     },
     {
       name: '!=',
-      dName: '不等于',
+      dName: _locale.default.src.constants.buDengYu,
       enDName: 'unequal',
     },
     {
       name: '>',
-      dName: '大于',
+      dName: _locale.default.src.constants.daYu,
       enDName: 'greater than',
     },
     {
       name: '>=',
-      dName: '大于等于',
+      dName: _locale.default.src.constants.daYuDengYu,
       enDName: 'equal or greater than',
     },
     {
       name: '<',
-      dName: '小于',
+      dName: _locale.default.src.constants.xiaoYu,
       enDName: 'less than',
     },
     {
       name: '<=',
-      dName: '小于等于',
+      dName: _locale.default.src.constants.xiaoYuDengYu,
       enDName: 'equal or less than',
     },
     {
       name: 'isnull',
-      dName: '为空',
+      dName: _locale.default.src.constants.weiKong,
       enDName: 'isnull',
     },
     {
       name: 'notnull',
-      dName: '不为空',
+      dName: _locale.default.src.constants.buWeiKong,
       enDName: 'notnull',
     },
   ],
   INT: [
     {
       name: '==',
-      dName: '等于',
+      dName: _locale.default.src.constants.dengYu,
       enDName: 'equal',
     },
     {
       name: '!=',
-      dName: '不等于',
+      dName: _locale.default.src.constants.buDengYu,
       enDName: 'unequal',
     },
     {
       name: '>',
-      dName: '大于',
+      dName: _locale.default.src.constants.daYu,
       enDName: 'greater than',
     },
     {
       name: '>=',
-      dName: '大于等于',
+      dName: _locale.default.src.constants.daYuDengYu,
       enDName: 'equal or greater than',
     },
     {
       name: '<',
-      dName: '小于',
+      dName: _locale.default.src.constants.xiaoYu,
       enDName: 'less than',
     },
     {
       name: '<=',
-      dName: '小于等于',
+      dName: _locale.default.src.constants.xiaoYuDengYu,
       enDName: 'equal or less than',
     },
     {
       name: 'isnull',
-      dName: '为空',
+      dName: _locale.default.src.constants.weiKong,
       enDName: 'isnull',
     },
     {
       name: 'notnull',
-      dName: '不为空',
+      dName: _locale.default.src.constants.buWeiKong,
       enDName: 'notnull',
     },
     {
       name: 'in',
-      dName: '存在于',
+      dName: _locale.default.src.constants.cunZaiYu,
       enDName: 'in',
     },
     {
       name: 'notin',
-      dName: '不存在于',
+      dName: _locale.default.src.constants.buCunZaiYu,
       enDName: 'notin',
     },
   ],
   LONG: [
     {
       name: '==',
-      dName: '等于',
+      dName: _locale.default.src.constants.dengYu,
       enDName: 'equal',
     },
     {
       name: '!=',
-      dName: '不等于',
+      dName: _locale.default.src.constants.buDengYu,
       enDName: 'unequal',
     },
     {
       name: '>',
-      dName: '大于',
+      dName: _locale.default.src.constants.daYu,
       enDName: 'greater than',
     },
     {
       name: '>=',
-      dName: '大于等于',
+      dName: _locale.default.src.constants.daYuDengYu,
       enDName: 'equal or greater than',
     },
     {
       name: '<',
-      dName: '小于',
+      dName: _locale.default.src.constants.xiaoYu,
       enDName: 'less than',
     },
     {
       name: '<=',
-      dName: '小于等于',
+      dName: _locale.default.src.constants.xiaoYuDengYu,
       enDName: 'equal or less than',
     },
     {
       name: 'isnull',
-      dName: '为空',
+      dName: _locale.default.src.constants.weiKong,
       enDName: 'isnull',
     },
     {
       name: 'notnull',
-      dName: '不为空',
+      dName: _locale.default.src.constants.buWeiKong,
       enDName: 'notnull',
     },
     {
       name: 'in',
-      dName: '存在于',
+      dName: _locale.default.src.constants.cunZaiYu,
       enDName: 'in',
     },
     {
       name: 'notin',
-      dName: '不存在于',
+      dName: _locale.default.src.constants.buCunZaiYu,
       enDName: 'notin',
     },
   ],
   DATETIME: [
     {
       name: '==',
-      dName: '等于',
+      dName: _locale.default.src.constants.dengYu,
       enDName: 'equal',
     },
     {
       name: '!=',
-      dName: '不等于',
+      dName: _locale.default.src.constants.buDengYu,
       enDName: 'unequal',
     },
     {
       name: '>',
-      dName: '大于',
+      dName: _locale.default.src.constants.daYu,
       enDName: 'greater than',
     },
     {
       name: '>=',
-      dName: '大于等于',
+      dName: _locale.default.src.constants.daYuDengYu,
       enDName: 'equal or greater than',
     },
     {
       name: '<',
-      dName: '小于',
+      dName: _locale.default.src.constants.xiaoYu,
       enDName: 'less than',
     },
     {
       name: '<=',
-      dName: '小于等于',
+      dName: _locale.default.src.constants.xiaoYuDengYu,
       enDName: 'equal or less than',
     },
     {
       name: 'isnull',
-      dName: '为空',
+      dName: _locale.default.src.constants.weiKong,
       enDName: 'isnull',
     },
     {
       name: 'notnull',
-      dName: '不为空',
+      dName: _locale.default.src.constants.buWeiKong,
       enDName: 'notnull',
     },
   ],
   BOOLEAN: [
     {
       name: '==',
-      dName: '等于',
+      dName: _locale.default.src.constants.dengYu,
       enDName: 'equal',
     },
     {
       name: '!=',
-      dName: '不等于',
+      dName: _locale.default.src.constants.buDengYu,
       enDName: 'unequal',
     },
     {
       name: 'isnull',
-      dName: '为空',
+      dName: _locale.default.src.constants.weiKong,
       enDName: 'isnull',
     },
     {
       name: 'notnull',
-      dName: '不为空',
+      dName: _locale.default.src.constants.buWeiKong,
       enDName: 'notnull',
     },
   ],
   ENUM: [
     {
       name: '==',
-      dName: '等于',
+      dName: _locale.default.src.constants.dengYu,
       enDName: 'equal',
     },
     {
       name: '!=',
-      dName: '不等于',
+      dName: _locale.default.src.constants.buDengYu,
       enDName: 'unequal',
     },
     {
       name: 'isnull',
-      dName: '为空',
+      dName: _locale.default.src.constants.weiKong,
       enDName: 'isnull',
     },
     {
       name: 'notnull',
-      dName: '不为空',
+      dName: _locale.default.src.constants.buWeiKong,
       enDName: 'notnull',
     },
     {
       name: 'in',
-      dName: '存在于',
+      dName: _locale.default.src.constants.cunZaiYu,
       enDName: 'in',
     },
     {
       name: 'notin',
-      dName: '不存在于',
+      dName: _locale.default.src.constants.buCunZaiYu,
       enDName: 'notin',
     },
   ],
   ARRAY: [
     {
       name: '==',
-      dName: '等于',
+      dName: _locale.default.src.constants.dengYu,
       enDName: 'equal',
     },
     {
       name: '!=',
-      dName: '不等于',
+      dName: _locale.default.src.constants.buDengYu,
       enDName: 'unequal',
     },
     {
       name: 'include',
-      dName: '包含',
+      dName: _locale.default.src.constants.baoHan,
       enDName: 'include',
     },
     {
       name: 'exclude',
-      dName: '不包含',
+      dName: _locale.default.src.constants.buBaoHan,
       enDName: 'exclude',
     },
   ],
   POLICY: [
     {
       name: '==',
-      dName: '等于',
+      dName: _locale.default.src.constants.dengYu,
       enDName: 'equal',
     },
     {
       name: '!=',
-      dName: '不等于',
+      dName: _locale.default.src.constants.buDengYu,
       enDName: 'unequal',
     },
   ],
@@ -337,12 +341,12 @@ var conditionOperator = {
   ADDRESS_FIELD: [
     {
       name: 'similarityMatch',
-      dName: '相似度匹配',
+      dName: _locale.default.src.constants.xiangSiDuPiPei,
       enDName: 'similarityMatch',
     },
     {
       name: 'similarityUnMatch',
-      dName: '相似度不匹配',
+      dName: _locale.default.src.constants.xiangSiDuBuPi,
       enDName: 'similarityUnMatch',
     },
   ],
@@ -350,12 +354,12 @@ var conditionOperator = {
   FIELD: [
     {
       name: 'match',
-      dName: '匹配',
+      dName: _locale.default.src.constants.piPei,
       enDName: 'match',
     },
     {
       name: 'unmatch',
-      dName: '不匹配',
+      dName: _locale.default.src.constants.buPiPei,
       enDName: 'unmatch',
     },
   ],

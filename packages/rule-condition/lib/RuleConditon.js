@@ -10,6 +10,7 @@ require('antd/lib/col/style');
 var _col = _interopRequireDefault(require('antd/lib/col'));
 require('antd/lib/radio/style');
 var _radio = _interopRequireDefault(require('antd/lib/radio'));
+var _locale = _interopRequireDefault(require('./locale.js'));
 var _react = _interopRequireDefault(require('react'));
 var _lodash = require('lodash');
 var _OneCondition = _interopRequireDefault(require('./OneCondition'));
@@ -953,14 +954,14 @@ var RuleConditon = /*#__PURE__*/ (function (_React$PureComponent) {
                   {
                     value: '&&',
                   },
-                  '满足以下所有条件',
+                  _locale.default.src.ruleconditon.manZuYiXiaSuo,
                 ),
                 /*#__PURE__*/ _react.default.createElement(
                   _radio.default,
                   {
                     value: '||',
                   },
-                  '满足以下任意条件',
+                  _locale.default.src.ruleconditon.manZuYiXiaRen,
                 ),
                 mode === 3 &&
                   /*#__PURE__*/ _react.default.createElement(
@@ -968,14 +969,14 @@ var RuleConditon = /*#__PURE__*/ (function (_React$PureComponent) {
                     {
                       value: '!||',
                     },
-                    '以下条件均不满足',
+                    _locale.default.src.ruleconditon.yiXiaTiaoJianJun,
                   ),
                 /*#__PURE__*/ _react.default.createElement(
                   _radio.default,
                   {
                     value: '##',
                   },
-                  '自定义',
+                  _locale.default.src.ruleconditon.ziDingYi,
                 ),
               ),
             ),
@@ -1181,14 +1182,14 @@ var RuleConditon = /*#__PURE__*/ (function (_React$PureComponent) {
                       {
                         onClick: this.addSingleCondition.bind(this),
                       },
-                      '添加单条条件',
+                      _locale.default.src.ruleconditon.tianJiaDanTiaoTiao,
                     ),
                     /*#__PURE__*/ _react.default.createElement(
                       'a',
                       {
                         onClick: this.addGroupCondition.bind(this),
                       },
-                      '添加条件组',
+                      _locale.default.src.ruleconditon.tianJiaTiaoJianZu,
                     ),
                   ),
                 ),
