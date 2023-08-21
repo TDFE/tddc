@@ -11,6 +11,7 @@ require('antd/lib/icon/style');
 var _icon = _interopRequireDefault(require('antd/lib/icon'));
 var _react = _interopRequireWildcard(require('react'));
 var _router = require('dva/router');
+var _locale = require('./locale');
 require('./index.less');
 function _getRequireWildcardCache(nodeInterop) {
   if (typeof WeakMap !== 'function') return null;
@@ -406,7 +407,7 @@ var _default = function _default(WrapperComponent, rest) {
                           type: 'left',
                           className: 'go-back',
                         }),
-                        '\u8FD4\u56DE',
+                        (0, _locale.getText)('back') || '返回',
                       );
                       return /*#__PURE__*/ _react.default.createElement(
                         _breadcrumb.default.Item,
