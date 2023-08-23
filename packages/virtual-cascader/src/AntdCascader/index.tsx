@@ -1,4 +1,4 @@
-import { Icon } from 'antd';
+import { Icon } from 'tntd';
 import classNames from 'classnames';
 import type {
   BaseOptionType,

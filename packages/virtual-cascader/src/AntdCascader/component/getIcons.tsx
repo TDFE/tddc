@@ -1,6 +1,6 @@
 import type { ReactNode } from 'react';
 import * as React from 'react';
-import { Icon } from 'antd';
+import { Icon } from 'tntd';
 
 type RenderNode = React.ReactNode | ((props: any) => React.ReactNode);
 
