@@ -276,7 +276,8 @@ var _default = function _default(WrapperComponent, rest) {
     _ref$BreadCrumbProtot = _ref.BreadCrumbPrototype,
     BreadCrumbPrototype = _ref$BreadCrumbProtot === void 0 ? {} : _ref$BreadCrumbProtot,
     showHeader = _ref.showHeader,
-    forceNoHeader = _ref.forceNoHeader;
+    forceNoHeader = _ref.forceNoHeader,
+    lang = _ref.lang;
   return (0, _router.withRouter)(function (props) {
     var _ref2 = props || {},
       match = _ref2.match,
@@ -407,7 +408,7 @@ var _default = function _default(WrapperComponent, rest) {
                           type: 'left',
                           className: 'go-back',
                         }),
-                        (0, _locale.getText)('back') || '返回',
+                        (0, _locale.getText)('back', lang) || '返回',
                       );
                       return /*#__PURE__*/ _react.default.createElement(
                         _breadcrumb.default.Item,

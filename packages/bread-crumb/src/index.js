@@ -52,6 +52,7 @@ export default (WrapperComponent, rest) => {
     BreadCrumbPrototype = {},
     showHeader,
     forceNoHeader,
+    lang,
   } = rest || {};
   return withRouter((props) => {
     const { match, location, separator } = props || {};
@@ -137,7 +138,7 @@ export default (WrapperComponent, rest) => {
                     const dom = (
                       <>
                         <Icon type="left" className="go-back" />
-                        {getText('back') || '返回'}
+                        {getText('back', lang) || '返回'}
                       </>
                     );
                     return (

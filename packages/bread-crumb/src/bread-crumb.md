@@ -38,6 +38,7 @@ const BreadCrumbDefault = BreadCrumb(
     );
   },
   {
+    lang: 'en',
     // BreadCrumbCustom:(breadList)=>{
     //   console.log(breadList)
     //   return <div>{breadList?.map(v=>v?.name)}</div>
@@ -65,6 +66,7 @@ BreadCrumb(
     );
   },
   {
+    lang: 'en',
     // BreadCrumbCustom:(breadList)=>{
     //   console.log(breadList)
     //   return <div>{breadList?.map(v=>v?.name)}</div>
