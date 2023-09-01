@@ -29,7 +29,135 @@ export default () => {
         title="查看关联引用"
         visible={visible}
         onClose={() => setVisible(false)}
-        data={[]}
+        fetchReference={() => {
+          return new Promise((resolve) => {
+            resolve({
+              code: 200,
+              message: '成功',
+              success: true,
+              data: [
+                {
+                  type: 'FUNCTION_VERSION_ONLINE',
+                  title: '被引用函数[运行区]',
+                  goName: 'code',
+                  columns: [
+                    {
+                      title: '函数名称',
+                      dataIndex: 'name',
+                    },
+                    {
+                      title: '函数标识',
+                      dataIndex: 'code',
+                    },
+                    {
+                      title: '函数版本',
+                      dataIndex: 'functionVersion',
+                    },
+                    {
+                      title: '函数类型',
+                      dataIndex: 'typeName',
+                    },
+                  ],
+                  rows: [
+                    {
+                      name: '额度计算_利润率',
+                      code: 'F4796386976',
+                      functionVersion: 'V1[已上线]',
+                      typeName: '计算公式',
+                      SORT_GMTCREATE: 1692611690000,
+                      referenceCheckType: 'STRONG',
+                      goLink: '/noah/formula?currentTab=1&code=F4796386976',
+                    },
+                    {
+                      name: '额度计算_利润',
+                      code: 'F4040900718',
+                      functionVersion: 'V1[已上线]',
+                      typeName: '计算公式',
+                      SORT_GMTCREATE: 1692610580000,
+                      referenceCheckType: 'STRONG',
+                      goLink: '/noah/formula?currentTab=1&code=F4040900718',
+                    },
+                  ],
+                },
+                {
+                  type: 'POLICY_VERSION_RUN',
+                  title: '被引用策略版本[运行区]',
+                  tips: '注意流模式策略判断体现在过程判断的适配的字段',
+                  goName: 'code',
+                  columns: [
+                    {
+                      title: '策略名称',
+                      dataIndex: 'policyName',
+                    },
+                    {
+                      title: '策略标识',
+                      dataIndex: 'code',
+                    },
+                    {
+                      title: '策略版本',
+                      dataIndex: 'version',
+                    },
+                    {
+                      title: '所属机构',
+                      dataIndex: 'org',
+                    },
+                    {
+                      title: '所属渠道',
+                      dataIndex: 'app',
+                    },
+                  ],
+                  rows: [
+                    {
+                      policyName: '额度计算',
+                      code: 'edjs',
+                      version: 'V1[已上线]',
+                      org: 'TongDun',
+                      app: 'test',
+                      SORT_GMTCREATE: 1692690056000,
+                      SORT_VERSION: 'V1',
+                      referenceCheckType: 'STRONG',
+                      goLink: '/noah/policyManage?currentTab=1&code=edjs',
+                    },
+                  ],
+                },
+                {
+                  type: 'API_SERVICE',
+                  title: '被引用对接服务',
+                  goName: 'id',
+                  columns: [
+                    {
+                      title: '服务名称',
+                      dataIndex: 'name',
+                    },
+                    {
+                      title: '服务标识',
+                      dataIndex: 'id',
+                    },
+                    {
+                      title: '服务状态',
+                      dataIndex: 'statusName',
+                    },
+                    {
+                      title: '服务类型',
+                      dataIndex: 'typeName',
+                    },
+                  ],
+                  rows: [
+                    {
+                      name: '额度计算服务接口',
+                      id: 'edjs_test',
+                      statusName: '启用',
+                      typeName: '信贷决策',
+                      SORT_GMTCREATE: 1692691201000,
+                      referenceCheckType: 'STRONG',
+                      goLink: '/unite/serviceManage/setService?code=edjs_test',
+                    },
+                  ],
+                },
+              ],
+            });
+          });
+        }}
       />
     </>
   );
