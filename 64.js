@@ -1,0 +1,1 @@
+(window["webpackJsonp"]=window["webpackJsonp"]||[]).push([[64],{Reca:function(e,n,a){"use strict";a.r(n);var p=a("q1tI"),t=a.n(p);n["default"]=()=>t.a.createElement("div",{style:{padding:"16px 20px"}},"\u8fd9\u91cc\u9762\u5305\u5c51\u8be6\u60c5\u5c55\u793a")}}]);
