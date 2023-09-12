@@ -1,8 +1,8 @@
 {
   "name": "@tddc/rule-condition",
-  "version": "1.0.6",
+  "version": "1.0.26",
   "description": "同盾规则条件组",
-  "author": "zyj",
+  "author": "zht",
   "license": "ISC",
   "main": "es/index.js",
   "files": [
@@ -28,7 +28,6 @@
     "@tddc/rule-condition": ">=1.0.1",
     "@tntd/tooltip-select": ">=1.0.4"
   },
-
   "publishConfig": {
     "access": "public"
   }

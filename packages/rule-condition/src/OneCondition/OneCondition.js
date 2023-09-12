@@ -601,14 +601,17 @@ class OneCondition extends React.PureComponent {
             placeholder="请选择"
             onChange={async (value, selectObj) => {
               const { enumTypeValues, name } = selectObj;
-
-              await this.changeConditionField('property', 'select', name);
+              this.changeConditionField('property', 'select', name);
 
               if (enumTypeValues && enumTypeValues.length) {
-                await this.changeConditionField('enumTypeValues', 'select', enumTypeValues || name);
+                setTimeout(() => {
+                  this.changeConditionField('enumTypeValues', 'select', enumTypeValues || name);
+                }, 0);
               }
               if (selectObj.type === 'ENUM' || selectObj.type === 'BOOLEAN') {
-                await this.changeConditionField('rightValueType', 'select', 'input');
+                setTimeout(() => {
+                  this.changeConditionField('rightValueType', 'select', 'input');
+                }, 0);
               }
             }}
             showSearch
