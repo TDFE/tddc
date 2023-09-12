@@ -137,12 +137,8 @@ const OneCondition = (props) => {
     );
   };
 
-  let textDom = (
-    <span
-      className={`one-condition-item ${
-        conditionType === 'group' ? 'one-condition-group-item' : ''
-      }`}
-    >
+  let text = (
+    <>
       {conditionType === 'group' &&
         `${Number(conditionArr[0]) + 1}.${Number(conditionArr[1]) + 1}. `}
       <span className="condition-value">{propertyName}</span>
@@ -175,6 +171,16 @@ const OneCondition = (props) => {
           {operaTypeInOrNot && getEnumInOrNotInName()}
         </>
       )}
+    </>
+  );
+
+  let textDom = (
+    <span
+      className={`one-condition-item ${
+        conditionType === 'group' ? 'one-condition-group-item' : ''
+      }`}
+    >
+      {text}
     </span>
   );
 
@@ -186,7 +192,7 @@ const OneCondition = (props) => {
           {logicOperatorMap[logicOperator] || logicOperator}
         </div>
       )}
-      <Tooltip title={textDom} placement="topLeft" overlayClassName="node-text">
+      <Tooltip title={text} placement="topLeft" overlayClassName="node-text">
         {textDom}
       </Tooltip>
     </>
