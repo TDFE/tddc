@@ -7,23 +7,23 @@ exports.default = void 0;
 var _d3Hierarchy = require('d3-hierarchy');
 var _lodash = require('lodash');
 var _constants = require('./constants');
-function _typeof(obj) {
+function _typeof(o) {
   '@babel/helpers - typeof';
   return (
     (_typeof =
       'function' == typeof Symbol && 'symbol' == typeof Symbol.iterator
-        ? function (obj) {
-            return typeof obj;
+        ? function (o) {
+            return typeof o;
           }
-        : function (obj) {
-            return obj &&
+        : function (o) {
+            return o &&
               'function' == typeof Symbol &&
-              obj.constructor === Symbol &&
-              obj !== Symbol.prototype
+              o.constructor === Symbol &&
+              o !== Symbol.prototype
               ? 'symbol'
-              : typeof obj;
+              : typeof o;
           }),
-    _typeof(obj)
+    _typeof(o)
   );
 }
 function _classCallCheck(instance, Constructor) {

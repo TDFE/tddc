@@ -187,13 +187,9 @@ var OneCondition = function OneCondition(props) {
       (lang === 'en' ? paramObj.enDName : paramObj.dName) || value,
     );
   };
-  var textDom = /*#__PURE__*/ _react.default.createElement(
-    'span',
-    {
-      className: 'one-condition-item '.concat(
-        conditionType === 'group' ? 'one-condition-group-item' : '',
-      ),
-    },
+  var text = /*#__PURE__*/ _react.default.createElement(
+    _react.default.Fragment,
+    null,
     conditionType === 'group' &&
       ''.concat(Number(conditionArr[0]) + 1, '.').concat(Number(conditionArr[1]) + 1, '. '),
     /*#__PURE__*/ _react.default.createElement(
@@ -239,6 +235,15 @@ var OneCondition = function OneCondition(props) {
         operaTypeInOrNot && getEnumInOrNotInName(),
       ),
   );
+  var textDom = /*#__PURE__*/ _react.default.createElement(
+    'span',
+    {
+      className: 'one-condition-item '.concat(
+        conditionType === 'group' ? 'one-condition-group-item' : '',
+      ),
+    },
+    text,
+  );
   return /*#__PURE__*/ _react.default.createElement(
     _react.default.Fragment,
     null,
@@ -253,7 +258,7 @@ var OneCondition = function OneCondition(props) {
     /*#__PURE__*/ _react.default.createElement(
       _tooltip.default,
       {
-        title: textDom,
+        title: text,
         placement: 'topLeft',
         overlayClassName: 'node-text',
       },
