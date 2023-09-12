@@ -1,22 +1,37 @@
-.condition-op {
-  margin: 0 2px;
-  padding: 0 2px;
-  color: #0cbebc;
-  font-weight: 500;
-}
-.condition-value {
-  margin: 0 2px;
-  padding: 0 2px;
-}
-.condition-type {
-  margin: 0 2px;
-  padding: 0 2px;
+.one-condition-item {
+  & {
+    display: inline-block;
+    max-width: 500px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    word-break: break-all;
+  }
+  .condition-op {
+    margin: 0 2px;
+    padding: 0 2px;
+    color: #0cbebc;
+    font-weight: 500;
+  }
+
+  .condition-value {
+    margin: 0 2px;
+    padding: 0 2px;
+  }
+
+  .condition-type {
+    margin: 0 2px;
+    padding: 0 2px;
+  }
 }
 .node-text {
   .ant-tooltip-content {
     .ant-tooltip-inner {
       min-width: 500px;
       max-width: max-content;
+      .one-condition-item {
+        // white-space: normal !important;
+      }
     }
   }
 }
