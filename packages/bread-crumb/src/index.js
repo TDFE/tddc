@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Breadcrumb, Icon } from 'antd';
 import { withRouter, matchPath, Link } from 'dva/router';
+import { getText } from './locale';
 import './index.less';
 const searchToObject = (search) => {
   let pairs = search.substring(1).split('&');
@@ -135,7 +136,7 @@ export default (WrapperComponent, rest) => {
                     const dom = (
                       <>
                         <Icon type="left" className="go-back" />
-                        返回
+                        {getText('back', lang) || '返回'}
                       </>
                     );
                     return (
