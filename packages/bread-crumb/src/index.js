@@ -52,6 +52,7 @@ export default (WrapperComponent, rest) => {
     BreadCrumbPrototype = {},
     showHeader,
     forceNoHeader,
+    lang,
   } = rest || {};
   return withRouter((props) => {
     const { match, location, separator } = props || {};
