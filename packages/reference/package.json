@@ -1,6 +1,6 @@
 {
   "name": "@tddc/reference",
-  "version": "2.0.1",
+  "version": "2.0.2",
   "description": "关联引用",
   "author": "周泽飞 <zefei.zhou@tongdun.net>",
   "license": "ISC",
@@ -10,7 +10,7 @@
   ],
   "peerDependencies": {
     "antd": ">=3.20.1",
-    "tntd": ">=2.0.1",
+    "tntd": ">=2.0.9",
     "react": ">=16.8.0",
     "react-dom": ">=16.8.0",
     "@tddc/reference":">=1.0.27"

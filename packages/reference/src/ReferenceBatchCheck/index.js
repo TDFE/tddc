@@ -49,7 +49,7 @@ const ReferenceBatchCheck = (props) => {
       }
     };
     removeModal();
-
+    document.body.appendChild(modalWrap);
     // 能进行下一步操作
     const canNextOpera = !['STRONG'].includes(type);
     ReactDOM.render(
@@ -142,7 +142,6 @@ const ReferenceBatchCheck = (props) => {
       </Modal>,
       modalWrap,
     );
-    document.body.appendChild(modalWrap);
   };
   if (rq && typeof rq === 'function') {
     return new Promise((resolve, reject) => {

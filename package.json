@@ -33,7 +33,7 @@
     "react": "^16.8.0",
     "react-sortablejs": "^1.5.1",
     "sortablejs": "^1.15.0",
-    "tntd": "^2.0.15",
+    "tntd": "^2.7.9",
     "universal-cookie": "^4.0.4"
   },
   "devDependencies": {

@@ -35,7 +35,7 @@ const ReferenceCheck = (props) => {
 
     // 能进行下一步操作
     const canNextOpera = !['STRONG'].includes(type);
-
+    document.body.appendChild(modalWrap);
     ReactDOM.render(
       <Modal
         title={title}
@@ -100,7 +100,6 @@ const ReferenceCheck = (props) => {
       </Modal>,
       modalWrap,
     );
-    document.body.appendChild(modalWrap);
   };
   if (rq && typeof rq === 'function') {
     return new Promise((resolve, reject) => {
