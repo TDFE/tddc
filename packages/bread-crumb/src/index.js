@@ -142,13 +142,17 @@ export default (WrapperComponent, rest) => {
                     );
                     return (
                       <Breadcrumb.Item key={v?.path}>
-                        {href ? <Link to={href}>{dom}</Link> : dom}
+                        {href && i !== breadList?.length - 1 ? <Link to={href}>{dom}</Link> : dom}
                       </Breadcrumb.Item>
                     );
                   }
                   return (
                     <Breadcrumb.Item key={v?.path}>
-                      {href ? <Link to={href}>{v?.name}</Link> : v?.name}
+                      {href && i !== breadList?.length - 1 ? (
+                        <Link to={href}>{v?.name}</Link>
+                      ) : (
+                        v?.name
+                      )}
                     </Breadcrumb.Item>
                   );
                 })}
