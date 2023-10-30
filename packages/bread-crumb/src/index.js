@@ -14,7 +14,8 @@ const searchToObject = (search) => {
     }
 
     pair = pairs[i].split('=');
-    obj[decodeURIComponent(pair[0])] = decodeURIComponent(pair[1]);
+    // obj[decodeURIComponent(pair[0])] = decodeURIComponent(pair[1]);
+    obj[decodeURIComponent(pair[0])] = pair[1];
   }
   return obj;
 };
