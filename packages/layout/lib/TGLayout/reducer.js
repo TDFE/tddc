@@ -144,7 +144,7 @@ var _default = function _default(state, action) {
       var subApps = (0, _utils.getSubAppsFromMenus)(
         (menuInfo === null || menuInfo === void 0 ? void 0 : menuInfo.menuTree) || [],
       );
-      window.localStorage.setItem('customTree', JSON.stringify(menuInfo));
+      // window.localStorage.setItem('customTree', JSON.stringify(menuInfo));
       return _objectSpread(
         _objectSpread({}, state),
         {},
