@@ -7,6 +7,8 @@ import CustomRuleConfig from './CustomRuleConfig';
 import './index.less';
 import { Tooltip } from 'antd';
 
+import otp from '../otp';
+
 const sourceName = (field, lang) => {
   let params = {
     field: {
@@ -26,8 +28,8 @@ const sourceName = (field, lang) => {
 };
 
 const InputContext = {
-  input: '常量',
-  context: '变量',
+  input: otp.changliang,
+  context: otp.bianliang,
 };
 
 const RuleConditionTemplate = (props) => {
@@ -277,7 +279,7 @@ const RuleConditionTemplate = (props) => {
       {currentTemplate && currentTemplate.description && (
         <Tooltip title={dom} overlayClassName="template-node">
           <span className="template-des">
-            <Ellipsis title={`规则描述：${description}`} placement="bottom" widthLimit={450} />
+            <Ellipsis title={`${otp.guize}${description}`} placement="bottom" widthLimit={450} />
           </span>
         </Tooltip>
       )}

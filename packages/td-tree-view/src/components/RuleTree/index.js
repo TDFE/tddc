@@ -4,6 +4,7 @@ import OverView from '../referenceTree';
 import { transform } from './utils';
 import Node from './Node';
 import './index.less';
+import otp, { getLang } from './otp';
 
 const RuleTreeComponent = (props) => {
   let {
@@ -17,6 +18,8 @@ const RuleTreeComponent = (props) => {
     styleOptions = {},
     showLogic = false,
   } = props;
+
+  lang = lang || getLang() || 'cn';
 
   let logicText = value;
   let IFCondition = ['!&&', '!||'].includes(logicOperator) && logicOperator; // IF规则模板会多两个逻辑运算： 以下条件均不满足、以下条件至少一条不满足，需要转换一下逻辑关系显示
@@ -72,7 +75,7 @@ const RuleTreeComponent = (props) => {
     <div className="custom-rule-tree">
       {showLogic && (
         <span className="logic-text">
-          {'逻辑关系：'}
+          {otp.luoji}
           {logicText}
         </span>
       )}

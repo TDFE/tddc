@@ -3,13 +3,11 @@ import CascaderTag from '../../IndicatorsCascader/CascaderTag';
 import './inde.less';
 import { Tooltip } from 'antd';
 
+import otp from '../otp';
+
 const logicOperatorMap = {
-  '&&': '与',
-  '||': '或',
-};
-const InputContext = {
-  input: '常量',
-  context: '变量',
+  '&&': otp.yu,
+  '||': otp.huo,
 };
 
 const OneCondition = (props) => {
@@ -148,9 +146,7 @@ const OneCondition = (props) => {
         <>
           {/* {propertyDataType !== 'ENUM' && <span className="condition-type">{InputContext[rightValueType]}</span>} */}
           {/* 前缀后缀添加为 */}
-          {ifAppendIsStr && (
-            <span className="condition-op">{ifAppendIsStr && (lang === 'en' ? ' is ' : '为')}</span>
-          )}
+          {ifAppendIsStr && <span className="condition-op">{ifAppendIsStr && otp.is}</span>}
           {/* 常量且非枚举场景 */}
           {rightValueType === 'input' && propertyDataType !== 'ENUM' && !operaTypeBlong && (
             <span className="condition-value">{value || value === 0 ? value : ''}</span>
@@ -188,7 +184,8 @@ const OneCondition = (props) => {
     <>
       {conditionType === 'group' && conditionArr[1] === 0 && (
         <div>
-          {'条件关系：&nbsp;'}
+          {otp.tiaojian}
+          {'&nbsp;'}
           {logicOperatorMap[logicOperator] || logicOperator}
         </div>
       )}

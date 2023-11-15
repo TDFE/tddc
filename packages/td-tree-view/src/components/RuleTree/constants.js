@@ -1,3 +1,5 @@
+import otp from '../RuleTree/otp';
+
 export const ruleOp = {
   '==': '=',
   '<=': '<=',
@@ -5,14 +7,14 @@ export const ruleOp = {
   '!=': '!=',
   '<': '<',
   '>': '>',
-  include: '包含',
-  prefix: '前缀',
-  exclude: '不包含',
-  suffix: '后缀',
-  isnull: '为空',
-  notnull: '不为空',
-  in: '存在',
-  notin: '不存在',
+  include: otp.baohan,
+  prefix: otp.qianzhui,
+  exclude: otp.buhan,
+  suffix: otp.houzhui,
+  isnull: otp.weikong,
+  notnull: otp.feikong,
+  in: otp.cunzai,
+  notin: otp.bucunzai,
 };
 
 export const excludeRuleTemplate = ['multiDimList/customList'];

@@ -1,10 +1,11 @@
 import OneCondition from '../OneCondition';
 import RuleConditionTemplate from '../RuleConditionTemplate';
 import './index.less';
+import otp from '../otp';
 
 const logicMap = {
-  '&&': '且',
-  '||': '或',
+  '&&': otp.qie,
+  '||': otp.huo,
 };
 
 const Node = (props) => {
@@ -16,7 +17,7 @@ const Node = (props) => {
   let isRoot = !parent;
 
   if (isRoot && IFCondition) {
-    logicName = IFCondition === '!&&' ? '或' : '且';
+    logicName = IFCondition === '!&&' ? otp.huo : otp.qie;
   }
 
   let isLeaf = parent && type === 'leaf'; // 叶子节点
@@ -45,8 +46,8 @@ const Node = (props) => {
         <div className="group-node">
           <span className="name">
             {name}
-            <span className="node-sup">{'组'}</span>
-            {IFCondition && <span className="node-sup if">{'非'}</span>}
+            <span className="node-sup">{otp.zhu}</span>
+            {IFCondition && <span className="node-sup if">{otp.fei}</span>}
           </span>
           <span className="logic">{groupLogicName}</span>
         </div>
@@ -61,8 +62,8 @@ const Node = (props) => {
           {name && (
             <span className="name">
               {name}
-              {isTemplate && <span className="node-sup">{'模'}</span>}
-              {IFCondition && <span className="node-sup if">{'非'}</span>}
+              {isTemplate && <span className="node-sup">{otp.mo}</span>}
+              {IFCondition && <span className="node-sup if">{otp.fei}</span>}
             </span>
           )}
           <span className="leaf-text">
