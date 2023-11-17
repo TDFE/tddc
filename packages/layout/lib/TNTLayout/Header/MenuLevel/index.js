@@ -1,22 +1,22 @@
 'use strict';
 
-function _typeof(o) {
+function _typeof(obj) {
   '@babel/helpers - typeof';
   return (
     (_typeof =
       'function' == typeof Symbol && 'symbol' == typeof Symbol.iterator
-        ? function (o) {
-            return typeof o;
+        ? function (obj) {
+            return typeof obj;
           }
-        : function (o) {
-            return o &&
+        : function (obj) {
+            return obj &&
               'function' == typeof Symbol &&
-              o.constructor === Symbol &&
-              o !== Symbol.prototype
+              obj.constructor === Symbol &&
+              obj !== Symbol.prototype
               ? 'symbol'
-              : typeof o;
+              : typeof obj;
           }),
-    _typeof(o)
+    _typeof(obj)
   );
 }
 Object.defineProperty(exports, '__esModule', {

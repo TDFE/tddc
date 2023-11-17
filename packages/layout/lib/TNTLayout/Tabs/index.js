@@ -1,22 +1,22 @@
 'use strict';
 
-function _typeof(o) {
+function _typeof(obj) {
   '@babel/helpers - typeof';
   return (
     (_typeof =
       'function' == typeof Symbol && 'symbol' == typeof Symbol.iterator
-        ? function (o) {
-            return typeof o;
+        ? function (obj) {
+            return typeof obj;
           }
-        : function (o) {
-            return o &&
+        : function (obj) {
+            return obj &&
               'function' == typeof Symbol &&
-              o.constructor === Symbol &&
-              o !== Symbol.prototype
+              obj.constructor === Symbol &&
+              obj !== Symbol.prototype
               ? 'symbol'
-              : typeof o;
+              : typeof obj;
           }),
-    _typeof(o)
+    _typeof(obj)
   );
 }
 Object.defineProperty(exports, '__esModule', {
@@ -68,32 +68,32 @@ function _interopRequireWildcard(obj, nodeInterop) {
   }
   return newObj;
 }
-function ownKeys(e, r) {
-  var t = Object.keys(e);
+function ownKeys(object, enumerableOnly) {
+  var keys = Object.keys(object);
   if (Object.getOwnPropertySymbols) {
-    var o = Object.getOwnPropertySymbols(e);
-    r &&
-      (o = o.filter(function (r) {
-        return Object.getOwnPropertyDescriptor(e, r).enumerable;
+    var symbols = Object.getOwnPropertySymbols(object);
+    enumerableOnly &&
+      (symbols = symbols.filter(function (sym) {
+        return Object.getOwnPropertyDescriptor(object, sym).enumerable;
       })),
-      t.push.apply(t, o);
+      keys.push.apply(keys, symbols);
   }
-  return t;
+  return keys;
 }
-function _objectSpread(e) {
-  for (var r = 1; r < arguments.length; r++) {
-    var t = null != arguments[r] ? arguments[r] : {};
-    r % 2
-      ? ownKeys(Object(t), !0).forEach(function (r) {
-          _defineProperty(e, r, t[r]);
+function _objectSpread(target) {
+  for (var i = 1; i < arguments.length; i++) {
+    var source = null != arguments[i] ? arguments[i] : {};
+    i % 2
+      ? ownKeys(Object(source), !0).forEach(function (key) {
+          _defineProperty(target, key, source[key]);
         })
       : Object.getOwnPropertyDescriptors
-      ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t))
-      : ownKeys(Object(t)).forEach(function (r) {
-          Object.defineProperty(e, r, Object.getOwnPropertyDescriptor(t, r));
+      ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source))
+      : ownKeys(Object(source)).forEach(function (key) {
+          Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key));
         });
   }
-  return e;
+  return target;
 }
 function _defineProperty(obj, key, value) {
   key = _toPropertyKey(key);
@@ -173,32 +173,39 @@ function _arrayLikeToArray(arr, len) {
   for (var i = 0, arr2 = new Array(len); i < len; i++) arr2[i] = arr[i];
   return arr2;
 }
-function _iterableToArrayLimit(r, l) {
-  var t =
-    null == r ? null : ('undefined' != typeof Symbol && r[Symbol.iterator]) || r['@@iterator'];
-  if (null != t) {
-    var e,
-      n,
-      i,
-      u,
-      a = [],
-      f = !0,
-      o = !1;
+function _iterableToArrayLimit(arr, i) {
+  var _i =
+    null == arr
+      ? null
+      : ('undefined' != typeof Symbol && arr[Symbol.iterator]) || arr['@@iterator'];
+  if (null != _i) {
+    var _s,
+      _e,
+      _x,
+      _r,
+      _arr = [],
+      _n = !0,
+      _d = !1;
     try {
-      if (((i = (t = t.call(r)).next), 0 === l)) {
-        if (Object(t) !== t) return;
-        f = !1;
-      } else for (; !(f = (e = i.call(t)).done) && (a.push(e.value), a.length !== l); f = !0);
-    } catch (r) {
-      (o = !0), (n = r);
+      if (((_x = (_i = _i.call(arr)).next), 0 === i)) {
+        if (Object(_i) !== _i) return;
+        _n = !1;
+      } else
+        for (
+          ;
+          !(_n = (_s = _x.call(_i)).done) && (_arr.push(_s.value), _arr.length !== i);
+          _n = !0
+        );
+    } catch (err) {
+      (_d = !0), (_e = err);
     } finally {
       try {
-        if (!f && null != t.return && ((u = t.return()), Object(u) !== u)) return;
+        if (!_n && null != _i.return && ((_r = _i.return()), Object(_r) !== _r)) return;
       } finally {
-        if (o) throw n;
+        if (_d) throw _e;
       }
     }
-    return a;
+    return _arr;
   }
 }
 function _arrayWithHoles(arr) {

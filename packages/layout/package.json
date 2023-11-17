@@ -1,6 +1,6 @@
 {
   "name": "@tddc/layout",
-  "version": "1.0.12",
+  "version": "1.0.14",
   "description": "Layout",
   "author": "zefei.zhou <zefei.zhou@tongdun.net>",
   "license": "ISC",
@@ -12,10 +12,8 @@
     "antd": ">=3.20.1",
     "react": ">=16.8.0",
     "react-dom": ">=16.8.0",
-    "universal-cookie": ">=2.2.0"
-  },
-  "dependencies": {
-    "jsencrypt": "3.2.1",
-    "lib-service": "0.2.13"
+    "universal-cookie": ">=2.2.0",
+    "lib-service": ">=0.2.0",
+    "jsencrypt": ">=3.0.0"
   }
 }
