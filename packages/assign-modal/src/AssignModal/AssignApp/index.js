@@ -218,7 +218,7 @@ const AssignModal = (props) => {
       checkedKeys: allOrgChecked ? ['all'] : checkedKeys,
       appCheckAll: allAppChecked,
       orgCheckAll: allOrgChecked,
-      userKeys: userKeys,
+      userKeys: newUserKeys,
       userCheckAll: allUserChecked,
       checkData: {
         apps: appKeys,
