@@ -1,22 +1,22 @@
 'use strict';
 
-function _typeof(o) {
+function _typeof(obj) {
   '@babel/helpers - typeof';
   return (
     (_typeof =
       'function' == typeof Symbol && 'symbol' == typeof Symbol.iterator
-        ? function (o) {
-            return typeof o;
+        ? function (obj) {
+            return typeof obj;
           }
-        : function (o) {
-            return o &&
+        : function (obj) {
+            return obj &&
               'function' == typeof Symbol &&
-              o.constructor === Symbol &&
-              o !== Symbol.prototype
+              obj.constructor === Symbol &&
+              obj !== Symbol.prototype
               ? 'symbol'
-              : typeof o;
+              : typeof obj;
           }),
-    _typeof(o)
+    _typeof(obj)
   );
 }
 Object.defineProperty(exports, '__esModule', {
@@ -123,32 +123,39 @@ function _arrayLikeToArray(arr, len) {
   for (var i = 0, arr2 = new Array(len); i < len; i++) arr2[i] = arr[i];
   return arr2;
 }
-function _iterableToArrayLimit(r, l) {
-  var t =
-    null == r ? null : ('undefined' != typeof Symbol && r[Symbol.iterator]) || r['@@iterator'];
-  if (null != t) {
-    var e,
-      n,
-      i,
-      u,
-      a = [],
-      f = !0,
-      o = !1;
+function _iterableToArrayLimit(arr, i) {
+  var _i =
+    null == arr
+      ? null
+      : ('undefined' != typeof Symbol && arr[Symbol.iterator]) || arr['@@iterator'];
+  if (null != _i) {
+    var _s,
+      _e,
+      _x,
+      _r,
+      _arr = [],
+      _n = !0,
+      _d = !1;
     try {
-      if (((i = (t = t.call(r)).next), 0 === l)) {
-        if (Object(t) !== t) return;
-        f = !1;
-      } else for (; !(f = (e = i.call(t)).done) && (a.push(e.value), a.length !== l); f = !0);
-    } catch (r) {
-      (o = !0), (n = r);
+      if (((_x = (_i = _i.call(arr)).next), 0 === i)) {
+        if (Object(_i) !== _i) return;
+        _n = !1;
+      } else
+        for (
+          ;
+          !(_n = (_s = _x.call(_i)).done) && (_arr.push(_s.value), _arr.length !== i);
+          _n = !0
+        );
+    } catch (err) {
+      (_d = !0), (_e = err);
     } finally {
       try {
-        if (!f && null != t.return && ((u = t.return()), Object(u) !== u)) return;
+        if (!_n && null != _i.return && ((_r = _i.return()), Object(_r) !== _r)) return;
       } finally {
-        if (o) throw n;
+        if (_d) throw _e;
       }
     }
-    return a;
+    return _arr;
   }
 }
 function _arrayWithHoles(arr) {
@@ -168,18 +175,32 @@ var AssignModal = function AssignModal(props) {
     onChange = props.onChange,
     orgTitle = props.orgTitle,
     appTitle = props.appTitle,
+    userTitle = props.userTitle,
     orgCheckboxTitle = props.orgCheckboxTitle,
-    appCheckboxTitle = props.appCheckboxTitle;
+    appCheckboxTitle = props.appCheckboxTitle,
+    userCheckboxTitle = props.userCheckboxTitle,
+    _props$userList = props.userList,
+    userList = _props$userList === void 0 ? [] : _props$userList,
+    showUser = props.showUser;
   var _dataItem$appCodes = dataItem.appCodes,
     appCodes = _dataItem$appCodes === void 0 ? [] : _dataItem$appCodes,
     _dataItem$orgCodes = dataItem.orgCodes,
     orgCodes = _dataItem$orgCodes === void 0 ? [] : _dataItem$orgCodes,
     orgCode = dataItem.orgCode,
-    appCode = dataItem.appCode;
+    appCode = dataItem.appCode,
+    _dataItem$accounts = dataItem.accounts,
+    accounts = _dataItem$accounts === void 0 ? [] : _dataItem$accounts,
+    account = dataItem.account;
   var allOrg = (0, _utils.preorder)(orgList[0]);
   var allApp = appList.map(function (item) {
     return item.value;
   });
+  var allUser =
+    (userList === null || userList === void 0
+      ? void 0
+      : userList.map(function (item) {
+          return item.account;
+        })) || [];
   var _useState = (0, _react.useState)([]),
     _useState2 = _slicedToArray(_useState, 2),
     checkedKeys = _useState2[0],
@@ -188,14 +209,22 @@ var AssignModal = function AssignModal(props) {
     _useState4 = _slicedToArray(_useState3, 2),
     appKeys = _useState4[0],
     setAppKeys = _useState4[1];
-  var _useState5 = (0, _react.useState)(false),
+  var _useState5 = (0, _react.useState)(accounts || []),
     _useState6 = _slicedToArray(_useState5, 2),
-    allOrgChecked = _useState6[0],
-    setAllOrgChecked = _useState6[1];
+    userKeys = _useState6[0],
+    setUserKeys = _useState6[1];
   var _useState7 = (0, _react.useState)(false),
     _useState8 = _slicedToArray(_useState7, 2),
-    allAppChecked = _useState8[0],
-    setAllAppChecked = _useState8[1];
+    allOrgChecked = _useState8[0],
+    setAllOrgChecked = _useState8[1];
+  var _useState9 = (0, _react.useState)(false),
+    _useState10 = _slicedToArray(_useState9, 2),
+    allAppChecked = _useState10[0],
+    setAllAppChecked = _useState10[1];
+  var _useState11 = (0, _react.useState)(false),
+    _useState12 = _slicedToArray(_useState11, 2),
+    allUserChecked = _useState12[0],
+    setAllUserChecked = _useState12[1];
   if (!((_orgList$ = orgList[0]) === null || _orgList$ === void 0 ? void 0 : _orgList$.path)) {
     (0, _utils.addPath)(orgList[0], []); // 添加 上级机构到子机构的路径
   }
@@ -206,6 +235,7 @@ var AssignModal = function AssignModal(props) {
       path = (0, _utils.findSameCodePath)(orgList[0], orgCode);
       var initOrgs = [];
       var initApps = [];
+      var initAccounts = [];
       if (orgCodes.includes('all')) {
         setAllOrgChecked(orgCodes.includes('all'));
         initOrgs = allOrg;
@@ -220,20 +250,31 @@ var AssignModal = function AssignModal(props) {
       } else {
         initApps = Array.from(new Set([].concat(_toConsumableArray(appCodes || []), [appCode])));
       }
+      if (showUser) {
+        if (accounts.includes('all')) {
+          setAllUserChecked(true);
+          initAccounts = allUser;
+        } else {
+          initAccounts = Array.from(
+            new Set([].concat(_toConsumableArray(accounts || []), [account])),
+          );
+        }
+      }
       setCheckedKeys(initOrgs);
       setAppKeys(initApps || []);
-      console.log({
-        initApps: initApps,
-      });
+      setUserKeys(initAccounts || []);
       onChange &&
         onChange({
           appKeys: appCodes.includes('all') ? ['all'] : initApps,
           checkedKeys: orgCodes.includes('all') ? ['all'] : initOrgs,
+          userKeys: accounts.includes('all') ? ['all'] : initAccounts,
           appCheckAll: appCodes.includes('all'),
           orgCheckAll: orgCodes.includes('all'),
+          userCheckAll: accounts.includes('all'),
           checkData: {
             apps: initApps,
             orgs: initOrgs,
+            accounts: initAccounts,
           },
         });
     },
@@ -307,9 +348,12 @@ var AssignModal = function AssignModal(props) {
       checkedKeys: checked,
       appCheckAll: allAppChecked,
       orgCheckAll: allOrgChecked,
+      userKeys: allUserChecked ? ['all'] : userKeys,
+      userCheckAll: allUserChecked,
       checkData: {
         apps: appKeys,
         orgs: checked,
+        accounts: userKeys,
       },
     });
   };
@@ -334,9 +378,42 @@ var AssignModal = function AssignModal(props) {
       checkedKeys: allOrgChecked ? ['all'] : checkedKeys,
       appCheckAll: allAppChecked,
       orgCheckAll: allOrgChecked,
+      userKeys: allUserChecked ? ['all'] : userKeys,
+      userCheckAll: allUserChecked,
       checkData: {
         apps: newAppKeys,
         orgs: checkedKeys,
+        accounts: userKeys,
+      },
+    });
+  };
+  var assignUser = function assignUser(e) {
+    var value = '';
+    var newUserKeys = [];
+    if (e.target.checked) {
+      value = e.target.value;
+      newUserKeys = [].concat(_toConsumableArray(userKeys), [value]);
+    } else {
+      value = e.target.value;
+      newUserKeys = (0, _lodash.cloneDeep)(userKeys);
+      newUserKeys.map(function (item, index) {
+        if (value === item) {
+          newUserKeys.splice(index, 1);
+        }
+      });
+    }
+    setUserKeys(newUserKeys);
+    onChange({
+      appKeys: appKeys,
+      checkedKeys: allOrgChecked ? ['all'] : checkedKeys,
+      appCheckAll: allAppChecked,
+      orgCheckAll: allOrgChecked,
+      userKeys: userKeys,
+      userCheckAll: allUserChecked,
+      checkData: {
+        apps: appKeys,
+        orgs: checkedKeys,
+        accounts: newUserKeys,
       },
     });
   };
@@ -353,9 +430,12 @@ var AssignModal = function AssignModal(props) {
         checkedKeys: ['all'],
         appCheckAll: allAppChecked,
         orgCheckAll: true,
+        userKeys: allUserChecked ? ['all'] : userKeys,
+        userCheckAll: allUserChecked,
         checkData: {
           apps: appKeys,
           orgs: checkedKeys,
+          accounts: accounts,
         },
       });
     } else {
@@ -370,9 +450,12 @@ var AssignModal = function AssignModal(props) {
         checkedKeys: orgChecks,
         appCheckAll: allAppChecked,
         orgCheckAll: false,
+        userKeys: allUserChecked ? ['all'] : userKeys,
+        userCheckAll: allUserChecked,
         checkData: {
           apps: appKeys,
           orgs: orgChecks,
+          accounts: accounts,
         },
       });
     }
@@ -392,9 +475,12 @@ var AssignModal = function AssignModal(props) {
         checkedKeys: allOrgChecked ? ['all'] : checkedKeys,
         appCheckAll: true,
         orgCheckAll: allOrgChecked,
+        userKeys: allUserChecked ? ['all'] : userKeys,
+        userCheckAll: allUserChecked,
         checkData: {
           apps: appChecks,
           orgs: checkedKeys,
+          accounts: accounts,
         },
       });
     } else {
@@ -407,9 +493,55 @@ var AssignModal = function AssignModal(props) {
         checkedKeys: allOrgChecked ? ['all'] : checkedKeys,
         appCheckAll: false,
         orgCheckAll: allOrgChecked,
+        userKeys: allUserChecked ? ['all'] : userKeys,
+        userCheckAll: allUserChecked,
         checkData: {
           apps: appChecks,
           orgs: checkedKeys,
+          accounts: accounts,
+        },
+      });
+    }
+  };
+
+  // account全局授权
+  var checkedAllUser = function checkedAllUser(e) {
+    var userChecks = [];
+    if (e.target.checked) {
+      setAllUserChecked(true);
+      userChecks = userList.map(function (item) {
+        return item.account;
+      });
+      setUserKeys(userChecks);
+      onChange({
+        appKeys: allAppChecked ? ['all'] : appKeys,
+        appCheckAll: allAppChecked,
+        checkedKeys: allOrgChecked ? ['all'] : checkedKeys,
+        orgCheckAll: allOrgChecked,
+        userKeys: ['all'],
+        userCheckAll: true,
+        checkData: {
+          apps: appKeys,
+          orgs: checkedKeys,
+          accounts: userChecks,
+        },
+      });
+    } else {
+      setAllUserChecked(false);
+      var arr = accounts.includes('all') ? allUser : accounts;
+      userChecks = Array.from(new Set([].concat(_toConsumableArray(arr || []), [account])));
+      setUserKeys(userChecks);
+      onChange({
+        appKeys: allAppChecked ? ['all'] : appKeys,
+        appCheckAll: allAppChecked,
+        checkedKeys: allOrgChecked ? ['all'] : checkedKeys,
+        orgCheckAll: allOrgChecked,
+        userKeys: userChecks,
+        userCheckAll: false,
+        checkData: {
+          apps: appKeys,
+          orgs: checkedKeys,
+          accounts: userChecks,
         },
       });
     }
@@ -538,6 +670,76 @@ var AssignModal = function AssignModal(props) {
         }),
       ),
     ),
+    !!showUser &&
+      /*#__PURE__*/ _react.default.createElement(
+        'div',
+        {
+          className: 'user',
+        },
+        /*#__PURE__*/ _react.default.createElement(
+          'div',
+          {
+            className: 'menu-header',
+          },
+          userTitle ||
+            (0, _locale.getText)(
+              'authorizesUserList',
+              props === null || props === void 0 ? void 0 : props.lang,
+            ),
+          /*#__PURE__*/ _react.default.createElement(
+            'div',
+            {
+              className: 'menu-all-checked',
+            },
+            /*#__PURE__*/ _react.default.createElement(
+              _checkbox.default,
+              {
+                onChange: checkedAllUser,
+                checked: allUserChecked,
+                disabled: disabled,
+              },
+              userCheckboxTitle ||
+                (0, _locale.getText)(
+                  'allUserAvailable',
+                  props === null || props === void 0 ? void 0 : props.lang,
+                ),
+            ),
+          ),
+        ),
+        /*#__PURE__*/ _react.default.createElement(
+          'div',
+          {
+            className: 'menu-body',
+          },
+          userList.map(function (item, index) {
+            var isCheck =
+              userKeys === null || userKeys === void 0 ? void 0 : userKeys.includes(item.account);
+            var isOwnAccount = account === item.account;
+            return /*#__PURE__*/ _react.default.createElement(
+              _checkbox.default,
+              {
+                checked: isCheck,
+                disabled: disabled || isOwnAccount || allUserChecked,
+                onChange: assignUser,
+                value: item.account,
+                key: index,
+              },
+              /*#__PURE__*/ _react.default.createElement(
+                'span',
+                {
+                  style: {
+                    display: 'inline-block',
+                  },
+                },
+                /*#__PURE__*/ _react.default.createElement(_tntd.Ellipsis, {
+                  widthLimit: 100,
+                  title: item.userName,
+                }),
+              ),
+            );
+          }),
+        ),
+      ),
   );
 };
 var _default = AssignModal;

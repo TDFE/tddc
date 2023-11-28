@@ -7,13 +7,17 @@ export const zh_CN = {
   allOrgAvailable: '全部机构可用',
   authorizesAppList: '授权可用渠道列表',
   allAppAvailable: '全部渠道可用',
+  authorizesUserList: '全部可用用户列表',
+  allUserAvailable: '全部用户可用',
 };
 
 export const en_US = {
   authorizesOrgList: 'Authorizes the list of organization available',
-  allOrgAvailable: 'All organization are available',
+  allOrgAvailable: 'All organizations are available',
   authorizesAppList: 'Authorizes the list of application available',
-  allAppAvailable: 'All application are available',
+  allAppAvailable: 'All applications are available',
+  authorizesUserList: 'Authorizes the list of account available',
+  allUserAvailable: 'All accounts are available',
 };
 
 export const getText = (key, language, ...params) => {

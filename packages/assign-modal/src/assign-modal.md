@@ -165,11 +165,82 @@ const Assign = () => {
     },
   ];
 
+  const userList = [
+    {
+      uuid: '2fc0f89d1b1d4eb5a86adb44bbc50017',
+      account: 'xyz2',
+      userName: 'xyz2',
+      orgUuid: 'a8202aea546f48979754bdd45c471b08',
+      orgCode: 'TongDun',
+      roleUuids: ['ee8dbc99831b4a9cb17578b51bbb09e0'],
+      roleCodes: ['TongDun'],
+      avatar: 'male1',
+      expiration: '2026-11-27 23:59:59',
+      gender: 0,
+      appName: ['quickPay'],
+      status: 0,
+      updateBy: 'xyz',
+      lang: 'cn',
+      theme: 'default',
+      layout: 'default',
+      simplified: 1,
+    },
+    {
+      uuid: '7070d72691a14af19ee17e55150d37df',
+      account: 'lu.gan',
+      userName: '甘露',
+      orgUuid: 'a8202aea546f48979754bdd45c471b08',
+      orgCode: 'TongDun',
+      roleUuids: ['ee8dbc99831b4a9cb17578b51bbb09e0'],
+      roleCodes: ['TongDun'],
+      avatar: 'male1',
+      expiration: '2028-11-23 23:59:59',
+      gender: 0,
+      appName: [
+        'quickPay',
+        'perOnline',
+        'epOnline',
+        'complex_index',
+        'fzsl',
+        'shyh',
+        'wj',
+        'test_app',
+      ],
+      status: 0,
+      updateBy: 'admin',
+      lang: 'cn',
+      theme: 'default',
+      layout: 'default',
+      simplified: 1,
+    },
+    {
+      uuid: '62fb24d510264b3892a56a5e9ccb7ba3',
+      account: 'wenjuan.su',
+      userName: '苏文娟苏文娟苏文娟苏文娟苏文娟',
+      orgUuid: 'a8202aea546f48979754bdd45c471b08',
+      orgCode: 'TongDun',
+      roleUuids: ['ee8dbc99831b4a9cb17578b51bbb09e0'],
+      roleCodes: ['TongDun'],
+      avatar: 'male1',
+      expiration: '2024-11-14 12:59:59',
+      gender: 0,
+      appName: ['shyh', 'quickPay', 'perOnline', 'epOnline'],
+      status: 0,
+      updateBy: 'gang.li',
+      lang: 'cn',
+      theme: 'default',
+      layout: 'default',
+      simplified: 1,
+    },
+  ];
+
   let dataItem = {
     appCode: 'TG01',
     appCodes: ['all'],
     orgCode: 'TongDun',
     orgCodes: ['TongDun', 'secondB'],
+    account: 'xyz2',
+    accounts: ['wenjuan.su'],
   };
   let title = 'XX授权';
 
@@ -194,7 +265,9 @@ const Assign = () => {
           setAssignVisible(false);
         }} // 关闭回调
         appList={app} // 应用列表
+        userList={userList}
         onSubmit={onSubmit} // 提交回调
+        showUser={true}
       />
     </>
   );
@@ -227,6 +300,9 @@ export default Assign;
 | close | 关闭操作回调 | function |  |
 | appTitle | 渠道列表标题 | String |  |
 | orgTitle | 机构列表标题 | String |  |
+| userTitle | 用户列表标题 | String |  |
+| showUser | 是否展示用户 | Boolean |  |
+| userList | 用户列表 | Boolean |  |
 
 #### 🚀 `orgList 决策中台数据结构`
 
