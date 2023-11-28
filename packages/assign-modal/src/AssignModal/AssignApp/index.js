@@ -1,14 +1,14 @@
-import { Checkbox, Tree } from 'antd';
-import { useEffect, useState } from 'react';
+import { Checkbox, Tree, Input } from 'antd';
+import { useEffect, useState, useCallback } from 'react';
 import { Ellipsis } from 'tntd';
 
-import { cloneDeep } from 'lodash';
+import { cloneDeep, debounce } from 'lodash';
 import './index.less';
 import { addPath, findSameCodePath, preorder } from './utils';
 import { getText } from '../../locale';
 
 const { TreeNode } = Tree;
-
+const { Search } = Input;
 let path = []; // 上级机构到当前机构的路径
 
 const AssignModal = (props) => {
@@ -40,6 +40,8 @@ const AssignModal = (props) => {
   const [allOrgChecked, setAllOrgChecked] = useState(false);
   const [allAppChecked, setAllAppChecked] = useState(false);
   const [allUserChecked, setAllUserChecked] = useState(false);
+
+  const [filterUser, setFilterUser] = useState();
 
   if (!orgList[0]?.path) {
     addPath(orgList[0], []); // 添加 上级机构到子机构的路径
@@ -360,6 +362,13 @@ const AssignModal = (props) => {
     }
   };
 
+  const debouncedSearch = useCallback(
+    debounce((nextValue) => {
+      setFilterUser(nextValue);
+    }, 200),
+    [],
+  );
+
   return (
     <div className="assign-box-container">
       <div className="left">
@@ -430,23 +439,50 @@ const AssignModal = (props) => {
             </div>
           </div>
           <div className="menu-body">
-            {userList.map((item, index) => {
-              const isCheck = userKeys?.includes(item.account);
-              const isOwnAccount = account === item.account;
-              return (
-                <Checkbox
-                  checked={isCheck}
-                  disabled={disabled || isOwnAccount || allUserChecked}
-                  onChange={assignUser}
-                  value={item.account}
-                  key={index}
-                >
-                  <span style={{ display: 'inline-block' }}>
-                    <Ellipsis widthLimit={100} title={item.userName} />
-                  </span>
-                </Checkbox>
-              );
-            })}
+            <div className="assign-search-wrap">
+              <Search
+                size="small"
+                allowClear
+                placeholder={getText('search', props?.lang)}
+                onChange={(e) => {
+                  debouncedSearch(e.target.value);
+                }}
+                onSearch={(v) => {
+                  setFilterUser(v);
+                }}
+                style={{ width: '90%' }}
+              />
+            </div>
+            {userList
+              ?.filter((item) => {
+                if (filterUser) {
+                  return (
+                    item?.account?.toLocaleLowerCase().includes(filterUser?.toLocaleLowerCase()) ||
+                    item?.userName?.toLocaleLowerCase().includes(filterUser?.toLocaleLowerCase())
+                  );
+                } else {
+                  return item;
+                }
+              })
+              .map((item, index) => {
+                const isCheck = userKeys?.includes(item.account);
+                const isOwnAccount = account === item.account;
+                return (
+                  <div>
+                    <Checkbox
+                      checked={isCheck}
+                      disabled={disabled || isOwnAccount || allUserChecked}
+                      onChange={assignUser}
+                      value={item.account}
+                      key={index}
+                    >
+                      <span style={{ display: 'inline-block' }}>
+                        <Ellipsis widthLimit={240} title={item.userName} />
+                      </span>
+                    </Checkbox>
+                  </div>
+                );
+              })}
           </div>
         </div>
       )}

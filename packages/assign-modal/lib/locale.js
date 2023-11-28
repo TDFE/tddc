@@ -10,21 +10,23 @@ function _interopRequireDefault(obj) {
 }
 var cookies = new _universalCookie.default();
 var zh_CN = {
-  authorizesOrgList: '授权可用机构列表',
-  allOrgAvailable: '全部机构可用',
-  authorizesAppList: '授权可用渠道列表',
-  allAppAvailable: '全部渠道可用',
-  authorizesUserList: '全部可用用户列表',
-  allUserAvailable: '全部用户可用',
+  authorizesOrgList: '机构列表',
+  allOrgAvailable: '全部机构',
+  authorizesAppList: '渠道列表',
+  allAppAvailable: '全部渠道',
+  authorizesUserList: '用户列表',
+  allUserAvailable: '全部用户',
+  search: '查询',
 };
 exports.zh_CN = zh_CN;
 var en_US = {
-  authorizesOrgList: 'Authorizes the list of organization available',
-  allOrgAvailable: 'All organizations are available',
-  authorizesAppList: 'Authorizes the list of application available',
-  allAppAvailable: 'All applications are available',
-  authorizesUserList: 'Authorizes the list of account available',
-  allUserAvailable: 'All accounts are available',
+  authorizesOrgList: 'Organization List',
+  allOrgAvailable: 'All Organizations',
+  authorizesAppList: 'Channel List',
+  allAppAvailable: 'All Channels',
+  authorizesUserList: 'Account List',
+  allUserAvailable: 'All Accounts',
+  search: 'Search',
 };
 exports.en_US = en_US;
 var getText = function getText(key, language) {

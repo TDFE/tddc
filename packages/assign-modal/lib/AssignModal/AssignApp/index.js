@@ -25,6 +25,8 @@ Object.defineProperty(exports, '__esModule', {
 exports.default = void 0;
 require('antd/lib/checkbox/style');
 var _checkbox = _interopRequireDefault(require('antd/lib/checkbox'));
+require('antd/lib/input/style');
+var _input = _interopRequireDefault(require('antd/lib/input'));
 require('antd/lib/tree/style');
 var _tree = _interopRequireDefault(require('antd/lib/tree'));
 var _react = _interopRequireWildcard(require('react'));
@@ -162,6 +164,7 @@ function _arrayWithHoles(arr) {
   if (Array.isArray(arr)) return arr;
 }
 var TreeNode = _tree.default.TreeNode;
+var Search = _input.default.Search;
 var path = []; // 上级机构到当前机构的路径
 
 var AssignModal = function AssignModal(props) {
@@ -225,6 +228,10 @@ var AssignModal = function AssignModal(props) {
     _useState12 = _slicedToArray(_useState11, 2),
     allUserChecked = _useState12[0],
     setAllUserChecked = _useState12[1];
+  var _useState13 = (0, _react.useState)(),
+    _useState14 = _slicedToArray(_useState13, 2),
+    filterUser = _useState14[0],
+    setFilterUser = _useState14[1];
   if (!((_orgList$ = orgList[0]) === null || _orgList$ === void 0 ? void 0 : _orgList$.path)) {
     (0, _utils.addPath)(orgList[0], []); // 添加 上级机构到子机构的路径
   }
@@ -546,6 +553,12 @@ var AssignModal = function AssignModal(props) {
       });
     }
   };
+  var debouncedSearch = (0, _react.useCallback)(
+    (0, _lodash.debounce)(function (nextValue) {
+      setFilterUser(nextValue);
+    }, 200),
+    [],
+  );
   return /*#__PURE__*/ _react.default.createElement(
     'div',
     {
@@ -711,33 +724,96 @@ var AssignModal = function AssignModal(props) {
           {
             className: 'menu-body',
           },
-          userList.map(function (item, index) {
-            var isCheck =
-              userKeys === null || userKeys === void 0 ? void 0 : userKeys.includes(item.account);
-            var isOwnAccount = account === item.account;
-            return /*#__PURE__*/ _react.default.createElement(
-              _checkbox.default,
-              {
-                checked: isCheck,
-                disabled: disabled || isOwnAccount || allUserChecked,
-                onChange: assignUser,
-                value: item.account,
-                key: index,
-              },
-              /*#__PURE__*/ _react.default.createElement(
-                'span',
-                {
-                  style: {
-                    display: 'inline-block',
-                  },
-                },
-                /*#__PURE__*/ _react.default.createElement(_tntd.Ellipsis, {
-                  widthLimit: 100,
-                  title: item.userName,
-                }),
+          /*#__PURE__*/ _react.default.createElement(
+            'div',
+            {
+              className: 'assign-search-wrap',
+            },
+            /*#__PURE__*/ _react.default.createElement(Search, {
+              size: 'small',
+              allowClear: true,
+              placeholder: (0, _locale.getText)(
+                'search',
+                props === null || props === void 0 ? void 0 : props.lang,
               ),
-            );
-          }),
+              onChange: function onChange(e) {
+                debouncedSearch(e.target.value);
+              },
+              onSearch: function onSearch(v) {
+                setFilterUser(v);
+              },
+              style: {
+                width: '90%',
+              },
+            }),
+          ),
+          userList === null || userList === void 0
+            ? void 0
+            : userList
+                .filter(function (item) {
+                  if (filterUser) {
+                    var _item$account, _item$userName;
+                    return (
+                      (item === null || item === void 0
+                        ? void 0
+                        : (_item$account = item.account) === null || _item$account === void 0
+                        ? void 0
+                        : _item$account
+                            .toLocaleLowerCase()
+                            .includes(
+                              filterUser === null || filterUser === void 0
+                                ? void 0
+                                : filterUser.toLocaleLowerCase(),
+                            )) ||
+                      (item === null || item === void 0
+                        ? void 0
+                        : (_item$userName = item.userName) === null || _item$userName === void 0
+                        ? void 0
+                        : _item$userName
+                            .toLocaleLowerCase()
+                            .includes(
+                              filterUser === null || filterUser === void 0
+                                ? void 0
+                                : filterUser.toLocaleLowerCase(),
+                            ))
+                    );
+                  } else {
+                    return item;
+                  }
+                })
+                .map(function (item, index) {
+                  var isCheck =
+                    userKeys === null || userKeys === void 0
+                      ? void 0
+                      : userKeys.includes(item.account);
+                  var isOwnAccount = account === item.account;
+                  return /*#__PURE__*/ _react.default.createElement(
+                    'div',
+                    null,
+                    /*#__PURE__*/ _react.default.createElement(
+                      _checkbox.default,
+                      {
+                        checked: isCheck,
+                        disabled: disabled || isOwnAccount || allUserChecked,
+                        onChange: assignUser,
+                        value: item.account,
+                        key: index,
+                      },
+                      /*#__PURE__*/ _react.default.createElement(
+                        'span',
+                        {
+                          style: {
+                            display: 'inline-block',
+                          },
+                        },
+                        /*#__PURE__*/ _react.default.createElement(_tntd.Ellipsis, {
+                          widthLimit: 240,
+                          title: item.userName,
+                        }),
+                      ),
+                    ),
+                  );
+                }),
         ),
       ),
   );

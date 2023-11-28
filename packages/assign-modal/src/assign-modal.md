@@ -216,7 +216,8 @@ const Assign = () => {
     {
       uuid: '62fb24d510264b3892a56a5e9ccb7ba3',
       account: 'wenjuan.su',
-      userName: '苏文娟苏文娟苏文娟苏文娟苏文娟',
+      userName:
+        '苏文娟苏文娟苏文娟苏文娟苏文娟苏文娟苏文娟苏文娟苏文娟苏文娟苏文娟苏文娟苏文娟苏文娟苏文娟苏文娟苏文娟苏文娟苏文娟苏文娟',
       orgUuid: 'a8202aea546f48979754bdd45c471b08',
       orgCode: 'TongDun',
       roleUuids: ['ee8dbc99831b4a9cb17578b51bbb09e0'],
