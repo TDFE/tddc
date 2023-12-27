@@ -1,38 +1,45 @@
-import React from 'react';
+import React, { useEffect, useMemo, memo } from 'react';
 import './index.less';
 
-// 返回一个无状态的函数组件
-function WrapNode(WrappedComponent) {
-  return (props) => {
-    let { x, y, width, fixed, minWidth, minHeight } = props;
+// 返回一个无状态的class类组件, memo 用于优化性能
+const WrapNode = memo((props) => {
+  let { x, y, component } = props;
 
-    let s = {};
-    if (fixed) {
-      s = {
-        width: minWidth,
-      };
-    } else {
-      s = {
-        width,
-      };
-    }
-    let style = {
-      position: 'absolute',
-      top: x,
+  useEffect(() => {}, []);
+
+  let pos = useMemo(() => {
+    return {
       left: y,
-      fontFamily: 'Segoe UI',
-      fontSize: '12px',
-      fontWeight: 'normal',
-      background: 'white',
-      height: minHeight,
-      ...s,
+      top: x,
     };
-    return (
-      <div className="wrap-node" style={style}>
-        <WrappedComponent {...props} />
-      </div>
-    );
+  }, [x, y]);
+
+  let style = {
+    transform: `translate(${pos['left']}px, ${pos['top']}px)`,
   };
-}
+
+  return (
+    <div
+      className="wrap-node"
+      style={{
+        ...style,
+      }}
+    >
+      {component(props)}
+    </div>
+  );
+}, areEqual);
+
+const areEqual = (prevProps, nextProps) => {
+  let { x: prevX, y: prevY, unique: preUnique } = prevProps;
+  let { x: nextX, y: nextY, unique: nextUnique } = nextProps;
+  if (prevX === nextX && prevY === nextY && preUnique === nextUnique) {
+    return true;
+  }
+  if (parent === null) {
+    return false;
+  }
+  return false;
+};
 
 export default WrapNode;

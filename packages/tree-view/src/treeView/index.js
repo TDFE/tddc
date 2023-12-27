@@ -1,4 +1,4 @@
-import { get } from 'lodash';
+import { clone, cloneDeep, debounce, get } from 'lodash';
 import ReactDOM from 'react-dom';
 import Base from './Base';
 import constants, {
@@ -19,6 +19,7 @@ class Tree extends Base {
   constructor() {
     super();
 
+    this.key = 'id';
     this.dom = null;
     this.nodeDom = null;
     this.onChange = null;
@@ -42,13 +43,16 @@ class Tree extends Base {
     this.isFirst = true;
     this.linesAndDoms = [];
     this.linesAndDomsNums = 0;
+
+    this.unmountBool = false;
   }
 
   init(props) {
-    let { data, options, styleOptions, container } = props;
+    let { data, options, styleOptions, container, key } = props;
     let { initType, onChange, customPosition, fixed, nodeDom, lineType, onFinish } = options || {};
     let { nodeWidth, nodeHeight, spaceVertical, spaceHorizontal, rootWidth } = styleOptions || {};
 
+    this.key = key || 'id';
     this.initType = initType || false;
     this.nodeDom = nodeDom || DefaultNode || null;
     this.onChange = onChange || (() => {});
@@ -76,13 +80,22 @@ class Tree extends Base {
   }
 
   setData(data) {
+    this.pre_data_key = this.data?.[this.key];
+    this.initDefault();
     this.data = data;
+  }
+
+  initDefault() {
+    this.Nodes = {};
+    this.linesAndDoms = [];
+    this.flattenNodes = [];
+    this.flattenLinks = [];
+    this.hierarchyData = null;
+    this.finalValue = null;
   }
 
   drawNode() {
     const result = [];
-    // 扁平化树
-    this.flattenNodes = this.Nodes?.descendants() || [];
     this.flattenNodes?.forEach((node) => {
       let { data, x, y } = node;
       let { key, nodeName } = data;
@@ -100,16 +113,18 @@ class Tree extends Base {
           null;
         return NodeIns;
       };
-      let Ele = WrapNode(Eledom);
+
       result.push(
-        <Ele
-          key={this.getHierarchyId(key, 'root') + x + y}
+        <WrapNode
+          component={(props) => Eledom(props)}
+          unique={x + y + this.data?.[this.key]}
           id={this.getHierarchyId(key, 'root')}
           width={!isExceed && this.constant.COMPONENT_WIDTH}
           minWidth={this.constant.COMPONENT_WIDTH}
           minHeight={this.constant.COMPONENT_HEIGHT}
           x={x}
           y={y}
+          parent={node.parent}
           fixed={this.fixed}
         />,
       );
@@ -118,8 +133,9 @@ class Tree extends Base {
   }
 
   drawLine() {
-    this.flattenLinks = this.Nodes?.links() || [];
     let result = [];
+    let areadyRendered = new Map();
+
     result =
       this?.flattenLinks.map((link) => {
         const { source, target } = link;
@@ -127,7 +143,6 @@ class Tree extends Base {
         const targetKey = target.data.key;
 
         let x = source.y;
-
         let nodeNameWidth = getTextPixelWith(source.data.nodeName || ''); // 组件名称宽度
 
         if (!source.parent) {
@@ -142,6 +157,41 @@ class Tree extends Base {
                 ? nodeNameWidth
                 : this.constant.COMPONENT_WIDTH);
           }
+        }
+
+        let startPath = [x, source.x];
+        let endPath = [target.y, target.x];
+
+        let shuoldRender = [];
+        const start = [startPath[0], startPath[1], (startPath[0] + endPath[0]) / 2, startPath[1]];
+        const control = [
+          (startPath[0] + endPath[0]) / 2,
+          startPath[1],
+          (startPath[0] + endPath[0]) / 2,
+          endPath[1],
+        ];
+        const end = [(startPath[0] + endPath[0]) / 2, endPath[1], endPath[0], endPath[1]];
+
+        let key = start[0] + '-' + start[1];
+        if (areadyRendered.has(key)) {
+          let s3 = areadyRendered.get(key);
+          if (control[3] < s3) {
+            shuoldRender = [...end];
+          } else {
+            let downKey = key + '-down';
+            if (areadyRendered.has(downKey)) {
+              let downMaxY = areadyRendered.get(downKey);
+              shuoldRender = [start[2], downMaxY, ...end];
+              areadyRendered.set(downKey, control[3]);
+            } else {
+              shuoldRender = [...control, ...end];
+              areadyRendered.set(downKey, control[3]);
+            }
+          }
+        } else {
+          shuoldRender = [...start, ...control, ...end];
+
+          areadyRendered.set(key, start[3]);
         }
 
         let length = source?.data?.children.length || source?.data?._children.length || 0;
@@ -163,6 +213,7 @@ class Tree extends Base {
                 x: target.y,
                 y: target.x,
               }}
+              shuoldRender={shuoldRender}
               type={this.lineType}
               linkType={this.linkType}
             />
@@ -216,6 +267,8 @@ class Tree extends Base {
     this.domHeight = domHeight;
 
     this.Nodes = Nodes;
+    this.flattenLinks = this.Nodes?.links() || [];
+    this.flattenNodes = this.Nodes?.descendants() || [];
   }
 
   // 获取id
@@ -251,7 +304,6 @@ class Tree extends Base {
   nodeChange(data) {
     this.data.nodeName = data.nodeName;
     this.data.children = data.children;
-    this.onChange(this.data);
     this.initData(this.data);
     this.render();
   }
@@ -277,45 +329,62 @@ class Tree extends Base {
   }
 
   async expand() {
-    this.onChange(this.data);
     await this.data.children.forEach(expandTree);
-    await this.initData();
-    await this.render();
+    this.initData(this.data);
+    this.render();
   }
 
   async packUp() {
-    this.onChange(this.data);
     await this.data.children.forEach(collapseTree);
-    await this.initData();
-    await this.render();
+    this.initData(this.data);
+    this.render();
   }
 
   render() {
     this.buildPosition(this.hierarchyData);
-
-    let nodeDoms = this.drawNode();
-    let lineDoms = this.drawLine();
-
-    if (this.linesAndDomsNums !== nodeDoms.length + lineDoms.length) {
+    if (
+      this.linesAndDomsNums !== this.flattenNodes.length + this.flattenLinks.length ||
+      this.data?.[this.key] !== this.pre_data_key
+    ) {
+      this.onChange && this.onChange(this.data);
+      let nodeDoms = this.drawNode();
+      let lineDoms = this.drawLine();
       this.linesAndDomsNums = nodeDoms.length + lineDoms.length;
-      ReactDOM.render(
-        <div
-          style={{
-            position: 'relative',
-            zIndex: 9,
-            width: this.domWidth + 100,
-            height: this.domHeight,
-            margin: '80px 0 0 20px',
-          }}
-        >
+
+      // 卸载所有子元素， 确保容器内没有其他元素之后再进行渲染
+      this.unmountBool = ReactDOM.unmountComponentAtNode(this.dom);
+
+      if (this.dom.childNodes.length === 0) {
+        ReactDOM.render(
           <GenerateDom
             doms={nodeDoms.concat(lineDoms)}
             linesAndDomsNums={this.linesAndDomsNums}
             onFinish={this.onFinish}
-          />
-        </div>,
-        this.dom,
-      );
+            onChange={this.onChange}
+            container={this.dom}
+          />,
+          this.dom,
+        );
+      } else {
+        let requestId = requestAnimationFrame(() => {
+          if (this.unmountBool) {
+            ReactDOM.render(
+              <GenerateDom
+                doms={nodeDoms.concat(lineDoms)}
+                linesAndDomsNums={this.linesAndDomsNums}
+                onFinish={this.onFinish}
+                onChange={this.onChange}
+                container={this.dom}
+              />,
+              this.dom,
+            );
+            cancelAnimationFrame(requestId);
+            this.unmountBool = false;
+          }
+        });
+      }
+    } else {
+      this.onFinish && this.onFinish();
     }
   }
 }

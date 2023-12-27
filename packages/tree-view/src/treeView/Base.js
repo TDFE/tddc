@@ -5,6 +5,7 @@ import { NODE_TYPE_MAP } from './constants';
 class Base {
   constructor() {
     this.data = null;
+    this.pre_data_key = null;
 
     this.flattenNodes = [];
     this.flattenLinks = [];

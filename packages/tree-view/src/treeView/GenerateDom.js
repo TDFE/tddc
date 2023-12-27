@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 
-let time = Date.now();
 function chunkRender(dataArr, callback) {
   let delay = 100;
   let chunkSize = 50; // 设置切割大小
@@ -13,7 +12,7 @@ function chunkRender(dataArr, callback) {
 
   let currentIndex = 0;
 
-  function renderChunk(currentTime) {
+  function renderChunk() {
     const start = performance.now();
 
     while (currentIndex < chunks.length && performance.now() - start < 16) {
@@ -36,23 +35,13 @@ function chunkRender(dataArr, callback) {
 class HugeArray extends Component {
   constructor(props) {
     super(props);
-
-    this.container = null;
+    this.container = props.container || <div />;
     this.elements = [];
   }
 
   componentDidMount() {
     const { doms } = this.props;
-
     chunkRender(doms, this.handleChunk); // 初始化分块渲染功能
-  }
-
-  componentDidUpdate(prevProps) {
-    if (prevProps.linesAndDomsNums.length !== this.props.doms.length) {
-      const { doms } = this.props;
-      this.elements = [];
-      chunkRender(doms, this.handleChunk); // 初始化分块渲染功能
-    }
   }
 
   handleChunk = (chunk, bool) => {
@@ -67,7 +56,7 @@ class HugeArray extends Component {
   };
 
   render() {
-    return <div ref={(ref) => (this.container = ref)}></div>; // 绑定空的 div 元素
+    return <></>;
   }
 }
 
