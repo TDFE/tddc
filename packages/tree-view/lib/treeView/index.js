@@ -33,42 +33,27 @@ var _Link = _interopRequireDefault(require('./Link'));
 var _utils = require('./utils');
 var _WrapNode = _interopRequireDefault(require('./WrapNode'));
 var _GenerateDom = _interopRequireDefault(require('./GenerateDom'));
-function _getRequireWildcardCache(nodeInterop) {
-  if (typeof WeakMap !== 'function') return null;
-  var cacheBabelInterop = new WeakMap();
-  var cacheNodeInterop = new WeakMap();
-  return (_getRequireWildcardCache = function _getRequireWildcardCache(nodeInterop) {
-    return nodeInterop ? cacheNodeInterop : cacheBabelInterop;
-  })(nodeInterop);
+function _getRequireWildcardCache(e) {
+  if ('function' != typeof WeakMap) return null;
+  var r = new WeakMap(),
+    t = new WeakMap();
+  return (_getRequireWildcardCache = function _getRequireWildcardCache(e) {
+    return e ? t : r;
+  })(e);
 }
-function _interopRequireWildcard(obj, nodeInterop) {
-  if (!nodeInterop && obj && obj.__esModule) {
-    return obj;
-  }
-  if (obj === null || (_typeof(obj) !== 'object' && typeof obj !== 'function')) {
-    return { default: obj };
-  }
-  var cache = _getRequireWildcardCache(nodeInterop);
-  if (cache && cache.has(obj)) {
-    return cache.get(obj);
-  }
-  var newObj = {};
-  var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor;
-  for (var key in obj) {
-    if (key !== 'default' && Object.prototype.hasOwnProperty.call(obj, key)) {
-      var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null;
-      if (desc && (desc.get || desc.set)) {
-        Object.defineProperty(newObj, key, desc);
-      } else {
-        newObj[key] = obj[key];
-      }
+function _interopRequireWildcard(e, r) {
+  if (!r && e && e.__esModule) return e;
+  if (null === e || ('object' != _typeof(e) && 'function' != typeof e)) return { default: e };
+  var t = _getRequireWildcardCache(r);
+  if (t && t.has(e)) return t.get(e);
+  var n = { __proto__: null },
+    a = Object.defineProperty && Object.getOwnPropertyDescriptor;
+  for (var u in e)
+    if ('default' !== u && Object.prototype.hasOwnProperty.call(e, u)) {
+      var i = a ? Object.getOwnPropertyDescriptor(e, u) : null;
+      i && (i.get || i.set) ? Object.defineProperty(n, u, i) : (n[u] = e[u]);
     }
-  }
-  newObj.default = obj;
-  if (cache) {
-    cache.set(obj, newObj);
-  }
-  return newObj;
+  return (n.default = e), t && t.set(e, n), n;
 }
 function _interopRequireDefault(obj) {
   return obj && obj.__esModule ? obj : { default: obj };
@@ -558,19 +543,19 @@ function _createClass(Constructor, protoProps, staticProps) {
   Object.defineProperty(Constructor, 'prototype', { writable: false });
   return Constructor;
 }
-function _toPropertyKey(arg) {
-  var key = _toPrimitive(arg, 'string');
-  return _typeof(key) === 'symbol' ? key : String(key);
+function _toPropertyKey(t) {
+  var i = _toPrimitive(t, 'string');
+  return 'symbol' == _typeof(i) ? i : String(i);
 }
-function _toPrimitive(input, hint) {
-  if (_typeof(input) !== 'object' || input === null) return input;
-  var prim = input[Symbol.toPrimitive];
-  if (prim !== undefined) {
-    var res = prim.call(input, hint || 'default');
-    if (_typeof(res) !== 'object') return res;
+function _toPrimitive(t, r) {
+  if ('object' != _typeof(t) || !t) return t;
+  var e = t[Symbol.toPrimitive];
+  if (void 0 !== e) {
+    var i = e.call(t, r || 'default');
+    if ('object' != _typeof(i)) return i;
     throw new TypeError('@@toPrimitive must return a primitive value.');
   }
-  return (hint === 'string' ? String : Number)(input);
+  return ('string' === r ? String : Number)(t);
 }
 function _inherits(subClass, superClass) {
   if (typeof superClass !== 'function' && superClass !== null) {
@@ -645,6 +630,7 @@ var Tree = /*#__PURE__*/ (function (_Base) {
     var _this;
     _classCallCheck(this, Tree);
     _this = _super.call(this);
+    _this.key = 'id';
     _this.dom = null;
     _this.nodeDom = null;
     _this.onChange = null;
@@ -666,6 +652,7 @@ var Tree = /*#__PURE__*/ (function (_Base) {
     _this.isFirst = true;
     _this.linesAndDoms = [];
     _this.linesAndDomsNums = 0;
+    _this.unmountBool = false;
     return _this;
   }
   _createClass(Tree, [
@@ -675,7 +662,8 @@ var Tree = /*#__PURE__*/ (function (_Base) {
         var data = props.data,
           options = props.options,
           styleOptions = props.styleOptions,
-          container = props.container;
+          container = props.container,
+          key = props.key;
         var _ref = options || {},
           initType = _ref.initType,
           onChange = _ref.onChange,
@@ -690,6 +678,7 @@ var Tree = /*#__PURE__*/ (function (_Base) {
           spaceVertical = _ref2.spaceVertical,
           spaceHorizontal = _ref2.spaceHorizontal,
           rootWidth = _ref2.rootWidth;
+        this.key = key || 'id';
         this.initType = initType || false;
         this.nodeDom = nodeDom || _DefaultNode.default || null;
         this.onChange = onChange || function () {};
@@ -719,24 +708,36 @@ var Tree = /*#__PURE__*/ (function (_Base) {
     {
       key: 'setData',
       value: function setData(data) {
+        var _this$data;
+        this.pre_data_key =
+          (_this$data = this.data) === null || _this$data === void 0
+            ? void 0
+            : _this$data[this.key];
+        this.initDefault();
         this.data = data;
+      },
+    },
+    {
+      key: 'initDefault',
+      value: function initDefault() {
+        this.Nodes = {};
+        this.linesAndDoms = [];
+        this.flattenNodes = [];
+        this.flattenLinks = [];
+        this.hierarchyData = null;
+        this.finalValue = null;
       },
     },
     {
       key: 'drawNode',
       value: function drawNode() {
-        var _this$Nodes,
-          _this$flattenNodes,
+        var _this$flattenNodes,
           _this2 = this;
         var result = [];
-        // 扁平化树
-        this.flattenNodes =
-          ((_this$Nodes = this.Nodes) === null || _this$Nodes === void 0
-            ? void 0
-            : _this$Nodes.descendants()) || [];
         ((_this$flattenNodes = this.flattenNodes) === null || _this$flattenNodes === void 0
           ? void 0
           : _this$flattenNodes.forEach(function (node) {
+              var _this2$data;
               var data = node.data,
                 x = node.x,
                 y = node.y;
@@ -759,16 +760,24 @@ var Tree = /*#__PURE__*/ (function (_Base) {
                   null;
                 return NodeIns;
               };
-              var Ele = (0, _WrapNode.default)(Eledom);
               result.push(
-                /*#__PURE__*/ _react.default.createElement(Ele, {
-                  key: _this2.getHierarchyId(key, 'root') + x + y,
+                /*#__PURE__*/ _react.default.createElement(_WrapNode.default, {
+                  component: function component(props) {
+                    return Eledom(props);
+                  },
+                  unique:
+                    x +
+                    y +
+                    ((_this2$data = _this2.data) === null || _this2$data === void 0
+                      ? void 0
+                      : _this2$data[_this2.key]),
                   id: _this2.getHierarchyId(key, 'root'),
                   width: !isExceed && _this2.constant.COMPONENT_WIDTH,
                   minWidth: _this2.constant.COMPONENT_WIDTH,
                   minHeight: _this2.constant.COMPONENT_HEIGHT,
                   x: x,
                   y: y,
+                  parent: node.parent,
                   fixed: _this2.fixed,
                 }),
               );
@@ -779,13 +788,9 @@ var Tree = /*#__PURE__*/ (function (_Base) {
     {
       key: 'drawLine',
       value: function drawLine() {
-        var _this$Nodes2,
-          _this3 = this;
-        this.flattenLinks =
-          ((_this$Nodes2 = this.Nodes) === null || _this$Nodes2 === void 0
-            ? void 0
-            : _this$Nodes2.links()) || [];
+        var _this3 = this;
         var result = [];
+        var areadyRendered = new Map();
         result =
           (this === null || this === void 0
             ? void 0
@@ -810,6 +815,42 @@ var Tree = /*#__PURE__*/ (function (_Base) {
                         ? nodeNameWidth
                         : _this3.constant.COMPONENT_WIDTH);
                   }
+                }
+                var startPath = [x, source.x];
+                var endPath = [target.y, target.x];
+                var shuoldRender = [];
+                var start = [
+                  startPath[0],
+                  startPath[1],
+                  (startPath[0] + endPath[0]) / 2,
+                  startPath[1],
+                ];
+                var control = [
+                  (startPath[0] + endPath[0]) / 2,
+                  startPath[1],
+                  (startPath[0] + endPath[0]) / 2,
+                  endPath[1],
+                ];
+                var end = [(startPath[0] + endPath[0]) / 2, endPath[1], endPath[0], endPath[1]];
+                var key = start[0] + '-' + start[1];
+                if (areadyRendered.has(key)) {
+                  var s3 = areadyRendered.get(key);
+                  if (control[3] < s3) {
+                    shuoldRender = [].concat(end);
+                  } else {
+                    var downKey = key + '-down';
+                    if (areadyRendered.has(downKey)) {
+                      var downMaxY = areadyRendered.get(downKey);
+                      shuoldRender = [start[2], downMaxY].concat(end);
+                      areadyRendered.set(downKey, control[3]);
+                    } else {
+                      shuoldRender = [].concat(control, end);
+                      areadyRendered.set(downKey, control[3]);
+                    }
+                  }
+                } else {
+                  shuoldRender = [].concat(start, control, end);
+                  areadyRendered.set(key, start[3]);
                 }
                 var length =
                   (source === null || source === void 0
@@ -846,6 +887,7 @@ var Tree = /*#__PURE__*/ (function (_Base) {
                       x: target.y,
                       y: target.x,
                     },
+                    shuoldRender: shuoldRender,
                     type: _this3.lineType,
                     linkType: _this3.linkType,
                   }),
@@ -859,7 +901,9 @@ var Tree = /*#__PURE__*/ (function (_Base) {
     {
       key: 'buildPosition',
       value: function buildPosition(data) {
-        var _this4 = this;
+        var _this4 = this,
+          _this$Nodes,
+          _this$Nodes2;
         var leafCount = 0;
         var domWidth = 0;
         var domHeight = 0;
@@ -916,6 +960,14 @@ var Tree = /*#__PURE__*/ (function (_Base) {
         this.domWidth = domWidth;
         this.domHeight = domHeight;
         this.Nodes = Nodes;
+        this.flattenLinks =
+          ((_this$Nodes = this.Nodes) === null || _this$Nodes === void 0
+            ? void 0
+            : _this$Nodes.links()) || [];
+        this.flattenNodes =
+          ((_this$Nodes2 = this.Nodes) === null || _this$Nodes2 === void 0
+            ? void 0
+            : _this$Nodes2.descendants()) || [];
       },
 
       // 获取id
@@ -961,7 +1013,6 @@ var Tree = /*#__PURE__*/ (function (_Base) {
       value: function nodeChange(data) {
         this.data.nodeName = data.nodeName;
         this.data.children = data.children;
-        this.onChange(this.data);
         this.initData(this.data);
         this.render();
       },
@@ -1001,16 +1052,12 @@ var Tree = /*#__PURE__*/ (function (_Base) {
                 while (1)
                   switch ((_context.prev = _context.next)) {
                     case 0:
-                      this.onChange(this.data);
-                      _context.next = 3;
+                      _context.next = 2;
                       return this.data.children.forEach(_utils.expandTree);
-                    case 3:
-                      _context.next = 5;
-                      return this.initData();
-                    case 5:
-                      _context.next = 7;
-                      return this.render();
-                    case 7:
+                    case 2:
+                      this.initData(this.data);
+                      this.render();
+                    case 4:
                     case 'end':
                       return _context.stop();
                   }
@@ -1036,16 +1083,12 @@ var Tree = /*#__PURE__*/ (function (_Base) {
                 while (1)
                   switch ((_context2.prev = _context2.next)) {
                     case 0:
-                      this.onChange(this.data);
-                      _context2.next = 3;
+                      _context2.next = 2;
                       return this.data.children.forEach(_utils.collapseTree);
-                    case 3:
-                      _context2.next = 5;
-                      return this.initData();
-                    case 5:
-                      _context2.next = 7;
-                      return this.render();
-                    case 7:
+                    case 2:
+                      this.initData(this.data);
+                      this.render();
+                    case 4:
                     case 'end':
                       return _context2.stop();
                   }
@@ -1064,31 +1107,53 @@ var Tree = /*#__PURE__*/ (function (_Base) {
     {
       key: 'render',
       value: function render() {
+        var _this$data2,
+          _this6 = this;
         this.buildPosition(this.hierarchyData);
-        var nodeDoms = this.drawNode();
-        var lineDoms = this.drawLine();
-        if (this.linesAndDomsNums !== nodeDoms.length + lineDoms.length) {
+        if (
+          this.linesAndDomsNums !== this.flattenNodes.length + this.flattenLinks.length ||
+          ((_this$data2 = this.data) === null || _this$data2 === void 0
+            ? void 0
+            : _this$data2[this.key]) !== this.pre_data_key
+        ) {
+          this.onChange && this.onChange(this.data);
+          var nodeDoms = this.drawNode();
+          var lineDoms = this.drawLine();
           this.linesAndDomsNums = nodeDoms.length + lineDoms.length;
-          _reactDom.default.render(
-            /*#__PURE__*/ _react.default.createElement(
-              'div',
-              {
-                style: {
-                  position: 'relative',
-                  zIndex: 9,
-                  width: this.domWidth + 100,
-                  height: this.domHeight,
-                  margin: '80px 0 0 20px',
-                },
-              },
+
+          // 卸载所有子元素， 确保容器内没有其他元素之后再进行渲染
+          this.unmountBool = _reactDom.default.unmountComponentAtNode(this.dom);
+          if (this.dom.childNodes.length === 0) {
+            _reactDom.default.render(
               /*#__PURE__*/ _react.default.createElement(_GenerateDom.default, {
                 doms: nodeDoms.concat(lineDoms),
                 linesAndDomsNums: this.linesAndDomsNums,
                 onFinish: this.onFinish,
+                onChange: this.onChange,
+                container: this.dom,
               }),
-            ),
-            this.dom,
-          );
+              this.dom,
+            );
+          } else {
+            var requestId = requestAnimationFrame(function () {
+              if (_this6.unmountBool) {
+                _reactDom.default.render(
+                  /*#__PURE__*/ _react.default.createElement(_GenerateDom.default, {
+                    doms: nodeDoms.concat(lineDoms),
+                    linesAndDomsNums: _this6.linesAndDomsNums,
+                    onFinish: _this6.onFinish,
+                    onChange: _this6.onChange,
+                    container: _this6.dom,
+                  }),
+                  _this6.dom,
+                );
+                cancelAnimationFrame(requestId);
+                _this6.unmountBool = false;
+              }
+            });
+          }
+        } else {
+          this.onFinish && this.onFinish();
         }
       },
     },
@@ -1131,5 +1196,4 @@ var BaseProxy = function BaseProxy() {
     },
   });
 };
-var _default = BaseProxy;
-exports.default = _default;
+var _default = (exports.default = BaseProxy);

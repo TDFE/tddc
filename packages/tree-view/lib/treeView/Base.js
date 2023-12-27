@@ -46,24 +46,25 @@ function _createClass(Constructor, protoProps, staticProps) {
   Object.defineProperty(Constructor, 'prototype', { writable: false });
   return Constructor;
 }
-function _toPropertyKey(arg) {
-  var key = _toPrimitive(arg, 'string');
-  return _typeof(key) === 'symbol' ? key : String(key);
+function _toPropertyKey(t) {
+  var i = _toPrimitive(t, 'string');
+  return 'symbol' == _typeof(i) ? i : String(i);
 }
-function _toPrimitive(input, hint) {
-  if (_typeof(input) !== 'object' || input === null) return input;
-  var prim = input[Symbol.toPrimitive];
-  if (prim !== undefined) {
-    var res = prim.call(input, hint || 'default');
-    if (_typeof(res) !== 'object') return res;
+function _toPrimitive(t, r) {
+  if ('object' != _typeof(t) || !t) return t;
+  var e = t[Symbol.toPrimitive];
+  if (void 0 !== e) {
+    var i = e.call(t, r || 'default');
+    if ('object' != _typeof(i)) return i;
     throw new TypeError('@@toPrimitive must return a primitive value.');
   }
-  return (hint === 'string' ? String : Number)(input);
+  return ('string' === r ? String : Number)(t);
 }
 var Base = /*#__PURE__*/ (function () {
   function Base() {
     _classCallCheck(this, Base);
     this.data = null;
+    this.pre_data_key = null;
     this.flattenNodes = [];
     this.flattenLinks = [];
     this.hierarchyData = null;
@@ -183,5 +184,4 @@ var Base = /*#__PURE__*/ (function () {
   ]);
   return Base;
 })();
-var _default = Base;
-exports.default = _default;
+var _default = (exports.default = Base);

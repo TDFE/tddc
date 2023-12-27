@@ -28,42 +28,27 @@ var _reactDom = _interopRequireDefault(require('react-dom'));
 function _interopRequireDefault(obj) {
   return obj && obj.__esModule ? obj : { default: obj };
 }
-function _getRequireWildcardCache(nodeInterop) {
-  if (typeof WeakMap !== 'function') return null;
-  var cacheBabelInterop = new WeakMap();
-  var cacheNodeInterop = new WeakMap();
-  return (_getRequireWildcardCache = function _getRequireWildcardCache(nodeInterop) {
-    return nodeInterop ? cacheNodeInterop : cacheBabelInterop;
-  })(nodeInterop);
+function _getRequireWildcardCache(e) {
+  if ('function' != typeof WeakMap) return null;
+  var r = new WeakMap(),
+    t = new WeakMap();
+  return (_getRequireWildcardCache = function _getRequireWildcardCache(e) {
+    return e ? t : r;
+  })(e);
 }
-function _interopRequireWildcard(obj, nodeInterop) {
-  if (!nodeInterop && obj && obj.__esModule) {
-    return obj;
-  }
-  if (obj === null || (_typeof(obj) !== 'object' && typeof obj !== 'function')) {
-    return { default: obj };
-  }
-  var cache = _getRequireWildcardCache(nodeInterop);
-  if (cache && cache.has(obj)) {
-    return cache.get(obj);
-  }
-  var newObj = {};
-  var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor;
-  for (var key in obj) {
-    if (key !== 'default' && Object.prototype.hasOwnProperty.call(obj, key)) {
-      var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null;
-      if (desc && (desc.get || desc.set)) {
-        Object.defineProperty(newObj, key, desc);
-      } else {
-        newObj[key] = obj[key];
-      }
+function _interopRequireWildcard(e, r) {
+  if (!r && e && e.__esModule) return e;
+  if (null === e || ('object' != _typeof(e) && 'function' != typeof e)) return { default: e };
+  var t = _getRequireWildcardCache(r);
+  if (t && t.has(e)) return t.get(e);
+  var n = { __proto__: null },
+    a = Object.defineProperty && Object.getOwnPropertyDescriptor;
+  for (var u in e)
+    if ('default' !== u && Object.prototype.hasOwnProperty.call(e, u)) {
+      var i = a ? Object.getOwnPropertyDescriptor(e, u) : null;
+      i && (i.get || i.set) ? Object.defineProperty(n, u, i) : (n[u] = e[u]);
     }
-  }
-  newObj.default = obj;
-  if (cache) {
-    cache.set(obj, newObj);
-  }
-  return newObj;
+  return (n.default = e), t && t.set(e, n), n;
 }
 function _classCallCheck(instance, Constructor) {
   if (!(instance instanceof Constructor)) {
@@ -85,19 +70,19 @@ function _createClass(Constructor, protoProps, staticProps) {
   Object.defineProperty(Constructor, 'prototype', { writable: false });
   return Constructor;
 }
-function _toPropertyKey(arg) {
-  var key = _toPrimitive(arg, 'string');
-  return _typeof(key) === 'symbol' ? key : String(key);
+function _toPropertyKey(t) {
+  var i = _toPrimitive(t, 'string');
+  return 'symbol' == _typeof(i) ? i : String(i);
 }
-function _toPrimitive(input, hint) {
-  if (_typeof(input) !== 'object' || input === null) return input;
-  var prim = input[Symbol.toPrimitive];
-  if (prim !== undefined) {
-    var res = prim.call(input, hint || 'default');
-    if (_typeof(res) !== 'object') return res;
+function _toPrimitive(t, r) {
+  if ('object' != _typeof(t) || !t) return t;
+  var e = t[Symbol.toPrimitive];
+  if (void 0 !== e) {
+    var i = e.call(t, r || 'default');
+    if ('object' != _typeof(i)) return i;
     throw new TypeError('@@toPrimitive must return a primitive value.');
   }
-  return (hint === 'string' ? String : Number)(input);
+  return ('string' === r ? String : Number)(t);
 }
 function _inherits(subClass, superClass) {
   if (typeof superClass !== 'function' && superClass !== null) {
@@ -165,7 +150,6 @@ function _getPrototypeOf(o) {
       };
   return _getPrototypeOf(o);
 }
-var time = Date.now();
 function chunkRender(dataArr, callback) {
   var delay = 100;
   var chunkSize = 50; // 设置切割大小
@@ -180,7 +164,7 @@ function chunkRender(dataArr, callback) {
     }); // 将原数组 B 切割成若干个小数组
 
   var currentIndex = 0;
-  function renderChunk(currentTime) {
+  function renderChunk() {
     var start = performance.now();
     while (currentIndex < chunks.length && performance.now() - start < 16) {
       callback(chunks[currentIndex], currentIndex === chunks.length - 1); // 第二个参数为 true 时，表示已经处理完所有小数组
@@ -213,7 +197,7 @@ var HugeArray = /*#__PURE__*/ (function (_Component) {
         _this.props.onFinish && _this.props.onFinish();
       }
     };
-    _this.container = null;
+    _this.container = props.container || /*#__PURE__*/ _react.default.createElement('div', null);
     _this.elements = [];
     return _this;
   }
@@ -226,28 +210,12 @@ var HugeArray = /*#__PURE__*/ (function (_Component) {
       },
     },
     {
-      key: 'componentDidUpdate',
-      value: function componentDidUpdate(prevProps) {
-        if (prevProps.linesAndDomsNums.length !== this.props.doms.length) {
-          var doms = this.props.doms;
-          this.elements = [];
-          chunkRender(doms, this.handleChunk); // 初始化分块渲染功能
-        }
-      },
-    },
-    {
       key: 'render',
       value: function render() {
-        var _this2 = this;
-        return /*#__PURE__*/ _react.default.createElement('div', {
-          ref: function ref(_ref) {
-            return (_this2.container = _ref);
-          },
-        }); // 绑定空的 div 元素
+        return /*#__PURE__*/ _react.default.createElement(_react.default.Fragment, null);
       },
     },
   ]);
   return HugeArray;
 })(_react.Component);
-var _default = HugeArray;
-exports.default = _default;
+var _default = (exports.default = HugeArray);

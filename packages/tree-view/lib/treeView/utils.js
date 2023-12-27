@@ -15,7 +15,7 @@ function _interopRequireDefault(obj) {
   return obj && obj.__esModule ? obj : { default: obj };
 }
 // 获取单行文本的像素宽度
-var getTextPixelWith = function getTextPixelWith(text) {
+var getTextPixelWith = (exports.getTextPixelWith = function getTextPixelWith(text) {
   var fontStyle =
     arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 'normal 12px Segoe UI';
   var canvas = document.createElement('canvas'); // 创建 canvas 画布
@@ -23,9 +23,8 @@ var getTextPixelWith = function getTextPixelWith(text) {
   context.font = fontStyle; // 设置字体样式，使用前设置好对应的 font 样式才能准确获取文字的像素长度
   var dimension = context.measureText(text); // 测量文字
   return dimension.width;
-};
-exports.getTextPixelWith = getTextPixelWith;
-var colorRgb = function colorRgb(str, opacity) {
+});
+var colorRgb = (exports.colorRgb = function colorRgb(str, opacity) {
   var sColor = str === null || str === void 0 ? void 0 : str.toLowerCase();
   if (sColor) {
     if (sColor.length === 4) {
@@ -43,31 +42,28 @@ var colorRgb = function colorRgb(str, opacity) {
     return 'rgba(' + sColorChange.join(',') + ',' + opacity + ')';
   }
   return sColor;
-};
+});
 
 // 折叠树
-exports.colorRgb = colorRgb;
-var collapseTree = function collapseTree(d) {
+var collapseTree = (exports.collapseTree = function collapseTree(d) {
   if (d.children) {
     d._children = d.children;
     d._children.forEach(collapseTree);
     d.children = null;
   }
   return d;
-};
+});
 
 // 展开树
-exports.collapseTree = collapseTree;
-var expandTree = function expandTree(d) {
+var expandTree = (exports.expandTree = function expandTree(d) {
   if (d._children) {
     d.children = d._children;
     d.children.forEach(expandTree);
     d._children = null;
   }
   return d;
-};
-exports.expandTree = expandTree;
-var SVGImage = function SVGImage(text, bgColor) {
+});
+var SVGImage = (exports.SVGImage = function SVGImage(text, bgColor) {
   // 使用 renderToString 方法将 SVGImage 组件渲染为字符串
   var svgString = (0, _server.renderToString)(
     /*#__PURE__*/ _react.default.createElement(
@@ -113,5 +109,4 @@ var SVGImage = function SVGImage(text, bgColor) {
   // 生成base64
   var imgSrc = 'data:image/svg+xml;base64,'.concat(base64);
   return imgSrc;
-};
-exports.SVGImage = SVGImage;
+});

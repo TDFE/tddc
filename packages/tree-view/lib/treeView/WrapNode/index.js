@@ -4,10 +4,29 @@ Object.defineProperty(exports, '__esModule', {
   value: true,
 });
 exports.default = void 0;
-var _react = _interopRequireDefault(require('react'));
+var _react = _interopRequireWildcard(require('react'));
 require('./index.less');
-function _interopRequireDefault(obj) {
-  return obj && obj.__esModule ? obj : { default: obj };
+function _getRequireWildcardCache(e) {
+  if ('function' != typeof WeakMap) return null;
+  var r = new WeakMap(),
+    t = new WeakMap();
+  return (_getRequireWildcardCache = function _getRequireWildcardCache(e) {
+    return e ? t : r;
+  })(e);
+}
+function _interopRequireWildcard(e, r) {
+  if (!r && e && e.__esModule) return e;
+  if (null === e || ('object' != _typeof(e) && 'function' != typeof e)) return { default: e };
+  var t = _getRequireWildcardCache(r);
+  if (t && t.has(e)) return t.get(e);
+  var n = { __proto__: null },
+    a = Object.defineProperty && Object.getOwnPropertyDescriptor;
+  for (var u in e)
+    if ('default' !== u && Object.prototype.hasOwnProperty.call(e, u)) {
+      var i = a ? Object.getOwnPropertyDescriptor(e, u) : null;
+      i && (i.get || i.set) ? Object.defineProperty(n, u, i) : (n[u] = e[u]);
+    }
+  return (n.default = e), t && t.set(e, n), n;
 }
 function _typeof(o) {
   '@babel/helpers - typeof';
@@ -69,61 +88,60 @@ function _defineProperty(obj, key, value) {
   }
   return obj;
 }
-function _toPropertyKey(arg) {
-  var key = _toPrimitive(arg, 'string');
-  return _typeof(key) === 'symbol' ? key : String(key);
+function _toPropertyKey(t) {
+  var i = _toPrimitive(t, 'string');
+  return 'symbol' == _typeof(i) ? i : String(i);
 }
-function _toPrimitive(input, hint) {
-  if (_typeof(input) !== 'object' || input === null) return input;
-  var prim = input[Symbol.toPrimitive];
-  if (prim !== undefined) {
-    var res = prim.call(input, hint || 'default');
-    if (_typeof(res) !== 'object') return res;
+function _toPrimitive(t, r) {
+  if ('object' != _typeof(t) || !t) return t;
+  var e = t[Symbol.toPrimitive];
+  if (void 0 !== e) {
+    var i = e.call(t, r || 'default');
+    if ('object' != _typeof(i)) return i;
     throw new TypeError('@@toPrimitive must return a primitive value.');
   }
-  return (hint === 'string' ? String : Number)(input);
+  return ('string' === r ? String : Number)(t);
 }
-// 返回一个无状态的函数组件
-function WrapNode(WrappedComponent) {
-  return function (props) {
-    var x = props.x,
-      y = props.y,
-      width = props.width,
-      fixed = props.fixed,
-      minWidth = props.minWidth,
-      minHeight = props.minHeight;
-    var s = {};
-    if (fixed) {
-      s = {
-        width: minWidth,
-      };
-    } else {
-      s = {
-        width: width,
-      };
-    }
-    var style = _objectSpread(
-      {
-        position: 'absolute',
-        top: x,
+// 返回一个无状态的class类组件, memo 用于优化性能
+var WrapNode = /*#__PURE__*/ (0, _react.memo)(function (props) {
+  var x = props.x,
+    y = props.y,
+    component = props.component;
+  (0, _react.useEffect)(function () {}, []);
+  var pos = (0, _react.useMemo)(
+    function () {
+      return {
         left: y,
-        fontFamily: 'Segoe UI',
-        fontSize: '12px',
-        fontWeight: 'normal',
-        background: 'white',
-        height: minHeight,
-      },
-      s,
-    );
-    return /*#__PURE__*/ _react.default.createElement(
-      'div',
-      {
-        className: 'wrap-node',
-        style: style,
-      },
-      /*#__PURE__*/ _react.default.createElement(WrappedComponent, props),
-    );
+        top: x,
+      };
+    },
+    [x, y],
+  );
+  var style = {
+    transform: 'translate('.concat(pos['left'], 'px, ').concat(pos['top'], 'px)'),
   };
-}
-var _default = WrapNode;
-exports.default = _default;
+  return /*#__PURE__*/ _react.default.createElement(
+    'div',
+    {
+      className: 'wrap-node',
+      style: _objectSpread({}, style),
+    },
+    component(props),
+  );
+}, areEqual);
+var areEqual = function areEqual(prevProps, nextProps) {
+  var prevX = prevProps.x,
+    prevY = prevProps.y,
+    preUnique = prevProps.unique;
+  var nextX = nextProps.x,
+    nextY = nextProps.y,
+    nextUnique = nextProps.unique;
+  if (prevX === nextX && prevY === nextY && preUnique === nextUnique) {
+    return true;
+  }
+  if (parent === null) {
+    return false;
+  }
+  return false;
+};
+var _default = (exports.default = WrapNode);

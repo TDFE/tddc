@@ -81,44 +81,32 @@ function _defineProperty(obj, key, value) {
   }
   return obj;
 }
-function _toPropertyKey(arg) {
-  var key = _toPrimitive(arg, 'string');
-  return _typeof(key) === 'symbol' ? key : String(key);
+function _toPropertyKey(t) {
+  var i = _toPrimitive(t, 'string');
+  return 'symbol' == _typeof(i) ? i : String(i);
 }
-function _toPrimitive(input, hint) {
-  if (_typeof(input) !== 'object' || input === null) return input;
-  var prim = input[Symbol.toPrimitive];
-  if (prim !== undefined) {
-    var res = prim.call(input, hint || 'default');
-    if (_typeof(res) !== 'object') return res;
+function _toPrimitive(t, r) {
+  if ('object' != _typeof(t) || !t) return t;
+  var e = t[Symbol.toPrimitive];
+  if (void 0 !== e) {
+    var i = e.call(t, r || 'default');
+    if ('object' != _typeof(i)) return i;
     throw new TypeError('@@toPrimitive must return a primitive value.');
   }
-  return (hint === 'string' ? String : Number)(input);
+  return ('string' === r ? String : Number)(t);
 }
-var RELATION_WIDTH = 120;
-exports.RELATION_WIDTH = RELATION_WIDTH;
-var COMPONENT_HEIGHT = 40;
-exports.COMPONENT_HEIGHT = COMPONENT_HEIGHT;
-var COMPONENT_WIDTH = 120;
-exports.COMPONENT_WIDTH = COMPONENT_WIDTH;
-var COMPONENT_SPACE_VERTICAL = 20;
-exports.COMPONENT_SPACE_VERTICAL = COMPONENT_SPACE_VERTICAL;
-var COMPONENT_SPACE_HORIZONTAL = 38;
-exports.COMPONENT_SPACE_HORIZONTAL = COMPONENT_SPACE_HORIZONTAL;
-var COMPONENT_MARGIN = 5;
-exports.COMPONENT_MARGIN = COMPONENT_MARGIN;
-var ROOT_WIDTH = 130;
-exports.ROOT_WIDTH = ROOT_WIDTH;
-var ROOT_HEIGHT = 60;
-exports.ROOT_HEIGHT = ROOT_HEIGHT;
-var MARGIN_LEFT = 60;
-exports.MARGIN_LEFT = MARGIN_LEFT;
-var CONTENT_WIDTH = 100;
-exports.CONTENT_WIDTH = CONTENT_WIDTH;
-var DOT_WIDTH = 20;
-exports.DOT_WIDTH = DOT_WIDTH;
-var EXPAND_WIDTH = 16;
-exports.EXPAND_WIDTH = EXPAND_WIDTH;
+var RELATION_WIDTH = (exports.RELATION_WIDTH = 120);
+var COMPONENT_HEIGHT = (exports.COMPONENT_HEIGHT = 40);
+var COMPONENT_WIDTH = (exports.COMPONENT_WIDTH = 120);
+var COMPONENT_SPACE_VERTICAL = (exports.COMPONENT_SPACE_VERTICAL = 20);
+var COMPONENT_SPACE_HORIZONTAL = (exports.COMPONENT_SPACE_HORIZONTAL = 38);
+var COMPONENT_MARGIN = (exports.COMPONENT_MARGIN = 5);
+var ROOT_WIDTH = (exports.ROOT_WIDTH = 130);
+var ROOT_HEIGHT = (exports.ROOT_HEIGHT = 60);
+var MARGIN_LEFT = (exports.MARGIN_LEFT = 60);
+var CONTENT_WIDTH = (exports.CONTENT_WIDTH = 100);
+var DOT_WIDTH = (exports.DOT_WIDTH = 20);
+var EXPAND_WIDTH = (exports.EXPAND_WIDTH = 16);
 var constant = {
   RELATION_WIDTH: RELATION_WIDTH,
   COMPONENT_HEIGHT: COMPONENT_HEIGHT,
@@ -134,7 +122,7 @@ var constant = {
 };
 
 // 天策
-var tiance = {
+var tiance = (exports.tiance = {
   POLICY: {
     en: 'P',
     cn: '策',
@@ -339,11 +327,10 @@ var tiance = {
     color: '#DB6595',
     img: (0, _utils.SVGImage)('评', '#DB6595'),
   },
-};
+});
 
 // 天座
-exports.tiance = tiance;
-var tianzuo = {
+var tianzuo = (exports.tianzuo = {
   DATASOURCE_PARTNER: {
     en: 'P',
     name: '合',
@@ -408,16 +395,13 @@ var tianzuo = {
     color: '#72A768',
     img: (0, _utils.SVGImage)('并', '#91B53B'),
   },
-};
-exports.tianzuo = tianzuo;
-var NODE_TYPE_MAP = _objectSpread(
+});
+var NODE_TYPE_MAP = (exports.NODE_TYPE_MAP = _objectSpread(
   _objectSpread(_objectSpread({}, tiance), tianzuo),
   {},
   {
     tiance: _objectSpread({}, tiance),
     tianzuo: _objectSpread({}, tianzuo),
   },
-);
-exports.NODE_TYPE_MAP = NODE_TYPE_MAP;
-var _default = constant;
-exports.default = _default;
+));
+var _default = (exports.default = constant);
