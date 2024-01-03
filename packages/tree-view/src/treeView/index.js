@@ -113,7 +113,9 @@ class Tree extends Base {
           null;
         return NodeIns;
       };
-
+      if (!node.parent && !node.children) {
+        return;
+      }
       result.push(
         <WrapNode
           component={(props) => Eledom(props)}
@@ -342,50 +344,23 @@ class Tree extends Base {
 
   render() {
     this.buildPosition(this.hierarchyData);
-    if (
-      this.linesAndDomsNums !== this.flattenNodes.length + this.flattenLinks.length ||
-      this.data?.[this.key] !== this.pre_data_key
-    ) {
-      this.onChange && this.onChange(this.data);
-      let nodeDoms = this.drawNode();
-      let lineDoms = this.drawLine();
-      this.linesAndDomsNums = nodeDoms.length + lineDoms.length;
 
-      // 卸载所有子元素， 确保容器内没有其他元素之后再进行渲染
-      this.unmountBool = ReactDOM.unmountComponentAtNode(this.dom);
+    this.onChange && this.onChange(this.data);
+    let nodeDoms = this.drawNode();
+    let lineDoms = this.drawLine();
+    this.linesAndDomsNums = nodeDoms.length + lineDoms.length;
 
-      if (this.dom.childNodes.length === 0) {
-        ReactDOM.render(
-          <GenerateDom
-            doms={nodeDoms.concat(lineDoms)}
-            linesAndDomsNums={this.linesAndDomsNums}
-            onFinish={this.onFinish}
-            onChange={this.onChange}
-            container={this.dom}
-          />,
-          this.dom,
-        );
-      } else {
-        let requestId = requestAnimationFrame(() => {
-          if (this.unmountBool) {
-            ReactDOM.render(
-              <GenerateDom
-                doms={nodeDoms.concat(lineDoms)}
-                linesAndDomsNums={this.linesAndDomsNums}
-                onFinish={this.onFinish}
-                onChange={this.onChange}
-                container={this.dom}
-              />,
-              this.dom,
-            );
-            cancelAnimationFrame(requestId);
-            this.unmountBool = false;
-          }
-        });
-      }
-    } else {
-      this.onFinish && this.onFinish();
-    }
+    ReactDOM.render(
+      <GenerateDom
+        doms={nodeDoms.concat(lineDoms)}
+        linesAndDomsNums={this.linesAndDomsNums}
+        onFinish={this.onFinish}
+        onChange={this.onChange}
+        width={this.domWidth}
+        height={this.domHeight}
+      />,
+      this.dom,
+    );
   }
 }
 

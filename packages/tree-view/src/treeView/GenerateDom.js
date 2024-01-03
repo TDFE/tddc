@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, createRef } from 'react';
 import ReactDOM from 'react-dom';
 
 function chunkRender(dataArr, callback) {
@@ -35,20 +35,34 @@ function chunkRender(dataArr, callback) {
 class HugeArray extends Component {
   constructor(props) {
     super(props);
-    this.container = props.container || <div />;
     this.elements = [];
+    this.container = createRef();
   }
 
   componentDidMount() {
     const { doms } = this.props;
-    chunkRender(doms, this.handleChunk); // 初始化分块渲染功能
+    // 清除上一次渲染的 DOM 元素
+    this.container.current.innerHTML = '';
+
+    chunkRender(doms, this.handleChunk);
   }
 
-  handleChunk = (chunk, bool) => {
-    const elements = chunk; // 根据当前小数组生成 DOM 元素
+  componentDidUpdate() {
+    const { doms } = this.props;
+    // 清除上一次渲染的 DOM 元素
+    this.container.current.innerHTML = '';
 
-    this.elements = this.elements.concat(elements); // 将元素添加到元素数组中
-    ReactDOM.render(this.elements, this.container); // 渲染所有元素
+    chunkRender(doms, this.handleChunk);
+  }
+
+  // 暴露给外部的方法和属性
+
+  handleChunk = (chunk, bool) => {
+    let dom = document.createElement('div');
+
+    ReactDOM.render(chunk, dom, () => {
+      this.container.current.appendChild(dom);
+    });
 
     if (bool) {
       this.props.onFinish && this.props.onFinish();
@@ -56,7 +70,17 @@ class HugeArray extends Component {
   };
 
   render() {
-    return <></>;
+    return (
+      <div
+        ref={this.container}
+        style={{
+          display: 'absolute',
+          minHeight: 100,
+          width: this.props.width,
+          height: this.props.height,
+        }}
+      />
+    );
   }
 }
 
