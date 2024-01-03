@@ -187,18 +187,18 @@ var HugeArray = /*#__PURE__*/ (function (_Component) {
     var _this;
     _classCallCheck(this, HugeArray);
     _this = _super.call(this, props);
+    // 暴露给外部的方法和属性
     _this.handleChunk = function (chunk, bool) {
-      var elements = chunk; // 根据当前小数组生成 DOM 元素
-
-      _this.elements = _this.elements.concat(elements); // 将元素添加到元素数组中
-      _reactDom.default.render(_this.elements, _this.container); // 渲染所有元素
-
+      var dom = document.createElement('div');
+      _reactDom.default.render(chunk, dom, function () {
+        _this.container.current.appendChild(dom);
+      });
       if (bool) {
         _this.props.onFinish && _this.props.onFinish();
       }
     };
-    _this.container = props.container || /*#__PURE__*/ _react.default.createElement('div', null);
     _this.elements = [];
+    _this.container = /*#__PURE__*/ (0, _react.createRef)();
     return _this;
   }
   _createClass(HugeArray, [
@@ -206,13 +206,32 @@ var HugeArray = /*#__PURE__*/ (function (_Component) {
       key: 'componentDidMount',
       value: function componentDidMount() {
         var doms = this.props.doms;
-        chunkRender(doms, this.handleChunk); // 初始化分块渲染功能
+        // 清除上一次渲染的 DOM 元素
+        this.container.current.innerHTML = '';
+        chunkRender(doms, this.handleChunk);
+      },
+    },
+    {
+      key: 'componentDidUpdate',
+      value: function componentDidUpdate() {
+        var doms = this.props.doms;
+        // 清除上一次渲染的 DOM 元素
+        this.container.current.innerHTML = '';
+        chunkRender(doms, this.handleChunk);
       },
     },
     {
       key: 'render',
       value: function render() {
-        return /*#__PURE__*/ _react.default.createElement(_react.default.Fragment, null);
+        return /*#__PURE__*/ _react.default.createElement('div', {
+          ref: this.container,
+          style: {
+            display: 'absolute',
+            minHeight: 100,
+            width: this.props.width,
+            height: this.props.height,
+          },
+        });
       },
     },
   ]);

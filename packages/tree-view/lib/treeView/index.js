@@ -760,6 +760,9 @@ var Tree = /*#__PURE__*/ (function (_Base) {
                   null;
                 return NodeIns;
               };
+              if (!node.parent && !node.children) {
+                return;
+              }
               result.push(
                 /*#__PURE__*/ _react.default.createElement(_WrapNode.default, {
                   component: function component(props) {
@@ -1107,54 +1110,22 @@ var Tree = /*#__PURE__*/ (function (_Base) {
     {
       key: 'render',
       value: function render() {
-        var _this$data2,
-          _this6 = this;
         this.buildPosition(this.hierarchyData);
-        if (
-          this.linesAndDomsNums !== this.flattenNodes.length + this.flattenLinks.length ||
-          ((_this$data2 = this.data) === null || _this$data2 === void 0
-            ? void 0
-            : _this$data2[this.key]) !== this.pre_data_key
-        ) {
-          this.onChange && this.onChange(this.data);
-          var nodeDoms = this.drawNode();
-          var lineDoms = this.drawLine();
-          this.linesAndDomsNums = nodeDoms.length + lineDoms.length;
-
-          // 卸载所有子元素， 确保容器内没有其他元素之后再进行渲染
-          this.unmountBool = _reactDom.default.unmountComponentAtNode(this.dom);
-          if (this.dom.childNodes.length === 0) {
-            _reactDom.default.render(
-              /*#__PURE__*/ _react.default.createElement(_GenerateDom.default, {
-                doms: nodeDoms.concat(lineDoms),
-                linesAndDomsNums: this.linesAndDomsNums,
-                onFinish: this.onFinish,
-                onChange: this.onChange,
-                container: this.dom,
-              }),
-              this.dom,
-            );
-          } else {
-            var requestId = requestAnimationFrame(function () {
-              if (_this6.unmountBool) {
-                _reactDom.default.render(
-                  /*#__PURE__*/ _react.default.createElement(_GenerateDom.default, {
-                    doms: nodeDoms.concat(lineDoms),
-                    linesAndDomsNums: _this6.linesAndDomsNums,
-                    onFinish: _this6.onFinish,
-                    onChange: _this6.onChange,
-                    container: _this6.dom,
-                  }),
-                  _this6.dom,
-                );
-                cancelAnimationFrame(requestId);
-                _this6.unmountBool = false;
-              }
-            });
-          }
-        } else {
-          this.onFinish && this.onFinish();
-        }
+        this.onChange && this.onChange(this.data);
+        var nodeDoms = this.drawNode();
+        var lineDoms = this.drawLine();
+        this.linesAndDomsNums = nodeDoms.length + lineDoms.length;
+        _reactDom.default.render(
+          /*#__PURE__*/ _react.default.createElement(_GenerateDom.default, {
+            doms: nodeDoms.concat(lineDoms),
+            linesAndDomsNums: this.linesAndDomsNums,
+            onFinish: this.onFinish,
+            onChange: this.onChange,
+            width: this.domWidth,
+            height: this.domHeight,
+          }),
+          this.dom,
+        );
       },
     },
   ]);
