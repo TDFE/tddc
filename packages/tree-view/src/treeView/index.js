@@ -113,7 +113,7 @@ class Tree extends Base {
           null;
         return NodeIns;
       };
-      if (!node.parent && !node.children) {
+      if (!node.parent && !node.data.children) {
         return;
       }
       result.push(
