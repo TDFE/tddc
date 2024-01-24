@@ -1,96 +1,28 @@
-'use strict';
+"use strict";
 
-Object.defineProperty(exports, '__esModule', {
-  value: true,
+Object.defineProperty(exports, "__esModule", {
+  value: true
 });
 exports.getHandleType = getHandleType;
 exports.getRuleCfgList = getRuleCfgList;
 exports.sourceName = exports.isJSON = exports.getTextPixelWith = void 0;
 exports.transform = transform;
-function _typeof(o) {
-  '@babel/helpers - typeof';
-  return (
-    (_typeof =
-      'function' == typeof Symbol && 'symbol' == typeof Symbol.iterator
-        ? function (o) {
-            return typeof o;
-          }
-        : function (o) {
-            return o &&
-              'function' == typeof Symbol &&
-              o.constructor === Symbol &&
-              o !== Symbol.prototype
-              ? 'symbol'
-              : typeof o;
-          }),
-    _typeof(o)
-  );
-}
-function ownKeys(e, r) {
-  var t = Object.keys(e);
-  if (Object.getOwnPropertySymbols) {
-    var o = Object.getOwnPropertySymbols(e);
-    r &&
-      (o = o.filter(function (r) {
-        return Object.getOwnPropertyDescriptor(e, r).enumerable;
-      })),
-      t.push.apply(t, o);
-  }
-  return t;
-}
-function _objectSpread(e) {
-  for (var r = 1; r < arguments.length; r++) {
-    var t = null != arguments[r] ? arguments[r] : {};
-    r % 2
-      ? ownKeys(Object(t), !0).forEach(function (r) {
-          _defineProperty(e, r, t[r]);
-        })
-      : Object.getOwnPropertyDescriptors
-      ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t))
-      : ownKeys(Object(t)).forEach(function (r) {
-          Object.defineProperty(e, r, Object.getOwnPropertyDescriptor(t, r));
-        });
-  }
-  return e;
-}
-function _defineProperty(obj, key, value) {
-  key = _toPropertyKey(key);
-  if (key in obj) {
-    Object.defineProperty(obj, key, {
-      value: value,
-      enumerable: true,
-      configurable: true,
-      writable: true,
-    });
-  } else {
-    obj[key] = value;
-  }
-  return obj;
-}
-function _toPropertyKey(arg) {
-  var key = _toPrimitive(arg, 'string');
-  return _typeof(key) === 'symbol' ? key : String(key);
-}
-function _toPrimitive(input, hint) {
-  if (_typeof(input) !== 'object' || input === null) return input;
-  var prim = input[Symbol.toPrimitive];
-  if (prim !== undefined) {
-    var res = prim.call(input, hint || 'default');
-    if (_typeof(res) !== 'object') return res;
-    throw new TypeError('@@toPrimitive must return a primitive value.');
-  }
-  return (hint === 'string' ? String : Number)(input);
-}
+function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
+function ownKeys(e, r) { var t = Object.keys(e); if (Object.getOwnPropertySymbols) { var o = Object.getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return Object.getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
+function _objectSpread(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys(Object(t), !0).forEach(function (r) { _defineProperty(e, r, t[r]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys(Object(t)).forEach(function (r) { Object.defineProperty(e, r, Object.getOwnPropertyDescriptor(t, r)); }); } return e; }
+function _defineProperty(obj, key, value) { key = _toPropertyKey(key); if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+function _toPropertyKey(t) { var i = _toPrimitive(t, "string"); return "symbol" == _typeof(i) ? i : String(i); }
+function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e = t[Symbol.toPrimitive]; if (void 0 !== e) { var i = e.call(t, r || "default"); if ("object" != _typeof(i)) return i; throw new TypeError("@@toPrimitive must return a primitive value."); } return ("string" === r ? String : Number)(t); }
 function transform(string, child, childMap) {
   var tree = child || {
     logic: '',
-    children: [],
+    children: []
   };
   var openBrackets = 0;
   var i = 0;
   var strObj = {
     logic: '&&',
-    children: [],
+    children: []
   };
   var hasAnd = false;
   var hasOr = false;
@@ -138,11 +70,7 @@ function transform(string, child, childMap) {
         _i = -1;
       }
       if (_string !== '' && _i + 1 >= _string.length) {
-        if (
-          _string !== '' &&
-          _string.charAt(0) === '(' &&
-          _string.charAt(_string.length - 1) === ')'
-        ) {
+        if (_string !== '' && _string.charAt(0) === '(' && _string.charAt(_string.length - 1) === ')') {
           if (bracesStatus(_string.substr(1, _string.length - 2))) {
             _string = _string.substr(1, _string.length - 2);
           }
@@ -159,7 +87,7 @@ function transform(string, child, childMap) {
       var _str2 = item;
       var _child = {
         logic: '&&',
-        children: [],
+        children: []
       };
       if (_str2 !== '' && _str2.charAt(0) === '(' && _str2.charAt(_str2.length - 1) === ')') {
         if (bracesStatus(_str2.substr(1, _str2.length - 2))) {
@@ -170,12 +98,9 @@ function transform(string, child, childMap) {
       transform(_str2, _child, childMap);
     } else {
       var obj = {};
-      obj = _objectSpread(
-        {
-          name: item,
-        },
-        childMap[item],
-      );
+      obj = _objectSpread({
+        name: item
+      }, childMap[item]);
       if (childMap[item] && childMap[item].children) {
         obj.isGroup = true;
       }
@@ -191,42 +116,37 @@ function bracesStatus(string) {
   }
   return string === '';
 }
-var getTextPixelWith = function getTextPixelWith(text) {
-  var fontStyle =
-    arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 'normal 14px Robot';
+var getTextPixelWith = exports.getTextPixelWith = function getTextPixelWith(text) {
+  var fontStyle = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 'normal 14px Robot';
   var canvas = document.createElement('canvas'); // 创建 canvas 画布
   var context = canvas.getContext('2d'); // 获取 canvas 绘图上下文环境
   context.font = fontStyle; // 设置字体样式，使用前设置好对应的 font 样式才能准确获取文字的像素长度
   var dimension = context.measureText(text); // 测量文字
   return dimension.width;
 };
-exports.getTextPixelWith = getTextPixelWith;
 function getRuleCfgList(cfgJson, params) {
   var list = [];
-  cfgJson &&
-    cfgJson['params'] &&
-    cfgJson['params'].map(function (item, index) {
-      item.children &&
-        item.children.map(function (subItem, subIndex) {
-          var param = params.find(function (pItem) {
-            return pItem.name === subItem.name;
-          });
-          var obj = {
-            name: subItem.name,
-            componentType: subItem.componentType,
-            type: subItem.type ? subItem.type : 'string',
-            value: param && param.value ? param.value : subItem.defaultValue,
-            mapType: subItem.mapType ? subItem.mapType : null,
-            selectName: subItem.selectName ? subItem.selectName : null,
-            selectType: subItem.selectType ? subItem.selectType : null,
-            selectOption: subItem.selectOption ? subItem.selectOption : null,
-            willChangeOther: subItem['willChangeOther'] ? subItem['willChangeOther'] : [],
-            willChangeSelf: subItem['willChangeSelf'] ? subItem['willChangeSelf'] : null,
-            willChangeParent: subItem['willChangeParent'] ? subItem['willChangeParent'] : [],
-          };
-          list.push(obj);
-        });
+  cfgJson && cfgJson['params'] && cfgJson['params'].map(function (item, index) {
+    item.children && item.children.map(function (subItem, subIndex) {
+      var param = params.find(function (pItem) {
+        return pItem.name === subItem.name;
+      });
+      var obj = {
+        name: subItem.name,
+        componentType: subItem.componentType,
+        type: subItem.type ? subItem.type : 'string',
+        value: param && param.value ? param.value : subItem.defaultValue,
+        mapType: subItem.mapType ? subItem.mapType : null,
+        selectName: subItem.selectName ? subItem.selectName : null,
+        selectType: subItem.selectType ? subItem.selectType : null,
+        selectOption: subItem.selectOption ? subItem.selectOption : null,
+        willChangeOther: subItem['willChangeOther'] ? subItem['willChangeOther'] : [],
+        willChangeSelf: subItem['willChangeSelf'] ? subItem['willChangeSelf'] : null,
+        willChangeParent: subItem['willChangeParent'] ? subItem['willChangeParent'] : []
+      };
+      list.push(obj);
     });
+  });
   return list;
 }
 function getHandleType(handleObj, allMap) {
@@ -234,20 +154,16 @@ function getHandleType(handleObj, allMap) {
   if (handleObj && handleObj.selectType) {
     if (handleObj.selectType === 'service') {
       if (handleObj.value && handleObj.selectName) {
-        var mapItem =
-          allMap &&
-          allMap[handleObj.selectName] &&
-          handleObj.value &&
-          allMap[handleObj.selectName].filter(function (item) {
-            return item.name === handleObj.value;
-          })[0];
+        var mapItem = allMap && allMap[handleObj.selectName] && handleObj.value && allMap[handleObj.selectName].filter(function (item) {
+          return item.name === handleObj.value;
+        })[0];
         type = mapItem && mapItem['type'] ? mapItem['type'].toLowerCase() : 'string';
       }
     }
   }
   return type;
 }
-var isJSON = function isJSON(str) {
+var isJSON = exports.isJSON = function isJSON(str) {
   if (typeof str === 'string') {
     try {
       var obj = JSON.parse(str);
@@ -263,27 +179,21 @@ var isJSON = function isJSON(str) {
     // console.log("It is not a string!", str);
   }
 };
-exports.isJSON = isJSON;
-var sourceName = function sourceName(field, lang) {
+var sourceName = exports.sourceName = function sourceName(field, lang) {
   var _params$field;
   var params = {
     field: {
       cn: '字段',
-      en: 'field',
+      en: 'field'
     },
     realtime: {
       cn: '实时',
-      en: 'realtime',
+      en: 'realtime'
     },
     offline: {
       cn: '离线',
-      en: 'offline',
-    },
+      en: 'offline'
+    }
   };
-  return (
-    ((_params$field = params[field]) === null || _params$field === void 0
-      ? void 0
-      : _params$field[lang]) || field
-  );
+  return ((_params$field = params[field]) === null || _params$field === void 0 ? void 0 : _params$field[lang]) || field;
 };
-exports.sourceName = sourceName;

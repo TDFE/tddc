@@ -1,10 +1,10 @@
-'use strict';
+"use strict";
 
-Object.defineProperty(exports, '__esModule', {
-  value: true,
+Object.defineProperty(exports, "__esModule", {
+  value: true
 });
 exports.colorRgb = void 0;
-var colorRgb = function colorRgb(str, opacity) {
+var colorRgb = exports.colorRgb = function colorRgb(str, opacity) {
   var sColor = str === null || str === void 0 ? void 0 : str.toLowerCase();
   if (sColor) {
     if (sColor.length === 4) {
@@ -23,4 +23,3 @@ var colorRgb = function colorRgb(str, opacity) {
   }
   return sColor;
 };
-exports.colorRgb = colorRgb;
