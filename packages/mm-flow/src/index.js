@@ -144,7 +144,7 @@ export default forwardRef((props, ref) => {
       await editorRef.current.controller.autoFit();
       runFlow();
     } catch (e) {
-      message.error('解析数据错误,' + e?.message);
+      message.error((getText('parseErr') || '解析数据错误,') + e?.message);
     }
   };
 

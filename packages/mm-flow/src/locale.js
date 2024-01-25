@@ -21,6 +21,12 @@ export const zh_CN = {
   yunxingshibai: '运行失败',
   bunengshezhishuruliu: '不能设置输入流',
   bunengshezhishuchuliu: '不能设置输出流',
+  parseErr: '解析数据错误，',
+  configErr: '配置不合法，原因如下：',
+  configEmpty: '配置不能为空',
+  startOutputMiss: '[开始]缺少输出流',
+  startOutputOne: '[开始]开始节点只能有一个',
+  endNoInput: '[结束]缺少输入流',
 };
 
 export const en_US = {
@@ -42,6 +48,12 @@ export const en_US = {
   yunxingshibai: 'fail',
   bunengshezhishuruliu: 'input stream cannot be set',
   bunengshezhishuchuliu: 'output stream cannot be set',
+  parseErr: 'Parsing data error,',
+  configErr: 'The configuration is invalid because of the following reasons:',
+  configEmpty: 'he configuration cannot be empty',
+  startOutputMiss: '[Start] The output stream is missing',
+  startOutputOne: '[Start] There can be only one start node',
+  endNoInput: '[End] The input stream is missing',
 };
 
 export const getText = (key, language, ...params) => {

@@ -1,4 +1,5 @@
 import { message, Modal } from 'antd';
+import { getText } from './locale';
 const DefaultConvert = {
   // 解析数据
   convert(data) {
@@ -66,16 +67,20 @@ const DefaultConvert = {
       switch (item.type) {
         case 'start':
           if (toLines.size < 1) {
-            errorMsgList.push(<p key={`1-${i}`}>[开始]缺少输出流</p>);
+            errorMsgList.push(
+              <p key={`1-${i}`}>{getText('startOutputMiss') || '[开始]缺少输出流'}</p>,
+            );
           }
           if (nodesTypeMap['start']) {
-            errorMsgList.push(<p key={i}>[开始]开始节点只能有一个</p>);
+            errorMsgList.push(
+              <p key={i}>{getText('startOutputOne') || '[开始]开始节点只能有一个'}</p>,
+            );
           }
           nodesTypeMap['start'] = true;
           break;
         case 'end':
           if (fromLines.size < 1) {
-            errorMsgList.push(<p key={`2-${i}`}>[结束]缺少输入流</p>);
+            errorMsgList.push(<p key={`2-${i}`}>{getText('endNoInput') || '[结束]缺少输入流'}</p>);
           }
           nodesTypeMap['end'] = true;
           break;
@@ -117,13 +122,13 @@ const DefaultConvert = {
       });
       Modal.warning({
         zIndex: 1100,
-        title: '配置不合法，原因如下：', //
+        title: getText('configErr') || '配置不合法，原因如下：', //
         content: <div>{errorMsgList}</div>,
       });
       return false;
     }
     if (!noMessage && res.flowNodeDefinitions.length === 0) {
-      message.warn('配置不能为空');
+      message.warn(getText('configEmpty') || '配置不能为空');
       return false;
     }
     this.res = res;
