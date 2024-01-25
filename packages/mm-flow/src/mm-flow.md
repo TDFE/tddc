@@ -25,11 +25,11 @@ const MMFlowComponent = () => {
   const [auditedNodes, setAuditedNodes] = useState([
     {
       uuid: '3e9bf4004ad911eda9df3f68e8b34c19',
-      status: 'success',
+      status: 'fail',
     },
     {
       uuid: '3f8012704ad911eda9df3f68e8b34c19',
-      status: 'error',
+      status: 'fail',
     },
   ]);
 
