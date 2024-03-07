@@ -201,7 +201,7 @@ class Tree extends Base {
         return (
           <div
             key={this.getHierarchyId(sourceKey, targetKey) + source.x + source.y}
-            data-key={this.getHierarchyId(sourceKey, targetKey) + source.x + source.y}
+            // data-key={this.getHierarchyId(sourceKey, targetKey) + source.x + source.y}
           >
             <Link
               root={!source.parent}

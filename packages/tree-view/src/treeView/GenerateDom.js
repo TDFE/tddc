@@ -16,7 +16,7 @@ function chunkRender(dataArr, callback) {
     const start = performance.now();
 
     while (currentIndex < chunks.length && performance.now() - start < 16) {
-      callback(chunks[currentIndex], currentIndex === chunks.length - 1); // 第二个参数为 true 时，表示已经处理完所有小数组
+      callback(chunks[currentIndex], currentIndex === chunks.length - 1, currentIndex); // 第二个参数为 true 时，表示已经处理完所有小数组
       currentIndex++;
     }
 
@@ -57,8 +57,10 @@ class HugeArray extends Component {
 
   // 暴露给外部的方法和属性
 
-  handleChunk = (chunk, bool) => {
+  handleChunk = (chunk, bool, currentIndex) => {
     let dom = document.createElement('div');
+    // 设置key值
+    dom.setAttribute('key', currentIndex);
 
     ReactDOM.render(chunk, dom, () => {
       this.container.current.appendChild(dom);
