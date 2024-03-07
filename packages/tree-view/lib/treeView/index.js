@@ -871,7 +871,7 @@ var Tree = /*#__PURE__*/ (function (_Base) {
                   'div',
                   {
                     key: _this3.getHierarchyId(sourceKey, targetKey) + source.x + source.y,
-                    'data-key': _this3.getHierarchyId(sourceKey, targetKey) + source.x + source.y,
+                    // data-key={this.getHierarchyId(sourceKey, targetKey) + source.x + source.y}
                   },
                   /*#__PURE__*/ _react.default.createElement(_Link.default, {
                     root: !source.parent,

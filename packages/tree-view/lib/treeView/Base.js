@@ -78,7 +78,7 @@ var Base = /*#__PURE__*/ (function () {
         if (!this.data) return;
         // 设置key
         var valueTemp = (0, _lodash.cloneDeep)(this.data);
-        this.setKey(valueTemp, {});
+        // this.setKey(valueTemp, {});
         this.finalValue = Object.assign(
           {
             type: 'relation',
@@ -95,49 +95,43 @@ var Base = /*#__PURE__*/ (function () {
       },
 
       // 设置key
-    },
-    {
-      key: 'setKey',
-      value: function setKey(data, keyMap) {
-        var _this = this;
-        var createKey = function createKey(v) {
-          if (!(v && v.key)) {
-            v.key = _this.getUniqKey(_this.keyDefault, keyMap);
-          }
-          keyMap[v.key] = 1;
-          if (v && v.children && v.children.length) {
-            _this.setKey(v.children, keyMap);
-          }
-        };
-        if (Array.isArray(data)) {
-          data.forEach(function (v, i) {
-            v.index = i;
-            createKey(v);
-          });
-        } else {
-          if (data) {
-            data.index = 0;
-            createKey(data);
-          }
-        }
-      },
-    },
-    {
-      key: 'getUniqKey',
-      value: function getUniqKey(key, keyMap) {
-        if (key in keyMap) {
-          var k = key + 1;
-          return this.getUniqKey(k, keyMap);
-        }
-        return key;
-      },
+      // setKey(data, keyMap) {
+      //   const createKey = (v) => {
+      //     if (!(v && v.key)) {
+      //       v.key = this.getUniqKey(this.keyDefault, keyMap);
+      //     }
+      //     keyMap[v.key] = 1;
+      //     if (v && v.children && v.children.length) {
+      //       this.setKey(v.children, keyMap);
+      //     }
+      //   };
+      //   if (Array.isArray(data)) {
+      //     data.forEach((v, i) => {
+      //       v.index = i;
+      //       createKey(v);
+      //     });
+      //   } else {
+      //     if (data) {
+      //       data.index = 0;
+      //       createKey(data);
+      //     }
+      //   }
+      // }
+
+      // getUniqKey(key, keyMap) {
+      //   if (key in keyMap) {
+      //     const k = key + 1;
+      //     return this.getUniqKey(k, keyMap);
+      //   }
+      //   return key;
+      // }
 
       // 格式化节点树
     },
     {
       key: 'addDropAreaAndOperation',
       value: function addDropAreaAndOperation(children, parentPath, level) {
-        var _this2 = this;
+        var _this = this;
         var parentColor = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : '';
         if (!children) {
           children = [];
@@ -167,7 +161,7 @@ var Base = /*#__PURE__*/ (function () {
             });
             if (child.children && child.children.length) {
               node.type = 'relation';
-              node.children = _this2.addDropAreaAndOperation(
+              node.children = _this.addDropAreaAndOperation(
                 child.children,
                 path.concat(['children']),
                 level + 1,

@@ -167,7 +167,7 @@ function chunkRender(dataArr, callback) {
   function renderChunk() {
     var start = performance.now();
     while (currentIndex < chunks.length && performance.now() - start < 16) {
-      callback(chunks[currentIndex], currentIndex === chunks.length - 1); // 第二个参数为 true 时，表示已经处理完所有小数组
+      callback(chunks[currentIndex], currentIndex === chunks.length - 1, currentIndex); // 第二个参数为 true 时，表示已经处理完所有小数组
       currentIndex++;
     }
     if (currentIndex < chunks.length) {
@@ -188,8 +188,10 @@ var HugeArray = /*#__PURE__*/ (function (_Component) {
     _classCallCheck(this, HugeArray);
     _this = _super.call(this, props);
     // 暴露给外部的方法和属性
-    _this.handleChunk = function (chunk, bool) {
+    _this.handleChunk = function (chunk, bool, currentIndex) {
       var dom = document.createElement('div');
+      // 设置key值
+      dom.setAttribute('key', currentIndex);
       _reactDom.default.render(chunk, dom, function () {
         _this.container.current.appendChild(dom);
       });
