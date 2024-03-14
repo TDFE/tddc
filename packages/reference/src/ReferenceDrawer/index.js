@@ -15,6 +15,8 @@ const ReferenceDrawer = (props) => {
     visible,
     onClose,
     emptyType,
+    showPagination,
+    destroyOnClose = true,
     ...rest
   } = props;
   const [referenceData, setReferenceData] = useState(data);
@@ -43,6 +45,7 @@ const ReferenceDrawer = (props) => {
       title={<Tooltip title={title}>{title || ''}</Tooltip>}
       onClose={onClose}
       visible={visible}
+      destroyOnClose={destroyOnClose}
       {...rest}
     >
       {referenceLoad && <Spin className="globalSpin" tip={getText('inQuery', props?.lang)}></Spin>}
@@ -54,6 +57,7 @@ const ReferenceDrawer = (props) => {
             appList={appList || []}
             orgMap={orgMap || {}}
             unmountHandle={onClose}
+            showPagination={showPagination}
           />
         </div>
       )}

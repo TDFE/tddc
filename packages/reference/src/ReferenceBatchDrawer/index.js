@@ -19,6 +19,8 @@ const ReferenceBatchDrawer = (props) => {
     value = undefined,
     onChange = () => {},
     emptyType,
+    showPagination,
+    destroyOnClose = true,
     ...rest
   } = props;
   const [referenceData, setReferenceData] = useState(data);
@@ -47,6 +49,7 @@ const ReferenceBatchDrawer = (props) => {
       title={<Tooltip title={title}>{title || ''}</Tooltip>}
       onClose={onClose}
       visible={visible}
+      destroyOnClose={destroyOnClose}
       {...rest}
     >
       {referenceLoad && <Spin className="globalSpin" tip={getText('inQuery', props?.lang)} />}
@@ -77,6 +80,7 @@ const ReferenceBatchDrawer = (props) => {
                     referenceData={d?.result || []}
                     orgMap={orgMap}
                     appList={appList}
+                    showPagination={showPagination}
                   />
                 </Panel>
               );

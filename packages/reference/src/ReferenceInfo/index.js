@@ -13,8 +13,21 @@ export const ReferenceInfo = (props) => {
     description = '',
     unmountHandle,
     imageStyle = {},
+    showPagination = true,
     type,
   } = props;
+
+  let paginationInfo = {
+    pagination: {
+      size: 'small',
+    },
+  };
+
+  if (!showPagination) {
+    paginationInfo = {
+      pagination: false,
+    };
+  }
   return (
     <div className="reference-body">
       {!referenceData?.length && (
@@ -145,10 +158,10 @@ export const ReferenceInfo = (props) => {
                 bordered={false}
                 dataSource={d?.rows}
                 columns={renderColumns}
-                pagination={false}
                 scroll={{
                   x: (renderColumns.length - 1) * 140 + 40,
                 }}
+                {...paginationInfo}
                 rowKey={(e, i) => `${dIndex}_${i}`}
               />
             )}

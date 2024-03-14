@@ -18,6 +18,8 @@ const ReferenceBatchCheck = (props) => {
     ),
     rq,
     checkReferResponse,
+    showPagination,
+    destroyOnClose = true,
     orgMap = {},
     appList = [],
     value = undefined,
@@ -57,7 +59,7 @@ const ReferenceBatchCheck = (props) => {
         title={title}
         visible={true}
         width={1000}
-        destroyOnClose
+        destroyOnClose={destroyOnClose}
         getContainer={modalWrap}
         onCancel={removeModal}
         footer={[
@@ -133,6 +135,7 @@ const ReferenceBatchCheck = (props) => {
                     referenceData={d?.result || []}
                     orgMap={orgMap}
                     appList={appList}
+                    showPagination={showPagination}
                   />
                 </Panel>
               );
