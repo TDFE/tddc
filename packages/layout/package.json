@@ -10,6 +10,7 @@
   ],
   "peerDependencies": {
     "antd": ">=3.20.1",
+    "tntd": ">=2.0.9",
     "react": ">=16.8.0",
     "react-dom": ">=16.8.0",
     "universal-cookie": ">=2.2.0"
