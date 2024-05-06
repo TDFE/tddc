@@ -1,12 +1,14 @@
-"use strict";
+'use strict';
 
-Object.defineProperty(exports, "__esModule", {
-  value: true
+Object.defineProperty(exports, '__esModule', {
+  value: true,
 });
 exports.ruleOp = exports.excludeRuleTemplate = void 0;
-var _otp = _interopRequireDefault(require("../RuleTree/otp"));
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-var ruleOp = exports.ruleOp = {
+var _otp = _interopRequireDefault(require('../RuleTree/otp'));
+function _interopRequireDefault(obj) {
+  return obj && obj.__esModule ? obj : { default: obj };
+}
+var ruleOp = {
   '==': '=',
   '<=': '<=',
   '>=': '>=',
@@ -20,7 +22,9 @@ var ruleOp = exports.ruleOp = {
   isnull: _otp.default.weikong,
   notnull: _otp.default.feikong,
   in: _otp.default.cunzai,
-  notin: _otp.default.bucunzai
+  notin: _otp.default.bucunzai,
 };
-var excludeRuleTemplate = exports.excludeRuleTemplate = ['multiDimList/customList'];
+exports.ruleOp = ruleOp;
+var excludeRuleTemplate = ['multiDimList/customList'];
 // const excludeRuleTemplate = ["watchlist/customList", "multiDimList/customList"];
+exports.excludeRuleTemplate = excludeRuleTemplate;

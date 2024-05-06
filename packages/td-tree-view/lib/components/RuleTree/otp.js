@@ -1,21 +1,25 @@
-"use strict";
+'use strict';
 
-Object.defineProperty(exports, "__esModule", {
-  value: true
+Object.defineProperty(exports, '__esModule', {
+  value: true,
 });
 exports.getLang = exports.default = exports.createOtp = void 0;
-var _universalCookie = _interopRequireDefault(require("universal-cookie"));
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+var _universalCookie = _interopRequireDefault(require('universal-cookie'));
+function _interopRequireDefault(obj) {
+  return obj && obj.__esModule ? obj : { default: obj };
+}
 var cookies = new _universalCookie.default();
-var getLang = exports.getLang = function getLang() {
+var getLang = function getLang() {
   return cookies.get('lang') || 'cn';
 };
-var createOtp = exports.createOtp = function createOtp() {
+exports.getLang = getLang;
+var createOtp = function createOtp() {
   var obj = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
   var lang = getLang() || 'cn';
   return obj[lang] || {};
 };
-var _default = exports.default = createOtp({
+exports.createOtp = createOtp;
+var _default = createOtp({
   cn: {
     is: '为',
     yu: '与',
@@ -40,7 +44,7 @@ var _default = exports.default = createOtp({
     quanzhong: '权重：',
     tiaojian: '条件关系：',
     luoji: '逻辑关系：',
-    guize: '规则描述：'
+    guize: '规则描述：',
   },
   en: {
     is: 'is',
@@ -66,6 +70,7 @@ var _default = exports.default = createOtp({
     quanzhong: 'Weight：',
     tiaojian: 'Condition Relationship：',
     luoji: 'Logic Relationship：',
-    guize: 'Rule Description：'
-  }
+    guize: 'Rule Description：',
+  },
 });
+exports.default = _default;
