@@ -1,6 +1,6 @@
 {
   "name": "@tddc/collapse-table",
-  "version": "0.0.6",
+  "version": "0.0.7",
   "description": "collapse-table",
   "author": "zj",
   "license": "ISC",
@@ -9,7 +9,7 @@
     "lib"
   ],
   "peerDependencies": {
-    "tntd": "^>=2.7.16",
+    "tntd": ">=2.7.16",
     "react": ">=16.8.0",
     "react-dom": ">=16.8.0"
   }
