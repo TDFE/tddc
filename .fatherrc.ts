@@ -28,9 +28,8 @@ if (type === 'es') {
     pkgs: [...tailPkgs],
     extraBabelPlugins: [
       ['babel-plugin-import', { libraryName: 'antd', libraryDirectory: 'es', style: true }, 'antd'],
-      ['babel-plugin-import', { libraryName: 'tntd', libraryDirectory: 'es' }, 'tntd'][
-        require('./scripts/replaceLib')
-      ],
+      ['babel-plugin-import', { libraryName: 'tntd', libraryDirectory: 'es' }, 'tntd'],
+      [require('./scripts/replaceLib')],
     ],
   };
 }
