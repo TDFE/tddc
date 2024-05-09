@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Breadcrumb, Icon } from 'antd';
+import { Breadcrumb, Icon } from 'tntd';
 import { withRouter, matchPath, Link } from 'dva/router';
 import { getText } from './locale';
 import './index.less';
@@ -48,13 +48,16 @@ const flatten = (arr) => {
 
 export default (WrapperComponent, rest) => {
   const {
+    useCache, // 使用内部缓存
     defaultSearch = ['currentTab', 'current'],
     BreadCrumbCustom,
     BreadCrumbPrototype = {},
     showHeader,
     forceNoHeader,
     lang,
+    version,
   } = rest || {};
+  let breadCacheList = [];
   return withRouter((props) => {
     const { match, location, separator } = props || {};
     const { pathname, search } = location || {};
@@ -62,6 +65,62 @@ export default (WrapperComponent, rest) => {
     const [breadList, setBreadList] = useState([]);
     // 记录链接上需要保留的query参数
     const searchObj = searchToObject(search);
+    const curVersion = version || localStorage.getItem('app_version') || 'v3';
+
+    useEffect(() => {
+      if (!useCache) {
+        const routerArr = [];
+        flatten(children)?.forEach((props) => {
+          routerArr.push({
+            path: props.path === '/' ? match?.path : props.path,
+            name: props.name,
+            query: props.query,
+          });
+        });
+
+        const breadCrumbList = [];
+        routerArr?.filter((routeObj) => {
+          const { path } = routeObj || {};
+          const pathObj = matchPath(pathname, { path });
+          if (pathObj) {
+            breadCrumbList.push({
+              ...pathObj,
+              ...(routeObj || {}),
+            });
+          }
+        });
+
+        breadCrumbList.sort((a, b) => {
+          return a.path.length - b.path.length;
+        });
+
+        breadCrumbList?.map((item) => {
+          const querySet = new Set();
+          let curQuery = [];
+          item.query?.map((item1) => {
+            const curKey = Object.keys(item1)[0];
+            const sourceKey = Object.values(item1)[0];
+            curQuery.push(curKey + '=' + searchObj[sourceKey]);
+            querySet.add(curKey);
+          });
+
+          // const matched = matchPath(pathname, { path: item.path, exact: true });
+          if (defaultSearch?.length) {
+            defaultSearch.forEach((defaultKey) => {
+              if (!querySet.has(defaultKey)) {
+                if (searchObj[defaultKey]) {
+                  curQuery.push(`${defaultKey}=${searchObj[defaultKey]}`);
+                }
+              }
+            });
+          }
+          if (curQuery?.length) {
+            item.url += '?' + curQuery.join('&');
+          }
+        });
+        setBreadList(breadCrumbList);
+      }
+    }, [pathname]);
 
     useEffect(() => {
       const routerArr = [];
@@ -72,57 +131,55 @@ export default (WrapperComponent, rest) => {
           query: props.query,
         });
       });
-
-      const breadCrumbList = [];
-      routerArr?.filter((routeObj) => {
-        const { path } = routeObj || {};
-        const pathObj = matchPath(pathname, { path });
-        if (pathObj) {
-          breadCrumbList.push({
-            ...pathObj,
-            ...(routeObj || {}),
-          });
-        }
-      });
-
-      breadCrumbList.sort((a, b) => {
-        return a.path.length - b.path.length;
-      });
-
-      breadCrumbList?.map((item) => {
-        const querySet = new Set();
-        let curQuery = [];
-        item.query?.map((item1) => {
-          const curKey = Object.keys(item1)[0];
-          const sourceKey = Object.values(item1)[0];
-          curQuery.push(curKey + '=' + searchObj[sourceKey]);
-          querySet.add(curKey);
-        });
-
-        // const matched = matchPath(pathname, { path: item.path, exact: true });
-        if (defaultSearch?.length) {
-          defaultSearch.forEach((defaultKey) => {
-            if (!querySet.has(defaultKey)) {
-              if (searchObj[defaultKey]) {
-                curQuery.push(`${defaultKey}=${searchObj[defaultKey]}`);
-              }
+      if (useCache) {
+        if (pathname) {
+          const curRoute = routerArr?.find((item) => {
+            const matched = matchPath(pathname, { path: item.path, exact: true });
+            if (matched) {
+              return item;
             }
           });
-        }
-        if (curQuery?.length) {
-          item.url += '?' + curQuery.join('&');
-        }
-      });
+          const routeSort = routerArr.sort((a, b) => {
+            return a.path.length - b.path.length;
+          });
+          const href = pathname + search;
 
-      setBreadList(breadCrumbList);
-    }, [pathname]);
+          // 获取最原始的第一层级数据
+          const isIndex = matchPath(pathname, { path: routeSort?.[0]?.path, exact: true });
+          // 如果是第一层路由例如列表， 查看是否已经在缓存中了
+          const indexInfo = isIndex
+            ? breadCacheList?.find((item) => item.path === pathname)
+            : undefined;
+          if (isIndex && !search) {
+            breadCacheList = [];
+          } else if (indexInfo) {
+            // 如果已经在缓存中了 则更新url 说明search发生变化
+            indexInfo.url = href;
+          } else {
+            const hasIn = breadCacheList?.find((item) => item.url === href);
+            if (!hasIn) {
+              breadCacheList.push({ ...curRoute, url: href });
+            }
+          }
+          setBreadList(breadCacheList);
+        }
+      }
+    }, [pathname, search]);
 
     const onlyTwoLevels = breadList?.length === 2;
 
+    const breadClick = (breadIndex) => {
+      if (useCache) {
+        const breadListTemp = [...breadList];
+        breadListTemp.splice(breadIndex + 1);
+        breadCacheList = breadListTemp;
+        setBreadList(breadListTemp);
+      }
+    };
     return (
       <>
         {(breadList?.length > 1 || showHeader) && !forceNoHeader && (
-          <div className="page-global-header bread-crumb-head">
+          <div className={`page-global-header bread-crumb-head ${curVersion}`}>
             {BreadCrumbCustom &&
               !!breadList?.length &&
               BreadCrumbCustom(breadList, getParams(searchObj))}
@@ -132,27 +189,30 @@ export default (WrapperComponent, rest) => {
                 className="c-breadcrumb"
                 {...(BreadCrumbPrototype || {})}
               >
-                {breadList?.map((v, i) => {
-                  const href = v?.url;
+                {breadList?.map((bread, i) => {
+                  const { url } = bread;
+                  let dom = bread?.name;
                   if (onlyTwoLevels && i === 0) {
-                    const dom = (
+                    dom = (
                       <>
                         <Icon type="left" className="go-back" />
                         {getText('back', lang) || '返回'}
                       </>
                     );
-                    return (
-                      <Breadcrumb.Item key={v?.path}>
-                        {href && i !== breadList?.length - 1 ? <Link to={href}>{dom}</Link> : dom}
-                      </Breadcrumb.Item>
-                    );
                   }
                   return (
-                    <Breadcrumb.Item key={v?.path}>
-                      {href && i !== breadList?.length - 1 ? (
-                        <Link to={href}>{v?.name}</Link>
+                    <Breadcrumb.Item key={url}>
+                      {url && i !== breadList?.length - 1 ? (
+                        <Link
+                          onClick={() => {
+                            breadClick(i);
+                          }}
+                          to={url}
+                        >
+                          {dom}
+                        </Link>
                       ) : (
-                        v?.name
+                        dom
                       )}
                     </Breadcrumb.Item>
                   );
