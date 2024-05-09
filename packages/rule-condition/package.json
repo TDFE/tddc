@@ -21,11 +21,11 @@
     "rc-virtual-list": "^3.4.13",
     "rc-align": "^4.0.0"
   },
-  "peerDependencies": {
+  "devDependencies": {
     "antd": ">=3.20.1",
+    "tntd": ">=2.7.9",
     "react": ">=16.9.0",
     "react-dom": ">=16.9.0",
-    "@tddc/rule-condition": ">=1.0.1",
     "@tntd/tooltip-select": ">=1.0.4"
   },
   "publishConfig": {

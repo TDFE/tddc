@@ -8,8 +8,9 @@
   "files": [
     "es"
   ],
-  "peerDependencies": {
+  "devDependencies": {
     "antd": ">=3.20.1",
+    "tntd": ">=2.7.9",
     "react": ">=16.8.0",
     "dva": ">=2.4.1"
   }
