@@ -1,6 +1,6 @@
 import { useEffect, useState, useRef } from 'react';
 import cn from 'classnames';
-import { Spin, Table, Icon } from 'antd';
+import { Spin, Table, Icon } from 'tntd';
 
 import { makeRandomCode } from './utils';
 
