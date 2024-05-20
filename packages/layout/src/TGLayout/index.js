@@ -1,4 +1,4 @@
-import { useState, useEffect, useReducer } from 'react';
+import { useState, useEffect, useReducer, useMemo } from 'react';
 import { Spin, Empty, message } from 'tntd';
 // import zhCN from 'antd/es/locale/zh_CN';
 // import enUS from 'antd/es/locale/en_US';
@@ -14,6 +14,9 @@ const { HeaderTabs, HeaderActionItem, AuthContext } = Layout;
 const TGLayout = (props) => {
   const { origin, pathname, search } = window.location || {};
   const {
+    directRender,
+    noAuth,
+    noMenu,
     eventEmitter,
     actions,
     syncGlobalState,
@@ -32,7 +35,15 @@ const TGLayout = (props) => {
   const [errorMsg, setErrorMsg] = useState('');
   const [state, dispatch] = useReducer(reducer, initState());
   const [routerPrefix, setRouterPrefix] = useState(pathname?.split('/')[1]);
-  const needAuth = !['/user/login', '/user/startup'].includes(pathname);
+  const needAuth = useMemo(
+    () => !(['/user/login'].indexOf(window.location.pathname) > -1 || noAuth),
+    [noAuth],
+  ); // , '/user/startup'
+  const needMenu = useMemo(
+    () => !(['/user/startup'].indexOf(window.location.pathname) > -1 || noMenu),
+    [noMenu],
+  );
+
   const {
     userReady,
     menuTreeReady,
@@ -153,22 +164,24 @@ const TGLayout = (props) => {
           });
           setErrorMsg(e.message || '加载用户失败');
         });
-      // 获取菜单信息
-      service
-        .getMenuTree()
-        .then((data) => {
-          document.title = data?.name || '';
-          dispatch({
-            type: 'initMenuTree',
-            payload: data,
+      if (needMenu) {
+        // 获取菜单信息
+        service
+          .getMenuTree()
+          .then((data) => {
+            document.title = data?.name || '';
+            dispatch({
+              type: 'initMenuTree',
+              payload: data,
+            });
+          })
+          .catch((e) => {
+            dispatch({
+              type: 'initMenuTreeReady',
+            });
+            setErrorMsg(e.message || '加载用户失败');
           });
-        })
-        .catch((e) => {
-          dispatch({
-            type: 'initMenuTreeReady',
-          });
-          setErrorMsg(e.message || '加载用户失败');
-        });
+      }
     }
   }, [routerPrefix]);
 
@@ -297,7 +310,7 @@ const TGLayout = (props) => {
         ),
       ]}
     >
-      {userReady && menuTreeReady ? (
+      {!needAuth || directRender || (userReady && (menuTreeReady || !needMenu)) ? (
         errorMsg ? (
           <Empty description={errorMsg} imageStyle={{ marginTop: '150px' }} />
         ) : (
