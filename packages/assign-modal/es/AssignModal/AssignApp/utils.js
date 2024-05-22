@@ -1,9 +1,3 @@
-'use strict';
-
-Object.defineProperty(exports, '__esModule', {
-  value: true,
-});
-exports.preorder = exports.findSameCodePath = exports.addPath = void 0;
 function _toConsumableArray(arr) {
   return (
     _arrayWithoutHoles(arr) ||
@@ -38,13 +32,11 @@ function _arrayWithoutHoles(arr) {
 }
 function _arrayLikeToArray(arr, len) {
   if (len == null || len > arr.length) len = arr.length;
-  for (var i = 0, arr2 = new Array(len); i < len; i++) {
-    arr2[i] = arr[i];
-  }
+  for (var i = 0, arr2 = new Array(len); i < len; i++) arr2[i] = arr[i];
   return arr2;
 }
 // 遍历机构树 添加 path属性 （上级机构到子机构的路径）
-var addPath = function addPath(root) {
+export var addPath = function addPath(root) {
   var parent = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : [];
   if (!root) {
     return;
@@ -57,8 +49,7 @@ var addPath = function addPath(root) {
 };
 
 // 遍历寻找 当前规则集所属机构
-exports.addPath = addPath;
-var findSameCodePath = function findSameCodePath(root, code) {
+export var findSameCodePath = function findSameCodePath(root, code) {
   var res = {};
   var dfs = function dfs(root, code) {
     if (!root) {
@@ -74,8 +65,7 @@ var findSameCodePath = function findSameCodePath(root, code) {
 };
 
 // 遍历输出 orgCode；
-exports.findSameCodePath = findSameCodePath;
-var preorder = function preorder(root) {
+export var preorder = function preorder(root) {
   var res = [];
   var dfs = function dfs(root) {
     var res = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : [];
@@ -90,4 +80,3 @@ var preorder = function preorder(root) {
   dfs(root, res);
   return res;
 };
-exports.preorder = preorder;

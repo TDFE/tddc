@@ -1,40 +1,4 @@
-'use strict';
-
-function _typeof(obj) {
-  '@babel/helpers - typeof';
-  return (
-    (_typeof =
-      'function' == typeof Symbol && 'symbol' == typeof Symbol.iterator
-        ? function (obj) {
-            return typeof obj;
-          }
-        : function (obj) {
-            return obj &&
-              'function' == typeof Symbol &&
-              obj.constructor === Symbol &&
-              obj !== Symbol.prototype
-              ? 'symbol'
-              : typeof obj;
-          }),
-    _typeof(obj)
-  );
-}
-Object.defineProperty(exports, '__esModule', {
-  value: true,
-});
-Object.defineProperty(exports, 'AssignApp', {
-  enumerable: true,
-  get: function get() {
-    return _AssignApp.default;
-  },
-});
-exports.default = void 0;
-require('antd/lib/modal/style');
-var _modal = _interopRequireDefault(require('antd/lib/modal'));
-var _react = _interopRequireWildcard(require('react'));
-var _AssignApp = _interopRequireDefault(require('./AssignApp'));
-require('./index.less');
-var _universalCookie = _interopRequireDefault(require('universal-cookie'));
+import _Modal from 'tntd/es/modal';
 var _excluded = [
   'visible',
   'orgList',
@@ -44,47 +8,9 @@ var _excluded = [
   'title',
   'onSubmit',
   'appList',
+  'userList',
+  'showUser',
 ];
-function _getRequireWildcardCache(nodeInterop) {
-  if (typeof WeakMap !== 'function') return null;
-  var cacheBabelInterop = new WeakMap();
-  var cacheNodeInterop = new WeakMap();
-  return (_getRequireWildcardCache = function _getRequireWildcardCache(nodeInterop) {
-    return nodeInterop ? cacheNodeInterop : cacheBabelInterop;
-  })(nodeInterop);
-}
-function _interopRequireWildcard(obj, nodeInterop) {
-  if (!nodeInterop && obj && obj.__esModule) {
-    return obj;
-  }
-  if (obj === null || (_typeof(obj) !== 'object' && typeof obj !== 'function')) {
-    return { default: obj };
-  }
-  var cache = _getRequireWildcardCache(nodeInterop);
-  if (cache && cache.has(obj)) {
-    return cache.get(obj);
-  }
-  var newObj = {};
-  var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor;
-  for (var key in obj) {
-    if (key !== 'default' && Object.prototype.hasOwnProperty.call(obj, key)) {
-      var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null;
-      if (desc && (desc.get || desc.set)) {
-        Object.defineProperty(newObj, key, desc);
-      } else {
-        newObj[key] = obj[key];
-      }
-    }
-  }
-  newObj.default = obj;
-  if (cache) {
-    cache.set(obj, newObj);
-  }
-  return newObj;
-}
-function _interopRequireDefault(obj) {
-  return obj && obj.__esModule ? obj : { default: obj };
-}
 function _extends() {
   _extends = Object.assign
     ? Object.assign.bind()
@@ -125,44 +51,35 @@ function _unsupportedIterableToArray(o, minLen) {
 }
 function _arrayLikeToArray(arr, len) {
   if (len == null || len > arr.length) len = arr.length;
-  for (var i = 0, arr2 = new Array(len); i < len; i++) {
-    arr2[i] = arr[i];
-  }
+  for (var i = 0, arr2 = new Array(len); i < len; i++) arr2[i] = arr[i];
   return arr2;
 }
-function _iterableToArrayLimit(arr, i) {
-  var _i =
-    null == arr
-      ? null
-      : ('undefined' != typeof Symbol && arr[Symbol.iterator]) || arr['@@iterator'];
-  if (null != _i) {
-    var _s,
-      _e,
-      _x,
-      _r,
-      _arr = [],
-      _n = !0,
-      _d = !1;
+function _iterableToArrayLimit(r, l) {
+  var t =
+    null == r ? null : ('undefined' != typeof Symbol && r[Symbol.iterator]) || r['@@iterator'];
+  if (null != t) {
+    var e,
+      n,
+      i,
+      u,
+      a = [],
+      f = !0,
+      o = !1;
     try {
-      if (((_x = (_i = _i.call(arr)).next), 0 === i)) {
-        if (Object(_i) !== _i) return;
-        _n = !1;
-      } else
-        for (
-          ;
-          !(_n = (_s = _x.call(_i)).done) && (_arr.push(_s.value), _arr.length !== i);
-          _n = !0
-        ) {}
-    } catch (err) {
-      (_d = !0), (_e = err);
+      if (((i = (t = t.call(r)).next), 0 === l)) {
+        if (Object(t) !== t) return;
+        f = !1;
+      } else for (; !(f = (e = i.call(t)).done) && (a.push(e.value), a.length !== l); f = !0);
+    } catch (r) {
+      (o = !0), (n = r);
     } finally {
       try {
-        if (!_n && null != _i.return && ((_r = _i.return()), Object(_r) !== _r)) return;
+        if (!f && null != t.return && ((u = t.return()), Object(u) !== u)) return;
       } finally {
-        if (_d) throw _e;
+        if (o) throw n;
       }
     }
-    return _arr;
+    return a;
   }
 }
 function _arrayWithHoles(arr) {
@@ -195,7 +112,12 @@ function _objectWithoutPropertiesLoose(source, excluded) {
   }
   return target;
 }
-var cookies = new _universalCookie.default();
+import React from 'react';
+import { useState } from 'react';
+import AssignApp from './AssignApp';
+import './index.less';
+import Cookies from 'universal-cookie';
+var cookies = new Cookies();
 var AssignModal = function AssignModal(props) {
   var visible = props.visible,
     orgList = props.orgList,
@@ -207,8 +129,10 @@ var AssignModal = function AssignModal(props) {
     title = _props$title === void 0 ? '' : _props$title,
     onSubmit = props.onSubmit,
     appList = props.appList,
+    userList = props.userList,
+    showUser = props.showUser,
     restProps = _objectWithoutProperties(props, _excluded);
-  var _useState = (0, _react.useState)({}),
+  var _useState = useState({}),
     _useState2 = _slicedToArray(_useState, 2),
     assignData = _useState2[0],
     setAssignData = _useState2[1];
@@ -218,13 +142,13 @@ var AssignModal = function AssignModal(props) {
     });
     onSubmit(assignData);
   };
-  return /*#__PURE__*/ _react.default.createElement(
-    _modal.default,
+  return /*#__PURE__*/ React.createElement(
+    _Modal,
     {
       className: 'modelTool-assign',
       title: title,
       visible: visible,
-      width: '65%',
+      width: showUser ? '80%' : '65%',
       onCancel: close,
       onOk: submit,
       maskClosable: false,
@@ -233,13 +157,14 @@ var AssignModal = function AssignModal(props) {
         disabled: disabled,
       },
     },
-    /*#__PURE__*/ _react.default.createElement(
-      _AssignApp.default,
+    /*#__PURE__*/ React.createElement(
+      AssignApp,
       _extends(
         {
           dataItem: dataItem,
           orgList: orgList,
           appList: appList,
+          userList: userList,
           onChange: function onChange(data) {
             setAssignData(data);
           },
@@ -248,11 +173,12 @@ var AssignModal = function AssignModal(props) {
             (props === null || props === void 0 ? void 0 : props.lang) ||
             cookies.get('lang') ||
             'cn',
+          showUser: showUser,
         },
         restProps,
       ),
     ),
   );
 };
-var _default = AssignModal;
-exports.default = _default;
+export default AssignModal;
+export { AssignApp };
