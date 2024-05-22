@@ -1,2 +1,3 @@
-export { AssignApp } from './AssignModal';
+import Assign from './AssignModal/AssignApp';
 export { default } from './AssignModal';
+export var AssignApp = Assign;
