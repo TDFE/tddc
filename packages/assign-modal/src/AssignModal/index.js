@@ -57,5 +57,3 @@ const AssignModal = (props) => {
 };
 
 export default AssignModal;
-
-export { AssignApp };

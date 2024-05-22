@@ -181,4 +181,3 @@ var AssignModal = function AssignModal(props) {
   );
 };
 export default AssignModal;
-export { AssignApp };
