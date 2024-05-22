@@ -1,14 +1,14 @@
-import { Checkbox, Tree } from 'antd';
-import { useEffect, useState } from 'react';
+import { Checkbox, Tree, Input } from 'tntd';
+import { useEffect, useState, useCallback } from 'react';
 import { Ellipsis } from 'tntd';
 
-import { cloneDeep } from 'lodash';
+import { cloneDeep, debounce } from 'lodash';
 import './index.less';
 import { addPath, findSameCodePath, preorder } from './utils';
 import { getText } from '../../locale';
 
 const { TreeNode } = Tree;
-
+const { Search } = Input;
 let path = []; // 上级机构到当前机构的路径
 
 const AssignModal = (props) => {
@@ -20,21 +20,30 @@ const AssignModal = (props) => {
     onChange,
     orgTitle,
     appTitle,
+    userTitle,
     orgCheckboxTitle,
     appCheckboxTitle,
+    userCheckboxTitle,
+    userList = [],
+    showUser,
   } = props;
-  let { appCodes = [], orgCodes = [], orgCode, appCode } = dataItem;
+  let { appCodes = [], orgCodes = [], orgCode, appCode, accounts = [], account } = dataItem;
 
   let allOrg = preorder(orgList[0]);
   let allApp = appList.map((item) => item.value);
+  let allUser = userList?.map((item) => item.account) || [];
 
   const [checkedKeys, setCheckedKeys] = useState([]);
   const [appKeys, setAppKeys] = useState(appCodes || []);
+  const [userKeys, setUserKeys] = useState(accounts || []);
 
   const [allOrgChecked, setAllOrgChecked] = useState(false);
   const [allAppChecked, setAllAppChecked] = useState(false);
+  const [allUserChecked, setAllUserChecked] = useState(false);
 
-  if (!orgList[0].path) {
+  const [filterUser, setFilterUser] = useState();
+
+  if (!orgList[0]?.path) {
     addPath(orgList[0], []); // 添加 上级机构到子机构的路径
   }
 
@@ -44,6 +53,7 @@ const AssignModal = (props) => {
 
     let initOrgs = [];
     let initApps = [];
+    let initAccounts = [];
     if (orgCodes.includes('all')) {
       setAllOrgChecked(orgCodes.includes('all'));
       initOrgs = allOrg;
@@ -57,18 +67,29 @@ const AssignModal = (props) => {
       initApps = Array.from(new Set([...(appCodes || []), appCode]));
     }
 
+    if (showUser) {
+      if (accounts.includes('all')) {
+        setAllUserChecked(true);
+        initAccounts = allUser;
+      } else {
+        initAccounts = Array.from(new Set([...(accounts || []), account]));
+      }
+    }
     setCheckedKeys(initOrgs);
     setAppKeys(initApps || []);
-    console.log({ initApps });
+    setUserKeys(initAccounts || []);
     onChange &&
       onChange({
         appKeys: appCodes.includes('all') ? ['all'] : initApps,
         checkedKeys: orgCodes.includes('all') ? ['all'] : initOrgs,
+        userKeys: accounts.includes('all') ? ['all'] : initAccounts,
         appCheckAll: appCodes.includes('all'),
         orgCheckAll: orgCodes.includes('all'),
+        userCheckAll: accounts.includes('all'),
         checkData: {
           apps: initApps,
           orgs: initOrgs,
+          accounts: initAccounts,
         },
       });
   }, [dataItem]);
@@ -135,9 +156,12 @@ const AssignModal = (props) => {
       checkedKeys: checked,
       appCheckAll: allAppChecked,
       orgCheckAll: allOrgChecked,
+      userKeys: allUserChecked ? ['all'] : userKeys,
+      userCheckAll: allUserChecked,
       checkData: {
         apps: appKeys,
         orgs: checked,
+        accounts: userKeys,
       },
     });
   };
@@ -163,9 +187,43 @@ const AssignModal = (props) => {
       checkedKeys: allOrgChecked ? ['all'] : checkedKeys,
       appCheckAll: allAppChecked,
       orgCheckAll: allOrgChecked,
+      userKeys: allUserChecked ? ['all'] : userKeys,
+      userCheckAll: allUserChecked,
       checkData: {
         apps: newAppKeys,
         orgs: checkedKeys,
+        accounts: userKeys,
+      },
+    });
+  };
+
+  const assignUser = (e) => {
+    let value = '';
+    let newUserKeys = [];
+    if (e.target.checked) {
+      value = e.target.value;
+      newUserKeys = [...userKeys, value];
+    } else {
+      value = e.target.value;
+      newUserKeys = cloneDeep(userKeys);
+      newUserKeys.map((item, index) => {
+        if (value === item) {
+          newUserKeys.splice(index, 1);
+        }
+      });
+    }
+    setUserKeys(newUserKeys);
+    onChange({
+      appKeys: appKeys,
+      checkedKeys: allOrgChecked ? ['all'] : checkedKeys,
+      appCheckAll: allAppChecked,
+      orgCheckAll: allOrgChecked,
+      userKeys: newUserKeys,
+      userCheckAll: allUserChecked,
+      checkData: {
+        apps: appKeys,
+        orgs: checkedKeys,
+        accounts: newUserKeys,
       },
     });
   };
@@ -182,9 +240,14 @@ const AssignModal = (props) => {
         checkedKeys: ['all'],
         appCheckAll: allAppChecked,
         orgCheckAll: true,
+
+        userKeys: allUserChecked ? ['all'] : userKeys,
+        userCheckAll: allUserChecked,
+
         checkData: {
           apps: appKeys,
           orgs: checkedKeys,
+          accounts: accounts,
         },
       });
     } else {
@@ -198,9 +261,12 @@ const AssignModal = (props) => {
         checkedKeys: orgChecks,
         appCheckAll: allAppChecked,
         orgCheckAll: false,
+        userKeys: allUserChecked ? ['all'] : userKeys,
+        userCheckAll: allUserChecked,
         checkData: {
           apps: appKeys,
           orgs: orgChecks,
+          accounts: accounts,
         },
       });
     }
@@ -218,9 +284,12 @@ const AssignModal = (props) => {
         checkedKeys: allOrgChecked ? ['all'] : checkedKeys,
         appCheckAll: true,
         orgCheckAll: allOrgChecked,
+        userKeys: allUserChecked ? ['all'] : userKeys,
+        userCheckAll: allUserChecked,
         checkData: {
           apps: appChecks,
           orgs: checkedKeys,
+          accounts: accounts,
         },
       });
     } else {
@@ -234,13 +303,71 @@ const AssignModal = (props) => {
         checkedKeys: allOrgChecked ? ['all'] : checkedKeys,
         appCheckAll: false,
         orgCheckAll: allOrgChecked,
+        userKeys: allUserChecked ? ['all'] : userKeys,
+        userCheckAll: allUserChecked,
         checkData: {
           apps: appChecks,
           orgs: checkedKeys,
+          accounts: accounts,
         },
       });
     }
   };
+
+  // account全局授权
+  const checkedAllUser = (e) => {
+    let userChecks = [];
+    if (e.target.checked) {
+      setAllUserChecked(true);
+      userChecks = userList.map((item) => item.account);
+      setUserKeys(userChecks);
+
+      onChange({
+        appKeys: allAppChecked ? ['all'] : appKeys,
+        appCheckAll: allAppChecked,
+
+        checkedKeys: allOrgChecked ? ['all'] : checkedKeys,
+        orgCheckAll: allOrgChecked,
+
+        userKeys: ['all'],
+        userCheckAll: true,
+        checkData: {
+          apps: appKeys,
+          orgs: checkedKeys,
+          accounts: userChecks,
+        },
+      });
+    } else {
+      setAllUserChecked(false);
+      const arr = accounts.includes('all') ? allUser : accounts;
+      userChecks = Array.from(new Set([...(arr || []), account]));
+
+      setUserKeys(userChecks);
+      onChange({
+        appKeys: allAppChecked ? ['all'] : appKeys,
+        appCheckAll: allAppChecked,
+
+        checkedKeys: allOrgChecked ? ['all'] : checkedKeys,
+        orgCheckAll: allOrgChecked,
+
+        userKeys: userChecks,
+        userCheckAll: false,
+
+        checkData: {
+          apps: appKeys,
+          orgs: checkedKeys,
+          accounts: userChecks,
+        },
+      });
+    }
+  };
+
+  const debouncedSearch = useCallback(
+    debounce((nextValue) => {
+      setFilterUser(nextValue);
+    }, 200),
+    [],
+  );
 
   return (
     <div className="assign-box-container">
@@ -299,6 +426,66 @@ const AssignModal = (props) => {
           })}
         </div>
       </div>
+      {!!showUser && (
+        <div className="user">
+          <div className="menu-header">
+            {/* 授权可用用户列表 */}
+            {userTitle || getText('authorizesUserList', props?.lang)}
+            <div className="menu-all-checked">
+              <Checkbox onChange={checkedAllUser} checked={allUserChecked} disabled={disabled}>
+                {/* 全部用户可用 */}
+                {userCheckboxTitle || getText('allUserAvailable', props?.lang)}
+              </Checkbox>
+            </div>
+          </div>
+          <div className="menu-body">
+            <div className="assign-search-wrap">
+              <Search
+                size="small"
+                allowClear
+                placeholder={getText('search', props?.lang)}
+                onChange={(e) => {
+                  debouncedSearch(e.target.value);
+                }}
+                onSearch={(v) => {
+                  setFilterUser(v);
+                }}
+                style={{ width: '90%' }}
+              />
+            </div>
+            {userList
+              ?.filter((item) => {
+                if (filterUser) {
+                  return (
+                    item?.account?.toLocaleLowerCase().includes(filterUser?.toLocaleLowerCase()) ||
+                    item?.userName?.toLocaleLowerCase().includes(filterUser?.toLocaleLowerCase())
+                  );
+                } else {
+                  return item;
+                }
+              })
+              .map((item, index) => {
+                const isCheck = userKeys?.includes(item.account);
+                const isOwnAccount = account === item.account;
+                return (
+                  <div>
+                    <Checkbox
+                      checked={isCheck}
+                      disabled={disabled || isOwnAccount || allUserChecked}
+                      onChange={assignUser}
+                      value={item.account}
+                      key={index}
+                    >
+                      <span style={{ display: 'inline-block' }}>
+                        <Ellipsis widthLimit={240} title={item.userName} />
+                      </span>
+                    </Checkbox>
+                  </div>
+                );
+              })}
+          </div>
+        </div>
+      )}
     </div>
   );
 };

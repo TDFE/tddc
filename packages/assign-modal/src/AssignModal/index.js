@@ -1,4 +1,4 @@
-import { Modal } from 'antd';
+import { Modal } from 'tntd';
 import { useState } from 'react';
 
 import AssignApp from './AssignApp';
@@ -16,6 +16,8 @@ const AssignModal = (props) => {
     title = '',
     onSubmit,
     appList,
+    userList,
+    showUser,
     ...restProps
   } = props;
   const [assignData, setAssignData] = useState({});
@@ -30,7 +32,7 @@ const AssignModal = (props) => {
       className="modelTool-assign"
       title={title}
       visible={visible}
-      width={'65%'}
+      width={showUser ? '80%' : '65%'}
       onCancel={close}
       onOk={submit}
       maskClosable={false}
@@ -41,11 +43,13 @@ const AssignModal = (props) => {
         dataItem={dataItem}
         orgList={orgList}
         appList={appList}
+        userList={userList}
         onChange={(data) => {
           setAssignData(data);
         }}
         disabled={disabled}
         lang={props?.lang || cookies.get('lang') || 'cn'}
+        showUser={showUser}
         {...restProps}
       />
     </Modal>
