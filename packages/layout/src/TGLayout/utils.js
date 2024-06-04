@@ -157,7 +157,7 @@ export const getSubAppsFromMenus = (menus) => {
       const { path, children } = menu;
 
       if (path) {
-        const appKey = !/^http/i.test(path) ? path.match(/\/([^\/]+)/)[1] : '';
+        const appKey = !/^http/i.test(path) ? path.match(/\/([^\/]+)/)?.[1] : '';
 
         if (appKey) {
           subapps.push(appKey);
