@@ -1,0 +1,22 @@
+{
+  "name": "@tddc/td-tree-view",
+  "version": "0.0.12",
+  "description": "TdTreeView",
+  "author": "zj",
+  "license": "ISC",
+  "main": "es/index.js",
+  "files": [
+    "es"
+  ],
+  "peerDependencies": {
+    "antd": "^3.20.1",
+    "tntd": "^2.7.9",
+    "react": "^16.8.0",
+    "react-dom": "^16.8.0"
+  },
+  "dependencies": {
+    "@tddc/tree-view": "^2.0.0",
+    "@tddc/virtual-cascader": "^2.0.6",
+    "universal-cookie": "^2.2.0"
+  }
+}
