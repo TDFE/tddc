@@ -1,6 +1,5 @@
 import ReactDOM from 'react-dom';
-import { Button, Collapse, message, Tag, Tooltip, Icon, Alert } from 'tntd';
-import { Modal } from 'tntd';
+import { Modal, Button, Collapse, message, Tag, Tooltip, Icon, Alert } from 'tntd';
 import { getText } from '../locale';
 import { ReferenceInfo } from '../ReferenceInfo';
 import './index.less';

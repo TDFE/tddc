@@ -1,5 +1,4 @@
-import { Tooltip, Icon, Table, Row, Empty } from 'tntd';
-import { Ellipsis } from 'tntd';
+import { Tooltip, Icon, Table, Row, Empty, Ellipsis } from 'tntd';
 import { getText } from '../locale';
 import AHref from '../AHref';
 import './index.less';
@@ -19,6 +18,7 @@ export const ReferenceInfo = (props) => {
 
   let paginationInfo = {
     pagination: {
+      hideOnSinglePage: true,
       size: 'small',
     },
   };
@@ -155,7 +155,7 @@ export const ReferenceInfo = (props) => {
             {renderColumns?.length && (
               <Table
                 className="reference-table"
-                bordered={false}
+                bordered={true}
                 dataSource={d?.rows}
                 columns={renderColumns}
                 scroll={{
