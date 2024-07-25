@@ -80,7 +80,7 @@ const ReferenceBatchCheck = (props) => {
         ]}
       >
         <div className="reference-online-check-modal">
-          {type && canNextOpera && (
+          {!!type && canNextOpera && (
             <div className="mb10">
               <Alert
                 type="warning"
@@ -91,7 +91,7 @@ const ReferenceBatchCheck = (props) => {
               />
             </div>
           )}
-          {!canNextOpera && (
+          {!!type && !canNextOpera && (
             <div className="mb10">
               <Alert
                 type="error"
