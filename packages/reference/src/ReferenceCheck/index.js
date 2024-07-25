@@ -35,7 +35,7 @@ const ReferenceCheck = (props) => {
     removeModal();
 
     // 能进行下一步操作
-    const canNextOpera = !['STRONG'].includes(type);
+    const canNextOpera = !!type && !['STRONG'].includes(type);
     document.body.appendChild(modalWrap);
     ReactDOM.render(
       <Modal
