@@ -2,107 +2,6 @@ import { Button } from 'antd';
 import { Ellipsis } from 'tntd';
 import { NODE_TYPE_MAP } from './constants';
 import './index.less';
-import { set } from 'lodash';
-
-let treeData = {
-  componentType: 'FIELD_SYSTEM',
-  componentId: 'S_S_METRICRESULT',
-  componentName: '指标结果',
-  componentVersion: '',
-  goLink: '/bridge/fields/fieldManage?currentTab=1&name=S_S_METRICRESULT',
-  isGroupItem: false,
-  children: [
-    {
-      componentType: 'THIRD_SERVICE_VERSION',
-      componentName: '三方服务',
-      isGroupItem: true,
-      children: [
-        {
-          componentType: 'THIRD_SERVICE_VERSION',
-          componentId: 'SFZLWHC_1',
-          componentName: '身份证联网核查服务',
-          componentVersion: '1',
-          goLink: '/handle/supplierManagement/dataServiceList?name=SFZLWHC',
-          isGroupItem: false,
-          nodeType: 'THIRD_SERVICE_VERSION',
-          nodeName: '身份证联网核查服务',
-        },
-      ],
-      nodeType: 'THIRD_SERVICE_VERSION',
-      nodeName: '三方服务',
-    },
-    {
-      componentType: 'POLICY',
-      componentName: '策略',
-      isGroupItem: true,
-      children: [
-        {
-          componentType: 'POLICY',
-          componentId: 'HXKD_CS',
-          componentName: '华兴快贷_初审',
-          componentVersion: '',
-          goLink: '/noah/policyManage?currentTab=1&code=HXKD_CS',
-          isGroupItem: false,
-          nodeType: 'POLICY',
-          nodeName: '华兴快贷_初审',
-        },
-      ],
-      nodeType: 'POLICY',
-      nodeName: '策略',
-    },
-    {
-      componentType: 'API_SERVICE',
-      componentName: '对接服务',
-      isGroupItem: true,
-      children: [
-        {
-          componentType: 'API_SERVICE',
-          componentId: 'hsh',
-          componentName: '指标回溯实时调用0531',
-          componentVersion: '',
-          goLink: '/unite/serviceManage/setService?code=hsh',
-          isGroupItem: false,
-          nodeType: 'API_SERVICE',
-          nodeName: '指标回溯实时调用0531',
-        },
-        {
-          componentType: 'API_SERVICE',
-          componentId: 'hsp',
-          componentName: '指标回溯离线调用0531-parquet',
-          componentVersion: '',
-          goLink: '/unite/serviceManage/setService?code=hsp',
-          isGroupItem: false,
-          nodeType: 'API_SERVICE',
-          nodeName: '指标回溯离线调用0531-parquet',
-        },
-        {
-          componentType: 'API_SERVICE',
-          componentId: 'test',
-          componentName: 'test',
-          componentVersion: '',
-          goLink: '/unite/serviceManage/setService?code=test',
-          isGroupItem: false,
-          nodeType: 'API_SERVICE',
-          nodeName: 'test',
-        },
-        {
-          componentType: 'API_SERVICE',
-          componentId: 'zjytest',
-          componentName: 'zjytest',
-          componentVersion: '',
-          goLink: '/unite/serviceManage/setService?code=zjytest',
-          isGroupItem: false,
-          nodeType: 'API_SERVICE',
-          nodeName: 'zjytest',
-        },
-      ],
-      nodeType: 'API_SERVICE',
-      nodeName: '对接服务',
-    },
-  ],
-  nodeType: 'FIELD_SYSTEM',
-  nodeName: '指标结果',
-};
 
 const Node = (props) => {
   let {
@@ -114,7 +13,6 @@ const Node = (props) => {
     onEyeClick,
     onClick,
     fixed,
-    editor,
   } = props;
 
   let { RELATION_WIDTH } = constants;
@@ -122,10 +20,8 @@ const Node = (props) => {
   const { data, x, y, parent } = node;
   const { nodeType, color = '', isGroupItem, nodeName } = data || {};
 
-  // let nums = data?.children?.length || data?._children?.length;
-  let nums = true;
-  // let isExpan = data?._children?.length || true;
-  let isExpan = !data?.children?.length;
+  let nums = data?.children?.length || data?._children?.length;
+  let isExpan = data?._children?.length;
 
   let style = {
     borderColor: color,
@@ -186,10 +82,7 @@ const Node = (props) => {
       <span
         className="relation-u-minus"
         onClick={() => {
-          setTimeout(() => {
-            console.log(editor, 'editor');
-            nodeToggle(treeData);
-          }, 1000);
+          nodeToggle(data);
         }}
       >
         <img alt="" src={isExpan ? require('./imgs/expand.svg') : require('./imgs/up.svg')} />
@@ -232,14 +125,7 @@ const Node = (props) => {
         <span
           className="leaf-u-minus"
           onClick={() => {
-            // nodeToggle(data);
-            setTimeout(() => {}, 1000);
-
-            console.log(editor, 'editor');
-            console.log(node, 'node');
-
-            node.data.children = treeData;
-            nodeToggle(treeData);
+            nodeToggle(data);
           }}
         >
           <img alt="" src={isExpan ? require('./imgs/expand.svg') : require('./imgs/up.svg')} />
