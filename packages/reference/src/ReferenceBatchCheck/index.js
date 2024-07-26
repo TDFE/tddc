@@ -52,7 +52,7 @@ const ReferenceBatchCheck = (props) => {
     removeModal();
     document.body.appendChild(modalWrap);
     // 能进行下一步操作
-    const canNextOpera = !['STRONG'].includes(type);
+    const canNextOpera = !!type && !['STRONG'].includes(type);
     ReactDOM.render(
       <Modal
         title={title}
@@ -80,7 +80,7 @@ const ReferenceBatchCheck = (props) => {
         ]}
       >
         <div className="reference-online-check-modal">
-          {type && canNextOpera && (
+          {!!type && canNextOpera && (
             <div className="mb10">
               <Alert
                 type="warning"
@@ -91,7 +91,7 @@ const ReferenceBatchCheck = (props) => {
               />
             </div>
           )}
-          {!canNextOpera && (
+          {!!type && !canNextOpera && (
             <div className="mb10">
               <Alert
                 type="error"
