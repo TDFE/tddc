@@ -57,6 +57,14 @@ export default () => {
                       title: '函数类型',
                       dataIndex: 'typeName',
                     },
+                    {
+                      title: 'a',
+                      dataIndex: 'a',
+                    },
+                    {
+                      title: 'b',
+                      dataIndex: 'b',
+                    },
                   ],
                   rows: [
                     {
@@ -67,6 +75,8 @@ export default () => {
                       SORT_GMTCREATE: 1692611690000,
                       referenceCheckType: 'STRONG',
                       goLink: '/noah/formula?currentTab=1&code=F4796386976',
+                      a: 'a',
+                      b: 'b',
                     },
                     {
                       name: '额度计算_利润',
@@ -428,6 +438,8 @@ export default () => {
                         { title: '指标版本', dataIndex: 'version', expression: null },
                         { title: '所属指标集标识', dataIndex: 'featureSetCode', expression: null },
                         { title: '所属指标集名称', dataIndex: 'featureSetName', expression: null },
+                        { title: '所属指标集名称', dataIndex: 'a', expression: null },
+                        { title: '所属指标集名称', dataIndex: 'b', expression: null },
                       ],
                       rows: [
                         {
@@ -438,6 +450,8 @@ export default () => {
                           featureSetName: '阿尔法指标集_peaow',
                           SORT_GMTCREATE: null,
                           referenceCheckType: 'INNER_STRONG',
+                          a: '1',
+                          b: '2',
                           goLink:
                             '/index/offIndexManage/detail?currentTab=1&type=view&from=run&metricCodes=pyveo4p110&featureSetVersionUuid=c00e0702e80b4bf98bedaf79dc92ff5e&featureSetUuid=898032e11e4645288dad1a901eab439c',
                           referenceCheckTypeName: '内部强引用',

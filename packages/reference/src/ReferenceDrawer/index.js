@@ -41,7 +41,7 @@ const ReferenceDrawer = (props) => {
   return (
     <Drawer
       className="reference-drawer"
-      width={650}
+      width={900}
       title={<Tooltip title={title}>{title || ''}</Tooltip>}
       onClose={onClose}
       visible={visible}

@@ -1,4 +1,4 @@
-import { Tooltip, Icon, Table, Row, Empty, Ellipsis } from 'tntd';
+import { Tooltip, Icon, Table, Row, Empty, Ellipsis, Tag, Title } from 'tntd';
 import { getText } from '../locale';
 import AHref from '../AHref';
 import './index.less';
@@ -49,25 +49,9 @@ export const ReferenceInfo = (props) => {
                   {c?.title}
                 </Tooltip>
               ),
-              width: 140,
+              width: 160,
               ellipsis: true,
             };
-            let fixedWidthLimit = {};
-            let fixedMaxWidth = {};
-            if (i === columns?.length - 1) {
-              if (columns?.length > 4) {
-                newC.fixed = 'right';
-                fixedWidthLimit = {
-                  widthLimit: 108,
-                };
-                fixedMaxWidth = {
-                  'max-width': '108px',
-                };
-              }
-            }
-            if (i === 0) {
-              newC.width = 180;
-            }
             if (from === 'ReferenceOnlineCheck' && c.dataIndex === 'status') {
               newC.className = 'refer-warning-txt';
             }
@@ -83,22 +67,23 @@ export const ReferenceInfo = (props) => {
               let tagInfo = null;
               if (i === 0 && record?.referenceCheckType) {
                 let checkObj;
-
                 // 能进行下一步操作
                 const isStrong = ['STRONG'].includes(record?.referenceCheckType);
                 if (isStrong) {
                   checkObj = {
                     name: record?.referenceCheckTypeName || getText('strong', props?.lang),
-                    className: 'refer-tag-strong',
+                    color: 'red',
                   };
                 } else {
                   checkObj = {
                     name: record?.referenceCheckTypeName || getText('weak', props?.lang),
-                    className: 'refer-tag-weak',
+                    color: 'grey',
                   };
                 }
                 tagInfo = checkObj ? (
-                  <span className={`refer-tag ${checkObj.className}`}>{checkObj.name}</span>
+                  <Tag size="small" color={checkObj.color}>
+                    {checkObj.name}
+                  </Tag>
                 ) : null;
               }
 
@@ -106,7 +91,7 @@ export const ReferenceInfo = (props) => {
                 return (
                   <AHref href={record?.goLink} target="_blank" unmountHandle={unmountHandle}>
                     <Tooltip placement="topLeft" title={content || '- -'}>
-                      <span className="content-span" style={fixedMaxWidth}>
+                      <span className="content-span">
                         {tagInfo}
                         {content || '- -'}
                       </span>
@@ -119,7 +104,6 @@ export const ReferenceInfo = (props) => {
                   <Ellipsis
                     placement="topLeft"
                     copyable={true}
-                    {...fixedWidthLimit}
                     title={content || '- -'}
                     prefix={tagInfo}
                   />
@@ -127,7 +111,7 @@ export const ReferenceInfo = (props) => {
               }
               return (
                 <Tooltip placement="topLeft" title={content || '- -'}>
-                  <span className="content-span" style={fixedMaxWidth}>
+                  <span className="content-span">
                     {tagInfo}
                     {content || '- -'}
                   </span>
@@ -140,27 +124,35 @@ export const ReferenceInfo = (props) => {
         }
         return (
           <div className="reference-body-item" key={dIndex}>
-            <Row className="reference-body-title" type="flex" align="middle">
-              <span className="body-title-content">
-                <Tooltip title={d?.title} placement="topLeft">
-                  {d?.title}
-                </Tooltip>
-              </span>
-              {d?.tips && (
-                <Tooltip title={d?.tips} placement="topLeft">
-                  <Icon type="info-circle" className="ml-6" />
-                </Tooltip>
-              )}
-            </Row>
+            <Title
+              className="reference-body-title"
+              size="small"
+              title={d?.title}
+              tooltip={d?.title}
+              subTitle={
+                d?.tips && (
+                  <Tooltip title={d?.tips} placement="topLeft">
+                    <Icon type="info-circle" />
+                  </Tooltip>
+                )
+              }
+            />
+
             {renderColumns?.length && (
               <Table
+                size="small"
+                bordered
                 className="reference-table"
-                bordered={true}
+                striped={true}
                 dataSource={d?.rows}
                 columns={renderColumns}
-                scroll={{
-                  x: (renderColumns.length - 1) * 140 + 40,
-                }}
+                scroll={
+                  renderColumns.length > 4
+                    ? {
+                        x: renderColumns.length * 160,
+                      }
+                    : {}
+                }
                 {...paginationInfo}
                 rowKey={(e, i) => `${dIndex}_${i}`}
               />

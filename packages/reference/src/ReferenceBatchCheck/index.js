@@ -81,7 +81,7 @@ const ReferenceBatchCheck = (props) => {
       >
         <div className="reference-online-check-modal">
           {!!type && canNextOpera && (
-            <div className="mb10">
+            <div className="mb16">
               <Alert
                 type="warning"
                 message={
@@ -92,7 +92,7 @@ const ReferenceBatchCheck = (props) => {
             </div>
           )}
           {!!type && !canNextOpera && (
-            <div className="mb10">
+            <div className="mb16">
               <Alert
                 type="error"
                 message={
@@ -116,9 +116,13 @@ const ReferenceBatchCheck = (props) => {
                       <Tooltip title={headerTxt} placement="topLeft">
                         <span>{headerTxt}</span>
                       </Tooltip>
-                      {d?.componentVersion && <Tag color="green">V{d?.componentVersion}</Tag>}
+                      {d?.componentVersion && (
+                        <Tag size="small" color="tnt-purple">
+                          V{d?.componentVersion}
+                        </Tag>
+                      )}
                       {d?.type === 'STRONG' && (
-                        <Tag color="#D96156">
+                        <Tag color="red" size="small">
                           {getText('exist', props?.lang)}
                           {d?.typeName || getText('strong', props?.lang)}
                         </Tag>

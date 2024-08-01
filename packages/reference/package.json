@@ -10,9 +10,8 @@
   ],
   "devDependencies": {
     "antd": ">=3.20.1",
-    "tntd": ">=2.7.9",
     "react": ">=16.8.0",
-    "react-dom": ">=16.8.0"
+    "tntd": ">=2.7.9"
   },
   "gitHead": "681d4356e5fb95aa24b117f71601e20835b7ab43"
 }

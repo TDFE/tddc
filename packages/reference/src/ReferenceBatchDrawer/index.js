@@ -3,7 +3,6 @@ import { Drawer, Spin, Tooltip, message, Collapse, Tag, Empty } from 'tntd';
 import PropTypes from 'prop-types';
 import { ReferenceInfo } from '../ReferenceInfo';
 import { getText } from '../locale';
-import './index.js';
 
 const { Panel } = Collapse;
 

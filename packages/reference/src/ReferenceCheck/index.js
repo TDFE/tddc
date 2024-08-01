@@ -67,7 +67,7 @@ const ReferenceCheck = (props) => {
       >
         <div className="reference-check-modal">
           {canNextOpera && (
-            <div className="mb10">
+            <div className="mb16">
               <Alert
                 type="warning"
                 message={
@@ -78,7 +78,7 @@ const ReferenceCheck = (props) => {
             </div>
           )}
           {!canNextOpera && (
-            <div className="mb10">
+            <div className="mb16">
               <Alert
                 type="error"
                 message={
