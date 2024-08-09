@@ -20,6 +20,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { Button, message } from 'antd';
 import MMFlow from '@tddc/mm-flow';
 import DialogTest from './DialogTest';
+import functionSvg from './NodeIcon/images/function.svg';
 const MMFlowComponent = () => {
   const mmFlow = useRef();
   const [auditedNodes, setAuditedNodes] = useState([
@@ -56,19 +57,17 @@ const MMFlowComponent = () => {
   };
 
   useEffect(() => {
-    setInterval(() => {
-      setAuditedNodes([
-        {
-          uuid: '3e9bf4004ad911eda9df3f68e8b34c19',
-          status: 'success',
-        },
-        {
-          uuid: '3f8012704ad911eda9df3f68e8b34c19',
-          status: 'success',
-        },
-      ]);
-    }, 1000);
-  });
+    setAuditedNodes([
+      {
+        uuid: '3e9bf4004ad911eda9df3f68e8b34c19',
+        status: 'success',
+      },
+      {
+        uuid: '3f8012704ad911eda9df3f68e8b34c19',
+        status: 'success',
+      },
+    ]);
+  }, []);
   return (
     <>
       <MMFlow
@@ -131,6 +130,7 @@ const MMFlowComponent = () => {
             type: 'DecisionToolServiceNode',
             iconText: '决',
             iconColor: '#CF6767',
+            icon: functionSvg,
           },
           {
             name: '模型',

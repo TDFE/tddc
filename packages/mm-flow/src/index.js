@@ -1,5 +1,5 @@
 import React, { useRef, useEffect, useState, useImperativeHandle, forwardRef } from 'react';
-import { Tooltip, message, Row } from 'antd';
+import { Tooltip, message, Row } from 'tntd';
 import MMEditor from 'mmeditor';
 import TopBar from './Content/TopBar';
 import LeftBar from './Content/LeftBar';
@@ -85,8 +85,11 @@ export default forwardRef((props, ref) => {
         (editorWrapRef && editorWrapRef.current && editorWrapRef.current.getBoundingClientRect()) ||
         {};
       if (jobEditorHei && editorDomRef) {
+        const { width: leftBarWidth } =
+          editorDomRef.current.querySelector('.job-left-bar')?.getBoundingClientRect() || {};
         editorDomRef.current.style.height = jobEditorHei - (!previewMode ? 48 : 0) + 'px';
-        editorDomRef.current.style.width = jobEditorWid - (!previewMode ? 140 : 0) + 'px';
+        editorDomRef.current.style.width =
+          jobEditorWid - (!previewMode ? leftBarWidth || 64 : 0) + 'px';
       }
       if (editorRef.current) {
         editorRef.current.controller.autoFit();
@@ -281,6 +284,20 @@ export default forwardRef((props, ref) => {
 
   return (
     <div ref={editorWrapRef} className={`job-editor ${className || ''}`} {...editorStyle}>
+      <svg width="0" height="0">
+        <defs>
+          <filter id="mm-editor-node-shadow" x="-50%" y="-50%" width="200%" height="200%">
+            <feGaussianBlur in="SourceAlpha" stdDeviation="10" />
+            <feOffset dx="0" dy="0" result="offsetblur" />
+            <feFlood floodColor="rgba(0, 0, 0, 0.05)" />
+            <feComposite in2="offsetblur" operator="in" />
+            <feMerge>
+              <feMergeNode />
+              <feMergeNode in="SourceGraphic" />
+            </feMerge>
+          </filter>
+        </defs>
+      </svg>
       {!previewMode && initReady && editorRef?.current && (
         <LeftBar {...props} editor={editorRef.current} onDrop={onDrop} />
       )}

@@ -1,6 +1,6 @@
 // 数据加工
 import { useEffect } from 'react';
-import { Modal, Button, Select, Input, Form } from 'antd';
+import { Modal, Button, Select, Input, Form } from 'tntd';
 const { Option } = Select;
 const formItemLayout = {
   labelCol: {

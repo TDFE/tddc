@@ -1,4 +1,4 @@
-import { message, Modal } from 'antd';
+import { message, Modal } from 'tntd';
 import { getText } from './locale';
 const DefaultConvert = {
   // 解析数据

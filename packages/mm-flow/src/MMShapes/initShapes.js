@@ -1,5 +1,7 @@
 import FlowExclusivity from '../Images/flow-exclusivity.svg';
 import FlowParallel from '../Images/flow-parallel.svg';
+import Judgment from '../NodeIcon/images/judgment-color.svg';
+import ParallelGateway from '../NodeIcon/images/parallel-color.svg';
 
 // 获取单行文本的像素宽度
 export const getTextPixelWith = (text, fontStyle = 'normal 12px Robot') => {
@@ -38,16 +40,27 @@ export default function initShapes(editor, flowNodes) {
     if (name) {
       name = sliceName(name);
     }
-    const text1 = snapPaper.text(15, 15, opt.iconText);
+    let circleInfo;
+    if (opt.icon) {
+      circleInfo = snapPaper.image(opt.icon, 0, 0, 16, 16);
+      circleInfo.node.setAttribute('xmlns:xlink', 'http://www.w3.org/1999/xlink');
+      circleInfo.attr({
+        x: 7,
+        y: 6,
+      });
+    } else {
+      circleInfo = snapPaper.text(15, 15, opt.iconText);
+      circleInfo.attr({
+        fill: '#fff',
+        fontSize: 12,
+      });
+    }
     const circle = snapPaper.circle(15, 14, 11);
-    text1.attr({
-      fill: '#fff',
-      fontSize: 12,
-    });
     circle.attr({
       fill: opt.color,
     });
-    const circleGroup = snapPaper.group(circle, text1);
+
+    const circleGroup = snapPaper.group(circle, circleInfo);
 
     const text = snapPaper.text(30, 15, name);
 
@@ -55,10 +68,11 @@ export default function initShapes(editor, flowNodes) {
 
     const node = snapPaper.rect(0, 0, Math.max(textW + 40, 120), 28, 15, 15);
     node.attr({
-      fill: '#eaeefa',
-      stroke: '#d0dcfd',
+      fill: '#ECF0FA',
+      stroke: '#fff',
       class: 'flow-icon-node',
-      strokeWidth: 1,
+      strokeWidth: 2,
+      filter: 'url(#mm-editor-node-shadow)',
     });
     text.attr({
       fill: '#454f64',
@@ -95,11 +109,14 @@ export default function initShapes(editor, flowNodes) {
           nodeType,
           {
             render: (data, snapPaper) => {
-              const node = snapPaper.circle(25, 25, 25);
-              const text = snapPaper.text(25, 25, data.name);
+              const node = snapPaper.circle(24, 24, 24);
+              const text = snapPaper.text(24, 24, data.name);
               node.attr({
-                fill: '#628FE4',
+                fill: '#20BD9F',
                 class: 'flow-icon-node',
+                filter: 'url(#mm-editor-node-shadow)',
+                stroke: '#fff',
+                strokeWidth: 2,
               });
               text.attr({
                 fill: '#fff',
@@ -122,11 +139,14 @@ export default function initShapes(editor, flowNodes) {
           nodeType,
           {
             render: (data, snapPaper) => {
-              const node = snapPaper.circle(25, 25, 25);
-              const text = snapPaper.text(25, 25, data.name);
+              const node = snapPaper.circle(24, 24, 24);
+              const text = snapPaper.text(24, 24, data.name);
               node.attr({
-                fill: '#869FBE',
+                fill: '#8B919E',
                 class: 'flow-icon-node',
+                filter: 'url(#mm-editor-node-shadow)',
+                stroke: '#fff',
+                strokeWidth: 2,
               });
               text.attr({
                 fill: '#fff',
@@ -149,15 +169,37 @@ export default function initShapes(editor, flowNodes) {
           nodeType,
           {
             render: (data, snapPaper) => {
-              const image = snapPaper.image(FlowParallel, 0, 0, 60, 56);
+              const image = snapPaper.image(FlowParallel, 0, 0, 120, 52);
               image.node.setAttribute('xmlns:xlink', 'http://www.w3.org/1999/xlink');
-              const text = snapPaper.text(30, 28, data.name);
+              image.attr({
+                filter: 'url(#mm-editor-node-shadow)',
+              });
+              let dName = data.name;
+              if (dName.length > 5) {
+                dName = dName.slice(0, 5) + '...';
+              }
+              const text = snapPaper.text(62, 28, dName);
               text.attr({
-                fill: '#24AF95',
+                fill: '#7A5AF8',
                 class: 'flow-txt-node',
               });
               text?.node?.setAttribute('font-size', '12px');
-              return snapPaper.group(image, text);
+
+              const iconImg = Snap(18, 18);
+              Snap.load(ParallelGateway, (f) => {
+                // 将加载的图片添加到 Snap.svg 的实例中
+                iconImg.append(f);
+              });
+              iconImg.attr({
+                width: 16,
+                height: 16,
+                x: 20,
+                y: 18,
+                class: 'parallel-node-icon',
+                filter: 'url(#mm-editor-node-shadow)',
+              });
+
+              return snapPaper.group(image, iconImg, text);
             },
             linkPoints: [
               { x: 0.5, y: 0 },
@@ -174,15 +216,34 @@ export default function initShapes(editor, flowNodes) {
           nodeType,
           {
             render: (data, snapPaper) => {
-              const image = snapPaper.image(FlowExclusivity, 0, 0, 60, 56);
+              const image = snapPaper.image(FlowExclusivity, 0, 0, 120, 52);
               image.node.setAttribute('xmlns:xlink', 'http://www.w3.org/1999/xlink');
-              const text = snapPaper.text(30, 28, data.name);
+              image.attr({
+                filter: 'url(#mm-editor-node-shadow)',
+              });
+              let dName = data.name;
+              if (dName.length > 5) {
+                dName = dName.slice(0, 5) + '...';
+              }
+              const text = snapPaper.text(62, 28, dName);
               text.attr({
-                fill: '#F67613',
+                fill: '#F47345',
                 class: 'flow-txt-node',
               });
               text?.node?.setAttribute('font-size', '12px');
-              return snapPaper.group(image, text);
+
+              const iconImg = Snap(16, 16);
+              Snap.load(Judgment, (f) => {
+                // 将加载的图片添加到 Snap.svg 的实例中
+                iconImg.append(f);
+              });
+              iconImg.attr({
+                x: 20,
+                y: 18,
+                class: 'exclusive-node-icon',
+              });
+
+              return snapPaper.group(image, iconImg, text);
             },
             linkPoints: [
               { x: 0.5, y: 0 },
@@ -201,6 +262,7 @@ export default function initShapes(editor, flowNodes) {
               return renderNode(data, snapPaper, {
                 iconText: node.iconText || '?',
                 color: node.iconColor || '#E6B55E',
+                icon: node.icon,
               });
             },
             linkPoints: [
