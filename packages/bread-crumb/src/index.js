@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useMemo } from 'react';
 import { Breadcrumb, Icon } from 'tntd';
 import { withRouter, matchPath, Link } from 'dva/router';
 import { getText } from './locale';
@@ -75,6 +75,7 @@ export default (WrapperComponent, rest) => {
             path: props.path === '/' ? match?.path : props.path,
             name: props.name,
             query: props.query,
+            ...(props.routerItemHide ? { routerItemHide: props.routerItemHide } : {}),
           });
         });
 
@@ -129,6 +130,7 @@ export default (WrapperComponent, rest) => {
           path: props.path === '/' ? match?.path : props.path,
           name: props.name,
           query: props.query,
+          ...(props.routerItemHide ? { routerItemHide: props.routerItemHide } : {}),
         });
       });
       if (useCache) {
@@ -143,7 +145,6 @@ export default (WrapperComponent, rest) => {
             return a.path.length - b.path.length;
           });
           const href = pathname + search;
-
           // 获取最原始的第一层级数据
           const isIndex = matchPath(pathname, { path: routeSort?.[0]?.path, exact: true });
           // 如果是第一层路由例如列表， 查看是否已经在缓存中了
@@ -151,7 +152,7 @@ export default (WrapperComponent, rest) => {
             ? breadCacheList?.find((item) => item.path === pathname)
             : undefined;
           if (isIndex && !search) {
-            breadCacheList = [];
+            breadCacheList = [{ ...curRoute, url: href }];
           } else if (indexInfo) {
             // 如果已经在缓存中了 则更新url 说明search发生变化
             indexInfo.url = href;
@@ -176,9 +177,21 @@ export default (WrapperComponent, rest) => {
         setBreadList(breadListTemp);
       }
     };
+
+    // 当前隐藏
+    const hideCurrentBreadCrumb = useMemo(() => {
+      if (breadList?.length) {
+        const curBread = breadList.slice(-1)?.[0] || {};
+        if (typeof curBread.routerItemHide === 'function') {
+          return curBread.routerItemHide(location);
+        }
+        return curBread.routerItemHide;
+      }
+    }, [breadList]);
+
     return (
       <>
-        {(breadList?.length > 1 || showHeader) && !forceNoHeader && (
+        {(breadList?.length > 1 || showHeader) && !forceNoHeader && !hideCurrentBreadCrumb && (
           <div className={`page-global-header bread-crumb-head ${curVersion}`}>
             {BreadCrumbCustom &&
               !!breadList?.length &&
