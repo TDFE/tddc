@@ -1,4 +1,4 @@
-import { Modal } from 'tntd';
+import { Drawer } from 'tntd';
 import { useState } from 'react';
 
 import AssignApp from './AssignApp';
@@ -23,20 +23,20 @@ const AssignModal = (props) => {
   const [assignData, setAssignData] = useState({});
 
   const submit = () => {
-    console.log({ assignData });
     onSubmit(assignData);
   };
 
   return (
-    <Modal
-      className="modelTool-assign"
+    <Drawer
+      className="modal-assign"
       title={title}
       visible={visible}
-      width={showUser ? '80%' : '65%'}
+      width={700}
       onCancel={close}
       onOk={submit}
-      maskClosable={false}
+      maskClosable={disabled}
       destroyOnClose
+      showFooter={!disabled}
       okButtonProps={{ disabled }}
     >
       <AssignApp
@@ -52,7 +52,7 @@ const AssignModal = (props) => {
         showUser={showUser}
         {...restProps}
       />
-    </Modal>
+    </Drawer>
   );
 };
 
