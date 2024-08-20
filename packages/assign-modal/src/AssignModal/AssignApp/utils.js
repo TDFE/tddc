@@ -1,3 +1,6 @@
+import { debounce } from 'lodash';
+import { useState, useEffect } from 'react';
+
 // 遍历机构树 添加 path属性 （上级机构到子机构的路径）
 export const dataFormat = function (root, cb) {
   if (!root) {
@@ -102,4 +105,22 @@ export const doSearch = (fileterKeys = '', flattenTreeMap, cb) => {
   }
 
   cb && cb();
+};
+
+export const useWindowHeight = (gap) => {
+  const [windowHeight, setWindowHeight] = useState(window.innerHeight - gap);
+
+  useEffect(() => {
+    const handleResize = debounce(() => {
+      setWindowHeight(window.innerHeight - gap);
+    });
+
+    window.addEventListener('resize', handleResize);
+    // 清理事件监听器
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, [gap]);
+
+  return windowHeight;
 };

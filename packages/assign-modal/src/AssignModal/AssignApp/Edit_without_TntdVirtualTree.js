@@ -1,118 +1,13 @@
-import { Checkbox, Input, Ellipsis, Segmented, Empty, Icon, TntdVirtualTree as Tree } from 'tntd';
+import { Checkbox, Tree, Input, Ellipsis, Segmented, Empty, Icon } from 'tntd';
 import { useEffect, useState, useCallback, useRef, useMemo } from 'react';
 
 import { cloneDeep, debounce } from 'lodash';
 import './index.less';
-import { dataFormat, findSameCodePath, preorder, mergeAndDeduplicate } from './utils';
+import { findSameCodePath, preorder, mergeAndDeduplicate, doSearch } from './utils';
 import { getText } from '../../locale';
 
 const { TreeNode } = Tree;
 let path = []; // 上级机构到当前机构的路径
-
-const userListData = [
-  {
-    uuid: '2fc0f89d1b1d4eb5a86adb44bbc50017',
-    account: 'xyz2',
-    userName: 'xyz2',
-    orgUuid: 'a8202aea546f48979754bdd45c471b08',
-    orgCode: 'TongDun',
-    roleUuids: ['ee8dbc99831b4a9cb17578b51bbb09e0'],
-    roleCodes: ['TongDun'],
-    avatar: 'male1',
-    expiration: '2026-11-27 23:59:59',
-    gender: 0,
-    appName: ['quickPay'],
-    status: 0,
-    updateBy: 'xyz',
-    lang: 'cn',
-    theme: 'default',
-    layout: 'default',
-    simplified: 1,
-  },
-  {
-    uuid: '7070d72691a14af19ee17e55150d37df',
-    account: 'lu.gan',
-    userName: '甘露',
-    orgUuid: 'a8202aea546f48979754bdd45c471b08',
-    orgCode: 'TongDun',
-    roleUuids: ['ee8dbc99831b4a9cb17578b51bbb09e0'],
-    roleCodes: ['TongDun'],
-    avatar: 'male1',
-    expiration: '2028-11-23 23:59:59',
-    gender: 0,
-    appName: [
-      'quickPay',
-      'perOnline',
-      'epOnline',
-      'complex_index',
-      'fzsl',
-      'shyh',
-      'wj',
-      'test_app',
-    ],
-    status: 0,
-    updateBy: 'admin',
-    lang: 'cn',
-    theme: 'default',
-    layout: 'default',
-    simplified: 1,
-  },
-  {
-    uuid: '62fb24d510264b3892a56a5e9ccb7ba3',
-    account: 'wenjuan.su',
-    userName:
-      '苏文娟苏文娟苏文娟苏文娟苏文娟苏文娟苏文娟苏文娟苏文娟苏文娟苏文娟苏文娟苏文娟苏文娟苏文娟苏文娟苏文娟苏文娟苏文娟苏文娟',
-    orgUuid: 'a8202aea546f48979754bdd45c471b08',
-    orgCode: 'TongDun',
-    roleUuids: ['ee8dbc99831b4a9cb17578b51bbb09e0'],
-    roleCodes: ['TongDun'],
-    avatar: 'male1',
-    expiration: '2024-11-14 12:59:59',
-    gender: 0,
-    appName: ['shyh', 'quickPay', 'perOnline', 'epOnline'],
-    status: 0,
-    updateBy: 'gang.li',
-    lang: 'cn',
-    theme: 'default',
-    layout: 'default',
-    simplified: 1,
-  },
-  {
-    uuid: '7607494fb78f4f0b8bd16f6781796ca9',
-    account: 'zhangjun',
-    userName: 'zhangjun',
-    orgUuid: 'a8202aea546f48979754bdd45c471b08',
-    orgCode: 'TongDun',
-    roleUuids: [
-      '4a7c466befb447bf9fc7c524b5a04728',
-      'c5f9d6338fd542d9b21d2250f52268e5',
-      'ee8dbc99831b4a9cb17578b51bbb09e0',
-      'fe8b9eaf7faf4b6eb998e330e697b696',
-    ],
-    roleCodes: ['TongDun'],
-    avatar: 'male1',
-    expiration: '2024-11-14 12:59:59',
-    gender: 0,
-    appName: [
-      'default',
-      'ktbank',
-      'BANKOFSANXIANG',
-      'flxd',
-      'ktyh',
-      'zxkzx',
-      'JXRX',
-      'Pos',
-      'scnd',
-      'edjs',
-    ],
-    status: 0,
-    updateBy: 'zhangjun',
-    lang: 'cn',
-    theme: 'default',
-    layout: 'default',
-    simplified: 1,
-  },
-];
 
 const AssignModal = (props) => {
   const {
@@ -127,7 +22,7 @@ const AssignModal = (props) => {
     orgCheckboxTitle,
     appCheckboxTitle,
     userCheckboxTitle,
-    userList = userListData || [],
+    userList,
     showUser,
   } = props;
   let { appCodes = [], orgCodes = [], orgCode, appCode, accounts = [], account } = dataItem;
@@ -141,8 +36,8 @@ const AssignModal = (props) => {
   const [allOrg, allApp, allUser] = useMemo(() => {
     let org = preorder(
       rootNode,
-      (key, node) => {
-        orgMapRef.current[key] = node;
+      (key, root) => {
+        orgMapRef.current[key] = root;
       },
       true,
     );
@@ -169,8 +64,7 @@ const AssignModal = (props) => {
     titleOptions.pop();
   }
 
-  const [treeData, setTreeData] = useState(orgList[0]);
-
+  const [treeData, setTreeData] = useState(orgList);
   const [curIndex, setCurIndex] = useState(0);
   const [curValue, setCurValue] = useState(titleOptions[0]);
 
@@ -234,72 +128,83 @@ const AssignModal = (props) => {
   }, [dataItem]);
 
   useEffect(() => {
-    if (orgList) {
-      const loopTreeNodes = (nodes, level = 0) => {
-        const NodeTitle = ({ node }) => {
-          return <div className="node-title">{node.title}</div>;
-        };
+    doSearch(filterOrg, orgMapRef.current, () => {
+      let newData = cloneDeep([orgMapRef.current[orgList[0].value]]);
+      setTreeData(newData);
+    });
+  }, [filterOrg]);
 
-        return nodes?.map((item) => {
-          let orgDisabled = path.includes(item.code);
+  const loopTreeNodes = (data, level = 0) => {
+    const NodeTitle = ({ node }) => {
+      return <div className="node-title">{node.title}</div>;
+    };
 
-          if (item.children && item.children.length > 0) {
-            return {
-              ...item,
-              key: item.code,
-              title: item.title,
-              value: item.code,
-              disabled: orgDisabled || disabled || allOrgChecked,
-              children: loopTreeNodes(item.children, level + 1),
-            };
-          }
-          return {
-            ...item,
-            key: item.code,
-            value: item.code,
-            title: item.title,
-            disabled: orgDisabled || disabled || allOrgChecked,
-          };
-        });
-      };
+    return data.map((item) => {
+      const { code, show } = item || {};
+      if (!show) return null;
 
-      setTreeData(loopTreeNodes(orgList, 0));
-    }
-  }, [orgList, allOrgChecked, allAppChecked, allUserChecked]);
+      let orgDisabled = path.includes(code);
 
-  const onCheck = (...rest) => {
-    const [checked, node, isChecked] = rest;
-    const isLeaf = !node?.childrenValues?.length;
-    const curNode = orgMapRef.current[node.value] || {};
-    let { path } = curNode;
+      if (item.children) {
+        return (
+          <TreeNode
+            key={code}
+            title={<NodeTitle node={item} />}
+            item={item}
+            disabled={orgDisabled || disabled || allOrgChecked}
+          >
+            {loopTreeNodes(item.children, level + 1)}
+          </TreeNode>
+        );
+      }
+      return (
+        <TreeNode
+          style={{
+            paddingLeft: `${(level + 1) * 14}px`,
+            marginLeft: `-${level * 14}px`,
+          }}
+          key={code}
+          title={<NodeTitle node={item} />}
+          item={item}
+          disabled={orgDisabled || disabled}
+        />
+      );
+    });
+  };
 
-    let newChecked = cloneDeep(checked);
+  const onCheck = (keys, info) => {
+    let {
+      node: { props },
+    } = info;
+    let { item } = props;
+    let { path } = item;
+    let { checked } = keys;
 
-    if (!isLeaf && !isChecked) {
-      let arr = preorder(node);
+    if (!info.node.isLeaf() && !info.node.checked) {
+      let arr = preorder(info.node.props.item);
       arr.splice(0, 1);
       arr.map((item) => {
-        let i = newChecked.findIndex((i) => i === item);
-        if (i !== -1) newChecked.splice(i, 1);
+        let i = checked.findIndex((i) => i === item);
+        if (i !== -1) checked.splice(i, 1);
       });
     }
-    if (isChecked) {
-      newChecked.pop();
-      newChecked = mergeAndDeduplicate(newChecked, path);
+    if (info.checked) {
+      checked.pop();
+      checked = mergeAndDeduplicate(checked, path);
     }
 
-    setCheckedKeys(newChecked);
+    setCheckedKeys(checked);
 
     onChange({
       appKeys: allAppChecked ? ['all'] : appKeys,
-      checkedKeys: newChecked,
+      checkedKeys: checked,
       appCheckAll: allAppChecked,
       orgCheckAll: allOrgChecked,
       userKeys: allUserChecked ? ['all'] : userKeys,
       userCheckAll: allUserChecked,
       checkData: {
         apps: appKeys,
-        orgs: newChecked,
+        orgs: checked,
         accounts: userKeys,
       },
     });
@@ -500,7 +405,6 @@ const AssignModal = (props) => {
       });
     }
   };
-
   const debouncedOrgSearch = useCallback(
     debounce((nextValue) => {
       setFilterOrg(nextValue);
@@ -762,34 +666,31 @@ const AssignModal = (props) => {
               <div className="panel-left">
                 <Input
                   size="small"
-                  // allowClear
+                  allowClear
                   placeholder={getText('search', props?.lang)}
                   onChange={(e) => {
                     debouncedOrgSearch(e.target.value);
                   }}
-                  // onSearch={(v) => {
-                  //     setFilterUser(v);
-                  // }}
                   suffix={<Icon type="zoom" />}
                   style={{ marginBottom: 16, width: 'calc(100% - 16px)' }}
                 />
                 <Tree
-                  treeData={treeData}
-                  filterKey={filterOrg}
                   blockNode
                   className="tree-list"
                   checkable
                   checkStrictly={true}
                   checkedKeys={checkedKeys}
-                  defaultExpandAll
+                  defaultExpandAll={true}
                   onCheck={onCheck}
-                  height="584px"
-                />
+                >
+                  {loopTreeNodes(treeData, 0)}
+                </Tree>
               </div>
               <div className="panel-right">
                 <div className="select-menu-header">
-                  <span>已选: {areadySelectOrg.length || 0} 个机构</span>
-                  <a onClick={() => onRemoveAllOrg()}>清空</a>
+                  {getText('hasBeenSelected', props?.lang)}:{' '}
+                  {getText('numOfOrg', props?.lang, areadySelectOrg.length || 0)}
+                  <a onClick={() => onRemoveAllOrg()}>{getText('clear', props?.lang)}</a>
                 </div>
                 <ul className="select-menu-list">
                   {checkedKeys.map((item, index) => {
@@ -837,8 +738,9 @@ const AssignModal = (props) => {
                   onChange={(e) => {
                     debouncedAppSearch(e.target.value);
                   }}
-                  placehoalder="请输入渠道名称"
                   size="small"
+                  allowClear
+                  placeholder={getText('search', props?.lang)}
                   suffix={<Icon type="zoom" />}
                   style={{ marginBottom: 16, width: 'calc(100% - 16px)' }}
                 />
@@ -846,8 +748,11 @@ const AssignModal = (props) => {
               </div>
               <div className="panel-right">
                 <div className="select-menu-header">
-                  <span>已选: {areadySelectApp.length || 0} 个渠道</span>
-                  <a onClick={() => onRemoveAllApp()}>清空</a>
+                  <span>
+                    {getText('hasBeenSelected', props?.lang)}:{' '}
+                    {getText('numOfApp', props?.lang, areadySelectApp.length || 0)}
+                  </span>
+                  <a onClick={() => onRemoveAllApp()}>{getText('clear', props?.lang)}</a>
                 </div>
                 <ul className="select-menu-list">
                   {appKeys.map((item, index) => {
@@ -893,14 +798,11 @@ const AssignModal = (props) => {
                 <div className="panel-left">
                   <Input
                     size="small"
-                    // allowClear
+                    allowClear
                     placeholder={getText('search', props?.lang)}
                     onChange={(e) => {
                       debouncedUserSearch(e.target.value);
                     }}
-                    // onSearch={(v) => {
-                    //     setFilterUser(v);
-                    // }}
                     suffix={<Icon type="zoom" />}
                     style={{ marginBottom: 16, width: 'calc(100% - 16px)' }}
                   />
@@ -909,8 +811,9 @@ const AssignModal = (props) => {
                 </div>
                 <div className="panel-right">
                   <div className="select-menu-header">
-                    <span>已选: {areadySelectUser.length || 0} 个用户</span>
-                    <a onClick={() => onRemoveAllUser()}>清空</a>
+                    {getText('hasBeenSelected', props?.lang)}:{' '}
+                    {getText('numOfUser', props?.lang, areadySelectUser.length || 0)}
+                    <a onClick={() => onRemoveAllUser()}>{getText('clear', props?.lang)}</a>
                   </div>
                   <ul className="select-menu-list">
                     {userKeys.map((item, index) => {

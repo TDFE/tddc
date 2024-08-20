@@ -1,12 +1,11 @@
-import { Checkbox, Tree, Input, Ellipsis, Segmented, Empty, Icon } from 'tntd';
+import { Checkbox, Input, Ellipsis, Segmented, Empty, Icon, TntdVirtualTree as Tree } from 'tntd';
 import { useEffect, useState, useCallback, useRef, useMemo } from 'react';
 
 import { cloneDeep, debounce } from 'lodash';
 import './index.less';
-import { findSameCodePath, preorder, mergeAndDeduplicate, doSearch } from './utils';
+import { findSameCodePath, preorder, mergeAndDeduplicate, useWindowHeight } from './utils';
 import { getText } from '../../locale';
 
-const { TreeNode } = Tree;
 let path = []; // 上级机构到当前机构的路径
 
 const AssignModal = (props) => {
@@ -22,7 +21,7 @@ const AssignModal = (props) => {
     orgCheckboxTitle,
     appCheckboxTitle,
     userCheckboxTitle,
-    userList,
+    userList = [],
     showUser,
   } = props;
   let { appCodes = [], orgCodes = [], orgCode, appCode, accounts = [], account } = dataItem;
@@ -36,8 +35,8 @@ const AssignModal = (props) => {
   const [allOrg, allApp, allUser] = useMemo(() => {
     let org = preorder(
       rootNode,
-      (key, root) => {
-        orgMapRef.current[key] = root;
+      (key, node) => {
+        orgMapRef.current[key] = node;
       },
       true,
     );
@@ -64,7 +63,8 @@ const AssignModal = (props) => {
     titleOptions.pop();
   }
 
-  const [treeData, setTreeData] = useState(orgList);
+  const [treeData, setTreeData] = useState(orgList[0]);
+
   const [curIndex, setCurIndex] = useState(0);
   const [curValue, setCurValue] = useState(titleOptions[0]);
 
@@ -80,131 +80,121 @@ const AssignModal = (props) => {
   const [filterUser, setFilterUser] = useState();
   const [filterApp, setFilterApp] = useState();
 
+  let gap = 335;
+  const windowHeight = useWindowHeight(gap);
+
   useEffect(() => {
-    // path 和 allOrgList 赋值
-    path = findSameCodePath(rootNode, orgCode);
+    if (dataItem && Object.keys(dataItem)?.length) {
+      // path 和 allOrgList 赋值
+      path = findSameCodePath(rootNode, orgCode);
 
-    let initOrgs = [];
-    let initApps = [];
-    let initAccounts = [];
-    if (orgCodes.includes('all')) {
-      setAllOrgChecked(orgCodes.includes('all'));
-      initOrgs = allOrg;
-    } else {
-      initOrgs = Array.from(new Set([...(orgCodes || []), ...path]));
-    }
-    if (appCodes.includes('all')) {
-      setAllAppChecked(appCodes.includes('all'));
-      initApps = allApp;
-    } else {
-      initApps = Array.from(new Set([...(appCodes || []), appCode]));
-    }
-
-    if (showUser) {
-      if (accounts.includes('all')) {
-        setAllUserChecked(true);
-        initAccounts = allUser;
+      let initOrgs = [];
+      let initApps = [];
+      let initAccounts = [];
+      if (orgCodes.includes('all')) {
+        setAllOrgChecked(orgCodes.includes('all'));
+        initOrgs = allOrg;
       } else {
-        initAccounts = Array.from(new Set([...(accounts || []), account]));
+        initOrgs = Array.from(new Set([...(orgCodes || []), ...path]));
       }
+      if (appCodes.includes('all')) {
+        setAllAppChecked(appCodes.includes('all'));
+        initApps = allApp;
+      } else {
+        initApps = Array.from(new Set([...(appCodes || []), appCode]));
+      }
+
+      if (showUser) {
+        if (accounts.includes('all')) {
+          setAllUserChecked(true);
+          initAccounts = allUser;
+        } else {
+          initAccounts = Array.from(new Set([...(accounts || []), account]));
+        }
+      }
+      setCheckedKeys(initOrgs);
+      setAppKeys(initApps || []);
+      setUserKeys(initAccounts || []);
+      onChange &&
+        onChange({
+          appKeys: appCodes.includes('all') ? ['all'] : initApps,
+          checkedKeys: orgCodes.includes('all') ? ['all'] : initOrgs,
+          userKeys: accounts.includes('all') ? ['all'] : initAccounts,
+          appCheckAll: appCodes.includes('all'),
+          orgCheckAll: orgCodes.includes('all'),
+          userCheckAll: accounts.includes('all'),
+          checkData: {
+            apps: initApps,
+            orgs: initOrgs,
+            accounts: initAccounts,
+          },
+        });
     }
-    setCheckedKeys(initOrgs);
-    setAppKeys(initApps || []);
-    setUserKeys(initAccounts || []);
-    onChange &&
-      onChange({
-        appKeys: appCodes.includes('all') ? ['all'] : initApps,
-        checkedKeys: orgCodes.includes('all') ? ['all'] : initOrgs,
-        userKeys: accounts.includes('all') ? ['all'] : initAccounts,
-        appCheckAll: appCodes.includes('all'),
-        orgCheckAll: orgCodes.includes('all'),
-        userCheckAll: accounts.includes('all'),
-        checkData: {
-          apps: initApps,
-          orgs: initOrgs,
-          accounts: initAccounts,
-        },
-      });
   }, [dataItem]);
 
   useEffect(() => {
-    doSearch(filterOrg, orgMapRef.current, () => {
-      let newData = cloneDeep([orgMapRef.current[orgList[0].value]]);
-      setTreeData(newData);
-    });
-  }, [filterOrg]);
+    if (orgList) {
+      const loopTreeNodes = (nodes, level = 0) => {
+        return nodes?.map((item) => {
+          let orgDisabled = path.includes(item.code);
 
-  const loopTreeNodes = (data, level = 0) => {
-    const NodeTitle = ({ node }) => {
-      return <div className="node-title">{node.title}</div>;
-    };
+          if (item.children && item.children.length > 0) {
+            return {
+              ...item,
+              key: item.code,
+              title: item.name,
+              value: item.code,
+              disabled: orgDisabled || disabled || allOrgChecked,
+              children: loopTreeNodes(item.children, level + 1),
+            };
+          }
+          return {
+            ...item,
+            key: item.code,
+            value: item.code,
+            title: item.name,
+            disabled: orgDisabled || disabled || allOrgChecked,
+          };
+        });
+      };
 
-    return data.map((item) => {
-      const { code, show } = item || {};
-      if (!show) return null;
+      setTreeData(loopTreeNodes(orgList, 0));
+    }
+  }, [orgList, allOrgChecked, allAppChecked, allUserChecked]);
 
-      let orgDisabled = path.includes(code);
+  const onCheck = (...rest) => {
+    const [checked, node, isChecked] = rest;
+    const isLeaf = !node?.childrenValues?.length;
+    const curNode = orgMapRef.current[node.value] || {};
+    let { path } = curNode;
 
-      if (item.children) {
-        return (
-          <TreeNode
-            key={code}
-            title={<NodeTitle node={item} />}
-            item={item}
-            disabled={orgDisabled || disabled || allOrgChecked}
-          >
-            {loopTreeNodes(item.children, level + 1)}
-          </TreeNode>
-        );
-      }
-      return (
-        <TreeNode
-          style={{
-            paddingLeft: `${(level + 1) * 14}px`,
-            marginLeft: `-${level * 14}px`,
-          }}
-          key={code}
-          title={<NodeTitle node={item} />}
-          item={item}
-          disabled={orgDisabled || disabled}
-        />
-      );
-    });
-  };
+    let newChecked = cloneDeep(checked);
 
-  const onCheck = (keys, info) => {
-    let {
-      node: { props },
-    } = info;
-    let { item } = props;
-    let { path } = item;
-    let { checked } = keys;
-
-    if (!info.node.isLeaf() && !info.node.checked) {
-      let arr = preorder(info.node.props.item);
+    if (!isLeaf && !isChecked) {
+      let arr = preorder(node);
       arr.splice(0, 1);
       arr.map((item) => {
-        let i = checked.findIndex((i) => i === item);
-        if (i !== -1) checked.splice(i, 1);
+        let i = newChecked.findIndex((i) => i === item);
+        if (i !== -1) newChecked.splice(i, 1);
       });
     }
-    if (info.checked) {
-      checked.pop();
-      checked = mergeAndDeduplicate(checked, path);
+    if (isChecked) {
+      newChecked.pop();
+      newChecked = mergeAndDeduplicate(newChecked, path);
     }
 
-    setCheckedKeys(checked);
+    setCheckedKeys(newChecked);
 
     onChange({
       appKeys: allAppChecked ? ['all'] : appKeys,
-      checkedKeys: checked,
+      checkedKeys: newChecked,
       appCheckAll: allAppChecked,
       orgCheckAll: allOrgChecked,
       userKeys: allUserChecked ? ['all'] : userKeys,
       userCheckAll: allUserChecked,
       checkData: {
         apps: appKeys,
-        orgs: checked,
+        orgs: newChecked,
         accounts: userKeys,
       },
     });
@@ -405,6 +395,7 @@ const AssignModal = (props) => {
       });
     }
   };
+
   const debouncedOrgSearch = useCallback(
     debounce((nextValue) => {
       setFilterOrg(nextValue);
@@ -423,6 +414,7 @@ const AssignModal = (props) => {
     }, 200),
     [],
   );
+
   // 拼接机构路径显示名
   const getOrgPathDisplayName = (path = []) => {
     let displayName = '';
@@ -432,6 +424,7 @@ const AssignModal = (props) => {
 
     return displayName;
   };
+
   // 移除单个机构
   const onRemoveSingleOrg = (node) => {
     let del_arr = preorder(node);
@@ -453,6 +446,7 @@ const AssignModal = (props) => {
       },
     });
   };
+
   // 移除全部机构
   const onRemoveAllOrg = () => {
     let checked = [rootNode.key];
@@ -472,6 +466,7 @@ const AssignModal = (props) => {
       },
     });
   };
+
   // 移除单个应用
   const onRemoveSingleApp = (value) => {
     let newAppKeys = cloneDeep(appKeys);
@@ -515,6 +510,7 @@ const AssignModal = (props) => {
       },
     });
   };
+
   // 移除全部用户
   let onRemoveAllUser = () => {
     let newUserKeys = [account];
@@ -534,6 +530,7 @@ const AssignModal = (props) => {
       },
     });
   };
+
   // 移除单个用户
   let onRemoveSingleUser = (value) => {
     let newUserKeys = cloneDeep(userKeys);
@@ -666,7 +663,6 @@ const AssignModal = (props) => {
               <div className="panel-left">
                 <Input
                   size="small"
-                  allowClear
                   placeholder={getText('search', props?.lang)}
                   onChange={(e) => {
                     debouncedOrgSearch(e.target.value);
@@ -675,22 +671,22 @@ const AssignModal = (props) => {
                   style={{ marginBottom: 16, width: 'calc(100% - 16px)' }}
                 />
                 <Tree
+                  treeData={treeData}
+                  filterKey={filterOrg}
                   blockNode
                   className="tree-list"
                   checkable
                   checkStrictly={true}
                   checkedKeys={checkedKeys}
-                  defaultExpandAll={true}
+                  defaultExpandAll
                   onCheck={onCheck}
-                >
-                  {loopTreeNodes(treeData, 0)}
-                </Tree>
+                  height={windowHeight}
+                />
               </div>
               <div className="panel-right">
                 <div className="select-menu-header">
-                  {getText('hasBeenSelected', props?.lang)}:{' '}
-                  {getText('numOfOrg', props?.lang, areadySelectOrg.length || 0)}
-                  <a onClick={() => onRemoveAllOrg()}>{getText('clear', props?.lang)}</a>
+                  <span>已选: {areadySelectOrg.length || 0} 个机构</span>
+                  <a onClick={() => onRemoveAllOrg()}>清空</a>
                 </div>
                 <ul className="select-menu-list">
                   {checkedKeys.map((item, index) => {
@@ -738,9 +734,8 @@ const AssignModal = (props) => {
                   onChange={(e) => {
                     debouncedAppSearch(e.target.value);
                   }}
+                  placehoalder="请输入渠道名称"
                   size="small"
-                  allowClear
-                  placeholder={getText('search', props?.lang)}
                   suffix={<Icon type="zoom" />}
                   style={{ marginBottom: 16, width: 'calc(100% - 16px)' }}
                 />
@@ -748,11 +743,8 @@ const AssignModal = (props) => {
               </div>
               <div className="panel-right">
                 <div className="select-menu-header">
-                  <span>
-                    {getText('hasBeenSelected', props?.lang)}:{' '}
-                    {getText('numOfApp', props?.lang, areadySelectApp.length || 0)}
-                  </span>
-                  <a onClick={() => onRemoveAllApp()}>{getText('clear', props?.lang)}</a>
+                  <span>已选: {areadySelectApp.length || 0} 个渠道</span>
+                  <a onClick={() => onRemoveAllApp()}>清空</a>
                 </div>
                 <ul className="select-menu-list">
                   {appKeys.map((item, index) => {
@@ -798,7 +790,6 @@ const AssignModal = (props) => {
                 <div className="panel-left">
                   <Input
                     size="small"
-                    allowClear
                     placeholder={getText('search', props?.lang)}
                     onChange={(e) => {
                       debouncedUserSearch(e.target.value);
@@ -811,9 +802,8 @@ const AssignModal = (props) => {
                 </div>
                 <div className="panel-right">
                   <div className="select-menu-header">
-                    {getText('hasBeenSelected', props?.lang)}:{' '}
-                    {getText('numOfUser', props?.lang, areadySelectUser.length || 0)}
-                    <a onClick={() => onRemoveAllUser()}>{getText('clear', props?.lang)}</a>
+                    <span>已选: {areadySelectUser.length || 0} 个用户</span>
+                    <a onClick={() => onRemoveAllUser()}>清空</a>
                   </div>
                   <ul className="select-menu-list">
                     {userKeys.map((item, index) => {
