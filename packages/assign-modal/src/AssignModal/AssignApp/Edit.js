@@ -10,11 +10,11 @@ let path = []; // 上级机构到当前机构的路径
 
 const AssignModal = (props) => {
   const {
+    onChange,
     orgList = [],
     dataItem = {},
     disabled,
     appList,
-    onChange,
     orgTitle,
     appTitle,
     userTitle,
@@ -23,7 +23,10 @@ const AssignModal = (props) => {
     userCheckboxTitle,
     userList = [],
     showUser,
+    customOrgDisabled,
+    customAppDisabled,
   } = props;
+
   let { appCodes = [], orgCodes = [], orgCode, appCode, accounts = [], account } = dataItem;
 
   const orgMapRef = useRef({});
@@ -144,7 +147,11 @@ const AssignModal = (props) => {
               key: item.code,
               title: item.name,
               value: item.code,
-              disabled: orgDisabled || disabled || allOrgChecked,
+              disabled:
+                orgDisabled ||
+                disabled ||
+                allOrgChecked ||
+                (customOrgDisabled && customOrgDisabled(item)),
               children: loopTreeNodes(item.children, level + 1),
             };
           }
@@ -153,7 +160,7 @@ const AssignModal = (props) => {
             key: item.code,
             value: item.code,
             title: item.name,
-            disabled: orgDisabled || disabled || allOrgChecked,
+            disabled: orgDisabled || disabled || allOrgChecked || customOrgDisabled(item),
           };
         });
       };
@@ -589,7 +596,12 @@ const AssignModal = (props) => {
         return (
           <Checkbox
             checked={isCheck}
-            disabled={disabled || isOwnAppCode || allAppChecked}
+            disabled={
+              disabled ||
+              isOwnAppCode ||
+              allAppChecked ||
+              (customAppDisabled && customAppDisabled(item))
+            }
             onChange={assignApp}
             value={item.value}
             key={index}
@@ -674,7 +686,6 @@ const AssignModal = (props) => {
                   treeData={treeData}
                   filterKey={filterOrg}
                   blockNode
-                  className="tree-list"
                   checkable
                   checkStrictly={true}
                   checkedKeys={checkedKeys}
