@@ -1,47 +1,40 @@
 import _Tooltip from 'tntd/es/tooltip';
 var _excluded = ['data', 'showSourceName', 'bool', 'inputValue'];
 function _extends() {
-  _extends = Object.assign
-    ? Object.assign.bind()
-    : function (target) {
-        for (var i = 1; i < arguments.length; i++) {
-          var source = arguments[i];
-          for (var key in source) {
-            if (Object.prototype.hasOwnProperty.call(source, key)) {
-              target[key] = source[key];
-            }
+  return (
+    (_extends = Object.assign
+      ? Object.assign.bind()
+      : function (n) {
+          for (var e = 1; e < arguments.length; e++) {
+            var t = arguments[e];
+            for (var r in t) ({}).hasOwnProperty.call(t, r) && (n[r] = t[r]);
           }
-        }
-        return target;
-      };
-  return _extends.apply(this, arguments);
+          return n;
+        }),
+    _extends.apply(null, arguments)
+  );
 }
-function _objectWithoutProperties(source, excluded) {
-  if (source == null) return {};
-  var target = _objectWithoutPropertiesLoose(source, excluded);
-  var key, i;
+function _objectWithoutProperties(e, t) {
+  if (null == e) return {};
+  var o,
+    r,
+    i = _objectWithoutPropertiesLoose(e, t);
   if (Object.getOwnPropertySymbols) {
-    var sourceSymbolKeys = Object.getOwnPropertySymbols(source);
-    for (i = 0; i < sourceSymbolKeys.length; i++) {
-      key = sourceSymbolKeys[i];
-      if (excluded.indexOf(key) >= 0) continue;
-      if (!Object.prototype.propertyIsEnumerable.call(source, key)) continue;
-      target[key] = source[key];
-    }
+    var s = Object.getOwnPropertySymbols(e);
+    for (r = 0; r < s.length; r++)
+      (o = s[r]), t.includes(o) || ({}.propertyIsEnumerable.call(e, o) && (i[o] = e[o]));
   }
-  return target;
+  return i;
 }
-function _objectWithoutPropertiesLoose(source, excluded) {
-  if (source == null) return {};
-  var target = {};
-  var sourceKeys = Object.keys(source);
-  var key, i;
-  for (i = 0; i < sourceKeys.length; i++) {
-    key = sourceKeys[i];
-    if (excluded.indexOf(key) >= 0) continue;
-    target[key] = source[key];
-  }
-  return target;
+function _objectWithoutPropertiesLoose(r, e) {
+  if (null == r) return {};
+  var t = {};
+  for (var n in r)
+    if ({}.hasOwnProperty.call(r, n)) {
+      if (e.includes(n)) continue;
+      t[n] = r[n];
+    }
+  return t;
 }
 import React from 'react';
 /*
@@ -51,52 +44,68 @@ import React from 'react';
  * @LastEditors: 郑泳健
  * @LastEditTime: 2022-12-29 19:55:37
  */
+import Cookies from 'universal-cookie';
 import './index.less';
 var TYPE_MAP = {
   INT: {
     displayName: '整数',
+    enDisplayName: 'Integer',
     color: '#5262C7',
   },
   DOUBLE: {
     displayName: '小数',
+    enDisplayName: 'Float',
     color: '#00D2C2',
   },
   STRING: {
     displayName: '字符',
+    enDisplayName: 'String',
     color: '#826AF9',
   },
   ENUM: {
     displayName: '枚举',
+    enDisplayName: 'Enum',
     color: '#00C5DC',
   },
   BOOLEAN: {
     displayName: '布尔',
+    enDisplayName: 'Boolean',
     color: '#4A9AF7',
   },
   DATETIME: {
     displayName: '日期',
+    enDisplayName: 'Date',
     color: '#826AF9',
   },
   INTEGER: {
     displayName: '整数',
+    enDisplayName: 'Integer',
     color: '#5262C7',
   },
   FLOAT: {
     displayName: '小数',
+    enDisplayName: 'Float',
     color: '#00D2C2',
   },
   BOOL: {
     displayName: '布尔',
+    enDisplayName: 'Boolean',
     color: '#4A9AF7',
   },
   DATE: {
     displayName: '日期',
+    enDisplayName: 'Date',
     color: '#826AF9',
   },
   ARRAY: {
     displayName: '数组',
+    enDisplayName: 'Array',
     color: '#00D2C2',
   },
+};
+var cookies = new Cookies();
+export var getLang = function getLang() {
+  return cookies.get('lang') || 'cn';
 };
 var Tag = function Tag(props) {
   var _props$data = props.data,
@@ -107,6 +116,7 @@ var Tag = function Tag(props) {
     bool = _props$bool === void 0 ? true : _props$bool,
     inputValue = props.inputValue,
     rest = _objectWithoutProperties(props, _excluded);
+  var lang = getLang();
   var showImg = false;
   var filedType;
   var dataTypeObj = {};
@@ -144,7 +154,7 @@ var Tag = function Tag(props) {
             color: dataTypeObj.color,
           },
         },
-        dataTypeObj.displayName,
+        lang === 'en' ? dataTypeObj.enDisplayName : dataTypeObj.displayName,
         ' ',
       ),
     showImg &&

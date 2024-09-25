@@ -46,23 +46,17 @@ function _objectSpread(e) {
   }
   return e;
 }
-function _defineProperty(obj, key, value) {
-  key = _toPropertyKey(key);
-  if (key in obj) {
-    Object.defineProperty(obj, key, {
-      value: value,
-      enumerable: true,
-      configurable: true,
-      writable: true,
-    });
-  } else {
-    obj[key] = value;
-  }
-  return obj;
+function _defineProperty(e, r, t) {
+  return (
+    (r = _toPropertyKey(r)) in e
+      ? Object.defineProperty(e, r, { value: t, enumerable: !0, configurable: !0, writable: !0 })
+      : (e[r] = t),
+    e
+  );
 }
 function _toPropertyKey(t) {
   var i = _toPrimitive(t, 'string');
-  return 'symbol' == _typeof(i) ? i : String(i);
+  return 'symbol' == _typeof(i) ? i : i + '';
 }
 function _toPrimitive(t, r) {
   if ('object' != _typeof(t) || !t) return t;
