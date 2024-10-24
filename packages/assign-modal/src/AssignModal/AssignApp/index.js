@@ -44,12 +44,14 @@ const AssignModal = (props) => {
   const [filterUser, setFilterUser] = useState();
 
   if (!orgList[0]?.path) {
-    addPath(orgList[0], []); // 添加 上级机构到子机构的路径
+    for (let i = 0; i < orgList.length; i++) {
+      addPath(orgList[i], []); // 添加 上级机构到子机构的路径
+    }
   }
 
   useEffect(() => {
     // path 和 allOrgList 赋值
-    path = findSameCodePath(orgList[0], orgCode);
+    path = findSameCodePath(orgList, orgCode);
 
     let initOrgs = [];
     let initApps = [];
