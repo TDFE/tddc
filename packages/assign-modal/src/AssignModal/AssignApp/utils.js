@@ -11,19 +11,24 @@ export const addPath = function (root, parent = []) {
 };
 
 // 遍历寻找 当前规则集所属机构
-export const findSameCodePath = (root, code) => {
-  let res = {};
-  const dfs = (root, code) => {
-    if (!root) {
-      return;
+export const findSameCodePath = (orgList, code) => {
+  const loop = (list, code) => {
+    for (let i = 0; i < list.length; i++) {
+      const root = list[i];
+      if (root.code === code) {
+        return root;
+      }
+      if (root.children?.length > 0) {
+        const back = loop(root.children, code);
+        if (back) {
+          return back;
+        }
+      }
     }
-    if (root.code === code) res = root;
-    for (let i = 0; i < root.children.length; i++) {
-      dfs(root.children[i], code);
-    }
+    return false;
   };
-  dfs(root, code);
-  return res.path || [];
+  const back = loop(orgList, code);
+  return back?.path || [];
 };
 
 // 遍历输出 orgCode；
