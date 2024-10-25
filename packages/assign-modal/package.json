@@ -1,6 +1,6 @@
 {
   "name": "@tddc/assign-modal",
-  "version": "2.0.5",
+  "version": "2.0.6",
   "description": "assign-modal",
   "author": "zj <jun.zhang002383@tongdun.net>",
   "license": "ISC",
@@ -11,9 +11,6 @@
   "devDependencies": {
     "universal-cookie": ">=2.2.0",
     "react": ">=16.8.0"
-  },
-  "dependencies": {
-    "jsencrypt": "3.2.1"
   },
   "gitHead": "597697f3b6df285679feeabf56b25943a4ec89d4"
 }

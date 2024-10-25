@@ -32,7 +32,9 @@ function _arrayWithoutHoles(arr) {
 }
 function _arrayLikeToArray(arr, len) {
   if (len == null || len > arr.length) len = arr.length;
-  for (var i = 0, arr2 = new Array(len); i < len; i++) arr2[i] = arr[i];
+  for (var i = 0, arr2 = new Array(len); i < len; i++) {
+    arr2[i] = arr[i];
+  }
   return arr2;
 }
 // 遍历机构树 添加 path属性 （上级机构到子机构的路径）
@@ -49,19 +51,29 @@ export var addPath = function addPath(root) {
 };
 
 // 遍历寻找 当前规则集所属机构
-export var findSameCodePath = function findSameCodePath(root, code) {
-  var res = {};
-  var dfs = function dfs(root, code) {
-    if (!root) {
-      return;
+export var findSameCodePath = function findSameCodePath(orgList, code) {
+  var loop = function loop(list, code) {
+    for (var i = 0; i < list.length; i++) {
+      var _root$children;
+      var root = list[i];
+      if (root.code === code) {
+        return root;
+      }
+      if (
+        ((_root$children = root.children) === null || _root$children === void 0
+          ? void 0
+          : _root$children.length) > 0
+      ) {
+        var _back = loop(root.children, code);
+        if (_back) {
+          return _back;
+        }
+      }
     }
-    if (root.code === code) res = root;
-    for (var i = 0; i < root.children.length; i++) {
-      dfs(root.children[i], code);
-    }
+    return false;
   };
-  dfs(root, code);
-  return res.path || [];
+  var back = loop(orgList, code);
+  return (back === null || back === void 0 ? void 0 : back.path) || [];
 };
 
 // 遍历输出 orgCode；
