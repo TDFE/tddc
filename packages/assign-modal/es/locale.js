@@ -8,6 +8,14 @@ export var zh_CN = {
   authorizesUserList: '用户列表',
   allUserAvailable: '全部用户',
   search: '查询',
+  availableOrgs: '可用机构',
+  availableApps: '可用渠道',
+  availableUsers: '可用用户',
+  clear: '清空',
+  hasBeenSelected: '已选',
+  numOfOrg: '%s 机构',
+  numOfApp: '%s 渠道',
+  numOfUser: '%s 用户',
 };
 export var en_US = {
   authorizesOrgList: 'Organization List',
@@ -17,6 +25,14 @@ export var en_US = {
   authorizesUserList: 'Account List',
   allUserAvailable: 'All Accounts',
   search: 'Search',
+  availableOrgs: 'Available Organizations',
+  availableApps: 'Available Channels',
+  availableUsers: 'Available Users',
+  clear: 'Clear',
+  hasBeenSelected: 'Selected',
+  numOfOrg: '%s Organizations',
+  numOfApp: '%s Channels',
+  numOfUser: '%s Accounts',
 };
 export var getText = function getText(key, language) {
   var _ref;

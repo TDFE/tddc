@@ -160,7 +160,11 @@ const AssignModal = (props) => {
             key: item.code,
             value: item.code,
             title: item.name,
-            disabled: orgDisabled || disabled || allOrgChecked || customOrgDisabled(item),
+            disabled:
+              orgDisabled ||
+              disabled ||
+              allOrgChecked ||
+              (customOrgDisabled && customOrgDisabled(item)),
           };
         });
       };
@@ -683,6 +687,7 @@ const AssignModal = (props) => {
                   style={{ marginBottom: 16, width: 'calc(100% - 16px)' }}
                 />
                 <Tree
+                  isOrg={true}
                   treeData={treeData}
                   filterKey={filterOrg}
                   blockNode
