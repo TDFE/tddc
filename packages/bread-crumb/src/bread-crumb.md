@@ -82,6 +82,7 @@ BreadCrumb(
 | component           | 子路由定义，可嵌套                         |                 |        |
 | BreadCrumbCustom    | 自定义面包屑                               | (breadList)=>{} | null   |
 | BreadCrumbPrototype | 面包屑属性，同 antd 的 BreadCrumb 组件参数 | Object          | {}     |
+| useCache            | 开启缓存模式，记录页面跳转地址             | false           | {}     |
 
 | Route 参数     | 说明                   | 类型                        | 默认值 |
 | -------------- | ---------------------- | --------------------------- | ------ |

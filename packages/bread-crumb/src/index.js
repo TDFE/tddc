@@ -162,7 +162,11 @@ export default (WrapperComponent, rest) => {
               breadCacheList.push({ ...curRoute, url: href });
             }
           }
-          setBreadList(breadCacheList);
+          try {
+            setBreadList(JSON.parse(JSON.stringify(breadCacheList)));
+          } catch (e) {
+            console.log('e', e);
+          }
         }
       }
     }, [pathname, search]);
@@ -198,7 +202,7 @@ export default (WrapperComponent, rest) => {
               BreadCrumbCustom(breadList, getParams(searchObj))}
             {!(BreadCrumbCustom && BreadCrumbCustom(breadList)) && (
               <Breadcrumb
-                separator={!onlyTwoLevels ? separator || '>' : ' '}
+                separator={!onlyTwoLevels ? separator || '<' : ' '}
                 className="c-breadcrumb"
                 {...(BreadCrumbPrototype || {})}
               >
@@ -234,7 +238,10 @@ export default (WrapperComponent, rest) => {
             )}
           </div>
         )}
-        {children || null}
+        {!!useCache && (
+          <div key={location?.pathname + (location?.search || '')}> {children || null}</div>
+        )}
+        {!useCache && (children || null)}
       </>
     );
   });
