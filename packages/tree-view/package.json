@@ -9,13 +9,8 @@
     "es"
   ],
   "devDependencies": {
-    "antd": ">=3.20.1",
-    "tntd": ">=2.7.9",
     "react": ">=16.8.0",
     "react-dom": ">=16.8.0"
-  },
-  "dependencies": {
-    "d3-hierarchy": "^3.1.1"
   },
   "gitHead": "c1fa2e53786d52348ea8b748ce924abf9239bafb"
 }
