@@ -1,6 +1,6 @@
 {
   "name": "@tddc/td-tree-view",
-  "version": "0.0.13",
+  "version": "0.0.14",
   "description": "TdTreeView",
   "author": "zj",
   "license": "ISC",
@@ -10,7 +10,6 @@
   ],
   "peerDependencies": {
     "antd": "^3.20.1",
-    "tntd": "^2.7.9",
     "react": "^16.8.0",
     "react-dom": "^16.8.0"
   },
