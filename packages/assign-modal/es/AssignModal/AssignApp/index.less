@@ -34,6 +34,7 @@
       > div {
         width: 50%;
       }
+
       .panel-left {
         height: 100%;
         // overflow: auto;
@@ -42,15 +43,18 @@
           position: sticky;
           top: 0px;
           z-index: 1;
-          background: #f8f9fb;
+          // background: #f8f9fb;
         }
       }
+
       .panel-right {
         overflow: hidden;
+
         & {
           padding: 0 0px 16px 16px;
           border-left: 1px solid @border-color-secondary;
         }
+
         .select-menu-header {
           display: flex;
           align-items: flex-start;
@@ -89,6 +93,7 @@
               font-family: 'PingFang SC';
               line-height: 22px;
             }
+
             .path-name {
               display: inline-block;
               color: tint(@bg-color-spotilight, 50%);
@@ -97,6 +102,7 @@
               font-family: 'PingFang SC';
               line-height: 20px;
             }
+
             .close-icon {
               position: absolute;
               top: calc(50% - 6px);
@@ -105,6 +111,7 @@
               cursor: pointer;
             }
           }
+
           .select-menu-list-item:hover {
             background-color: #fff;
           }
@@ -130,6 +137,7 @@
           > label {
             margin-bottom: 8px;
           }
+
           > label:last-child {
             margin-bottom: 0px;
           }
@@ -150,9 +158,11 @@
   .slider.panel-0 {
     transform: translateX(0);
   }
+
   .slider.panel-1 {
     transform: translateX(-652px);
   }
+
   .slider.panel-2 {
     transform: translateX(-1304px);
   }
@@ -164,26 +174,30 @@
       width: 100%;
       margin-bottom: 16px;
     }
+
     .title {
       position: relative;
-      margin-left: 16px;
+      margin-left: 12px;
       color: @text-color;
       font-weight: 600;
       font-style: normal;
       line-height: 22px;
+
       .sum {
         display: inline-block;
         margin: 0 4px;
         color: @blue-6;
       }
+
       .text-grey {
         color: tint(@text-color, 50%);
       }
     }
+
     .title::after {
       position: absolute;
       top: 5px;
-      left: -14px;
+      left: -12px;
       display: inline-block;
       width: 4px;
       height: 12px;
@@ -200,6 +214,7 @@
     gap: 16px;
     height: 100%;
   }
+
   .panel.org-panel,
   .panel.app-panel,
   .panel.user-panel {
@@ -239,10 +254,12 @@
           z-index: 1;
           background: #f8f9fb;
         }
+
         .select-menu-list-item {
           &:last-child {
             margin-bottom: 0px;
           }
+
           margin-bottom: 8px;
         }
       }
@@ -282,6 +299,7 @@
           padding: 0px;
           border-radius: @border-radius-base;
         }
+
         &:last-child {
           margin-bottom: 0px;
         }
@@ -295,6 +313,7 @@
           font-family: 'PingFang SC';
           line-height: 22px;
         }
+
         .path-name {
           display: inline-block;
           height: 22px;
