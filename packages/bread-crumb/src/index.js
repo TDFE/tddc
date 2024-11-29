@@ -202,7 +202,7 @@ export default (WrapperComponent, rest) => {
               BreadCrumbCustom(breadList, getParams(searchObj))}
             {!(BreadCrumbCustom && BreadCrumbCustom(breadList)) && (
               <Breadcrumb
-                separator={!onlyTwoLevels ? separator || '<' : ' '}
+                separator={!onlyTwoLevels ? separator || '>' : ' '}
                 className="c-breadcrumb"
                 {...(BreadCrumbPrototype || {})}
               >
