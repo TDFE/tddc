@@ -1,6 +1,6 @@
 {
   "name": "@tddc/tree-view",
-  "version": "2.0.5",
+  "version": "2.0.6",
   "description": "treeView",
   "author": "zj",
   "license": "ISC",
@@ -11,6 +11,9 @@
   "devDependencies": {
     "react": ">=16.8.0",
     "react-dom": ">=16.8.0"
+  },
+  "dependencies": {
+    "d3-hierarchy": "^3.1.1"
   },
   "gitHead": "c1fa2e53786d52348ea8b748ce924abf9239bafb"
 }
