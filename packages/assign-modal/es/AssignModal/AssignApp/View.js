@@ -528,6 +528,10 @@ var AssignModal = function AssignModal(props) {
             onChange: function onChange(e) {
               debouncedAppSearch(e.target.value);
             },
+            placeholder: getText(
+              'enterAppName',
+              props === null || props === void 0 ? void 0 : props.lang,
+            ),
             size: 'small',
             suffix: /*#__PURE__*/ React.createElement(_Icon, {
               type: 'zoom',
@@ -576,7 +580,7 @@ var AssignModal = function AssignModal(props) {
             /*#__PURE__*/ React.createElement(_Input, {
               size: 'small',
               placeholder: getText(
-                'search',
+                'enterUserName',
                 props === null || props === void 0 ? void 0 : props.lang,
               ),
               onChange: function onChange(e) {

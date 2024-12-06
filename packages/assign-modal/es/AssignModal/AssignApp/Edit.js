@@ -965,6 +965,50 @@ var AssignModal = function AssignModal(props) {
     },
     [userList, userKeys, filterUser],
   );
+  var renderOrgItem = function renderOrgItem(item, lang) {
+    var mapResult = {
+      1: {
+        cn: '职能部门',
+        en: 'Func. Dept.',
+        icon: 'crowd',
+      },
+      2: {
+        icon: 'corporation',
+      },
+    };
+    var result = mapResult[item === null || item === void 0 ? void 0 : item.orgAttribute] || {};
+    return /*#__PURE__*/ React.createElement(
+      'div',
+      {
+        className: 'org-item-wrapper',
+        style: {
+          width: 'calc(100% - 32px)',
+        },
+      },
+      /*#__PURE__*/ React.createElement(_Ellipsis, {
+        title: item.title,
+        widthLimit: String(item.orgAttribute) === '1' ? 'calc(100% - 90px}' : '100%',
+      }),
+      String(item.orgAttribute) === '1' &&
+        /*#__PURE__*/ React.createElement(
+          'span',
+          {
+            className: 'org-functional-departemt-marker',
+          },
+          result[lang] || '职能部门',
+        ),
+    );
+  };
+  var defaultRenderItem = function defaultRenderItem(item) {
+    var isOrg = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : true;
+    if (isOrg) {
+      return renderOrgItem(item, props === null || props === void 0 ? void 0 : props.lang);
+    }
+    return /*#__PURE__*/ React.createElement(_Ellipsis, {
+      title: item.title,
+      widthLimit: '100%',
+    });
+  };
   return /*#__PURE__*/ React.createElement(
     React.Fragment,
     null,
@@ -1044,6 +1088,9 @@ var AssignModal = function AssignModal(props) {
               'div',
               {
                 className: 'panel-left',
+                style: {
+                  width: '60%',
+                },
               },
               /*#__PURE__*/ React.createElement(_Input, {
                 size: 'small',
@@ -1063,6 +1110,9 @@ var AssignModal = function AssignModal(props) {
                 },
               }),
               /*#__PURE__*/ React.createElement(_TntdVirtualTree, {
+                style: {
+                  overflowX: 'auto',
+                },
                 isOrg: true,
                 treeData: treeData,
                 filterKey: filterOrg,
@@ -1073,12 +1123,16 @@ var AssignModal = function AssignModal(props) {
                 defaultExpandAll: true,
                 onCheck: onCheck,
                 height: windowHeight,
+                titleRender: defaultRenderItem,
               }),
             ),
             /*#__PURE__*/ React.createElement(
               'div',
               {
                 className: 'panel-right',
+                style: {
+                  width: '40%',
+                },
               },
               /*#__PURE__*/ React.createElement(
                 'div',
@@ -1088,9 +1142,17 @@ var AssignModal = function AssignModal(props) {
                 /*#__PURE__*/ React.createElement(
                   'span',
                   null,
-                  '\u5DF2\u9009: ',
-                  areadySelectOrg.length || 0,
-                  ' \u4E2A\u673A\u6784',
+                  getText(
+                    'hasBeenSelected',
+                    props === null || props === void 0 ? void 0 : props.lang,
+                  ),
+                  ':',
+                  ' ',
+                  getText(
+                    'numOfOrg',
+                    props === null || props === void 0 ? void 0 : props.lang,
+                    areadySelectOrg.length || 0,
+                  ),
                 ),
                 /*#__PURE__*/ React.createElement(
                   'a',
@@ -1099,7 +1161,7 @@ var AssignModal = function AssignModal(props) {
                       return onRemoveAllOrg();
                     },
                   },
-                  '\u6E05\u7A7A',
+                  getText('clear', props === null || props === void 0 ? void 0 : props.lang),
                 ),
               ),
               /*#__PURE__*/ React.createElement(
@@ -1206,7 +1268,10 @@ var AssignModal = function AssignModal(props) {
                 onChange: function onChange(e) {
                   debouncedAppSearch(e.target.value);
                 },
-                placehoalder: '\u8BF7\u8F93\u5165\u6E20\u9053\u540D\u79F0',
+                placeholder: getText(
+                  'enterAppName',
+                  props === null || props === void 0 ? void 0 : props.lang,
+                ),
                 size: 'small',
                 suffix: /*#__PURE__*/ React.createElement(_Icon, {
                   type: 'zoom',
@@ -1231,9 +1296,17 @@ var AssignModal = function AssignModal(props) {
                 /*#__PURE__*/ React.createElement(
                   'span',
                   null,
-                  '\u5DF2\u9009: ',
-                  areadySelectApp.length || 0,
-                  ' \u4E2A\u6E20\u9053',
+                  getText(
+                    'hasBeenSelected',
+                    props === null || props === void 0 ? void 0 : props.lang,
+                  ),
+                  ':',
+                  ' ',
+                  getText(
+                    'numOfApp',
+                    props === null || props === void 0 ? void 0 : props.lang,
+                    areadySelectApp.length || 0,
+                  ),
                 ),
                 /*#__PURE__*/ React.createElement(
                   'a',
@@ -1242,7 +1315,7 @@ var AssignModal = function AssignModal(props) {
                       return onRemoveAllApp();
                     },
                   },
-                  '\u6E05\u7A7A',
+                  getText('clear', props === null || props === void 0 ? void 0 : props.lang),
                 ),
               ),
               /*#__PURE__*/ React.createElement(
@@ -1340,7 +1413,7 @@ var AssignModal = function AssignModal(props) {
                 /*#__PURE__*/ React.createElement(_Input, {
                   size: 'small',
                   placeholder: getText(
-                    'search',
+                    'enterUserName',
                     props === null || props === void 0 ? void 0 : props.lang,
                   ),
                   onChange: function onChange(e) {
@@ -1369,18 +1442,26 @@ var AssignModal = function AssignModal(props) {
                   /*#__PURE__*/ React.createElement(
                     'span',
                     null,
-                    '\u5DF2\u9009: ',
-                    areadySelectUser.length || 0,
-                    ' \u4E2A\u7528\u6237',
+                    getText(
+                      'hasBeenSelected',
+                      props === null || props === void 0 ? void 0 : props.lang,
+                    ),
+                    ':',
+                    ' ',
+                    getText(
+                      'numOfUser',
+                      props === null || props === void 0 ? void 0 : props.lang,
+                      areadySelectUser.length || 0,
+                    ),
                   ),
                   /*#__PURE__*/ React.createElement(
                     'a',
                     {
                       onClick: function onClick() {
-                        return onRemoveAllUser();
+                        return onRemoveAllOrg();
                       },
                     },
-                    '\u6E05\u7A7A',
+                    getText('clear', props === null || props === void 0 ? void 0 : props.lang),
                   ),
                 ),
                 /*#__PURE__*/ React.createElement(

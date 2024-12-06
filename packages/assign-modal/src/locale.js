@@ -15,9 +15,11 @@ export const zh_CN = {
   availableUsers: '可用用户',
   clear: '清空',
   hasBeenSelected: '已选',
-  numOfOrg: '%s 机构',
-  numOfApp: '%s 渠道',
-  numOfUser: '%s 用户',
+  numOfOrg: '%s 个机构',
+  numOfApp: '%s 个渠道',
+  numOfUser: '%s 个用户',
+  enterAppName: '请输入渠道名称',
+  enterUserName: '请输入用户名称',
 };
 
 export const en_US = {
@@ -36,6 +38,8 @@ export const en_US = {
   numOfOrg: '%s Organizations',
   numOfApp: '%s Channels',
   numOfUser: '%s Accounts',
+  enterAppName: 'Enter Channel name',
+  enterUserName: 'Enter Account name',
 };
 
 export const getText = (key, language, ...params) => {

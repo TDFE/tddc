@@ -246,6 +246,7 @@ const AssignModal = (props) => {
               onChange={(e) => {
                 debouncedAppSearch(e.target.value);
               }}
+              placeholder={getText('enterAppName', props?.lang)}
               size="small"
               suffix={<Icon type="zoom" />}
               style={{ marginBottom: 16 }}
@@ -264,7 +265,7 @@ const AssignModal = (props) => {
             <div className="panel-menu-body">
               <Input
                 size="small"
-                placeholder={getText('search', props?.lang)}
+                placeholder={getText('enterUserName', props?.lang)}
                 onChange={(e) => {
                   debouncedUserSearch(e.target.value);
                 }}

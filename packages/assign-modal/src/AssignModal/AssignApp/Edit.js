@@ -651,6 +651,40 @@ const AssignModal = (props) => {
     );
   }, [userList, userKeys, filterUser]);
 
+  const renderOrgItem = (item, lang) => {
+    const mapResult = {
+      1: {
+        cn: '职能部门',
+        en: 'Func. Dept.',
+        icon: 'crowd',
+      },
+      2: {
+        icon: 'corporation',
+      },
+    };
+
+    const result = mapResult[item?.orgAttribute] || {};
+
+    return (
+      <div className="org-item-wrapper" style={{ width: 'calc(100% - 32px)' }}>
+        <Ellipsis
+          title={item.title}
+          widthLimit={String(item.orgAttribute) === '1' ? 'calc(100% - 90px}' : '100%'}
+        />
+        {String(item.orgAttribute) === '1' && (
+          <span className="org-functional-departemt-marker">{result[lang] || '职能部门'}</span>
+        )}
+      </div>
+    );
+  };
+
+  const defaultRenderItem = (item, isOrg = true) => {
+    if (isOrg) {
+      return renderOrgItem(item, props?.lang);
+    }
+    return <Ellipsis title={item.title} widthLimit={'100%'} />;
+  };
+
   return (
     <>
       <Segmented
@@ -676,7 +710,7 @@ const AssignModal = (props) => {
               </div>
             </div>
             <div className="panel-menu-body">
-              <div className="panel-left">
+              <div className="panel-left" style={{ width: '60%' }}>
                 <Input
                   size="small"
                   placeholder={getText('search', props?.lang)}
@@ -687,6 +721,7 @@ const AssignModal = (props) => {
                   style={{ marginBottom: 16, width: 'calc(100% - 16px)' }}
                 />
                 <Tree
+                  style={{ overflowX: 'auto' }}
                   isOrg={true}
                   treeData={treeData}
                   filterKey={filterOrg}
@@ -697,12 +732,16 @@ const AssignModal = (props) => {
                   defaultExpandAll
                   onCheck={onCheck}
                   height={windowHeight}
+                  titleRender={defaultRenderItem}
                 />
               </div>
-              <div className="panel-right">
+              <div className="panel-right" style={{ width: '40%' }}>
                 <div className="select-menu-header">
-                  <span>已选: {areadySelectOrg.length || 0} 个机构</span>
-                  <a onClick={() => onRemoveAllOrg()}>清空</a>
+                  <span>
+                    {getText('hasBeenSelected', props?.lang)}:{' '}
+                    {getText('numOfOrg', props?.lang, areadySelectOrg.length || 0)}
+                  </span>
+                  <a onClick={() => onRemoveAllOrg()}>{getText('clear', props?.lang)}</a>
                 </div>
                 <ul className="select-menu-list">
                   {checkedKeys.map((item, index) => {
@@ -750,7 +789,7 @@ const AssignModal = (props) => {
                   onChange={(e) => {
                     debouncedAppSearch(e.target.value);
                   }}
-                  placehoalder="请输入渠道名称"
+                  placeholder={getText('enterAppName', props?.lang)}
                   size="small"
                   suffix={<Icon type="zoom" />}
                   style={{ marginBottom: 16, width: 'calc(100% - 16px)' }}
@@ -759,8 +798,14 @@ const AssignModal = (props) => {
               </div>
               <div className="panel-right">
                 <div className="select-menu-header">
-                  <span>已选: {areadySelectApp.length || 0} 个渠道</span>
-                  <a onClick={() => onRemoveAllApp()}>清空</a>
+                  <span>
+                    {getText('hasBeenSelected', props?.lang)}:{' '}
+                    {getText('numOfApp', props?.lang, areadySelectApp.length || 0)}
+                  </span>
+                  <a onClick={() => onRemoveAllApp()}>
+                    {/* 清空 */}
+                    {getText('clear', props?.lang)}
+                  </a>
                 </div>
                 <ul className="select-menu-list">
                   {appKeys.map((item, index) => {
@@ -806,7 +851,7 @@ const AssignModal = (props) => {
                 <div className="panel-left">
                   <Input
                     size="small"
-                    placeholder={getText('search', props?.lang)}
+                    placeholder={getText('enterUserName', props?.lang)}
                     onChange={(e) => {
                       debouncedUserSearch(e.target.value);
                     }}
@@ -818,8 +863,11 @@ const AssignModal = (props) => {
                 </div>
                 <div className="panel-right">
                   <div className="select-menu-header">
-                    <span>已选: {areadySelectUser.length || 0} 个用户</span>
-                    <a onClick={() => onRemoveAllUser()}>清空</a>
+                    <span>
+                      {getText('hasBeenSelected', props?.lang)}:{' '}
+                      {getText('numOfUser', props?.lang, areadySelectUser.length || 0)}
+                    </span>
+                    <a onClick={() => onRemoveAllOrg()}>{getText('clear', props?.lang)}</a>
                   </div>
                   <ul className="select-menu-list">
                     {userKeys.map((item, index) => {

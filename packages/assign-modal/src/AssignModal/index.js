@@ -19,7 +19,7 @@ const AssignModal = (props) => {
       className="modal-assign"
       title={title}
       visible={visible}
-      width={700}
+      width={900}
       onCancel={close}
       onOk={submit}
       maskClosable={disabled}
