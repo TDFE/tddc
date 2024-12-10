@@ -1,4 +1,4 @@
-import { useEffect, useState, useMemo } from 'react';
+import { useEffect, useState, useMemo, useRef } from 'react';
 import { Breadcrumb, Icon } from 'tntd';
 import { withRouter, matchPath, Link } from 'dva/router';
 import { getText } from './locale';
@@ -48,6 +48,8 @@ const flatten = (arr) => {
 
 export default (WrapperComponent, rest) => {
   const {
+    useMemory,
+    memoryHandle,
     useCache, // 使用内部缓存
     defaultSearch = ['currentTab', 'current'],
     BreadCrumbCustom,
@@ -58,6 +60,7 @@ export default (WrapperComponent, rest) => {
     version,
   } = rest || {};
   let breadCacheList = [];
+
   return withRouter((props) => {
     const { match, location, separator } = props || {};
     const { pathname, search } = location || {};
@@ -66,6 +69,50 @@ export default (WrapperComponent, rest) => {
     // 记录链接上需要保留的query参数
     const searchObj = searchToObject(search);
     const curVersion = version || localStorage.getItem('app_version') || 'v3';
+
+    const breadListRef = useRef();
+    breadListRef.current = useMemo(() => {
+      return breadList;
+    }, [breadList]);
+
+    const watchReplaceState = (e) => {
+      const newBread = (breadListRef.current || []).slice();
+      const url = e?.arguments?.[2];
+      if (newBread?.length && url) {
+        if (url !== newBread[newBread?.length - 1].url) {
+          newBread[newBread?.length - 1].url = url;
+          setBreadList(newBread);
+          breadCacheList = newBread;
+        }
+      }
+    };
+    useEffect(() => {
+      if (useCache) {
+        window.addEventListener('replaceState', watchReplaceState);
+        return () => {
+          window.removeEventListener('replaceState', watchReplaceState);
+        };
+      }
+    }, [breadList, useCache]);
+
+    useEffect(() => {
+      if (useCache && useMemory && breadList?.length > 0) {
+        const localStorageKey = breadList?.[0]?.path;
+        if (breadList?.length > 1) {
+          if (breadList?.[0]?.path) {
+            const lastKey = breadList?.slice(-1)?.[0]?.url;
+            localStorage.setItem(
+              localStorageKey,
+              JSON.stringify({
+                [lastKey]: breadList,
+              }),
+            );
+          }
+        } else {
+          localStorage.removeItem(localStorageKey);
+        }
+      }
+    }, [useCache, useMemory, breadList]);
 
     useEffect(() => {
       if (!useCache) {
@@ -133,6 +180,7 @@ export default (WrapperComponent, rest) => {
           ...(props.routerItemHide ? { routerItemHide: props.routerItemHide } : {}),
         });
       });
+
       if (useCache) {
         if (pathname) {
           const curRoute = routerArr?.find((item) => {
@@ -144,9 +192,25 @@ export default (WrapperComponent, rest) => {
           const routeSort = routerArr.sort((a, b) => {
             return a.path.length - b.path.length;
           });
+
           const href = pathname + search;
           // 获取最原始的第一层级数据
           const isIndex = matchPath(pathname, { path: routeSort?.[0]?.path, exact: true });
+
+          // 如果在缓存中默认取
+          if (useMemory && useCache) {
+            let curStorageInfo = localStorage.getItem(routeSort?.[0]?.path);
+            if (typeof curStorageInfo === 'string') {
+              curStorageInfo = JSON.parse(curStorageInfo);
+              if (curStorageInfo && curStorageInfo[href]) {
+                breadCacheList = curStorageInfo[href];
+              }
+              if (memoryHandle && typeof memoryHandle === 'function') {
+                breadCacheList = memoryHandle({ routeArr: routeSort, href });
+              }
+            }
+          }
+
           // 如果是第一层路由例如列表， 查看是否已经在缓存中了
           const indexInfo = isIndex
             ? breadCacheList?.find((item) => item.path === pathname)
@@ -169,7 +233,7 @@ export default (WrapperComponent, rest) => {
           }
         }
       }
-    }, [pathname, search]);
+    }, [pathname, search, useCache]);
 
     const onlyTwoLevels = breadList?.length === 2;
 
