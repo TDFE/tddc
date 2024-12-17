@@ -329,6 +329,7 @@ var AssignModal = function AssignModal(props) {
             );
           }
         }
+        console.log(initOrgs, 'initOrgs');
         setCheckedKeys(initOrgs);
         setAppKeys(initApps || []);
         setUserKeys(initAccounts || []);
@@ -1009,6 +1010,38 @@ var AssignModal = function AssignModal(props) {
       widthLimit: '100%',
     });
   };
+  var canNotRemoveOrg = useMemo(
+    function () {
+      var _orgMapRef$current, _orgMapRef$current$ch;
+      return (
+        (checkedKeys === null || checkedKeys === void 0 ? void 0 : checkedKeys.length) === 1 &&
+        ((_orgMapRef$current = orgMapRef.current) === null || _orgMapRef$current === void 0
+          ? void 0
+          : (_orgMapRef$current$ch = _orgMapRef$current[checkedKeys[0]]) === null ||
+            _orgMapRef$current$ch === void 0
+          ? void 0
+          : _orgMapRef$current$ch.key) ===
+          (rootNode === null || rootNode === void 0 ? void 0 : rootNode.key)
+      );
+    },
+    [checkedKeys],
+  );
+  var canNotRemoveApp = useMemo(
+    function () {
+      var _appMapRef$current, _appMapRef$current$ap;
+      return (
+        (appKeys === null || appKeys === void 0 ? void 0 : appKeys.length) === 1 &&
+        ((_appMapRef$current = appMapRef.current) === null || _appMapRef$current === void 0
+          ? void 0
+          : (_appMapRef$current$ap = _appMapRef$current[appKeys[0]]) === null ||
+            _appMapRef$current$ap === void 0
+          ? void 0
+          : _appMapRef$current$ap.name) === appCode
+      );
+    },
+    [appKeys],
+  );
+  console.log(canNotRemoveOrg, 'canNotRemove');
   return /*#__PURE__*/ React.createElement(
     React.Fragment,
     null,
@@ -1157,6 +1190,7 @@ var AssignModal = function AssignModal(props) {
                 /*#__PURE__*/ React.createElement(
                   'a',
                   {
+                    className: canNotRemoveOrg ? 'disabeld' : '',
                     onClick: function onClick() {
                       return onRemoveAllOrg();
                     },
@@ -1169,46 +1203,50 @@ var AssignModal = function AssignModal(props) {
                 {
                   className: 'select-menu-list',
                 },
-                checkedKeys.map(function (item, index) {
-                  var node = orgMapRef.current[item] || {};
-                  var path = node.path,
-                    name = node.name;
-                  var pathDisplayName = getOrgPathDisplayName(path);
-                  var disabled = rootNode.key === item;
-                  return /*#__PURE__*/ React.createElement(
-                    'li',
-                    {
-                      key: item.value + index,
-                      className: 'select-menu-list-item',
-                    },
-                    /*#__PURE__*/ React.createElement(
-                      'span',
+                checkedKeys
+                  .filter(function (i) {
+                    return !!orgMapRef.current[i];
+                  })
+                  .map(function (item, index) {
+                    var node = orgMapRef.current[item] || {};
+                    var path = node.path,
+                      name = node.name;
+                    var pathDisplayName = getOrgPathDisplayName(path);
+                    var disabled = rootNode.key === item;
+                    return /*#__PURE__*/ React.createElement(
+                      'li',
                       {
-                        className: 'org-name',
+                        key: item.value + index,
+                        className: 'select-menu-list-item',
                       },
-                      /*#__PURE__*/ React.createElement(_Ellipsis, {
-                        title: name,
-                      }),
-                    ),
-                    /*#__PURE__*/ React.createElement(
-                      'span',
-                      {
-                        className: 'path-name',
-                      },
-                      /*#__PURE__*/ React.createElement(_Ellipsis, {
-                        title: pathDisplayName,
-                      }),
-                    ),
-                    !disabled &&
-                      /*#__PURE__*/ React.createElement(_Icon, {
-                        type: 'close',
-                        className: 'close-icon',
-                        onClick: function onClick() {
-                          return onRemoveSingleOrg(node);
+                      /*#__PURE__*/ React.createElement(
+                        'span',
+                        {
+                          className: 'org-name',
                         },
-                      }),
-                  );
-                }) || /*#__PURE__*/ React.createElement(_Empty, null),
+                        /*#__PURE__*/ React.createElement(_Ellipsis, {
+                          title: name,
+                        }),
+                      ),
+                      /*#__PURE__*/ React.createElement(
+                        'span',
+                        {
+                          className: 'path-name',
+                        },
+                        /*#__PURE__*/ React.createElement(_Ellipsis, {
+                          title: pathDisplayName,
+                        }),
+                      ),
+                      !disabled &&
+                        /*#__PURE__*/ React.createElement(_Icon, {
+                          type: 'close',
+                          className: 'close-icon',
+                          onClick: function onClick() {
+                            return onRemoveSingleOrg(node);
+                          },
+                        }),
+                    );
+                  }) || /*#__PURE__*/ React.createElement(_Empty, null),
               ),
             ),
           ),
@@ -1311,6 +1349,7 @@ var AssignModal = function AssignModal(props) {
                 /*#__PURE__*/ React.createElement(
                   'a',
                   {
+                    className: canNotRemoveApp ? 'disabeld' : '',
                     onClick: function onClick() {
                       return onRemoveAllApp();
                     },

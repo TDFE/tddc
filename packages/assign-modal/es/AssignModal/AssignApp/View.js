@@ -239,6 +239,41 @@ var AssignModal = function AssignModal(props) {
   // 渲染Org列表
   var orgListDomRender = useMemo(
     function () {
+      var renderOrgItem = function renderOrgItem(item, lang) {
+        console.log(item, 'item');
+        var mapResult = {
+          1: {
+            cn: '职能部门',
+            en: 'Func. Dept.',
+            icon: 'crowd',
+          },
+          2: {
+            icon: 'corporation',
+          },
+        };
+        var result = mapResult[item === null || item === void 0 ? void 0 : item.orgAttribute] || {};
+        return /*#__PURE__*/ React.createElement(
+          'div',
+          {
+            className: 'org-item-wrapper',
+            style: {
+              width: '100%',
+            },
+          },
+          /*#__PURE__*/ React.createElement(_Ellipsis, {
+            title: item.name,
+            widthLimit: String(item.orgAttribute) === '1' ? 'calc(100% - 90px}' : '100%',
+          }),
+          String(item.orgAttribute) === '1' &&
+            /*#__PURE__*/ React.createElement(
+              'span',
+              {
+                className: 'org-functional-departemt-marker',
+              },
+              result[lang] || '职能部门',
+            ),
+        );
+      };
       return (
         checkedKeys
           .filter(function (i) {
@@ -289,7 +324,10 @@ var AssignModal = function AssignModal(props) {
                   className: 'org-name',
                 },
                 /*#__PURE__*/ React.createElement(_Ellipsis, {
-                  title: name,
+                  title: renderOrgItem(
+                    node,
+                    props === null || props === void 0 ? void 0 : props.lang,
+                  ),
                 }),
               ),
               /*#__PURE__*/ React.createElement(

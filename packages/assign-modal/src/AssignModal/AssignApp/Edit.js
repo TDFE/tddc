@@ -115,6 +115,7 @@ const AssignModal = (props) => {
           initAccounts = Array.from(new Set([...(accounts || []), account]));
         }
       }
+
       setCheckedKeys(initOrgs);
       setAppKeys(initApps || []);
       setUserKeys(initAccounts || []);
@@ -685,6 +686,16 @@ const AssignModal = (props) => {
     return <Ellipsis title={item.title} widthLimit={'100%'} />;
   };
 
+  const canNotRemoveOrg = useMemo(() => {
+    return checkedKeys?.length === 1 && orgMapRef.current?.[checkedKeys[0]]?.key === rootNode?.key;
+  }, [checkedKeys]);
+
+  const canNotRemoveApp = useMemo(() => {
+    return appKeys?.length === 1 && appMapRef.current?.[appKeys[0]]?.name === appCode;
+  }, [appKeys]);
+
+  console.log(canNotRemoveOrg, 'canNotRemove');
+
   return (
     <>
       <Segmented
@@ -741,33 +752,39 @@ const AssignModal = (props) => {
                     {getText('hasBeenSelected', props?.lang)}:{' '}
                     {getText('numOfOrg', props?.lang, areadySelectOrg.length || 0)}
                   </span>
-                  <a onClick={() => onRemoveAllOrg()}>{getText('clear', props?.lang)}</a>
+                  <a className={canNotRemoveOrg ? 'disabeld' : ''} onClick={() => onRemoveAllOrg()}>
+                    {getText('clear', props?.lang)}
+                  </a>
                 </div>
                 <ul className="select-menu-list">
-                  {checkedKeys.map((item, index) => {
-                    let node = orgMapRef.current[item] || {};
-                    let { path, name } = node;
+                  {checkedKeys
+                    .filter((i) => {
+                      return !!orgMapRef.current[i];
+                    })
+                    .map((item, index) => {
+                      let node = orgMapRef.current[item] || {};
+                      let { path, name } = node;
 
-                    let pathDisplayName = getOrgPathDisplayName(path);
-                    let disabled = rootNode.key === item;
-                    return (
-                      <li key={item.value + index} className="select-menu-list-item">
-                        <span className="org-name">
-                          <Ellipsis title={name} />
-                        </span>
-                        <span className="path-name">
-                          <Ellipsis title={pathDisplayName} />
-                        </span>
-                        {!disabled && (
-                          <Icon
-                            type="close"
-                            className="close-icon"
-                            onClick={() => onRemoveSingleOrg(node)}
-                          />
-                        )}
-                      </li>
-                    );
-                  }) || <Empty />}
+                      let pathDisplayName = getOrgPathDisplayName(path);
+                      let disabled = rootNode.key === item;
+                      return (
+                        <li key={item.value + index} className="select-menu-list-item">
+                          <span className="org-name">
+                            <Ellipsis title={name} />
+                          </span>
+                          <span className="path-name">
+                            <Ellipsis title={pathDisplayName} />
+                          </span>
+                          {!disabled && (
+                            <Icon
+                              type="close"
+                              className="close-icon"
+                              onClick={() => onRemoveSingleOrg(node)}
+                            />
+                          )}
+                        </li>
+                      );
+                    }) || <Empty />}
                 </ul>
               </div>
             </div>
@@ -802,7 +819,7 @@ const AssignModal = (props) => {
                     {getText('hasBeenSelected', props?.lang)}:{' '}
                     {getText('numOfApp', props?.lang, areadySelectApp.length || 0)}
                   </span>
-                  <a onClick={() => onRemoveAllApp()}>
+                  <a className={canNotRemoveApp ? 'disabeld' : ''} onClick={() => onRemoveAllApp()}>
                     {/* 清空 */}
                     {getText('clear', props?.lang)}
                   </a>

@@ -116,6 +116,35 @@ const AssignModal = (props) => {
 
   // 渲染Org列表
   let orgListDomRender = useMemo(() => {
+    const renderOrgItem = (item, lang) => {
+      console.log(item, 'item');
+
+      const mapResult = {
+        1: {
+          cn: '职能部门',
+          en: 'Func. Dept.',
+          icon: 'crowd',
+        },
+        2: {
+          icon: 'corporation',
+        },
+      };
+
+      const result = mapResult[item?.orgAttribute] || {};
+
+      return (
+        <div className="org-item-wrapper" style={{ width: '100%' }}>
+          <Ellipsis
+            title={item.name}
+            widthLimit={String(item.orgAttribute) === '1' ? 'calc(100% - 90px}' : '100%'}
+          />
+          {String(item.orgAttribute) === '1' && (
+            <span className="org-functional-departemt-marker">{result[lang] || '职能部门'}</span>
+          )}
+        </div>
+      );
+    };
+
     return (
       checkedKeys
         .filter((i) => {
@@ -141,7 +170,7 @@ const AssignModal = (props) => {
           return (
             <li key={item.value + index} className="select-menu-list-item">
               <span className="org-name">
-                <Ellipsis title={name} />
+                <Ellipsis title={renderOrgItem(node, props?.lang)} />
               </span>
               <span className="path-name">
                 <Ellipsis title={pathDisplayName} />
