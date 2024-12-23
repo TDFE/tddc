@@ -12,7 +12,7 @@ export const dataFormat = function (root, cb) {
   root.show = true;
 
   cb && cb(root.key, root);
-  for (let i = 0; i < root.children.length; i++) {
+  for (let i = 0; i < (root?.children || [])?.length; i++) {
     dataFormat(root.children[i], path, cb);
   }
 };
@@ -25,7 +25,7 @@ export const findSameCodePath = (root, code) => {
       return;
     }
     if (root.code === code) res = root;
-    for (let i = 0; i < root.children.length; i++) {
+    for (let i = 0; i < (root?.children || [])?.length; i++) {
       dfs(root.children[i], code);
     }
   };
