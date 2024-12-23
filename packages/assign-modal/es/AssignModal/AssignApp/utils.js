@@ -94,7 +94,16 @@ var _dataFormat = function dataFormat(root, cb) {
   root.path = _toConsumableArray(path);
   root.show = true;
   cb && cb(root.key, root);
-  for (var i = 0; i < root.children.length; i++) {
+  for (
+    var i = 0;
+    i <
+    ((_ref = (root === null || root === void 0 ? void 0 : root.children) || []) === null ||
+    _ref === void 0
+      ? void 0
+      : _ref.length);
+    i++
+  ) {
+    var _ref;
     _dataFormat(root.children[i], path, cb);
   }
 };
@@ -108,7 +117,16 @@ export var findSameCodePath = function findSameCodePath(root, code) {
       return;
     }
     if (root.code === code) res = root;
-    for (var i = 0; i < root.children.length; i++) {
+    for (
+      var i = 0;
+      i <
+      ((_ref2 = (root === null || root === void 0 ? void 0 : root.children) || []) === null ||
+      _ref2 === void 0
+        ? void 0
+        : _ref2.length);
+      i++
+    ) {
+      var _ref2;
       _dfs(root.children[i], code);
     }
   };

@@ -329,7 +329,6 @@ var AssignModal = function AssignModal(props) {
             );
           }
         }
-        console.log(initOrgs, 'initOrgs');
         setCheckedKeys(initOrgs);
         setAppKeys(initApps || []);
         setUserKeys(initAccounts || []);
