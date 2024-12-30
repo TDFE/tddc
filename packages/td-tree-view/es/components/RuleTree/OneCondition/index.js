@@ -46,7 +46,13 @@ var OneCondition = function OneCondition(props) {
   // 获取左侧
   var _ref3 = ['', ''],
     propertyName = _ref3[0];
-  if (property && ruleAndIndexFieldList && ruleAndIndexFieldList.length) {
+  if (
+    property &&
+    ruleAndIndexFieldList &&
+    (ruleAndIndexFieldList === null || ruleAndIndexFieldList === void 0
+      ? void 0
+      : ruleAndIndexFieldList.length)
+  ) {
     // 获取左侧属性显示名称
     propertyName =
       ruleAndIndexFieldList.find(function (v) {
@@ -116,8 +122,14 @@ var OneCondition = function OneCondition(props) {
 
   // 枚举且非属于不属于
   var getEnumNotBlongName = function getEnumNotBlongName() {
+    var _conditionSingleData$;
     var enumObj = {};
-    if (conditionSingleData['enumTypeValues'].length) {
+    if (
+      (_conditionSingleData$ = conditionSingleData['enumTypeValues']) === null ||
+      _conditionSingleData$ === void 0
+        ? void 0
+        : _conditionSingleData$.length
+    ) {
       enumObj =
         conditionSingleData['enumTypeValues'].find(function (item) {
           return item.value === value;
@@ -142,7 +154,7 @@ var OneCondition = function OneCondition(props) {
       })) === null || _ruleAndIndexFieldLis === void 0
         ? void 0
         : _ruleAndIndexFieldLis.enumTypeValues) || [];
-    if (enumTypeValues.length) {
+    if (enumTypeValues === null || enumTypeValues === void 0 ? void 0 : enumTypeValues.length) {
       enumArr =
         enumTypeValues.filter(function (item) {
           return value.includes(item.value);
