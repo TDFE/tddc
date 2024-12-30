@@ -42,7 +42,7 @@ const OneCondition = (props) => {
 
   // 获取左侧
   let [propertyName] = ['', ''];
-  if (property && ruleAndIndexFieldList && ruleAndIndexFieldList.length) {
+  if (property && ruleAndIndexFieldList && ruleAndIndexFieldList?.length) {
     // 获取左侧属性显示名称
     propertyName = ruleAndIndexFieldList.find((v) => v.name === property) || {};
 
@@ -97,7 +97,7 @@ const OneCondition = (props) => {
   // 枚举且非属于不属于
   const getEnumNotBlongName = () => {
     let enumObj = {};
-    if (conditionSingleData['enumTypeValues'].length) {
+    if (conditionSingleData['enumTypeValues']?.length) {
       enumObj = conditionSingleData['enumTypeValues'].find((item) => item.value === value) || {};
     }
     return <span className="condition-value">{enumObj.description || value}</span>;
@@ -109,7 +109,7 @@ const OneCondition = (props) => {
     let enumTypeValues =
       ruleAndIndexFieldList.find((item) => item.name === conditionSingleData.property)
         ?.enumTypeValues || [];
-    if (enumTypeValues.length) {
+    if (enumTypeValues?.length) {
       enumArr =
         enumTypeValues.filter((item) => {
           return value.includes(item.value);
