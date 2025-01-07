@@ -7,7 +7,6 @@ import constants, {
   COMPONENT_SPACE_VERTICAL,
   COMPONENT_WIDTH,
   ROOT_WIDTH,
-  NODE_TYPE_MAP,
 } from './constants';
 import DefaultNode from './DefaultNode';
 import Link from './Link';

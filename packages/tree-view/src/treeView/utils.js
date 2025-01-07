@@ -1,6 +1,3 @@
-import React from 'react';
-import { renderToString } from 'react-dom/server';
-
 // 获取单行文本的像素宽度
 export const getTextPixelWith = (text, fontStyle = 'normal 12px Segoe UI') => {
   let canvas = document.createElement('canvas'); // 创建 canvas 画布
@@ -48,38 +45,4 @@ export const expandTree = (d) => {
     d._children = null;
   }
   return d;
-};
-
-export const SVGImage = (text, bgColor) => {
-  // 使用 renderToString 方法将 SVGImage 组件渲染为字符串
-  const svgString = renderToString(
-    <svg
-      width="22px"
-      height="22px"
-      viewBox="0 0 22 22"
-      version="1.1"
-      xmlns="http://www.w3.org/2000/svg"
-    >
-      <circle id="shape" fill={bgColor} cx="11" cy="11" r="11" />
-      <text
-        fontFamily="PingFangSC-Regular, PingFang SC"
-        fontSize="12"
-        fontWeight="normal"
-        fill="#FFFFFF"
-      >
-        <tspan x="5" y="15">
-          {text}
-        </tspan>
-      </text>
-    </svg>,
-  );
-
-  // 对 svgString 进行 URL 编码
-  const encodedSvgString = encodeURIComponent(svgString);
-  // 使用 btoa 函数将 SVG 字符串转换为 base64 编码的字符串
-  const base64 = btoa(encodedSvgString);
-  // 生成base64
-  const imgSrc = `data:image/svg+xml;base64,${base64}`;
-
-  return imgSrc;
 };

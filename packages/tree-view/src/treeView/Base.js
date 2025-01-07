@@ -1,6 +1,5 @@
 import { hierarchy } from 'd3-hierarchy';
 import { cloneDeep } from 'lodash';
-import { NODE_TYPE_MAP } from './constants';
 
 class Base {
   constructor() {
@@ -79,14 +78,14 @@ class Base {
         const { key } = child || {};
         let color = '';
 
-        color = (NODE_TYPE_MAP && NODE_TYPE_MAP[child.nodeType]?.color) || parentColor;
+        // color = (NODE_TYPE_MAP && NODE_TYPE_MAP[child.nodeType]?.color) || parentColor;
         const node = Object.assign({}, child, {
           type: 'leaf',
           key,
           index,
           parentPath,
           path,
-          color,
+          // color,
         });
         if (child.children && child.children.length) {
           node.type = 'relation';
