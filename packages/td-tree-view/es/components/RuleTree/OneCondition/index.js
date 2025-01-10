@@ -9,10 +9,6 @@ var logicOperatorMap = {
   '||': otp.huo,
 };
 var OneCondition = function OneCondition(props) {
-  // const { globalStore, conditionData, conditionSingleData, conditionType, conditionArr, keyMap = {} } = props;
-  // const { allMap, personalMode } = globalStore;
-  // const { lang } = personalMode;
-
   var allMap = props.allMap,
     lang = props.lang,
     conditionData = props.conditionData,
@@ -122,16 +118,17 @@ var OneCondition = function OneCondition(props) {
 
   // 枚举且非属于不属于
   var getEnumNotBlongName = function getEnumNotBlongName() {
-    var _conditionSingleData$;
+    var _ruleAndIndexFieldLis;
     var enumObj = {};
-    if (
-      (_conditionSingleData$ = conditionSingleData['enumTypeValues']) === null ||
-      _conditionSingleData$ === void 0
+    var enumTypeValues =
+      ((_ruleAndIndexFieldLis = ruleAndIndexFieldList.find(function (item) {
+        return item.name === conditionSingleData.property;
+      })) === null || _ruleAndIndexFieldLis === void 0
         ? void 0
-        : _conditionSingleData$.length
-    ) {
+        : _ruleAndIndexFieldLis.enumTypeValues) || [];
+    if (enumTypeValues === null || enumTypeValues === void 0 ? void 0 : enumTypeValues.length) {
       enumObj =
-        conditionSingleData['enumTypeValues'].find(function (item) {
+        enumTypeValues.find(function (item) {
           return item.value === value;
         }) || {};
     }
@@ -146,14 +143,14 @@ var OneCondition = function OneCondition(props) {
 
   // 枚举且存在于不存在于
   var getEnumInOrNotInName = function getEnumInOrNotInName() {
-    var _ruleAndIndexFieldLis;
+    var _ruleAndIndexFieldLis2;
     var enumArr = [];
     var enumTypeValues =
-      ((_ruleAndIndexFieldLis = ruleAndIndexFieldList.find(function (item) {
+      ((_ruleAndIndexFieldLis2 = ruleAndIndexFieldList.find(function (item) {
         return item.name === conditionSingleData.property;
-      })) === null || _ruleAndIndexFieldLis === void 0
+      })) === null || _ruleAndIndexFieldLis2 === void 0
         ? void 0
-        : _ruleAndIndexFieldLis.enumTypeValues) || [];
+        : _ruleAndIndexFieldLis2.enumTypeValues) || [];
     if (enumTypeValues === null || enumTypeValues === void 0 ? void 0 : enumTypeValues.length) {
       enumArr =
         enumTypeValues.filter(function (item) {
