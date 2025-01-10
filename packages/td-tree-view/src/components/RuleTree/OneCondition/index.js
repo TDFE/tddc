@@ -11,10 +11,6 @@ const logicOperatorMap = {
 };
 
 const OneCondition = (props) => {
-  // const { globalStore, conditionData, conditionSingleData, conditionType, conditionArr, keyMap = {} } = props;
-  // const { allMap, personalMode } = globalStore;
-  // const { lang } = personalMode;
-
   const {
     allMap,
     lang,
@@ -97,9 +93,13 @@ const OneCondition = (props) => {
   // 枚举且非属于不属于
   const getEnumNotBlongName = () => {
     let enumObj = {};
-    if (conditionSingleData['enumTypeValues']?.length) {
-      enumObj = conditionSingleData['enumTypeValues'].find((item) => item.value === value) || {};
+    let enumTypeValues =
+      ruleAndIndexFieldList.find((item) => item.name === conditionSingleData.property)
+        ?.enumTypeValues || [];
+    if (enumTypeValues?.length) {
+      enumObj = enumTypeValues.find((item) => item.value === value) || {};
     }
+
     return <span className="condition-value">{enumObj.description || value}</span>;
   };
 

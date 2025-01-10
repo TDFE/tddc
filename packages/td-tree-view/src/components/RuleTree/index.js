@@ -49,6 +49,7 @@ const RuleTreeComponent = (props) => {
 
   let NodeDom = (d) => {
     let { node } = d;
+
     return (
       <Node
         node={node}
