@@ -65,6 +65,9 @@ BreadCrumb(
     );
   },
   {
+    breadCrumbCustomName: ({ breadList, path }) => {
+      return 'aa';
+    },
     // BreadCrumbCustom:(breadList)=>{
     //   console.log(breadList)
     //   return <div>{breadList?.map(v=>v?.name)}</div>

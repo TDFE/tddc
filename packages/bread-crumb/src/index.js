@@ -53,6 +53,7 @@ export default (WrapperComponent, rest) => {
     useCache, // 使用内部缓存
     defaultSearch = ['currentTab', 'current'],
     BreadCrumbCustom,
+    breadCrumbCustomName,
     BreadCrumbPrototype = {},
     showHeader,
     forceNoHeader,
@@ -273,6 +274,16 @@ export default (WrapperComponent, rest) => {
                 {breadList?.map((bread, i) => {
                   const { url } = bread;
                   let dom = bread?.name;
+                  if (breadCrumbCustomName && typeof breadCrumbCustomName === 'function') {
+                    dom =
+                      breadCrumbCustomName({
+                        breadList,
+                        level: i + 1,
+                        path: url,
+                        name: bread?.name,
+                        pathInfo: bread,
+                      }) || dom;
+                  }
                   if (onlyTwoLevels && i === 0) {
                     dom = (
                       <>
