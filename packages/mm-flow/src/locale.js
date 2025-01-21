@@ -38,7 +38,7 @@ export const en_US = {
   'deployment-unit': 'Sort',
   copy: 'Copy',
   reset: 'Original Scale',
-  'auto-fit': 'Adapt to canvas',
+  'auto-fit': 'Adapt to Canvas',
   fullscreen: 'Maximize',
   formatSort: 'Format Sort',
   hengXiangPaiXu: 'Sort horizontally',
