@@ -1,6 +1,6 @@
 // 数据加工
 import { useEffect } from 'react';
-import { Modal, Button, Select, Input, Form } from 'tntd';
+import { Modal, Button, Select, Input, TntdForm as Form } from 'tntd';
 const { Option } = Select;
 const formItemLayout = {
   labelCol: {
@@ -12,8 +12,9 @@ const formItemLayout = {
     sm: { span: 18 },
   },
 };
-export default Form.create({ name: 'data_process' })((props) => {
-  const { form, onCancel, dmConfig = {}, dialogShowInfo, editor, disabled } = props;
+export default (props) => {
+  const [form] = Form.useForm();
+  const { onCancel, dmConfig = {}, dialogShowInfo, editor, disabled } = props;
   const { dataMachine = [] } = dmConfig || {};
   const { getFieldDecorator, setFieldsValue, resetFields, validateFields } = form;
   const { type, nodeId } = dialogShowInfo || {};
@@ -31,16 +32,18 @@ export default Form.create({ name: 'data_process' })((props) => {
   };
 
   const commitModal = () => {
-    validateFields((errors, data) => {
-      if (!errors) {
+    validateFields()
+      .then((data) => {
         const { nodeName } = data || {};
         editor.schema.data.nodesMap[nodeId].name = nodeName;
         editor.schema.data.nodesMap[nodeId].data = data;
         editor.graph.node.nodes[nodeId].shape.select('text.flow-txt-node').node.innerHTML =
           nodeName.length > 6 ? nodeName.substring(0, 6) + '...' : nodeName;
         onCancel();
-      }
-    });
+      })
+      .catch((res) => {
+        console.log('res', res);
+      });
   };
 
   const footerDom = [
@@ -67,61 +70,63 @@ export default Form.create({ name: 'data_process' })((props) => {
       footer={disabled ? footerCancelDom : footerDom}
     >
       <Form {...formItemLayout}>
-        <Form.Item label="节点名称">
-          {getFieldDecorator('nodeName', {
-            rules: [
-              {
-                required: true,
-                message: '请输入节点名称',
-              },
-              {
-                max: 50,
-                message: '最多50个字符',
-              },
-              {
-                pattern: /^[a-zA-Z0-9_\u4e00-\u9fa5]+$/,
-                message: '节点名称只支持中英文、数字、下划线的输入组合',
-              },
-            ],
-          })(<Input placeholder="请输入节点名称" disabled={disabled} />)}
+        <Form.Item
+          label="节点名称"
+          name="nodeName"
+          rules={[
+            {
+              required: true,
+              message: '请输入节点名称',
+            },
+            {
+              max: 50,
+              message: '最多50个字符',
+            },
+            {
+              pattern: /^[a-zA-Z0-9_\u4e00-\u9fa5]+$/,
+              message: '节点名称只支持中英文、数字、下划线的输入组合',
+            },
+          ]}
+        >
+          <Input placeholder="请输入节点名称" disabled={disabled} />
         </Form.Item>
-        <Form.Item label="数据加工任务">
-          {getFieldDecorator('dataProcessId', {
-            rules: [
+        <Form.Item
+          label="数据加工任务"
+          name="dataProcessId"
+          rules={[
+            {
+              required: true,
+              message: '请选择数据加工任务',
+            },
+          ]}
+        >
+          <Select
+            isVirtual
+            placeholder="请选择数据加工任务"
+            allowClear
+            optionFilterProp="children"
+            showSearch
+            disabled={disabled}
+          >
+            {[
               {
-                required: true,
-                message: '请选择数据加工任务',
+                id: 'zzf',
+                name: '周泽飞',
               },
-            ],
-          })(
-            <Select
-              isVirtual
-              placeholder="请选择数据加工任务"
-              allowClear
-              optionFilterProp="children"
-              showSearch
-              disabled={disabled}
-            >
-              {[
-                {
-                  id: 'zzf',
-                  name: '周泽飞',
-                },
-                {
-                  id: 'fmk',
-                  name: '放光明',
-                },
-              ]?.map((item) => {
-                return (
-                  <Option key={item?.id} value={item?.id}>
-                    {item?.name}
-                  </Option>
-                );
-              })}
-            </Select>,
-          )}
+              {
+                id: 'fmk',
+                name: '放光明',
+              },
+            ]?.map((item) => {
+              return (
+                <Option key={item?.id} value={item?.id}>
+                  {item?.name}
+                </Option>
+              );
+            })}
+          </Select>
         </Form.Item>
       </Form>
     </Modal>
   );
-});
+};
