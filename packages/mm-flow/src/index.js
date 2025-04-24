@@ -6,6 +6,7 @@ import LeftBar from './Content/LeftBar';
 import initShapes, { sliceName } from './MMShapes/initShapes';
 import DefaultDataConvert from './DefaultDataConvert';
 import DialogHandle from './DialogHandle';
+import NodeTooTip from './NodeTooTip';
 import { getText } from './locale';
 import './index.less';
 
@@ -37,6 +38,9 @@ export default forwardRef((props, ref) => {
     LengendDom,
     autoDiffAuditNodes = true,
     lang,
+    highlightNodeList,
+    highlightNodeColor,
+    renderNodeToolTip,
   } = props;
   const previewMode = type === 'view';
 
@@ -44,6 +48,7 @@ export default forwardRef((props, ref) => {
 
   useImperativeHandle(ref, () => ({
     updateGraph: setGraphData,
+    editorRef,
   }));
 
   const checkNewLine = (data, editor) => {
@@ -104,7 +109,7 @@ export default forwardRef((props, ref) => {
         mode: previewMode ? 'view' : 'edit', // 只读模式设置 mode:"view"
       });
       // 注册节点
-      initShapes(editorRef.current, flowNodesDict);
+      initShapes(editorRef.current, flowNodesDict, highlightNodeList, highlightNodeColor);
       if (graphData) {
         await setGraphData(graphData);
       }
@@ -133,6 +138,12 @@ export default forwardRef((props, ref) => {
       window.removeEventListener('resize', resizeBound);
     };
   }, []);
+
+  useEffect(() => {
+    if (editorRef.current) {
+      initShapes(editorRef.current, flowNodesDict, highlightNodeList, highlightNodeColor);
+    }
+  }, [flowNodesDict, highlightNodeList, highlightNodeColor]);
 
   const setGraphData = async (data) => {
     try {
@@ -326,16 +337,7 @@ export default forwardRef((props, ref) => {
       </div>
 
       {/* 节点hover展示 */}
-      <div
-        style={{
-          position: 'fixed',
-          left: toolTipInfo?.textX,
-          top: toolTipInfo?.textY,
-          display: toolTipInfo?.textVisible ? 'block' : 'none',
-        }}
-      >
-        <Tooltip visible={true} title={`${toolTipInfo?.nowTextNode?.name}`} />
-      </div>
+      <NodeTooTip {...{ renderNodeToolTip, toolTipInfo }} />
 
       {dialogDom?.map((dialog) => {
         return React.cloneElement(dialog, {

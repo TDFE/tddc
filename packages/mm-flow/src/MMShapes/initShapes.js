@@ -2,6 +2,8 @@ import FlowExclusivity from '../Images/flow-exclusivity.svg';
 import FlowParallel from '../Images/flow-parallel.svg';
 import Judgment from '../NodeIcon/images/judgment-color.svg';
 import ParallelGateway from '../NodeIcon/images/parallel-color.svg';
+import FlowParallelHighlight from '../Images/flow-parallel-hightlight.svg';
+import FlowExclusivityHighlight from '../Images/flow-exclusivity-hightlight.svg';
 
 // 获取单行文本的像素宽度
 export const getTextPixelWith = (text, fontStyle = 'normal 12px Robot') => {
@@ -30,7 +32,12 @@ export const sliceName = (str, defaultWidth = 80) => {
   }
   return str;
 };
-export default function initShapes(editor, flowNodes) {
+export default function initShapes(
+  editor,
+  flowNodes,
+  highlightNodeList = [],
+  highlightNodeColor = 'red',
+) {
   const { config = {} } = editor || {};
   const { showMiniMap } = config || {};
   // 渲染策略类节点
@@ -69,7 +76,7 @@ export default function initShapes(editor, flowNodes) {
     const node = snapPaper.rect(0, 0, Math.max(textW + 40, 120), 28, 15, 15);
     node.attr({
       fill: '#ECF0FA',
-      stroke: '#fff',
+      stroke: highlightNodeList?.includes(data?.uuid) ? highlightNodeColor : '#fff',
       class: 'flow-icon-node',
       strokeWidth: 2,
       filter: 'url(#mm-editor-node-shadow)',
@@ -115,7 +122,7 @@ export default function initShapes(editor, flowNodes) {
                 fill: '#20BD9F',
                 class: 'flow-icon-node',
                 filter: 'url(#mm-editor-node-shadow)',
-                stroke: '#fff',
+                stroke: highlightNodeList?.includes(data?.uuid) ? highlightNodeColor : '#fff',
                 strokeWidth: 2,
               });
               text.attr({
@@ -145,7 +152,7 @@ export default function initShapes(editor, flowNodes) {
                 fill: '#8B919E',
                 class: 'flow-icon-node',
                 filter: 'url(#mm-editor-node-shadow)',
-                stroke: '#fff',
+                stroke: highlightNodeList?.includes(data?.uuid) ? highlightNodeColor : '#fff',
                 strokeWidth: 2,
               });
               text.attr({
@@ -169,7 +176,13 @@ export default function initShapes(editor, flowNodes) {
           nodeType,
           {
             render: (data, snapPaper) => {
-              const image = snapPaper.image(FlowParallel, 0, 0, 120, 52);
+              const image = snapPaper.image(
+                highlightNodeList?.includes(data?.uuid) ? FlowParallelHighlight : FlowParallel,
+                0,
+                0,
+                120,
+                52,
+              );
               image.node.setAttribute('xmlns:xlink', 'http://www.w3.org/1999/xlink');
               image.attr({
                 filter: 'url(#mm-editor-node-shadow)',
@@ -216,7 +229,15 @@ export default function initShapes(editor, flowNodes) {
           nodeType,
           {
             render: (data, snapPaper) => {
-              const image = snapPaper.image(FlowExclusivity, 0, 0, 120, 52);
+              const image = snapPaper.image(
+                highlightNodeList?.includes(data?.uuid)
+                  ? FlowExclusivityHighlight
+                  : FlowExclusivity,
+                0,
+                0,
+                120,
+                52,
+              );
               image.node.setAttribute('xmlns:xlink', 'http://www.w3.org/1999/xlink');
               image.attr({
                 filter: 'url(#mm-editor-node-shadow)',
