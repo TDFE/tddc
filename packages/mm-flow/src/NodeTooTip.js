@@ -10,6 +10,7 @@ const NodeTooTip = ({ toolTipInfo, renderNodeToolTip }) => {
         left: toolTipInfo?.textX,
         top: toolTipInfo?.textY,
         display: toolTipInfo?.textVisible ? 'block' : 'none',
+        zIndex: 1000,
       }}
     >
       {renderNodeToolTip ? (
