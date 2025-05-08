@@ -166,7 +166,7 @@ export default forwardRef((props, ref) => {
     if (editorRef.current && initReady) {
       setGraphData(graphData);
     }
-  }, [graphData, initReady]);
+  }, [graphData, initReady, highlightNodeList]);
 
   useEffect(() => {
     if (
@@ -221,14 +221,27 @@ export default forwardRef((props, ref) => {
 
   // 动画效果
   const runFlow = async () => {
-    if (!auditedNodes?.length) {
-      return;
-    }
     const { graph } = editorRef?.current || {};
     const {
       node: { nodes },
       line: { lines },
     } = graph || {};
+
+    if (Array.isArray(highlightNodeList) && highlightNodeList.length) {
+      for (let key in lines) {
+        const line = lines[key];
+        const { from, to } = line?.data || {};
+        if (highlightNodeList.includes(from) && highlightNodeList.includes(to)) {
+          line.data.className = `${line.data.className || ''} choosed-line`;
+          line.addClass('choosed-line');
+        }
+      }
+    }
+
+    if (!auditedNodes?.length) {
+      return;
+    }
+
     const [hasAuditedNodeUuids, auditedLine] = [[], []];
     auditedNodes.forEach((node) => {
       hasAuditedNodeUuids.push(node?.uuid);
