@@ -1,6 +1,6 @@
 import React, { memo } from 'react';
 import ReactDOM from 'react-dom';
-import { Tooltip } from 'tntd';
+import { Tooltip } from 'antd';
 
 const NodeTooTip = ({ toolTipInfo, renderNodeToolTip }) => {
   return ReactDOM.createPortal(
@@ -9,15 +9,17 @@ const NodeTooTip = ({ toolTipInfo, renderNodeToolTip }) => {
         position: 'fixed',
         left: toolTipInfo?.textX,
         top: toolTipInfo?.textY,
-        display: toolTipInfo?.textVisible ? 'block' : 'none',
         zIndex: 1000,
       }}
     >
-      {renderNodeToolTip ? (
-        renderNodeToolTip(toolTipInfo)
-      ) : (
-        <Tooltip visible={true} title={`${toolTipInfo?.nowTextNode?.name}`} />
-      )}
+      <Tooltip
+        overlayClassName={renderNodeToolTip ? 'custom-node-tootip' : ''}
+        overlayStyle={renderNodeToolTip ? { top: 10, style: { top: 10 } } : {}}
+        visible={true}
+        title={
+          renderNodeToolTip ? renderNodeToolTip(toolTipInfo) : `${toolTipInfo?.nowTextNode?.name}`
+        }
+      />
     </div>,
     document.body,
   );
