@@ -10,11 +10,11 @@ const NodeTooTip = ({ toolTipInfo, renderNodeToolTip }) => {
         left: toolTipInfo?.textX,
         top: toolTipInfo?.textY,
         zIndex: 1000,
+        display: toolTipInfo?.textVisible ? 'block' : 'none',
       }}
     >
       <Tooltip
         overlayClassName={renderNodeToolTip ? 'custom-node-tootip' : ''}
-        overlayStyle={renderNodeToolTip ? { top: 10, style: { top: 10 } } : {}}
         visible={true}
         title={
           renderNodeToolTip ? renderNodeToolTip(toolTipInfo) : `${toolTipInfo?.nowTextNode?.name}`
