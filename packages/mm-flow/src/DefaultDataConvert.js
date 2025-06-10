@@ -34,6 +34,44 @@ const DefaultConvert = {
         from: item.sourceNodeId,
         to: item.targetNodeId,
       };
+      switch (item.lineType) {
+        case 'ExclusiveConditionLine':
+          line.data = {
+            processFlowCondition: {
+              isDefault: item.attributes.isDefault,
+              priority: item.attributes.priority,
+              ruleConditionList: item.attributes.condition
+                ? JSON.parse(item.attributes.condition || '[]')
+                : undefined,
+              conditionName: item.name,
+            },
+          };
+          line.label = item.name;
+          break;
+        case 'BOOL_EXPRESSION':
+          line.label = item.name;
+          break;
+        case 'ChampionConditionLine':
+          line.data = {
+            processFlowCondition: {
+              type: item.attributes.type,
+              ratio: item.attributes.ratio,
+              isDefault: item.attributes.isDefault,
+              priority: item.attributes.priority,
+              fieldList: item.attributes.fieldList,
+              conditionName: item.name,
+              ruleConditionList: item.attributes.condition
+                ? JSON.parse(item.attributes.condition)
+                : undefined,
+            },
+          };
+
+          line.label = item.name;
+
+          break;
+        default:
+          break;
+      }
       return line;
     });
 
