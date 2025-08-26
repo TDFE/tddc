@@ -163,13 +163,13 @@ var AssignModal = function AssignModal(props) {
     filterOrg = _useState8[0],
     setFilterOrg = _useState8[1];
   var _useState9 = useState(),
-    _useState10 = _slicedToArray(_useState9, 2),
-    filterUser = _useState10[0],
-    setFilterUser = _useState10[1];
-  var _useState11 = useState(),
-    _useState12 = _slicedToArray(_useState11, 2),
-    filterApp = _useState12[0],
-    setFilterApp = _useState12[1];
+    _useState0 = _slicedToArray(_useState9, 2),
+    filterUser = _useState0[0],
+    setFilterUser = _useState0[1];
+  var _useState1 = useState(),
+    _useState10 = _slicedToArray(_useState1, 2),
+    filterApp = _useState10[0],
+    setFilterApp = _useState10[1];
   useEffect(
     function () {
       // path 和 allOrgList 赋值
