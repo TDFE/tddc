@@ -25,7 +25,11 @@ const AssignModal = (props) => {
     showUser,
     customOrgDisabled,
     customAppDisabled,
+    locale,
   } = props;
+
+  // 封装 getText，自动传入 locale
+  const t = (key, ...params) => getText(key, props?.lang, locale, ...params);
 
   let { appCodes = [], orgCodes = [], orgCode, appCode, accounts = [], account } = dataItem;
 
@@ -57,9 +61,9 @@ const AssignModal = (props) => {
   }, [rootNode, appList, userList]);
 
   const titleOptions = [
-    `${orgTitle || getText('availableOrgs', props?.lang)}`,
-    `${appTitle || getText('availableApps', props?.lang)}`,
-    `${userTitle || getText('availableUsers', props?.lang)}`,
+    `${orgTitle || t('availableOrgs')}`,
+    `${appTitle || t('availableApps')}`,
+    `${userTitle || t('availableUsers')}`,
   ];
 
   if (!showUser) {
@@ -712,11 +716,11 @@ const AssignModal = (props) => {
           <div className="org-panel panel">
             <div className="menu-header">
               {/* 授权可用机构列表 */}
-              <span className="title">{orgTitle || getText('authorizesOrgList', props?.lang)}</span>
+              <span className="title">{orgTitle || t('authorizesOrgList')}</span>
               <div className="menu-all-checked">
                 <Checkbox onChange={checkAllOrg} checked={allOrgChecked} disabled={disabled}>
                   {/* 全部机构可用 */}
-                  {orgCheckboxTitle || getText('allOrgAvailable', props?.lang)}
+                  {orgCheckboxTitle || t('allOrgAvailable')}
                 </Checkbox>
               </div>
             </div>
@@ -724,7 +728,7 @@ const AssignModal = (props) => {
               <div className="panel-left" style={{ width: '60%' }}>
                 <Input
                   size="small"
-                  placeholder={getText('search', props?.lang)}
+                  placeholder={t('search')}
                   onChange={(e) => {
                     debouncedOrgSearch(e.target.value);
                   }}
@@ -749,11 +753,10 @@ const AssignModal = (props) => {
               <div className="panel-right" style={{ width: '40%' }}>
                 <div className="select-menu-header">
                   <span>
-                    {getText('hasBeenSelected', props?.lang)}:{' '}
-                    {getText('numOfOrg', props?.lang, areadySelectOrg.length || 0)}
+                    {t('hasBeenSelected')}: {t('numOfOrg', areadySelectOrg.length || 0)}
                   </span>
                   <a className={canNotRemoveOrg ? 'disabeld' : ''} onClick={() => onRemoveAllOrg()}>
-                    {getText('clear', props?.lang)}
+                    {t('clear')}
                   </a>
                 </div>
                 <ul className="select-menu-list">
@@ -792,11 +795,11 @@ const AssignModal = (props) => {
           <div className="app-panel panel">
             <div className="menu-header">
               {/* 授权可用渠道列表 */}
-              <span className="title">{appTitle || getText('authorizesAppList', props?.lang)}</span>
+              <span className="title">{appTitle || t('authorizesAppList')}</span>
               <div className="menu-all-checked">
                 <Checkbox onChange={checkedAllApp} checked={allAppChecked} disabled={disabled}>
                   {/* 全部渠道可用 */}
-                  {appCheckboxTitle || getText('allAppAvailable', props?.lang)}
+                  {appCheckboxTitle || t('allAppAvailable')}
                 </Checkbox>
               </div>
             </div>
@@ -806,7 +809,7 @@ const AssignModal = (props) => {
                   onChange={(e) => {
                     debouncedAppSearch(e.target.value);
                   }}
-                  placeholder={getText('enterAppName', props?.lang)}
+                  placeholder={t('enterAppName')}
                   size="small"
                   suffix={<Icon type="zoom" />}
                   style={{ marginBottom: 16, width: 'calc(100% - 16px)' }}
@@ -816,12 +819,11 @@ const AssignModal = (props) => {
               <div className="panel-right">
                 <div className="select-menu-header">
                   <span>
-                    {getText('hasBeenSelected', props?.lang)}:{' '}
-                    {getText('numOfApp', props?.lang, areadySelectApp.length || 0)}
+                    {t('hasBeenSelected')}: {t('numOfApp', areadySelectApp.length || 0)}
                   </span>
                   <a className={canNotRemoveApp ? 'disabeld' : ''} onClick={() => onRemoveAllApp()}>
                     {/* 清空 */}
-                    {getText('clear', props?.lang)}
+                    {t('clear')}
                   </a>
                 </div>
                 <ul className="select-menu-list">
@@ -854,13 +856,11 @@ const AssignModal = (props) => {
             <div className="user-panel panel">
               <div className="menu-header">
                 {/* 授权可用用户列表 */}
-                <span className="title">
-                  {userTitle || getText('authorizesUserList', props?.lang)}
-                </span>
+                <span className="title">{userTitle || t('authorizesUserList')}</span>
                 <div className="menu-all-checked">
                   <Checkbox onChange={checkedAllUser} checked={allUserChecked} disabled={disabled}>
                     {/* 全部用户可用 */}
-                    {userCheckboxTitle || getText('allUserAvailable', props?.lang)}
+                    {userCheckboxTitle || t('allUserAvailable')}
                   </Checkbox>
                 </div>
               </div>
@@ -868,7 +868,7 @@ const AssignModal = (props) => {
                 <div className="panel-left">
                   <Input
                     size="small"
-                    placeholder={getText('enterUserName', props?.lang)}
+                    placeholder={t('enterUserName')}
                     onChange={(e) => {
                       debouncedUserSearch(e.target.value);
                     }}
@@ -881,10 +881,9 @@ const AssignModal = (props) => {
                 <div className="panel-right">
                   <div className="select-menu-header">
                     <span>
-                      {getText('hasBeenSelected', props?.lang)}:{' '}
-                      {getText('numOfUser', props?.lang, areadySelectUser.length || 0)}
+                      {t('hasBeenSelected')}: {t('numOfUser', areadySelectUser.length || 0)}
                     </span>
-                    <a onClick={() => onRemoveAllOrg()}>{getText('clear', props?.lang)}</a>
+                    <a onClick={() => onRemoveAllOrg()}>{t('clear')}</a>
                   </div>
                   <ul className="select-menu-list">
                     {userKeys.map((item, index) => {

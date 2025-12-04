@@ -1,3 +1,22 @@
+function _typeof(o) {
+  '@babel/helpers - typeof';
+  return (
+    (_typeof =
+      'function' == typeof Symbol && 'symbol' == typeof Symbol.iterator
+        ? function (o) {
+            return typeof o;
+          }
+        : function (o) {
+            return o &&
+              'function' == typeof Symbol &&
+              o.constructor === Symbol &&
+              o !== Symbol.prototype
+              ? 'symbol'
+              : typeof o;
+          }),
+    _typeof(o)
+  );
+}
 import Cookies from 'universal-cookie';
 var cookies = new Cookies();
 export var zh_CN = {
@@ -38,26 +57,57 @@ export var en_US = {
   enterAppName: 'Enter Channel name',
   enterUserName: 'Enter Account name',
 };
-export var getText = function getText(key, language) {
-  var _ref;
-  var text =
-    (_ref =
-      {
-        cn: zh_CN,
-        en: en_US,
-      }[language || getLanguage()] || zh_CN) === null || _ref === void 0
-      ? void 0
-      : _ref[key];
+
+// 内置语言包
+var builtInLocales = {
+  cn: zh_CN,
+  en: en_US,
+};
+
+/**
+ * 获取文本，支持外部传入的语言包覆盖
+ * @param {string} key - 文本 key
+ * @param {string} language - 语言标识
+ * @param {Object} locale - 外部传入的语言包（可选），通过 createOtp 生成的扁平对象
+ * @param {...any} params - 替换参数
+ */
+export var getText = function getText(key, language, locale) {
+  var _actualLocale$key, _actualLocale, _actualParams;
+  // 兼容旧的调用方式：getText(key, language, ...params)
+  // 新的调用方式：getText(key, language, locale, ...params)
+  var actualLocale = locale;
   for (
-    var _len = arguments.length, params = new Array(_len > 2 ? _len - 2 : 0), _key = 2;
+    var _len = arguments.length, params = new Array(_len > 3 ? _len - 3 : 0), _key = 3;
     _key < _len;
     _key++
   ) {
-    params[_key - 2] = arguments[_key];
+    params[_key - 3] = arguments[_key];
   }
-  if (params === null || params === void 0 ? void 0 : params.length) {
-    return params.reduce(function (acc, cur) {
-      return acc.replace(/%s/, cur);
+  var actualParams = params;
+
+  // 如果 locale 不是对象或为 null，则认为是旧的调用方式
+  if (_typeof(locale) !== 'object' || locale === null) {
+    actualLocale = null;
+    actualParams = locale !== undefined ? [locale].concat(params) : params;
+  }
+  var lang = language || getLanguage();
+  var builtIn = builtInLocales[lang] || zh_CN;
+
+  // locale 是扁平对象（通过 createOtp 生成），直接覆盖内置语言包
+  var text =
+    (_actualLocale$key =
+      (_actualLocale = actualLocale) === null || _actualLocale === void 0
+        ? void 0
+        : _actualLocale[key]) !== null && _actualLocale$key !== void 0
+      ? _actualLocale$key
+      : builtIn[key];
+  if (
+    (_actualParams = actualParams) === null || _actualParams === void 0
+      ? void 0
+      : _actualParams.length
+  ) {
+    return actualParams.reduce(function (acc, cur) {
+      return acc === null || acc === void 0 ? void 0 : acc.replace(/%s/, cur);
     }, text);
   }
   return text;

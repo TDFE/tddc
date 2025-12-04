@@ -18,7 +18,11 @@ const AssignModal = (props) => {
     userTitle,
     userList = [],
     showUser,
+    locale,
   } = props;
+
+  // 封装 getText，自动传入 locale
+  const t = (key, ...params) => getText(key, props?.lang, locale, ...params);
   let { appCodes = [], orgCodes = [], orgCode, appCode, accounts, account } = dataItem;
 
   const orgMapRef = useRef({});
@@ -248,13 +252,13 @@ const AssignModal = (props) => {
         <div className="org-panel panel">
           <div className="menu-header">
             {/* 授权可用机构列表 */}
-            <span className="title">{orgTitle || getText('authorizesOrgList', props?.lang)}</span>
+            <span className="title">{orgTitle || t('authorizesOrgList')}</span>
           </div>
           <div className="panel-menu-body">
             <ul className="select-menu-list">
               <Input
                 size="small"
-                placeholder={getText('search', props?.lang)}
+                placeholder={t('search')}
                 onChange={(e) => {
                   debouncedOrgSearch(e.target.value);
                 }}
@@ -268,14 +272,14 @@ const AssignModal = (props) => {
         <div className="app-panel panel">
           <div className="menu-header">
             {/* 授权可用渠道列表 */}
-            <span className="title">{appTitle || getText('authorizesAppList', props?.lang)}</span>
+            <span className="title">{appTitle || t('authorizesAppList')}</span>
           </div>
           <div className="panel-menu-body">
             <Input
               onChange={(e) => {
                 debouncedAppSearch(e.target.value);
               }}
-              placeholder={getText('enterAppName', props?.lang)}
+              placeholder={t('enterAppName')}
               size="small"
               suffix={<Icon type="zoom" />}
               style={{ marginBottom: 16 }}
@@ -287,14 +291,12 @@ const AssignModal = (props) => {
           <div className="user-panel panel">
             <div className="menu-header">
               {/* 授权可用用户列表 */}
-              <span className="title">
-                {userTitle || getText('authorizesUserList', props?.lang)}
-              </span>
+              <span className="title">{userTitle || t('authorizesUserList')}</span>
             </div>
             <div className="panel-menu-body">
               <Input
                 size="small"
-                placeholder={getText('enterUserName', props?.lang)}
+                placeholder={t('enterUserName')}
                 onChange={(e) => {
                   debouncedUserSearch(e.target.value);
                 }}

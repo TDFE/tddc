@@ -7,7 +7,7 @@ import Cookies from 'universal-cookie';
 const cookies = new Cookies();
 
 const AssignModal = (props) => {
-  const { visible, close, disabled, title = '', onSubmit, ...restProps } = props;
+  const { visible, close, disabled, title = '', onSubmit, locale, ...restProps } = props;
   const [assignData, setAssignData] = useState({});
 
   const submit = () => {
@@ -33,6 +33,7 @@ const AssignModal = (props) => {
         }}
         disabled={disabled}
         lang={props?.lang || cookies.get('lang') || 'cn'}
+        locale={locale}
         {...restProps}
       />
     </Drawer>

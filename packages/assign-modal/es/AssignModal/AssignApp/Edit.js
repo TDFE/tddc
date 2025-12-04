@@ -182,7 +182,23 @@ var AssignModal = function AssignModal(props) {
     userList = _props$userList === void 0 ? [] : _props$userList,
     showUser = props.showUser,
     customOrgDisabled = props.customOrgDisabled,
-    customAppDisabled = props.customAppDisabled;
+    customAppDisabled = props.customAppDisabled,
+    locale = props.locale;
+
+  // 封装 getText，自动传入 locale
+  var t = function t(key) {
+    for (
+      var _len = arguments.length, params = new Array(_len > 1 ? _len - 1 : 0), _key = 1;
+      _key < _len;
+      _key++
+    ) {
+      params[_key - 1] = arguments[_key];
+    }
+    return getText.apply(
+      void 0,
+      [key, props === null || props === void 0 ? void 0 : props.lang, locale].concat(params),
+    );
+  };
   var _dataItem$appCodes = dataItem.appCodes,
     appCodes = _dataItem$appCodes === void 0 ? [] : _dataItem$appCodes,
     _dataItem$orgCodes = dataItem.orgCodes,
@@ -225,18 +241,9 @@ var AssignModal = function AssignModal(props) {
     allApp = _useMemo2[1],
     allUser = _useMemo2[2];
   var titleOptions = [
-    ''.concat(
-      orgTitle ||
-        getText('availableOrgs', props === null || props === void 0 ? void 0 : props.lang),
-    ),
-    ''.concat(
-      appTitle ||
-        getText('availableApps', props === null || props === void 0 ? void 0 : props.lang),
-    ),
-    ''.concat(
-      userTitle ||
-        getText('availableUsers', props === null || props === void 0 ? void 0 : props.lang),
-    ),
+    ''.concat(orgTitle || t('availableOrgs')),
+    ''.concat(appTitle || t('availableApps')),
+    ''.concat(userTitle || t('availableUsers')),
   ];
   if (!showUser) {
     titleOptions.pop();
@@ -258,37 +265,37 @@ var AssignModal = function AssignModal(props) {
     checkedKeys = _useState8[0],
     setCheckedKeys = _useState8[1];
   var _useState9 = useState(appCodes || []),
-    _useState0 = _slicedToArray(_useState9, 2),
-    appKeys = _useState0[0],
-    setAppKeys = _useState0[1];
-  var _useState1 = useState(accounts || []),
-    _useState10 = _slicedToArray(_useState1, 2),
-    userKeys = _useState10[0],
-    setUserKeys = _useState10[1];
-  var _useState11 = useState(false),
+    _useState10 = _slicedToArray(_useState9, 2),
+    appKeys = _useState10[0],
+    setAppKeys = _useState10[1];
+  var _useState11 = useState(accounts || []),
     _useState12 = _slicedToArray(_useState11, 2),
-    allOrgChecked = _useState12[0],
-    setAllOrgChecked = _useState12[1];
+    userKeys = _useState12[0],
+    setUserKeys = _useState12[1];
   var _useState13 = useState(false),
     _useState14 = _slicedToArray(_useState13, 2),
-    allAppChecked = _useState14[0],
-    setAllAppChecked = _useState14[1];
+    allOrgChecked = _useState14[0],
+    setAllOrgChecked = _useState14[1];
   var _useState15 = useState(false),
     _useState16 = _slicedToArray(_useState15, 2),
-    allUserChecked = _useState16[0],
-    setAllUserChecked = _useState16[1];
-  var _useState17 = useState(),
+    allAppChecked = _useState16[0],
+    setAllAppChecked = _useState16[1];
+  var _useState17 = useState(false),
     _useState18 = _slicedToArray(_useState17, 2),
-    filterOrg = _useState18[0],
-    setFilterOrg = _useState18[1];
+    allUserChecked = _useState18[0],
+    setAllUserChecked = _useState18[1];
   var _useState19 = useState(),
     _useState20 = _slicedToArray(_useState19, 2),
-    filterUser = _useState20[0],
-    setFilterUser = _useState20[1];
+    filterOrg = _useState20[0],
+    setFilterOrg = _useState20[1];
   var _useState21 = useState(),
     _useState22 = _slicedToArray(_useState21, 2),
-    filterApp = _useState22[0],
-    setFilterApp = _useState22[1];
+    filterUser = _useState22[0],
+    setFilterUser = _useState22[1];
+  var _useState23 = useState(),
+    _useState24 = _slicedToArray(_useState23, 2),
+    filterApp = _useState24[0],
+    setFilterApp = _useState24[1];
   var gap = 335;
   var windowHeight = useWindowHeight(gap);
   useEffect(
@@ -399,8 +406,8 @@ var AssignModal = function AssignModal(props) {
   );
   var onCheck = function onCheck() {
     var _node$childrenValues;
-    for (var _len = arguments.length, rest = new Array(_len), _key = 0; _key < _len; _key++) {
-      rest[_key] = arguments[_key];
+    for (var _len2 = arguments.length, rest = new Array(_len2), _key2 = 0; _key2 < _len2; _key2++) {
+      rest[_key2] = arguments[_key2];
     }
     var checked = rest[0],
       node = rest[1],
@@ -1085,11 +1092,7 @@ var AssignModal = function AssignModal(props) {
               {
                 className: 'title',
               },
-              orgTitle ||
-                getText(
-                  'authorizesOrgList',
-                  props === null || props === void 0 ? void 0 : props.lang,
-                ),
+              orgTitle || t('authorizesOrgList'),
             ),
             /*#__PURE__*/ React.createElement(
               'div',
@@ -1103,11 +1106,7 @@ var AssignModal = function AssignModal(props) {
                   checked: allOrgChecked,
                   disabled: disabled,
                 },
-                orgCheckboxTitle ||
-                  getText(
-                    'allOrgAvailable',
-                    props === null || props === void 0 ? void 0 : props.lang,
-                  ),
+                orgCheckboxTitle || t('allOrgAvailable'),
               ),
             ),
           ),
@@ -1126,10 +1125,7 @@ var AssignModal = function AssignModal(props) {
               },
               /*#__PURE__*/ React.createElement(_Input, {
                 size: 'small',
-                placeholder: getText(
-                  'search',
-                  props === null || props === void 0 ? void 0 : props.lang,
-                ),
+                placeholder: t('search'),
                 onChange: function onChange(e) {
                   debouncedOrgSearch(e.target.value);
                 },
@@ -1174,17 +1170,9 @@ var AssignModal = function AssignModal(props) {
                 /*#__PURE__*/ React.createElement(
                   'span',
                   null,
-                  getText(
-                    'hasBeenSelected',
-                    props === null || props === void 0 ? void 0 : props.lang,
-                  ),
-                  ':',
-                  ' ',
-                  getText(
-                    'numOfOrg',
-                    props === null || props === void 0 ? void 0 : props.lang,
-                    areadySelectOrg.length || 0,
-                  ),
+                  t('hasBeenSelected'),
+                  ': ',
+                  t('numOfOrg', areadySelectOrg.length || 0),
                 ),
                 /*#__PURE__*/ React.createElement(
                   'a',
@@ -1194,7 +1182,7 @@ var AssignModal = function AssignModal(props) {
                       return onRemoveAllOrg();
                     },
                   },
-                  getText('clear', props === null || props === void 0 ? void 0 : props.lang),
+                  t('clear'),
                 ),
               ),
               /*#__PURE__*/ React.createElement(
@@ -1265,11 +1253,7 @@ var AssignModal = function AssignModal(props) {
               {
                 className: 'title',
               },
-              appTitle ||
-                getText(
-                  'authorizesAppList',
-                  props === null || props === void 0 ? void 0 : props.lang,
-                ),
+              appTitle || t('authorizesAppList'),
             ),
             /*#__PURE__*/ React.createElement(
               'div',
@@ -1283,11 +1267,7 @@ var AssignModal = function AssignModal(props) {
                   checked: allAppChecked,
                   disabled: disabled,
                 },
-                appCheckboxTitle ||
-                  getText(
-                    'allAppAvailable',
-                    props === null || props === void 0 ? void 0 : props.lang,
-                  ),
+                appCheckboxTitle || t('allAppAvailable'),
               ),
             ),
           ),
@@ -1305,10 +1285,7 @@ var AssignModal = function AssignModal(props) {
                 onChange: function onChange(e) {
                   debouncedAppSearch(e.target.value);
                 },
-                placeholder: getText(
-                  'enterAppName',
-                  props === null || props === void 0 ? void 0 : props.lang,
-                ),
+                placeholder: t('enterAppName'),
                 size: 'small',
                 suffix: /*#__PURE__*/ React.createElement(_Icon, {
                   type: 'zoom',
@@ -1333,17 +1310,9 @@ var AssignModal = function AssignModal(props) {
                 /*#__PURE__*/ React.createElement(
                   'span',
                   null,
-                  getText(
-                    'hasBeenSelected',
-                    props === null || props === void 0 ? void 0 : props.lang,
-                  ),
-                  ':',
-                  ' ',
-                  getText(
-                    'numOfApp',
-                    props === null || props === void 0 ? void 0 : props.lang,
-                    areadySelectApp.length || 0,
-                  ),
+                  t('hasBeenSelected'),
+                  ': ',
+                  t('numOfApp', areadySelectApp.length || 0),
                 ),
                 /*#__PURE__*/ React.createElement(
                   'a',
@@ -1353,7 +1322,7 @@ var AssignModal = function AssignModal(props) {
                       return onRemoveAllApp();
                     },
                   },
-                  getText('clear', props === null || props === void 0 ? void 0 : props.lang),
+                  t('clear'),
                 ),
               ),
               /*#__PURE__*/ React.createElement(
@@ -1412,11 +1381,7 @@ var AssignModal = function AssignModal(props) {
                 {
                   className: 'title',
                 },
-                userTitle ||
-                  getText(
-                    'authorizesUserList',
-                    props === null || props === void 0 ? void 0 : props.lang,
-                  ),
+                userTitle || t('authorizesUserList'),
               ),
               /*#__PURE__*/ React.createElement(
                 'div',
@@ -1430,11 +1395,7 @@ var AssignModal = function AssignModal(props) {
                     checked: allUserChecked,
                     disabled: disabled,
                   },
-                  userCheckboxTitle ||
-                    getText(
-                      'allUserAvailable',
-                      props === null || props === void 0 ? void 0 : props.lang,
-                    ),
+                  userCheckboxTitle || t('allUserAvailable'),
                 ),
               ),
             ),
@@ -1450,10 +1411,7 @@ var AssignModal = function AssignModal(props) {
                 },
                 /*#__PURE__*/ React.createElement(_Input, {
                   size: 'small',
-                  placeholder: getText(
-                    'enterUserName',
-                    props === null || props === void 0 ? void 0 : props.lang,
-                  ),
+                  placeholder: t('enterUserName'),
                   onChange: function onChange(e) {
                     debouncedUserSearch(e.target.value);
                   },
@@ -1480,17 +1438,9 @@ var AssignModal = function AssignModal(props) {
                   /*#__PURE__*/ React.createElement(
                     'span',
                     null,
-                    getText(
-                      'hasBeenSelected',
-                      props === null || props === void 0 ? void 0 : props.lang,
-                    ),
-                    ':',
-                    ' ',
-                    getText(
-                      'numOfUser',
-                      props === null || props === void 0 ? void 0 : props.lang,
-                      areadySelectUser.length || 0,
-                    ),
+                    t('hasBeenSelected'),
+                    ': ',
+                    t('numOfUser', areadySelectUser.length || 0),
                   ),
                   /*#__PURE__*/ React.createElement(
                     'a',
@@ -1499,7 +1449,7 @@ var AssignModal = function AssignModal(props) {
                         return onRemoveAllOrg();
                       },
                     },
-                    getText('clear', props === null || props === void 0 ? void 0 : props.lang),
+                    t('clear'),
                   ),
                 ),
                 /*#__PURE__*/ React.createElement(

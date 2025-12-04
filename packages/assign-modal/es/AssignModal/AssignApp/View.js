@@ -105,7 +105,23 @@ var AssignModal = function AssignModal(props) {
     userTitle = props.userTitle,
     _props$userList = props.userList,
     userList = _props$userList === void 0 ? [] : _props$userList,
-    showUser = props.showUser;
+    showUser = props.showUser,
+    locale = props.locale;
+
+  // 封装 getText，自动传入 locale
+  var t = function t(key) {
+    for (
+      var _len = arguments.length, params = new Array(_len > 1 ? _len - 1 : 0), _key = 1;
+      _key < _len;
+      _key++
+    ) {
+      params[_key - 1] = arguments[_key];
+    }
+    return getText.apply(
+      void 0,
+      [key, props === null || props === void 0 ? void 0 : props.lang, locale].concat(params),
+    );
+  };
   var _dataItem$appCodes = dataItem.appCodes,
     appCodes = _dataItem$appCodes === void 0 ? [] : _dataItem$appCodes,
     _dataItem$orgCodes = dataItem.orgCodes,
@@ -163,13 +179,13 @@ var AssignModal = function AssignModal(props) {
     filterOrg = _useState8[0],
     setFilterOrg = _useState8[1];
   var _useState9 = useState(),
-    _useState0 = _slicedToArray(_useState9, 2),
-    filterUser = _useState0[0],
-    setFilterUser = _useState0[1];
-  var _useState1 = useState(),
-    _useState10 = _slicedToArray(_useState1, 2),
-    filterApp = _useState10[0],
-    setFilterApp = _useState10[1];
+    _useState10 = _slicedToArray(_useState9, 2),
+    filterUser = _useState10[0],
+    setFilterUser = _useState10[1];
+  var _useState11 = useState(),
+    _useState12 = _slicedToArray(_useState11, 2),
+    filterApp = _useState12[0],
+    setFilterApp = _useState12[1];
   useEffect(
     function () {
       // path 和 allOrgList 赋值
@@ -498,11 +514,7 @@ var AssignModal = function AssignModal(props) {
             {
               className: 'title',
             },
-            orgTitle ||
-              getText(
-                'authorizesOrgList',
-                props === null || props === void 0 ? void 0 : props.lang,
-              ),
+            orgTitle || t('authorizesOrgList'),
           ),
         ),
         /*#__PURE__*/ React.createElement(
@@ -517,10 +529,7 @@ var AssignModal = function AssignModal(props) {
             },
             /*#__PURE__*/ React.createElement(_Input, {
               size: 'small',
-              placeholder: getText(
-                'search',
-                props === null || props === void 0 ? void 0 : props.lang,
-              ),
+              placeholder: t('search'),
               onChange: function onChange(e) {
                 debouncedOrgSearch(e.target.value);
               },
@@ -550,11 +559,7 @@ var AssignModal = function AssignModal(props) {
             {
               className: 'title',
             },
-            appTitle ||
-              getText(
-                'authorizesAppList',
-                props === null || props === void 0 ? void 0 : props.lang,
-              ),
+            appTitle || t('authorizesAppList'),
           ),
         ),
         /*#__PURE__*/ React.createElement(
@@ -566,10 +571,7 @@ var AssignModal = function AssignModal(props) {
             onChange: function onChange(e) {
               debouncedAppSearch(e.target.value);
             },
-            placeholder: getText(
-              'enterAppName',
-              props === null || props === void 0 ? void 0 : props.lang,
-            ),
+            placeholder: t('enterAppName'),
             size: 'small',
             suffix: /*#__PURE__*/ React.createElement(_Icon, {
               type: 'zoom',
@@ -603,11 +605,7 @@ var AssignModal = function AssignModal(props) {
               {
                 className: 'title',
               },
-              userTitle ||
-                getText(
-                  'authorizesUserList',
-                  props === null || props === void 0 ? void 0 : props.lang,
-                ),
+              userTitle || t('authorizesUserList'),
             ),
           ),
           /*#__PURE__*/ React.createElement(
@@ -617,10 +615,7 @@ var AssignModal = function AssignModal(props) {
             },
             /*#__PURE__*/ React.createElement(_Input, {
               size: 'small',
-              placeholder: getText(
-                'enterUserName',
-                props === null || props === void 0 ? void 0 : props.lang,
-              ),
+              placeholder: t('enterUserName'),
               onChange: function onChange(e) {
                 debouncedUserSearch(e.target.value);
               },
