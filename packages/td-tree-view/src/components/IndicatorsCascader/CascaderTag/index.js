@@ -99,7 +99,7 @@ const Tag = (props) => {
           <img src={require('./imgs/import_export.svg')} className="tag-img" />
         </Tooltip>
       )}
-      {showSourceName && `[${data?.sourceName}]`}
+      {showSourceName && !!data?.sourceName && `[${data?.sourceName}]`}
     </div>
   );
 };
