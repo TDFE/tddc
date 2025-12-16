@@ -59,8 +59,10 @@ export default (WrapperComponent, rest) => {
     forceNoHeader,
     lang,
     version,
+    locale,
   } = rest || {};
   let breadCacheList = [];
+  const t = (key, ...params) => getText(key, lang, locale, ...params);
 
   return withRouter((props) => {
     const { match, location, separator } = props || {};
@@ -288,7 +290,7 @@ export default (WrapperComponent, rest) => {
                     dom = (
                       <>
                         <Icon type="left" className="go-back" />
-                        {getText('back', lang) || '返回'}
+                        {t('back') || '返回'}
                       </>
                     );
                   }
