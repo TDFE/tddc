@@ -1,12 +1,3 @@
----
-title: 机构应用授权
-group:
-  path: /
-nav:
-  title: 组件
-  path: /components
----
-
 # AssignModal 授权弹窗组件
 
 用于管理机构、应用（渠道）、用户授权的复杂业务组件，支持树形机构选择、多选应用和用户，以及全局授权等功能。
