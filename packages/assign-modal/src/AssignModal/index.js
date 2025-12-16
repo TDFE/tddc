@@ -7,7 +7,17 @@ import Cookies from 'universal-cookie';
 const cookies = new Cookies();
 
 const AssignModal = (props) => {
-  const { visible, close, disabled, title = '', onSubmit, locale, ...restProps } = props;
+  const {
+    visible,
+    close,
+    disabled = false,
+    title = '',
+    onSubmit,
+    locale,
+    okText = '确定',
+    cancelText = '取消',
+    ...restProps
+  } = props;
   const [assignData, setAssignData] = useState({});
 
   const submit = () => {
@@ -22,6 +32,8 @@ const AssignModal = (props) => {
       width={900}
       onCancel={close}
       onOk={submit}
+      // okText={okText}
+      // cancelText={cancelText}
       maskClosable={disabled}
       destroyOnClose
       showFooter={!disabled}

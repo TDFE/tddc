@@ -8,12 +8,11 @@
     display: flex;
     height: calc(100% - 24px);
     margin-top: 16px;
-    transition: transform 0.2s ease;
+    // transition 已移至 inline style，支持动态面板数量
 
     .panel {
-      // width: 650px;
-      flex: 1;
-      min-width: 652px;
+      flex: 1 0 0; // flex-grow: 1, flex-shrink: 0, flex-basis: 0
+      // 每个面板平分 slider 宽度，不压缩，从 0 基准开始计算
       height: 100%;
       padding: 16px;
       overflow: hidden;
@@ -159,18 +158,6 @@
         }
       }
     }
-  }
-
-  .slider.panel-0 {
-    transform: translateX(0);
-  }
-
-  .slider.panel-1 {
-    transform: translateX(-852px);
-  }
-
-  .slider.panel-2 {
-    transform: translateX(-1504px);
   }
 
   .menu-header {

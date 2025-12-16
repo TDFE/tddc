@@ -700,6 +700,10 @@ const AssignModal = (props) => {
 
   console.log(canNotRemoveOrg, 'canNotRemove');
 
+  // 计算面板数量和平移距离
+  const panelCount = showUser ? 3 : 2;
+  const translateX = curIndex === 0 ? 0 : `${-(100 / panelCount) * curIndex}%`;
+
   return (
     <>
       <Segmented
@@ -712,7 +716,14 @@ const AssignModal = (props) => {
         }}
       />
       <div className="assign-box-container">
-        <div className={`slider panel-${curIndex}`} style={{ width: !!showUser ? '300%' : '200%' }}>
+        <div
+          className="slider"
+          style={{
+            width: showUser ? '300%' : '200%',
+            transform: `translateX(${translateX})`,
+            transition: 'transform 0.2s ease',
+          }}
+        >
           <div className="org-panel panel">
             <div className="menu-header">
               {/* 授权可用机构列表 */}
@@ -883,21 +894,21 @@ const AssignModal = (props) => {
                     <span>
                       {t('hasBeenSelected')}: {t('numOfUser', areadySelectUser.length || 0)}
                     </span>
-                    <a onClick={() => onRemoveAllOrg()}>{t('clear')}</a>
+                    <a onClick={() => onRemoveAllUser()}>{t('clear')}</a>
                   </div>
                   <ul className="select-menu-list">
                     {userKeys.map((item, index) => {
                       let node = userMapRef.current[item] || {};
                       let { userName } = node;
 
-                      const isOwnAppCode = accounts === node.account;
+                      const isOwnUserCode = account === node.account;
                       if (!userName && !node.account) return null; // 不显示多余数据
                       return (
                         <li key={userName + index} className="select-menu-list-item">
                           <span className="app-name">
                             <Ellipsis title={userName} />
                           </span>
-                          {!isOwnAppCode && (
+                          {!isOwnUserCode && (
                             <Icon
                               type="close"
                               className="close-icon"

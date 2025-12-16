@@ -50,7 +50,7 @@ export const preorder = (root, cb, isAddPath = false) => {
     }
 
     res.push(root.code || root.key);
-    cb && cb(root.key, root);
+    cb && cb(root.code || root.key, root);
 
     for (let i = 0; i < root?.children?.length; i++) {
       dfs(root.children[i], res, path, cb);
