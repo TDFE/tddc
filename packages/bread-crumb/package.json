@@ -1,12 +1,13 @@
 {
   "name": "@tddc/bread-crumb",
-  "version": "3.0.13",
+  "version": "3.0.14",
   "description": "react4.0的面包屑",
   "author": "zefei.zhou <zefei.zhou@tongdun.net>",
   "license": "ISC",
   "main": "es/index.js",
   "files": [
-    "es"
+    "es",
+    "src"
   ],
   "devDependencies": {
     "tntd": ">=2.0.1",
