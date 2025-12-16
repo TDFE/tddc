@@ -153,7 +153,7 @@ export var preorder = function preorder(root, cb) {
       root.show = true;
     }
     res.push(root.code || root.key);
-    cb && cb(root.key, root);
+    cb && cb(root.code || root.key, root);
     for (
       var i = 0;
       i <

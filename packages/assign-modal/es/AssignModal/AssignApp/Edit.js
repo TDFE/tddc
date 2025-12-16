@@ -265,37 +265,37 @@ var AssignModal = function AssignModal(props) {
     checkedKeys = _useState8[0],
     setCheckedKeys = _useState8[1];
   var _useState9 = useState(appCodes || []),
-    _useState10 = _slicedToArray(_useState9, 2),
-    appKeys = _useState10[0],
-    setAppKeys = _useState10[1];
-  var _useState11 = useState(accounts || []),
+    _useState0 = _slicedToArray(_useState9, 2),
+    appKeys = _useState0[0],
+    setAppKeys = _useState0[1];
+  var _useState1 = useState(accounts || []),
+    _useState10 = _slicedToArray(_useState1, 2),
+    userKeys = _useState10[0],
+    setUserKeys = _useState10[1];
+  var _useState11 = useState(false),
     _useState12 = _slicedToArray(_useState11, 2),
-    userKeys = _useState12[0],
-    setUserKeys = _useState12[1];
+    allOrgChecked = _useState12[0],
+    setAllOrgChecked = _useState12[1];
   var _useState13 = useState(false),
     _useState14 = _slicedToArray(_useState13, 2),
-    allOrgChecked = _useState14[0],
-    setAllOrgChecked = _useState14[1];
+    allAppChecked = _useState14[0],
+    setAllAppChecked = _useState14[1];
   var _useState15 = useState(false),
     _useState16 = _slicedToArray(_useState15, 2),
-    allAppChecked = _useState16[0],
-    setAllAppChecked = _useState16[1];
-  var _useState17 = useState(false),
+    allUserChecked = _useState16[0],
+    setAllUserChecked = _useState16[1];
+  var _useState17 = useState(),
     _useState18 = _slicedToArray(_useState17, 2),
-    allUserChecked = _useState18[0],
-    setAllUserChecked = _useState18[1];
+    filterOrg = _useState18[0],
+    setFilterOrg = _useState18[1];
   var _useState19 = useState(),
     _useState20 = _slicedToArray(_useState19, 2),
-    filterOrg = _useState20[0],
-    setFilterOrg = _useState20[1];
+    filterUser = _useState20[0],
+    setFilterUser = _useState20[1];
   var _useState21 = useState(),
     _useState22 = _slicedToArray(_useState21, 2),
-    filterUser = _useState22[0],
-    setFilterUser = _useState22[1];
-  var _useState23 = useState(),
-    _useState24 = _slicedToArray(_useState23, 2),
-    filterApp = _useState24[0],
-    setFilterApp = _useState24[1];
+    filterApp = _useState22[0],
+    setFilterApp = _useState22[1];
   var gap = 335;
   var windowHeight = useWindowHeight(gap);
   useEffect(
@@ -1048,6 +1048,10 @@ var AssignModal = function AssignModal(props) {
     [appKeys],
   );
   console.log(canNotRemoveOrg, 'canNotRemove');
+
+  // 计算面板数量和平移距离
+  var panelCount = showUser ? 3 : 2;
+  var translateX = curIndex === 0 ? 0 : ''.concat(-(100 / panelCount) * curIndex, '%');
   return /*#__PURE__*/ React.createElement(
     React.Fragment,
     null,
@@ -1072,9 +1076,11 @@ var AssignModal = function AssignModal(props) {
       /*#__PURE__*/ React.createElement(
         'div',
         {
-          className: 'slider panel-'.concat(curIndex),
+          className: 'slider',
           style: {
-            width: !!showUser ? '300%' : '200%',
+            width: showUser ? '300%' : '200%',
+            transform: 'translateX('.concat(translateX, ')'),
+            transition: 'transform 0.2s ease',
           },
         },
         /*#__PURE__*/ React.createElement(
@@ -1446,7 +1452,7 @@ var AssignModal = function AssignModal(props) {
                     'a',
                     {
                       onClick: function onClick() {
-                        return onRemoveAllOrg();
+                        return onRemoveAllUser();
                       },
                     },
                     t('clear'),
@@ -1460,7 +1466,7 @@ var AssignModal = function AssignModal(props) {
                   userKeys.map(function (item, index) {
                     var node = userMapRef.current[item] || {};
                     var userName = node.userName;
-                    var isOwnAppCode = accounts === node.account;
+                    var isOwnUserCode = account === node.account;
                     if (!userName && !node.account) return null; // 不显示多余数据
                     return /*#__PURE__*/ React.createElement(
                       'li',
@@ -1477,7 +1483,7 @@ var AssignModal = function AssignModal(props) {
                           title: userName,
                         }),
                       ),
-                      !isOwnAppCode &&
+                      !isOwnUserCode &&
                         /*#__PURE__*/ React.createElement(_Icon, {
                           type: 'close',
                           className: 'close-icon',

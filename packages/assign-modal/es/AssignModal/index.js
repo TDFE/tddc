@@ -1,5 +1,14 @@
 import _Drawer from 'tntd/es/drawer';
-var _excluded = ['visible', 'close', 'disabled', 'title', 'onSubmit', 'locale'];
+var _excluded = [
+  'visible',
+  'close',
+  'disabled',
+  'title',
+  'onSubmit',
+  'locale',
+  'okText',
+  'cancelText',
+];
 function _extends() {
   return (
     (_extends = Object.assign
@@ -83,9 +92,9 @@ function _objectWithoutProperties(e, t) {
     r,
     i = _objectWithoutPropertiesLoose(e, t);
   if (Object.getOwnPropertySymbols) {
-    var s = Object.getOwnPropertySymbols(e);
-    for (r = 0; r < s.length; r++)
-      (o = s[r]), t.includes(o) || ({}.propertyIsEnumerable.call(e, o) && (i[o] = e[o]));
+    var n = Object.getOwnPropertySymbols(e);
+    for (r = 0; r < n.length; r++)
+      (o = n[r]), -1 === t.indexOf(o) && {}.propertyIsEnumerable.call(e, o) && (i[o] = e[o]);
   }
   return i;
 }
@@ -94,7 +103,7 @@ function _objectWithoutPropertiesLoose(r, e) {
   var t = {};
   for (var n in r)
     if ({}.hasOwnProperty.call(r, n)) {
-      if (e.includes(n)) continue;
+      if (-1 !== e.indexOf(n)) continue;
       t[n] = r[n];
     }
   return t;
@@ -108,11 +117,16 @@ var cookies = new Cookies();
 var AssignModal = function AssignModal(props) {
   var visible = props.visible,
     close = props.close,
-    disabled = props.disabled,
+    _props$disabled = props.disabled,
+    disabled = _props$disabled === void 0 ? false : _props$disabled,
     _props$title = props.title,
     title = _props$title === void 0 ? '' : _props$title,
     onSubmit = props.onSubmit,
     locale = props.locale,
+    _props$okText = props.okText,
+    okText = _props$okText === void 0 ? '确定' : _props$okText,
+    _props$cancelText = props.cancelText,
+    cancelText = _props$cancelText === void 0 ? '取消' : _props$cancelText,
     restProps = _objectWithoutProperties(props, _excluded);
   var _useState = useState({}),
     _useState2 = _slicedToArray(_useState, 2),
@@ -130,6 +144,8 @@ var AssignModal = function AssignModal(props) {
       width: 900,
       onCancel: close,
       onOk: submit,
+      // okText={okText}
+      // cancelText={cancelText}
       maskClosable: disabled,
       destroyOnClose: true,
       showFooter: !disabled,
