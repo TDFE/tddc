@@ -498,7 +498,3 @@ const dataItem = {
   // 其他属性...
 />
 ```
-
-## License
-
-ISC
