@@ -4,7 +4,7 @@ import { useEffect, useState, useCallback, useRef, useMemo } from 'react';
 import { cloneDeep, debounce } from 'lodash';
 import './index.less';
 import { findSameCodePath, preorder, mergeAndDeduplicate, useWindowHeight } from './utils';
-import { getText } from '../../locale';
+import { getText } from '../../I18N';
 
 let path = []; // 上级机构到当前机构的路径
 
