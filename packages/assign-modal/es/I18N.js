@@ -25,17 +25,16 @@ import arEG from './.octopus/ar-EG';
 import koKR from './.octopus/ko-KR';
 import esES from './.octopus/es-ES';
 var cookies = new Cookies();
-
-// 语言包映射
 var builtInLocales = {
   'zh-cn': zhCN,
-  cn: zhCN,
-  // 兼容旧的 'cn' 标识
   en: enUS,
   th: thTH,
+  // 泰语
   ar: arEG,
+  // 阿拉伯语（埃及）
   ko: koKR,
-  es: esES,
+  // 韩语
+  es: esES, // 西班牙语
 };
 
 /**
@@ -64,7 +63,7 @@ export var getText = function getText(key, language, locale) {
     actualLocale = null;
     actualParams = locale !== undefined ? [locale].concat(params) : params;
   }
-  var lang = language || getLang();
+  var lang = language || getLanguage();
   var builtIn = builtInLocales[lang] || builtInLocales['zh-cn'];
 
   // locale 是扁平对象（通过 createOtp 生成），直接覆盖内置语言包

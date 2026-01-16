@@ -8,15 +8,13 @@ import esES from './.octopus/es-ES';
 
 const cookies = new Cookies();
 
-// 语言包映射
 const builtInLocales = {
   'zh-cn': zhCN,
-  cn: zhCN, // 兼容旧的 'cn' 标识
   en: enUS,
-  th: thTH,
-  ar: arEG,
-  ko: koKR,
-  es: esES,
+  th: thTH, // 泰语
+  ar: arEG, // 阿拉伯语（埃及）
+  ko: koKR, // 韩语
+  es: esES, // 西班牙语
 };
 
 /**
@@ -38,7 +36,7 @@ export const getText = (key, language, locale, ...params) => {
     actualParams = locale !== undefined ? [locale, ...params] : params;
   }
 
-  const lang = language || getLang();
+  const lang = language || getLanguage();
   const builtIn = builtInLocales[lang] || builtInLocales['zh-cn'];
 
   // locale 是扁平对象（通过 createOtp 生成），直接覆盖内置语言包

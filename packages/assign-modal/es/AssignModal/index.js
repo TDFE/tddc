@@ -1,6 +1,6 @@
 import _Drawer from 'tntd/es/drawer';
 var _excluded = [
-  'I18N',
+  'lang',
   'visible',
   'close',
   'disabled',
@@ -113,12 +113,10 @@ import mapLocale, { getLang } from '../I18N';
 import { useState } from 'react';
 import AssignApp from './AssignApp';
 import './index.less';
-import Cookies from 'universal-cookie';
 import LocaleReceiver from 'antd/es/locale-provider/LocaleReceiver';
-var cookies = new Cookies();
 var AssignModal = function AssignModal(props) {
   var locale = props.locale;
-  var I18N = props.I18N,
+  var lang = props.lang,
     visible = props.visible,
     close = props.close,
     _props$disabled = props.disabled,
@@ -149,6 +147,41 @@ var AssignModal = function AssignModal(props) {
     onSubmit(assignData);
   };
   return /*#__PURE__*/ React.createElement(
+    _Drawer,
+    {
+      className: 'modal-assign',
+      title: title,
+      visible: visible,
+      width: 900,
+      onCancel: close,
+      onOk: submit,
+      // okText={okText}
+      // cancelText={cancelText}
+      maskClosable: disabled,
+      destroyOnClose: true,
+      showFooter: !disabled,
+      okButtonProps: {
+        disabled: disabled,
+      },
+    },
+    /*#__PURE__*/ React.createElement(
+      AssignApp,
+      _extends(
+        {
+          onChange: function onChange(data) {
+            setAssignData(data);
+          },
+          disabled: disabled,
+          lang: lang,
+          locale: locale,
+        },
+        restProps,
+      ),
+    ),
+  );
+};
+export default (function (props) {
+  return /*#__PURE__*/ React.createElement(
     LocaleReceiver,
     {
       componentName: 'AssignModal',
@@ -158,42 +191,12 @@ var AssignModal = function AssignModal(props) {
         ? locale
         : mapLocale[localeCode] || mapLocale[getLang()];
       return /*#__PURE__*/ React.createElement(
-        _Drawer,
-        {
-          className: 'modal-assign',
-          title: title,
-          visible: visible,
-          width: 900,
-          onCancel: close,
-          onOk: submit,
-          // okText={okText}
-          // cancelText={cancelText}
-          maskClosable: disabled,
-          destroyOnClose: true,
-          showFooter: !disabled,
-          okButtonProps: {
-            disabled: disabled,
-          },
-        },
-        /*#__PURE__*/ React.createElement(
-          AssignApp,
-          _extends(
-            {
-              onChange: function onChange(data) {
-                setAssignData(data);
-              },
-              disabled: disabled,
-              lang:
-                (props === null || props === void 0 ? void 0 : props.lang) ||
-                cookies.get('lang') ||
-                'cn',
-              locale: I18N,
-            },
-            restProps,
-          ),
-        ),
+        AssignModal,
+        _extends({}, props, {
+          locale: I18N,
+          lang: localeCode || getLang(),
+        }),
       );
     },
   );
-};
-export default AssignModal;
+});
