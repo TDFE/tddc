@@ -91,7 +91,7 @@ import { useEffect, useState, useCallback, useRef, useMemo } from 'react';
 import { debounce } from 'lodash';
 import './index.less';
 import { findSameCodePath, preorder } from './utils';
-import { getText } from '../../locale';
+import { getText } from '../../I18N';
 var path = []; // 上级机构到当前机构的路径
 
 var AssignModal = function AssignModal(props) {

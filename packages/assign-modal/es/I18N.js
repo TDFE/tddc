@@ -18,50 +18,24 @@ function _typeof(o) {
   );
 }
 import Cookies from 'universal-cookie';
+import zhCN from './.octopus/zh-CN';
+import enUS from './.octopus/en-US';
+import thTH from './.octopus/th-TH';
+import arEG from './.octopus/ar-EG';
+import koKR from './.octopus/ko-KR';
+import esES from './.octopus/es-ES';
 var cookies = new Cookies();
-export var zh_CN = {
-  authorizesOrgList: '机构列表',
-  allOrgAvailable: '全部机构',
-  authorizesAppList: '渠道列表',
-  allAppAvailable: '全部渠道',
-  authorizesUserList: '用户列表',
-  allUserAvailable: '全部用户',
-  search: '请输入机构名称',
-  availableOrgs: '可用机构',
-  availableApps: '可用渠道',
-  availableUsers: '可用用户',
-  clear: '清空',
-  hasBeenSelected: '已选',
-  numOfOrg: '%s 个机构',
-  numOfApp: '%s 个渠道',
-  numOfUser: '%s 个用户',
-  enterAppName: '请输入渠道名称',
-  enterUserName: '请输入用户名称',
-};
-export var en_US = {
-  authorizesOrgList: 'Organization List',
-  allOrgAvailable: 'All Organizations',
-  authorizesAppList: 'Channel List',
-  allAppAvailable: 'All Channels',
-  authorizesUserList: 'Account List',
-  allUserAvailable: 'All Accounts',
-  search: 'Organization name',
-  availableOrgs: 'Available Organizations',
-  availableApps: 'Available Channels',
-  availableUsers: 'Available Users',
-  clear: 'Clear',
-  hasBeenSelected: 'Selected',
-  numOfOrg: '%s Organizations',
-  numOfApp: '%s Channels',
-  numOfUser: '%s Accounts',
-  enterAppName: 'Enter Channel name',
-  enterUserName: 'Enter Account name',
-};
 
-// 内置语言包
+// 语言包映射
 var builtInLocales = {
-  cn: zh_CN,
-  en: en_US,
+  'zh-cn': zhCN,
+  cn: zhCN,
+  // 兼容旧的 'cn' 标识
+  en: enUS,
+  th: thTH,
+  ar: arEG,
+  ko: koKR,
+  es: esES,
 };
 
 /**
@@ -90,8 +64,8 @@ export var getText = function getText(key, language, locale) {
     actualLocale = null;
     actualParams = locale !== undefined ? [locale].concat(params) : params;
   }
-  var lang = language || getLanguage();
-  var builtIn = builtInLocales[lang] || zh_CN;
+  var lang = language || getLang();
+  var builtIn = builtInLocales[lang] || builtInLocales['zh-cn'];
 
   // locale 是扁平对象（通过 createOtp 生成），直接覆盖内置语言包
   var text =
@@ -112,14 +86,18 @@ export var getText = function getText(key, language, locale) {
   }
   return text;
 };
-export var getLanguage = function getLanguage() {
-  return (
-    cookies.get('lang', {
-      path: '/',
-    }) || 'cn'
-  );
+export var getLang = function getLang() {
+  var lang = cookies.get('lang');
+  return lang !== 'cn' ? lang : 'zh-cn';
 };
 export default {
-  en_US: en_US,
-  zh_CN: zh_CN,
+  'zh-cn': zhCN,
+  en: enUS,
+  th: thTH,
+  // 泰语
+  ar: arEG,
+  // 阿拉伯语（埃及）
+  ko: koKR,
+  // 韩语
+  es: esES, // 西班牙语
 };

@@ -1,11 +1,11 @@
 import _Drawer from 'tntd/es/drawer';
 var _excluded = [
+  'I18N',
   'visible',
   'close',
   'disabled',
   'title',
   'onSubmit',
-  'locale',
   'okText',
   'cancelText',
 ];
@@ -109,24 +109,37 @@ function _objectWithoutPropertiesLoose(r, e) {
   return t;
 }
 import React from 'react';
+import mapLocale, { getLang } from '../I18N';
 import { useState } from 'react';
 import AssignApp from './AssignApp';
 import './index.less';
 import Cookies from 'universal-cookie';
+import LocaleReceiver from 'antd/es/locale-provider/LocaleReceiver';
 var cookies = new Cookies();
 var AssignModal = function AssignModal(props) {
-  var visible = props.visible,
+  var locale = props.locale;
+  var I18N = props.I18N,
+    visible = props.visible,
     close = props.close,
     _props$disabled = props.disabled,
     disabled = _props$disabled === void 0 ? false : _props$disabled,
     _props$title = props.title,
     title = _props$title === void 0 ? '' : _props$title,
     onSubmit = props.onSubmit,
-    locale = props.locale,
     _props$okText = props.okText,
-    okText = _props$okText === void 0 ? '确定' : _props$okText,
+    okText =
+      _props$okText === void 0
+        ? locale === null || locale === void 0
+          ? void 0
+          : locale.okText
+        : _props$okText,
     _props$cancelText = props.cancelText,
-    cancelText = _props$cancelText === void 0 ? '取消' : _props$cancelText,
+    cancelText =
+      _props$cancelText === void 0
+        ? locale === null || locale === void 0
+          ? void 0
+          : locale.cancelText
+        : _props$cancelText,
     restProps = _objectWithoutProperties(props, _excluded);
   var _useState = useState({}),
     _useState2 = _slicedToArray(_useState, 2),
@@ -136,40 +149,51 @@ var AssignModal = function AssignModal(props) {
     onSubmit(assignData);
   };
   return /*#__PURE__*/ React.createElement(
-    _Drawer,
+    LocaleReceiver,
     {
-      className: 'modal-assign',
-      title: title,
-      visible: visible,
-      width: 900,
-      onCancel: close,
-      onOk: submit,
-      // okText={okText}
-      // cancelText={cancelText}
-      maskClosable: disabled,
-      destroyOnClose: true,
-      showFooter: !disabled,
-      okButtonProps: {
-        disabled: disabled,
-      },
+      componentName: 'AssignModal',
     },
-    /*#__PURE__*/ React.createElement(
-      AssignApp,
-      _extends(
+    function (locale, localeCode) {
+      var I18N = !!Object.keys(locale).length
+        ? locale
+        : mapLocale[localeCode] || mapLocale[getLang()];
+      return /*#__PURE__*/ React.createElement(
+        _Drawer,
         {
-          onChange: function onChange(data) {
-            setAssignData(data);
+          className: 'modal-assign',
+          title: title,
+          visible: visible,
+          width: 900,
+          onCancel: close,
+          onOk: submit,
+          // okText={okText}
+          // cancelText={cancelText}
+          maskClosable: disabled,
+          destroyOnClose: true,
+          showFooter: !disabled,
+          okButtonProps: {
+            disabled: disabled,
           },
-          disabled: disabled,
-          lang:
-            (props === null || props === void 0 ? void 0 : props.lang) ||
-            cookies.get('lang') ||
-            'cn',
-          locale: locale,
         },
-        restProps,
-      ),
-    ),
+        /*#__PURE__*/ React.createElement(
+          AssignApp,
+          _extends(
+            {
+              onChange: function onChange(data) {
+                setAssignData(data);
+              },
+              disabled: disabled,
+              lang:
+                (props === null || props === void 0 ? void 0 : props.lang) ||
+                cookies.get('lang') ||
+                'cn',
+              locale: I18N,
+            },
+            restProps,
+          ),
+        ),
+      );
+    },
   );
 };
 export default AssignModal;
