@@ -1,0 +1,139 @@
+.node {
+  .root {
+    display: flex;
+    align-items: center;
+    box-sizing: border-box;
+    min-width: 120px;
+    height: 58px;
+    margin-top: -10px;
+    padding: 8px 16px;
+    color: #fff;
+    text-align: center;
+    word-break: break-all;
+    background: #126bfb;
+    border-radius: 4px;
+  }
+  font-weight: normal;
+  font-size: 12px;
+
+  font-family: Segoe UI;
+
+  .s1 {
+    // text-overflow: ellipsis;
+    display: inline-block;
+    // overflow: hidden;
+    white-space: nowrap;
+  }
+
+  .dot {
+    position: absolute;
+    top: 5px;
+    left: 10px;
+    display: inline-block;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+  }
+
+  .leaf-u-minus {
+    position: absolute;
+    top: 11px;
+    right: -20px;
+    z-index: 10;
+    display: inline-block;
+    width: 17px;
+    text-align: center;
+    background: white;
+  }
+
+  .eye {
+    position: absolute;
+    top: -25px;
+    left: 5px;
+    padding-right: 100px;
+    .ant-btn.ant-btn-icon-only {
+      width: 25px;
+      height: 25px;
+    }
+  }
+  .hidden-eye {
+    display: none;
+  }
+
+  .relation-node {
+    display: flex;
+    align-items: center;
+    min-width: 120px;
+    height: 28px;
+    margin-top: 5px;
+    padding: 0 2px;
+    text-align: center;
+    border: 1px solid #c7d0d9;
+    border-radius: 14px;
+    .img1 {
+      float: left;
+      height: 22px;
+    }
+    .relation-u-minus {
+      position: absolute;
+      top: 11px;
+      right: -16px;
+      z-index: 10;
+      display: inline-block;
+      width: 16px;
+      text-align: center;
+      background: white;
+    }
+    .relation-u-plus {
+      position: absolute;
+      top: 11px;
+      right: -16px;
+      z-index: 10;
+      display: inline-block;
+      width: 16px;
+      text-align: center;
+      background: white;
+    }
+  }
+
+  .leaf-node {
+    display: flex;
+
+    align-items: center;
+    min-width: 120px;
+    margin-top: -1px;
+    padding-bottom: 1px;
+    padding-left: 18px;
+    border-bottom: 1px dashed;
+    cursor: pointer;
+
+    .leaf-u-plus {
+      position: absolute;
+      top: 12px;
+      right: -16px;
+      z-index: 10;
+      display: inline-block;
+      width: 17px;
+      text-align: center;
+      background: white;
+    }
+  }
+  .child-policy {
+    position: absolute;
+    top: -15px;
+    left: 119px;
+    display: inline-block;
+    width: 17px;
+    height: 17px;
+    color: white;
+    font-size: 10px;
+    line-height: 17px;
+    text-align: center;
+    background: #ff9845;
+    border-radius: 50%;
+  }
+}
+
+.link {
+  position: absolute;
+}
