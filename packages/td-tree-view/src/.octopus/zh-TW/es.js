@@ -1,0 +1,23 @@
+export default {
+  constants: {
+    ping: '评',
+    tu: '图',
+    wai: '外',
+    dui: '对',
+    mian: '免',
+    gui: '规',
+    liu: '流',
+    ming: '名',
+    han: '函',
+    shi: '事',
+    feng: '风',
+    dong: '动',
+    xi: '系',
+    shi2: '实',
+    li: '离',
+    mo: '模',
+    san: '三',
+    jue: '决',
+    ce: '策',
+  },
+};

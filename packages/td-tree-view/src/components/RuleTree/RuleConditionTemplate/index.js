@@ -1,4 +1,3 @@
-import { Fragment } from 'react';
 import { Ellipsis, Tooltip } from 'tntd';
 import { excludeRuleTemplate } from '../constants';
 import { getRuleCfgList, getHandleType, isJSON } from '../utils';
@@ -6,33 +5,22 @@ import CustomRuleConfig from './CustomRuleConfig';
 
 import './index.less';
 
-import otp from '../otp';
-
-const sourceName = (field, lang) => {
-  let params = {
-    field: {
-      cn: '字段',
-      en: 'field',
-    },
-    realtime: {
-      cn: '实时',
-      en: 'realtime',
-    },
-    offline: {
-      cn: '离线',
-      en: 'offline',
-    },
-  };
-  return params[field]?.[lang] || field;
-};
-
-const InputContext = {
-  input: otp.changliang,
-  context: otp.bianliang,
-};
-
 const RuleConditionTemplate = (props) => {
-  const { allMap, ruleTemplateListObj, data, lang = 'cn' } = props;
+  const { allMap, ruleTemplateListObj, data, lang = 'cn', locale: I18N } = props;
+
+  const sourceName = (field) => {
+    let params = {
+      field: I18N.ruleconditiontemplate.index.ziDuan,
+      realtime: I18N.ruleconditiontemplate.index.shiShi,
+      offline: I18N.ruleconditiontemplate.index.liXian,
+    };
+    return params[field] || field;
+  };
+
+  const InputContext = {
+    input: I18N.ruletree.otp.changLiang,
+    context: I18N.ruletree.otp.bianLiang,
+  };
 
   const { description, property } = data || {};
   let { params = [] } = data || {};
@@ -278,7 +266,13 @@ const RuleConditionTemplate = (props) => {
       {currentTemplate && currentTemplate.description && (
         <Tooltip title={dom} overlayClassName="template-node">
           <span className="template-des">
-            <Ellipsis title={`${otp.guize}${description}`} placement="bottom" widthLimit={450} />
+            <Ellipsis
+              title={I18N.template(I18N.ruleconditiontemplate.index.guiZeMiaoShuD, {
+                val1: description,
+              })}
+              placement="bottom"
+              widthLimit={450}
+            />
           </span>
         </Tooltip>
       )}

@@ -1,5 +1,7 @@
-import React, { useEffect, useRef } from 'react';
+import mapLocale, { getLang } from '../I18N';
+import { useEffect, useRef } from 'react';
 import TreeView from '@tddc/tree-view';
+import LocaleReceiver from 'antd/es/locale-provider/LocaleReceiver';
 
 const Overview = (props) => {
   let { data, options, refs = {}, styleOptions, style } = props;
@@ -35,4 +37,13 @@ const Overview = (props) => {
   );
 };
 
-export default Overview;
+export default (props) => (
+  <LocaleReceiver componentName="TdTreeView">
+    {(locale, localeCode) => {
+      const I18N = !!Object.keys(locale).length
+        ? locale
+        : mapLocale[localeCode] || mapLocale[getLang()];
+      return <Overview {...props} locale={I18N} lang={localeCode || getLang()} />;
+    }}
+  </LocaleReceiver>
+);

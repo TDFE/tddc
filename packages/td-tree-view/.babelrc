@@ -1,0 +1,39 @@
+{
+    "presets": [
+        "@babel/preset-env",
+        "@babel/preset-react"
+    ],
+    "plugins": [
+        "syntax-dynamic-import",
+        [
+            "import",
+            {
+                "libraryName": "antd",
+                "libraryDirectory": "es",
+                "style": true // `style: true` 会加载 less 文件
+            }
+        ],
+        [
+            "import",
+            {
+                "libraryName": "tntd",
+                "libraryDirectory": "es"
+            },
+            "tntd"
+        ],
+        "@babel/plugin-proposal-class-properties",
+        "@babel/plugin-transform-runtime",
+        [
+            "@babel/plugin-proposal-decorators",
+            {
+                "legacy": true
+            }
+        ],
+        [
+            "@babel/plugin-proposal-optional-chaining",
+            {
+                "loose": true
+            }
+        ]
+    ]
+}

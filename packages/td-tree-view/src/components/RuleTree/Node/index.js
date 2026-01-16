@@ -1,15 +1,15 @@
 import OneCondition from '../OneCondition';
 import RuleConditionTemplate from '../RuleConditionTemplate';
 import './index.less';
-import otp from '../otp';
-
-const logicMap = {
-  '&&': otp.qie,
-  '||': otp.huo,
-};
 
 const Node = (props) => {
-  let { node, IFCondition, lang, allMap, ruleTemplateListObj } = props;
+  let { node, IFCondition, lang, allMap, ruleTemplateListObj, locale: I18N } = props;
+
+  const logicMap = {
+    '&&': I18N.ruletree.otp.qie,
+    '||': I18N.ruletree.otp.huo,
+  };
+
   // let { node, templateStore, globalStore, IFCondition } = props;
   let { data, parent } = node;
   let { logic = '', type, name, children, logicOperator } = data;
@@ -17,7 +17,7 @@ const Node = (props) => {
   let isRoot = !parent;
 
   if (isRoot && IFCondition) {
-    logicName = IFCondition === '!&&' ? otp.huo : otp.qie;
+    logicName = IFCondition === '!&&' ? I18N.ruletree.otp.qie : I18N.ruletree.otp.huo;
   }
 
   let isLeaf = parent && type === 'leaf'; // 叶子节点
@@ -46,8 +46,8 @@ const Node = (props) => {
         <div className="group-node">
           <span className="name">
             {name}
-            <span className="node-sup">{otp.zhu}</span>
-            {IFCondition && <span className="node-sup if">{otp.fei}</span>}
+            <span className="node-sup">{I18N.ruletree.otp.zu}</span>
+            {IFCondition && <span className="node-sup if">{I18N.ruletree.otp.fei}</span>}
           </span>
           <span className="logic">{groupLogicName}</span>
         </div>
@@ -62,8 +62,8 @@ const Node = (props) => {
           {name && (
             <span className="name">
               {name}
-              {isTemplate && <span className="node-sup">{otp.mo}</span>}
-              {IFCondition && <span className="node-sup if">{otp.fei}</span>}
+              {isTemplate && <span className="node-sup">{I18N.es.constants.mo}</span>}
+              {IFCondition && <span className="node-sup if">{I18N.ruletree.otp.fei}</span>}
             </span>
           )}
           <span className="leaf-text">
@@ -74,10 +74,12 @@ const Node = (props) => {
                 template={template}
                 ruleTemplateListObj={ruleTemplateListObj}
                 lang={lang}
+                locale={I18N}
                 allMap={allMap}
               />
             ) : (
               <OneCondition
+                locale={I18N}
                 conditionData={null}
                 conditionSingleData={data}
                 conditionType="single"

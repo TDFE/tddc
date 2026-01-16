@@ -4,10 +4,13 @@ import OverView from '../referenceTree';
 import { transform } from './utils';
 import Node from './Node';
 import './index.less';
-import otp, { getLang } from './otp';
+import mapLocale, { getLang } from '../../I18N';
+
+import LocaleReceiver from 'antd/es/locale-provider/LocaleReceiver';
 
 const RuleTreeComponent = (props) => {
   let {
+    locale,
     rules,
     value,
     allMap,
@@ -52,6 +55,7 @@ const RuleTreeComponent = (props) => {
 
     return (
       <Node
+        locale={locale}
         node={node}
         lang={lang}
         allMap={allMap}
@@ -76,11 +80,12 @@ const RuleTreeComponent = (props) => {
     <div className="custom-rule-tree">
       {showLogic && (
         <span className="logic-text">
-          {otp.luoji}
+          {locale.luoji}
           {logicText}
         </span>
       )}
       <OverView
+        locale={locale}
         data={data}
         options={{
           fixed: false,
@@ -102,4 +107,14 @@ const RuleTreeComponent = (props) => {
   );
 };
 
-export default RuleTreeComponent;
+// export default RuleTreeComponent;
+export default (props) => (
+  <LocaleReceiver componentName="TdTreeView">
+    {(locale, localeCode) => {
+      const I18N = !!Object.keys(locale).length
+        ? locale
+        : mapLocale[localeCode] || mapLocale[getLang()];
+      return <RuleTreeComponent {...props} locale={I18N} lang={localeCode || getLang()} />;
+    }}
+  </LocaleReceiver>
+);

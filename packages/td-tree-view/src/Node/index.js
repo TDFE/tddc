@@ -1,6 +1,7 @@
+import mapLocale, { getLang } from './I18N';
 import './index.less';
 import { Button, Ellipsis } from 'tntd';
-import { NODE_TYPE_MAP } from '../constants';
+import { NODE_ } from '../constants';
 import SVGImage from '../components/SVGImage';
 import { colorRgb } from './utils';
 import Cookies from 'universal-cookie';
@@ -77,8 +78,8 @@ const Node = (props) => {
   );
 
   let textObj = {
-    text: (NODE_TYPE_MAP[nodeType] && NODE_TYPE_MAP[nodeType][lang]) || 'cn',
-    color: NODE_TYPE_MAP[nodeType] && NODE_TYPE_MAP[nodeType]['color'],
+    text: (NODE_[locale][nodeType] && NODE_[locale][nodeType][lang]) || 'cn',
+    color: NODE_[locale][nodeType] && NODE_[locale][nodeType]['color'],
   };
   // 类型 节点
   let ele1 = (
@@ -110,7 +111,7 @@ const Node = (props) => {
   let ele2 = (
     <>
       <span className="dot" style={{ background: color }} />
-      {isChildPolicy && <span className="child-policy">{'子'}</span>}
+      {isChildPolicy && <span className="child-policy">{I18N.node.index.zi}</span>}
       <div
         className="leaf-node"
         style={style}

@@ -5,6 +5,7 @@
  * @LastEditors: 郑泳健
  * @LastEditTime: 2023-03-24 18:25:32
  */
+import mapLocale, { getLang } from './I18N';
 import React, { memo, useEffect, useState, useCallback } from 'react';
 import { Tooltip, Select, Ellipsis } from 'tntd';
 import { isEmpty, isEqual } from 'lodash';
@@ -12,7 +13,7 @@ import VirtualCascader from '@tddc/virtual-cascader';
 import TdTag from './CascaderTag';
 import './index.less';
 
-export const EnptyContent = ({ text = '当前类型暂无可选变量,若有需要请联系管理员添加。' }) => {
+export const EnptyContent = ({ text = I18N.indicatorscascader.index.dangQianLeiXingZan }) => {
   return (
     <div className="virtual-cascader-enpty-wrapper">
       <div className="virtual-cascader-enpty-content">
@@ -24,6 +25,7 @@ export const EnptyContent = ({ text = '当前类型暂无可选变量,若有需�
 };
 
 const IndicatorsCascader = ({
+  locale,
   options,
   value,
   setTitle,
@@ -110,7 +112,7 @@ const IndicatorsCascader = ({
       } else {
         displayDom = (
           <div className="ant-select-selection-selected-value">
-            <TdTag data={item} inputValue={inputValue} />
+            <TdTag data={item} inputValue={inputValue} locale={locale} />
             {item?.dName}
           </div>
         );
@@ -207,7 +209,7 @@ const IndicatorsCascader = ({
             onChange: handleChange,
             renderItem,
             allowClear: allowClear || false,
-            notFoundContent: <EnptyContent text={'暂无数据'} />,
+            notFoundContent: <EnptyContent text={I18N.indicatorscascader.index.zanWuShuJu} />,
             showSearch: rest.showSearch || {
               render: handleSearchRender,
             },

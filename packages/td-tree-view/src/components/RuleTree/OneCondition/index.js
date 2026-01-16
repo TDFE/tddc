@@ -3,15 +3,9 @@ import CascaderTag from '../../IndicatorsCascader/CascaderTag';
 import './inde.less';
 import { Tooltip } from 'tntd';
 
-import otp from '../otp';
-
-const logicOperatorMap = {
-  '&&': otp.yu,
-  '||': otp.huo,
-};
-
 const OneCondition = (props) => {
   const {
+    locale: I18N,
     allMap,
     lang,
     conditionData,
@@ -20,6 +14,12 @@ const OneCondition = (props) => {
     conditionArr,
     keyMap = {},
   } = props;
+
+  const logicOperatorMap = {
+    '&&': I18N.ruletree.otp.yu,
+    '||': I18N.ruletree.otp.huo,
+  };
+
   const { fieldParamListSelect = [], ruleAndIndexFieldList = [] } = allMap;
 
   const operaTypeInOrNot =
@@ -45,7 +45,7 @@ const OneCondition = (props) => {
     propertyName =
       propertyName && propertyName.dName ? (
         <>
-          <CascaderTag data={propertyName} />
+          <CascaderTag data={propertyName} locale={I18N} />
           {propertyName.dName}
         </>
       ) : (
@@ -146,7 +146,9 @@ const OneCondition = (props) => {
         <>
           {/* {propertyDataType !== 'ENUM' && <span className="condition-type">{InputContext[rightValueType]}</span>} */}
           {/* 前缀后缀添加为 */}
-          {ifAppendIsStr && <span className="condition-op">{ifAppendIsStr && otp.is}</span>}
+          {ifAppendIsStr && (
+            <span className="condition-op">{ifAppendIsStr && I18N.ruletree.otp.wei}</span>
+          )}
           {/* 常量且非枚举场景 */}
           {rightValueType === 'input' && propertyDataType !== 'ENUM' && !operaTypeBlong && (
             <span className="condition-value">{value || value === 0 ? value : ''}</span>
@@ -184,7 +186,7 @@ const OneCondition = (props) => {
     <>
       {conditionType === 'group' && conditionArr[1] === 0 && (
         <div>
-          {otp.tiaojian}
+          {I18N.ruletree.otp.tiaoJianGuanXi}
           {'&nbsp;'}
           {logicOperatorMap[logicOperator] || logicOperator}
         </div>

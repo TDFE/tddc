@@ -179,20 +179,11 @@ export const isJSON = (str) => {
   }
 };
 
-export const sourceName = (field, lang) => {
+export const sourceName = (field) => {
   let params = {
-    field: {
-      cn: '字段',
-      en: 'field',
-    },
-    realtime: {
-      cn: '实时',
-      en: 'realtime',
-    },
-    offline: {
-      cn: '离线',
-      en: 'offline',
-    },
+    field: I18N.ruleconditiontemplate.index.ziDuan,
+    realtime: I18N.ruleconditiontemplate.index.shiShi,
+    offline: I18N.ruleconditiontemplate.index.liXian,
   };
-  return params[field]?.[lang] || field;
+  return params[field] || field;
 };

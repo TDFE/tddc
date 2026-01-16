@@ -1,0 +1,23 @@
+export default {
+  constants: {
+    ping: 'S',
+    tu: 'G',
+    wai: 'E',
+    dui: 'D',
+    mian: 'D',
+    gui: 'R',
+    liu: 'P',
+    ming: 'L',
+    han: 'F',
+    shi: 'E',
+    feng: 'R',
+    dong: 'D',
+    xi: 'S',
+    shi2: 'R',
+    li: 'O',
+    mo: 'M',
+    san: 'T',
+    jue: 'D',
+    ce: 'P',
+  },
+};

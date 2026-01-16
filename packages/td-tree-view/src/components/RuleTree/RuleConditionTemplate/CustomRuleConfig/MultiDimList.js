@@ -46,11 +46,11 @@ export default (props) => {
   return (
     <>
       <span>
-        {'复核名单列表：'}
+        {I18N.customruleconfig.multidimlist.fuHeMingDanLie}
         {defineTypeName} {definitionListName}
       </span>
       <span>
-        {'匹配字段：'}
+        {I18N.customruleconfig.multidimlist.piPeiZiDuan}
         {conditions &&
           conditions.map((conditionItem, index) => {
             const { leftValue, right, weight } = conditionItem || {};
@@ -84,14 +84,15 @@ export default (props) => {
                 {leftSourceName}
                 {leftDName}
                 {rightDName}
-                {(weight || weight === 0) && `权重${weight}%`}
+                {(weight || weight === 0) &&
+                  I18N.template(I18N.customruleconfig.multidimlist.quanZhongWEI, { val1: weight })}
                 {multiDimCustomListBusiTypeObj && multiDimCustomListBusiTypeObj.dName}
               </span>
             );
           })}
       </span>
       <span>
-        {'匹配度：'}
+        {I18N.customruleconfig.multidimlist.piPeiDu}
         {score || score === 0 ? score : ''}
       </span>
     </>
