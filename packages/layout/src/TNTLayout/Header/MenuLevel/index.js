@@ -1,3 +1,4 @@
+import { WrapLocaleReceiver } from '../../../I18N';
 import { useContext } from 'react';
 import { Row } from 'tntd';
 
@@ -5,13 +6,13 @@ import './index.less';
 import { setMenuLevelStore } from '../../storage';
 import { ThemeContext } from '../../Context';
 
-const menuLevelList = [
-  { value: '2', label: '二级导航' },
-  { value: '3', label: '三级导航' },
+const menuLevelList = (I18N) => [
+  { value: '2', label: I18N.menulevel.index.erJiDaoHang },
+  { value: '3', label: I18N.menulevel.index.sanJiDaoHang },
 ];
 
-export default (props) => {
-  const { onMenuLevelChange } = props;
+export default WrapLocaleReceiver((props) => {
+  const { onMenuLevelChange, I18N } = props;
 
   const { menuLevel, handleMenuLevel } = useContext(ThemeContext);
 
@@ -23,7 +24,7 @@ export default (props) => {
 
   return (
     <Row type="flex" className="user-info-body-menu-row">
-      {menuLevelList.map(({ value, label }) => {
+      {menuLevelList(I18N).map(({ value, label }) => {
         const isChecked = menuLevel === value;
         return (
           <Row
@@ -42,4 +43,4 @@ export default (props) => {
       })}
     </Row>
   );
-};
+});

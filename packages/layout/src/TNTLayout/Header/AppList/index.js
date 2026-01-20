@@ -1,3 +1,4 @@
+import { WrapLocaleReceiver } from '../../../I18N';
 import { useState, useEffect } from 'react';
 import { Select } from 'tntd';
 
@@ -7,8 +8,8 @@ import { getCurrentAppStore, setCurrentAppStore } from '../../storage';
 
 const { Option } = Select;
 
-export default (props) => {
-  const { appList = [], onAppChange } = props;
+export default WrapLocaleReceiver((props) => {
+  const { appList = [], onAppChange, I18N } = props;
 
   const getInitialSelectedApp = () => {
     const currentAppStore = getCurrentAppStore();
@@ -58,7 +59,7 @@ export default (props) => {
   return (
     <div className="tnt-layout-header-app-select">
       <Select
-        placeholder="请选择"
+        placeholder={I18N.applist.index.qingXuanZe}
         showSearch
         optionFilterProp="children"
         value={key}
@@ -75,4 +76,4 @@ export default (props) => {
       </Select>
     </div>
   );
-};
+});

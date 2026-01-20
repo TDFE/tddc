@@ -1,3 +1,4 @@
+import { WrapLocaleReceiver } from '../../../I18N';
 import { useContext } from 'react';
 import { Row } from 'tntd';
 
@@ -6,14 +7,14 @@ import './index.less';
 import { setThemeStore } from '../../storage';
 import { ThemeContext } from '../../Context';
 
-const themes = [
-  { value: 'themeS3', label: '科技蓝' },
-  { value: 'themeS2', label: '暗夜黑' },
-  { value: 'themeS1', label: '极致白' },
+const themes = (I18N) => [
+  { value: 'themeS3', label: I18N.theme.index.keJiLan },
+  { value: 'themeS2', label: I18N.theme.index.anYeHei },
+  { value: 'themeS1', label: I18N.theme.index.jiZhiBai },
 ];
 
-export default (props) => {
-  const { onThemeChange } = props;
+export default WrapLocaleReceiver((props) => {
+  const { onThemeChange, I18N } = props;
 
   const { theme, handleTheme } = useContext(ThemeContext);
 
@@ -25,7 +26,7 @@ export default (props) => {
 
   return (
     <Row type="flex" justify="space-between" className="user-info-body-theme-row">
-      {themes.map(({ value, label }) => (
+      {themes(I18N).map(({ value, label }) => (
         <div className={value} onClick={changeTheme.bind(this, value)} key={value}>
           {label}
           {theme === value && <span className="icon-checked-wrap" />}
@@ -33,4 +34,4 @@ export default (props) => {
       ))}
     </Row>
   );
-};
+});

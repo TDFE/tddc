@@ -1,3 +1,4 @@
+import { WrapLocaleReceiver } from '../I18N';
 import { useState, useEffect, useContext } from 'react';
 import cn from 'classnames';
 import { isUndefined, cloneDeep } from 'lodash';
@@ -14,7 +15,7 @@ import { formatter, getActiveMenu, getParents, hasLevel2, hasLevel3 } from './ut
 
 const { Content, Sider, Header: AntdHeader } = Layout;
 
-export default (props) => {
+export default WrapLocaleReceiver((props) => {
   const {
     className,
     menus = [],
@@ -26,9 +27,11 @@ export default (props) => {
     headerTabs,
     onLanguageChange,
     onMenuLevelChange,
+    I18N,
+    localeCode,
   } = props;
 
-  const { theme, language, menuLevel } = useContext(ThemeContext);
+  const { theme, menuLevel } = useContext(ThemeContext);
   let { collapsed: storeCollapsed, openKeys = [] } = getSideMenuStore();
 
   const [collapsed, setCollapsed] = useState(isUndefined(storeCollapsed) ? false : storeCollapsed);
@@ -45,9 +48,9 @@ export default (props) => {
       mainMenu = [
         {
           code: 'other',
-          enName: '其它',
+          enName: I18N.tntlayout.layout.qiTa,
           groupIcon: 'system',
-          groupName: '其它',
+          groupName: I18N.tntlayout.layout.qiTa,
           id: Number(new Date()),
           children: [],
         },
@@ -139,8 +142,8 @@ export default (props) => {
   };
 
   useEffect(() => {
-    onLanguageChange && onLanguageChange(language);
-  }, []);
+    onLanguageChange && onLanguageChange(localeCode);
+  }, [localeCode]);
   return (
     <Layout
       className={cn(
@@ -207,4 +210,4 @@ export default (props) => {
       </Layout>
     </Layout>
   );
-};
+});

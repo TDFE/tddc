@@ -1,3 +1,4 @@
+import { WrapLocaleReceiver } from '../../../I18N';
 import { useState, useEffect } from 'react';
 import { Input, Select, TreeSelect } from 'tntd';
 
@@ -14,8 +15,8 @@ import { traverseTree } from '../../utils';
 const { Group: InputGroup } = Input;
 const { Option } = Select;
 
-export default (props) => {
-  const { orgAppShow, orgList, onOrgChange, orgAppList = [], onAppChange } = props;
+export default WrapLocaleReceiver((props) => {
+  const { orgAppShow, orgList, onOrgChange, orgAppList = [], onAppChange, I18N } = props;
 
   const orgListFormatData = traverseTree([orgList], (item) => {
     item.title = item.name;
@@ -113,8 +114,8 @@ export default (props) => {
     <div className="tnt-layout-header-org-app">
       <InputGroup compact>
         <TreeSelect
-          placeholder="选择机构"
-          searchPlaceholder="机构名称"
+          placeholder={I18N.orgapplist.index.xuanZeJiGou}
+          searchPlaceholder={I18N.orgapplist.index.jiGouMingCheng}
           treeNodeFilterProp="title"
           showSearch
           treeData={orgListFormatData}
@@ -136,7 +137,7 @@ export default (props) => {
         />
         {orgAppShow && (
           <Select
-            placeholder="请选择"
+            placeholder={I18N.applist.index.qingXuanZe}
             className="org-app-select"
             showSearch
             optionFilterProp="children"
@@ -156,4 +157,4 @@ export default (props) => {
       </InputGroup>
     </div>
   );
-};
+});

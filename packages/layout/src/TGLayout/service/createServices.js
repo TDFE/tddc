@@ -13,6 +13,6 @@ export default service({
     message.warn(`【403】${res.message || res.statusText}`);
   },
   onError: (err) => {
-    message.error((err && err.message) || '未知错误');
+    message.error(err && err.message);
   },
 });

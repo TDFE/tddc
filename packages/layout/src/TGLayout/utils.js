@@ -70,12 +70,12 @@ export const isJSON = (str) => {
   }
 };
 
-export const formatAppList = (apps) => [
-  { key: '', name: '全部渠道' },
+export const formatAppList = (apps, I18N) => [
+  { key: '', name: I18N.tglayout.utils.quanBuQuDao },
   ...(apps || []).map((item) => ({ ...item, key: item.name, name: item.displayName })),
 ];
 
-export const formatOrgApp = (orgGroup, apps = []) => {
+export const formatOrgApp = (orgGroup, apps = [], I18N) => {
   let [orgUuidMap, orgCodeMap, appMap] = [{}, {}, {}];
   const orgList = traverseTree([cloneDeep(orgGroup)], (item) => {
     item.title = item.name;
@@ -99,7 +99,7 @@ export const formatOrgApp = (orgGroup, apps = []) => {
   const appList = [
     {
       key: '',
-      name: '全部渠道',
+      name: I18N.tglayout.utils.quanBuQuDao,
     },
   ].concat(
     apps.map((app) => {
@@ -111,7 +111,7 @@ export const formatOrgApp = (orgGroup, apps = []) => {
     }),
   );
   const allTempObj = {
-    name: '全部渠道',
+    name: I18N.tglayout.utils.quanBuQuDao,
     key: '',
   };
   let currentApp = allTempObj;
@@ -172,12 +172,8 @@ export const getSubAppsFromMenus = (menus) => {
   return uniq(subapps);
 };
 
-export const getLang = () => {
-  return cookies.get('lang') || 'cn';
-};
-
 // 获取页面标题
-export const getLayoutPageTitle = (menuTree) => {
+export const getLayoutPageTitle = (menuTree, localeCode) => {
   let title;
   const { pathname } = window.location;
   const changeTitle = () => {
@@ -188,7 +184,7 @@ export const getLayoutPageTitle = (menuTree) => {
 
         if (item.path) {
           if (pathname.includes(item.path)) {
-            title = getLang() === 'cn' ? item['menuName'] : item['enName'];
+            title = localeCode ? item['menuName'] : item['enName'];
           }
         }
         if (item.children) {

@@ -1,6 +1,6 @@
 import { useState, useEffect, useContext } from 'react';
 import { Menu } from 'tntd';
-
+import { WrapLocaleReceiver } from '../../I18N';
 import './index.less';
 
 import { ThemeContext } from '../Context';
@@ -17,7 +17,7 @@ const hasChild = (menu) => {
   return hasChild;
 };
 
-const SideMenu = (props) => {
+const SideMenu = WrapLocaleReceiver((props) => {
   const {
     size,
     openKeys = [],
@@ -31,9 +31,9 @@ const SideMenu = (props) => {
     onMenuSelect,
     onOpenChange,
     collapsed,
+    localeCode,
   } = props;
 
-  const { language } = useContext(ThemeContext);
   const [mainCodes, setMainCodes] = useState([]);
 
   const headerHeight = size === 'large' ? 60 : 50;
@@ -104,7 +104,7 @@ const SideMenu = (props) => {
 
   const MenuLink = ({ menuName, enName, path }) => (
     <a href={path} onClick={(evt) => evt.preventDefault()}>
-      {{ cn: menuName, en: enName }[language]}
+      {menuName}
     </a>
   );
 
@@ -113,12 +113,12 @@ const SideMenu = (props) => {
     title: !isHasLevel3 ? (
       <span className="menu-title">
         <Iconfont type={groupIcon} />
-        {collapsed ? '' : { cn: groupName, en: enName }[language]}
+        {collapsed ? '' : groupName}
       </span>
     ) : (
       <span className="menu-title">
         {collapsed ? <Iconfont type={groupIcon} /> : null}
-        {collapsed ? '' : { cn: groupName, en: enName }[language]}
+        {collapsed ? '' : groupName}
       </span>
     ),
     expandIcon: collapsed ? null : <Iconfont type={getExpandIcon(code)} />,
@@ -199,6 +199,6 @@ const SideMenu = (props) => {
       </Menu>
     </div>
   );
-};
+});
 
 export default SideMenu;

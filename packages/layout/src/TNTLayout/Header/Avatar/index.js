@@ -1,3 +1,4 @@
+import { WrapLocaleReceiver } from '../../../I18N';
 import { Popover, Row, Divider } from 'tntd';
 import deleteAllCookiesFactory from 'delete-all-cookies';
 import { get } from 'lodash';
@@ -21,6 +22,7 @@ const UserInfoContent = (props) => {
     onThemeChange,
     supportLevelChange,
     onMenuLevelChange,
+    I18N,
   } = props;
   const { language = false } = config || {};
 
@@ -28,7 +30,7 @@ const UserInfoContent = (props) => {
     <div className="user-info-setting-wrap">
       <div className="user-info-body">
         <div className="user-info-body-username">
-          {userInfo.userName || '暂无昵称'}
+          {userInfo.userName || I18N.avatar.index.zanWuNiCheng}
           <span className="user-info-body-account">{userInfo.account}</span>
         </div>
         {language && <Language size={size} onLanguageChange={onLanguageChange} />}
@@ -37,11 +39,11 @@ const UserInfoContent = (props) => {
       </div>
       <Row className="user-info-footer" type="flex" justify="space-between" align="middle">
         <a onClick={onPersonalSetting} href="/bridge/userCenter?currentTab=1">
-          个人设置
+          {I18N.avatar.index.geRenSheZhi}
         </a>
         <Divider type="vertical" />
         <a onClick={onChangePassword} href="/bridge/userCenter?currentTab=2">
-          修改密码
+          {I18N.avatar.index.xiuGaiMiMa}
         </a>
         <Divider type="vertical" />
         <a
@@ -56,14 +58,14 @@ const UserInfoContent = (props) => {
             }
           }}
         >
-          退出登录
+          {I18N.avatar.index.tuiChuDengLu}
         </a>
       </Row>
     </div>
   );
 };
 
-export default (props) => {
+export default WrapLocaleReceiver((props) => {
   const { userInfo = {} } = props;
   const { avatar } = userInfo;
 
@@ -92,4 +94,4 @@ export default (props) => {
       </Popover>
     </div>
   );
-};
+});

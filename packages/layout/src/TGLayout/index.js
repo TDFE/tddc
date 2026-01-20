@@ -1,3 +1,4 @@
+import { WrapLocaleReceiver } from '../I18N';
 import { useState, useEffect, useReducer, useMemo } from 'react';
 import { Spin, Empty, message } from 'tntd';
 // import zhCN from 'antd/es/locale/zh_CN';
@@ -11,7 +12,7 @@ import service from './service/index';
 import './index.less';
 const { HeaderTabs, HeaderActionItem, AuthContext } = Layout;
 
-const TGLayout = (props) => {
+const TGLayout = WrapLocaleReceiver((props) => {
   const { origin, pathname, search } = window.location || {};
   const {
     directRender,
@@ -30,6 +31,7 @@ const TGLayout = (props) => {
     onMenuSelect,
     onMenuLevelChange,
     isDev,
+    I18N,
     ...rest
   } = props;
   const [errorMsg, setErrorMsg] = useState('');
@@ -66,6 +68,7 @@ const TGLayout = (props) => {
       payload: {
         currentOrgCode: org?.code,
         orgAppList,
+        I18N,
       },
     });
   };
@@ -126,7 +129,7 @@ const TGLayout = (props) => {
           // 获取机构树
           const { orgGroup = {}, apps } = data || {};
           const { orgList, orgUuidTree, orgUuidMap, orgCodeMap, currentApp, appList, appMap } =
-            formatOrgApp(orgGroup, apps);
+            formatOrgApp(orgGroup, apps, I18N);
           let { uuid, code } = orgGroup || {};
           if (localStorage.hasOwnProperty('currentOrg_new') && orgGroup) {
             try {
@@ -162,7 +165,7 @@ const TGLayout = (props) => {
           dispatch({
             type: 'initUserReady',
           });
-          setErrorMsg(e.message || '加载用户失败');
+          setErrorMsg(e.message || I18N.tglayout.index.jiaZaiYongHuShi);
         });
       if (needMenu) {
         // 获取菜单信息
@@ -179,7 +182,7 @@ const TGLayout = (props) => {
             dispatch({
               type: 'initMenuTreeReady',
             });
-            setErrorMsg(e.message || '加载用户失败');
+            setErrorMsg(e.message || I18N.tglayout.index.jiaZaiYongHuShi);
           });
       }
     }
@@ -216,8 +219,8 @@ const TGLayout = (props) => {
       }
       return;
     }
-    message.error(authMessage || '账号或者密码错误');
-    return Promise.reject(authMessage || '账号或者密码错误');
+    message.error(authMessage || I18N.tglayout.index.zhangHaoHuoZheMi);
+    return Promise.reject(authMessage || I18N.tglayout.index.zhangHaoHuoZheMi);
   };
 
   // 监听机构变更
@@ -322,7 +325,7 @@ const TGLayout = (props) => {
     </Layout>
     // </ConfigProvider>
   );
-};
+});
 TGLayout.getLayoutPageTitle = getLayoutPageTitle;
 TGLayout.HeaderTabs = HeaderTabs;
 TGLayout.AuthContext = AuthContext;
