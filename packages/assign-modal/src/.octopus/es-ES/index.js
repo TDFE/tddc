@@ -1,5 +1,19 @@
-import test from './test';
-
 export default {
-  ...test,
+  authorizesOrgList: 'Lista de Organizaciones',
+  allOrgAvailable: 'Todas las Organizaciones',
+  authorizesAppList: 'Lista de Canales',
+  allAppAvailable: 'Todos los Canales',
+  authorizesUserList: 'Lista de Usuarios',
+  allUserAvailable: 'Todos los Usuarios',
+  search: 'Ingrese el nombre de la organización',
+  availableOrgs: 'Organizaciones Disponibles',
+  availableApps: 'Canales Disponibles',
+  availableUsers: 'Usuarios Disponibles',
+  clear: 'Limpiar',
+  hasBeenSelected: 'Seleccionados',
+  numOfOrg: '%s Organizaciones',
+  numOfApp: '%s Canales',
+  numOfUser: '%s Usuarios',
+  enterAppName: 'Ingrese el nombre del canal',
+  enterUserName: 'Ingrese el nombre de usuario',
 };

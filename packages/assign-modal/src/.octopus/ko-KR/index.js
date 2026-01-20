@@ -1,5 +1,19 @@
-import test from './test';
-
 export default {
-  ...test,
+  authorizesOrgList: '조직 목록',
+  allOrgAvailable: '전체 조직',
+  authorizesAppList: '채널 목록',
+  allAppAvailable: '전체 채널',
+  authorizesUserList: '사용자 목록',
+  allUserAvailable: '전체 사용자',
+  search: '조직명을 입력하세요',
+  availableOrgs: '사용 가능한 조직',
+  availableApps: '사용 가능한 채널',
+  availableUsers: '사용 가능한 사용자',
+  clear: '초기화',
+  hasBeenSelected: '선택됨',
+  numOfOrg: '%s개 조직',
+  numOfApp: '%s개 채널',
+  numOfUser: '%s명 사용자',
+  enterAppName: '채널명을 입력하세요',
+  enterUserName: '사용자명을 입력하세요',
 };

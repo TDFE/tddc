@@ -1,5 +1,19 @@
-import test from './test';
-
 export default {
-  ...test,
+  authorizesOrgList: 'รายชื่อองค์กร',
+  allOrgAvailable: 'องค์กรทั้งหมด',
+  authorizesAppList: 'รายชื่อช่องทาง',
+  allAppAvailable: 'ช่องทางทั้งหมด',
+  authorizesUserList: 'รายชื่อผู้ใช้',
+  allUserAvailable: 'ผู้ใช้ทั้งหมด',
+  search: 'กรอกชื่อองค์กร',
+  availableOrgs: 'องค์กรที่พร้อมใช้งาน',
+  availableApps: 'ช่องทางที่พร้อมใช้งาน',
+  availableUsers: 'ผู้ใช้ที่พร้อมใช้งาน',
+  clear: 'เคลียร์',
+  hasBeenSelected: 'ที่เลือก',
+  numOfOrg: '%s องค์กร',
+  numOfApp: '%s ช่องทาง',
+  numOfUser: '%s ผู้ใช้',
+  enterAppName: 'กรอกชื่อช่องทาง',
+  enterUserName: 'กรอกชื่อผู้ใช้',
 };
