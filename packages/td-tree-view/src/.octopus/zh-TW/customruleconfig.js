@@ -1,9 +1,9 @@
 export default {
   multidimlist: {
     piPeiDu: '匹配度：',
-    quanZhong: '权重',
-    piPeiZiDuan: '匹配字段：',
-    fuHeMingDanLie: '复核名单列表：',
-    quanZhongWEI: '权重{val1}%',
+    quanZhong: '權重',
+    piPeiZiDuan: '匹配欄位：',
+    fuHeMingDanLie: '複核名單列表：',
+    quanZhongWEI: '權重{val1}%',
   },
 };

@@ -1,75 +1,98 @@
 const webpack = require('webpack');
 const path = require('path');
-const TerserPlugin = require('terser-webpack-plugin');
-const CssMinimizerPlugin = require('css-minimizer-webpack-plugin');
-const CopyWebpackPlugin = require('copy-webpack-plugin');
 
-module.exports = {
-  entry: './src/index.js',
-  output: {
-    path: path.resolve(__dirname, 'dist'),
-    filename: 'index.js',
-    library: {
-      name: '@tntd/assign-modal',
-      type: 'umd',
-      umdNamedDefine: true,
-    },
-    globalObject: 'this',
-    clean: true,
-  },
+// 共享的基础配置
+const baseConfig = {
   mode: 'production',
-  devtool: 'source-map',
+  devtool: false,
   externals: {
-    react: {
-      root: 'React',
-      commonjs2: 'react',
-      commonjs: 'react',
-      amd: 'react',
-    },
-    'react-dom': {
-      root: 'ReactDOM',
-      commonjs2: 'react-dom',
-      commonjs: 'react-dom',
-      amd: 'react-dom',
-    },
-    antd: {
-      root: 'antd',
-      commonjs2: 'antd',
-      commonjs: 'antd',
-      amd: 'antd',
-    },
-    tntd: {
-      root: 'tntd',
-      commonjs2: 'tntd',
-      commonjs: 'tntd',
-      amd: 'tntd',
-    },
+    react: 'react',
+    'react-dom': 'react-dom',
+    antd: 'antd',
+    tntd: 'tntd',
+    'universal-cookie': 'universal-cookie',
   },
   module: {
     rules: [
       {
-        test: /\.js$/,
-        exclude: /node_modules|vs/,
+        test: /\.(js|jsx)$/,
+        exclude: /node_modules/,
+        use: {
+          loader: 'babel-loader',
+        },
+      },
+      {
+        test: /\.less$/,
+        use: [
+          'style-loader',
+          'css-loader',
+          {
+            loader: 'less-loader',
+            options: {
+              lessOptions: {
+                javascriptEnabled: true,
+                modifyVars: {
+                  hack: 'true; @import "~tntd/themes/default/variables.less";',
+                },
+              },
+            },
+          },
+        ],
+      },
+      {
+        test: /\.(png|jpe?g|gif|svg)(\?.*)?$/,
+        type: 'asset',
+        parser: {
+          dataUrlCondition: {
+            maxSize: 4 * 1024,
+          },
+        },
+      },
+    ],
+  },
+  resolve: {
+    extensions: ['.js', '.jsx', '.json'],
+    alias: {
+      '@': path.resolve(__dirname, 'src'),
+    },
+  },
+  plugins: [
+    new webpack.DefinePlugin({
+      'process.env.NODE_ENV': JSON.stringify('production'),
+    }),
+  ],
+};
+
+// ES Module 版本
+const esConfig = {
+  ...baseConfig,
+  entry: './src/index.js',
+  output: {
+    path: path.resolve(__dirname, 'es'),
+    filename: 'index.js',
+    library: {
+      type: 'module',
+    },
+    environment: {
+      module: true,
+    },
+  },
+  experiments: {
+    outputModule: true,
+  },
+  module: {
+    ...baseConfig.module,
+    rules: [
+      {
+        test: /\.(js|jsx)$/,
+        exclude: /node_modules/,
         use: {
           loader: 'babel-loader',
           options: {
-            presets: [
-              [
-                '@babel/preset-env',
-                {
-                  modules: false,
-                  targets: {
-                    browsers: ['last 2 versions', 'ie >= 11'],
-                  },
-                },
-              ],
-              '@babel/preset-react',
-            ],
+            presets: [['@babel/preset-env', { modules: false }], '@babel/preset-react'],
             plugins: [
               ['@babel/plugin-proposal-decorators', { legacy: true }],
               ['@babel/plugin-proposal-class-properties', { loose: true }],
-              ['@babel/plugin-proposal-private-methods', { loose: true }],
-              ['@babel/plugin-proposal-private-property-in-object', { loose: true }],
               [
                 'import',
                 {
@@ -86,90 +109,62 @@ module.exports = {
                 },
                 'tntd',
               ],
-              '@babel/plugin-transform-runtime',
             ],
           },
         },
       },
-      {
-        test: /\.less$/,
-        exclude: /vs/,
-        use: [
-          'style-loader',
-          {
-            loader: 'css-loader',
-            options: {
-              sourceMap: true,
-              modules: false,
-            },
-          },
-          {
-            loader: 'less-loader',
-            options: {
-              sourceMap: true,
-              lessOptions: {
-                javascriptEnabled: true,
-                modifyVars: {
-                  hack: 'true; @import "~tntd/themes/default/variables.less";',
-                },
-              },
-            },
-          },
-        ],
-      },
-      {
-        test: /\.(png|jpe?g|gif|svg)(\?.*)?$/,
-        type: 'asset',
-        exclude: /vs/,
-        parser: {
-          dataUrlCondition: {
-            maxSize: 4 * 1024,
-          },
-        },
-      },
-    ],
-  },
-  resolve: {
-    extensions: ['.js', '.jsx', '.ts', '.tsx', '.json'],
-    alias: {
-      '@': path.resolve(__dirname, 'src'),
-    },
-  },
-  plugins: [
-    new webpack.ProvidePlugin({
-      React: 'react',
-    }),
-    new webpack.DefinePlugin({
-      'process.env.NODE_ENV': JSON.stringify('production'),
-    }),
-  ],
-  optimization: {
-    minimize: true,
-    minimizer: [
-      new TerserPlugin({
-        terserOptions: {
-          parse: {
-            ecma: 8,
-          },
-          compress: {
-            ecma: 5,
-            warnings: false,
-            comparisons: false,
-            inline: 2,
-            drop_console: true,
-          },
-          mangle: {
-            safari10: true,
-          },
-          output: {
-            ecma: 5,
-            comments: false,
-            ascii_only: true,
-          },
-        },
-        extractComments: false,
-      }),
-      new CssMinimizerPlugin(),
+      ...baseConfig.module.rules.slice(1),
     ],
   },
 };
+
+// CommonJS 版本
+const libConfig = {
+  ...baseConfig,
+  entry: './src/index.js',
+  output: {
+    path: path.resolve(__dirname, 'lib'),
+    filename: 'index.js',
+    library: {
+      type: 'commonjs2',
+    },
+  },
+  module: {
+    ...baseConfig.module,
+    rules: [
+      {
+        test: /\.(js|jsx)$/,
+        exclude: /node_modules/,
+        use: {
+          loader: 'babel-loader',
+          options: {
+            presets: [['@babel/preset-env', { modules: 'cjs' }], '@babel/preset-react'],
+            plugins: [
+              ['@babel/plugin-proposal-decorators', { legacy: true }],
+              ['@babel/plugin-proposal-class-properties', { loose: true }],
+              [
+                'import',
+                {
+                  libraryName: 'antd',
+                  libraryDirectory: 'lib',
+                  style: true,
+                },
+              ],
+              [
+                'import',
+                {
+                  libraryName: 'tntd',
+                  libraryDirectory: 'lib',
+                },
+                'tntd',
+              ],
+            ],
+          },
+        },
+      },
+      ...baseConfig.module.rules.slice(1),
+    ],
+  },
+};
+
+module.exports = [esConfig, libConfig];

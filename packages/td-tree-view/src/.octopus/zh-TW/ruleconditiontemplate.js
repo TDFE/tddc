@@ -1,7 +1,7 @@
 export default {
   index: {
-    liXian: '离线',
-    shiShi: '实时',
-    ziDuan: '字段',
+    liXian: '離線',
+    shiShi: '即時',
+    ziDuan: '欄位',
   },
 };

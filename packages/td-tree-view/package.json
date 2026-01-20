@@ -1,6 +1,6 @@
 {
   "name": "@tddc/td-tree-view",
-  "version": "0.0.21",
+  "version": "0.0.22",
   "scripts": {
     "start": "webpack-dev-server  --config webpack.config.js",
     "build": "rm -rf ./dist && webpack --config webpack.config.build.js"

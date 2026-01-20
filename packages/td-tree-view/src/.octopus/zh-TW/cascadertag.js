@@ -1,12 +1,12 @@
 export default {
   index: {
-    daoRuDaiTiJiao: '导入待提交',
-    shuZu: '数组',
+    daoRuDaiTiJiao: '匯入待提交',
+    shuZu: '陣列',
     riQi: '日期',
-    buEr: '布尔',
-    xiaoShu: '小数',
-    zhengShu: '整数',
-    meiJu: '枚举',
-    ziFu: '字符',
+    buEr: '布林',
+    xiaoShu: '小數',
+    zhengShu: '整數',
+    meiJu: '列舉',
+    ziFu: '字元',
   },
 };

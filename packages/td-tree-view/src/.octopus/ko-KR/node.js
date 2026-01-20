@@ -1,5 +1,5 @@
 export default {
   index: {
-    zi: '子',
+    zi: '하위',
   },
 };

@@ -1,6 +1,7 @@
 export default {
   index: {
-    zanWuShuJu: '暂无数据',
-    dangQianLeiXingZan: '当前类型暂无可选变量,若有需要请联系管理员添加。',
+    zanWuShuJu: '데이터 없음',
+    dangQianLeiXingZan:
+      '현재 유형에 사용 가능한 변수가 없습니다. 필요한 경우 관리자에게 문의하세요.',
   },
 };
