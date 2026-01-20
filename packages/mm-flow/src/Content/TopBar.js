@@ -5,7 +5,7 @@ import './TopBar.less';
 import { getText } from '../locale';
 
 export default (props) => {
-  const { editor, previewMode, operateGroup, DataConvert, commandAction, lang } = props || {};
+  const { I18N, editor, previewMode, operateGroup, DataConvert, commandAction } = props || {};
   const [canRedo, setCanRedo] = useState(false);
   const [canUndo, setCanUndo] = useState(false);
   const [canDelete, setCanDelete] = useState(false);
@@ -19,16 +19,16 @@ export default (props) => {
   } = editor || {};
 
   const toolBarTypeNameMap = {
-    redo: getText('redo', lang) || '重做',
-    undo: getText('undo', lang) || '撤销',
-    'zoom-in': getText('zoom-in', lang) || '放大',
-    'zoom-out': getText('zoom-out', lang) || '缩小',
-    delete: getText('delete', lang) || '删除',
-    'deployment-unit': getText('deployment-unit', lang) || '排序',
-    copy: getText('copy', lang) || '拷贝规则流',
-    reset: getText('reset', lang) || '原比例',
-    'auto-fit': getText('auto-fit', lang) || '适应画布',
-    fullscreen: getText('fullscreen', lang) || '最大化',
+    redo: getText('redo', I18N) || I18N.content.topbar.zhongZuo,
+    undo: getText('undo', I18N) || I18N.content.topbar.cheXiao,
+    'zoom-in': getText('zoom-in', I18N) || I18N.content.topbar.fangDa,
+    'zoom-out': getText('zoom-out', I18N) || I18N.content.topbar.suoXiao,
+    delete: getText('delete', I18N) || I18N.content.topbar.shanChu,
+    'deployment-unit': getText('deployment-unit', I18N) || I18N.content.topbar.paiXu,
+    copy: getText('copy', I18N) || I18N.content.topbar.kaoBeiGuiZeLiu,
+    reset: getText('reset', I18N) || I18N.content.topbar.yuanBiLi,
+    'auto-fit': getText('auto-fit', I18N) || I18N.content.topbar.shiYingHuaBu,
+    fullscreen: getText('fullscreen', I18N) || I18N.content.topbar.zuiDaHua,
   };
 
   useEffect(() => {
@@ -220,10 +220,10 @@ export default (props) => {
     const menu = (
       <Menu>
         <Menu.Item key="y" onClick={() => format('y')}>
-          {getText('zongXiangPaiXu', lang) || '纵向排序'}
+          {getText('zongXiangPaiXu', I18N) || I18N.content.topbar.zongXiangPaiXu}
         </Menu.Item>
         <Menu.Item key="x" onClick={() => format('x')}>
-          {getText('hengXiangPaiXu', lang) || '横向排序'}
+          {getText('hengXiangPaiXu', I18N) || I18N.content.topbar.hengXiangPaiXu}
         </Menu.Item>
       </Menu>
     );
@@ -235,7 +235,7 @@ export default (props) => {
       >
         <label className="command-item">
           <Icon type="deployment-unit" />
-          {getText('formatSort', lang) || '格式化排序'}
+          {getText('formatSort', I18N) || I18N.content.topbar.geShiHuaPaiXu}
         </label>
       </Dropdown>,
     );
@@ -287,7 +287,7 @@ export default (props) => {
                       convertFun = DataConvert;
                     }
                     const { schema } = editor || {};
-                    const data = convertFun.format(schema.getData(), editor);
+                    const data = convertFun.format(schema.getData(), editor, false, I18N);
                     if (data) {
                       if (v?.clickType === 'async') {
                         setLoad({

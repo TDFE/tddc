@@ -3,7 +3,7 @@ import { Tooltip } from 'antd';
 import './LeftBar.less';
 
 export default (props) => {
-  const { onDrop, flowNodesDict, showType } = props || {};
+  const { onDrop, flowNodesDict, showType, I18N } = props || {};
   const [dragItem, setDargItem] = useState(null);
   const [pageX, setPageX] = useState(-990);
   const [pageY, setPageY] = useState(-990);
@@ -52,7 +52,10 @@ export default (props) => {
       const nodeType = item.type || item.code;
       const lowNodeType = nodeType.toLowerCase();
       const shape = item.shape;
-      if (['circle'].includes(shape) || ['开始', '结束'].includes(item.name)) {
+      if (
+        ['circle'].includes(shape) ||
+        [I18N.content.leftbar.kaiShi, I18N.content.leftbar.jieShu].includes(item.name)
+      ) {
         ItemMap.push({
           type: nodeType,
           name: item.name,

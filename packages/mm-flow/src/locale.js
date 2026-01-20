@@ -2,75 +2,45 @@ import Cookies from 'universal-cookie';
 
 const cookies = new Cookies();
 
-export const zh_CN = {
-  redo: '重做',
-  undo: '撤销',
-  'zoom-in': '放大',
-  'zoom-out': '缩小',
-  delete: '删除',
-  'deployment-unit': '排序',
-  copy: '拷贝规则流',
-  reset: '原比例',
-  'auto-fit': '适应画布',
-  fullscreen: '最大化',
-  formatSort: '格式化排序',
-  hengXiangPaiXu: '横向排序',
-  zongXiangPaiXu: '纵向排序',
-  yunxingwancheng: '运行完成',
-  yunxingzhong: '运行中',
-  yunxingshibai: '运行失败',
-  bunengshezhishuruliu: '不能设置输入流',
-  bunengshezhishuchuliu: '不能设置输出流',
-  parseErr: '解析数据错误，',
-  configErr: '配置不合法，原因如下：',
-  configEmpty: '配置不能为空',
-  startOutputMiss: '[开始]缺少输出流',
-  startOutputOne: '[开始]开始节点只能有一个',
-  endNoInput: '[结束]缺少输入流',
+export const geTextName = (I18N) => {
+  return {
+    redo: I18N.src.locale.zhongZuo,
+    undo: I18N.src.locale.cheXiao,
+    'zoom-in': I18N.src.locale.fangDa,
+    'zoom-out': I18N.src.locale.suoXiao,
+    delete: I18N.src.locale.shanChu,
+    'deployment-unit': I18N.src.locale.paiXu,
+    copy: I18N.src.locale.kaoBeiGuiZeLiu,
+    reset: I18N.src.locale.yuanBiLi,
+    'auto-fit': I18N.src.locale.shiYingHuaBu,
+    fullscreen: I18N.src.locale.zuiDaHua,
+    formatSort: I18N.src.locale.geShiHuaPaiXu,
+    hengXiangPaiXu: I18N.src.locale.hengXiangPaiXu,
+    zongXiangPaiXu: I18N.src.locale.zongXiangPaiXu,
+    yunxingwancheng: I18N.src.locale.yunXingWanCheng,
+    yunxingzhong: I18N.src.locale.yunXingZhong,
+    yunxingshibai: I18N.src.locale.yunXingShiBai,
+    bunengshezhishuruliu: I18N.src.locale.buNengSheZhiShu2,
+    bunengshezhishuchuliu: I18N.src.locale.buNengSheZhiShu,
+    parseErr: I18N.src.locale.jieXiShuJuCuo,
+    configErr: I18N.src.locale.peiZhiBuHeFa,
+    configEmpty: I18N.src.locale.peiZhiBuNengWei,
+    startOutputMiss: I18N.src.locale.kaiShiQueShaoShu,
+    startOutputOne: I18N.src.locale.kaiShiKaiShiJie,
+    endNoInput: I18N.src.locale.jieShuQueShaoShu,
+  };
 };
 
-export const en_US = {
-  redo: 'Redo',
-  undo: 'Undo',
-  'zoom-in': 'Zoom In',
-  'zoom-out': 'Zoom Out',
-  delete: 'Delete',
-  'deployment-unit': 'Sort',
-  copy: 'Copy',
-  reset: 'Original Scale',
-  'auto-fit': 'Adapt to Canvas',
-  fullscreen: 'Maximize',
-  formatSort: 'Format Sort',
-  hengXiangPaiXu: 'Sort horizontally',
-  zongXiangPaiXu: 'Sort Vertically',
-  yunxingwancheng: 'Success',
-  yunxingzhong: 'Running',
-  yunxingshibai: 'Fail',
-  bunengshezhishuruliu: 'input stream cannot be set',
-  bunengshezhishuchuliu: 'output stream cannot be set',
-  parseErr: 'Parsing data error,',
-  configErr: 'The configuration is invalid because of the following reasons:',
-  configEmpty: 'he configuration cannot be empty',
-  startOutputMiss: '[Start] The output stream is missing',
-  startOutputOne: '[Start] There can be only one start node',
-  endNoInput: '[End] The input stream is missing',
-};
+export const getText = (key, I18N) => {
+  const text = geTextName(I18N);
 
-export const getText = (key, language, ...params) => {
-  const text = ({
-    cn: zh_CN,
-    en: en_US,
-  }[language || getLanguage()] || zh_CN)?.[key];
+  // if (params?.length) {
+  //   return params.reduce((acc, cur) => {
+  //     return acc.replace(/%s/, cur);
+  //   }, text);
+  // }
 
-  if (params?.length) {
-    return params.reduce((acc, cur) => {
-      return acc.replace(/%s/, cur);
-    }, text);
-  }
-
-  return text;
+  return text?.[key];
 };
 
 export const getLanguage = () => cookies.get('lang', { path: '/' }) || 'cn';
-
-export default { en_US, zh_CN };
