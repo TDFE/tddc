@@ -1,5 +1,5 @@
 import zhTW from '../../.octopus/zh-TW/index.js';
 
 export default {
-  mmFlow: zhTW,
+  TddcmmFlow: zhTW,
 };

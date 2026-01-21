@@ -54,7 +54,8 @@ export default (props) => {
       const shape = item.shape;
       if (
         ['circle'].includes(shape) ||
-        [I18N.content.leftbar.kaiShi, I18N.content.leftbar.jieShu].includes(item.name)
+        lowNodeType.includes(item.name) ||
+        lowNodeType.includes(item.name)
       ) {
         ItemMap.push({
           type: nodeType,

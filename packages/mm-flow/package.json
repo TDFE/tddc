@@ -1,12 +1,13 @@
 {
   "name": "@tddc/mm-flow",
-  "version": "1.0.10",
+  "version": "1.1.0",
   "description": "基于mmeditor的流",
   "author": "zefei.zhou <zefei.zhou@tongdun.net>",
   "license": "ISC",
   "main": "es/index.js",
   "files": [
-    "es"
+    "es",
+    ".octopus"
   ],
   "devDependencies": {
     "antd": "^3.26.20",
