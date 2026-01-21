@@ -1,5 +1,5 @@
 {
-  "name": "@tntd/assign-modal",
+  "name": "@tddc/assign-modal",
   "version": "3.1.6",
   "scripts": {
     "start": "webpack-dev-server  --config webpack.config.js",
