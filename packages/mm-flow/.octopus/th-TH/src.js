@@ -1,17 +1,17 @@
 export default {
   defaultdataconvert: {
-    peiZhiBuNengWei: '配置不能为空',
-    peiZhiBuHeFa: '配置不合法，原因如下：',
-    jieShuQueShaoShu: '[结束]缺少输入流',
-    kaiShiKaiShiJie: '[开始]开始节点只能有一个',
-    kaiShiQueShaoShu: '[开始]缺少输出流',
+    peiZhiBuNengWei: 'การกำหนดค่าไม่สามารถว่างเปล่าได้',
+    peiZhiBuHeFa: 'การกำหนดค่าไม่ถูกต้อง เหตุผลดังนี้:',
+    jieShuQueShaoShu: '[สิ้นสุด] ขาดสตรีมอินพุต',
+    kaiShiKaiShiJie: '[เริ่มต้น] อนุญาตเฉพาะโหนดเริ่มต้นเดียว',
+    kaiShiQueShaoShu: '[เริ่มต้น] ขาดสตรีมเอาต์พุต',
   },
   index: {
-    yunXingShiBai: '运行失败',
-    yunXingZhong: '运行中',
-    yunXingWanCheng: '运行完成',
-    jieXiShuJuCuo: '解析数据错误,',
-    buNengSheZhiShu: '不能设置输出流',
-    buNengSheZhiShu2: '不能设置输入流',
+    yunXingShiBai: 'การดำเนินการล้มเหลว',
+    yunXingZhong: 'กำลังทำงาน',
+    yunXingWanCheng: 'การดำเนินการเสร็จสมบูรณ์',
+    jieXiShuJuCuo: 'ข้อผิดพลาดในการแยกวิเคราะห์ข้อมูล,',
+    buNengSheZhiShu: 'ไม่สามารถตั้งค่าสตรีมเอาต์พุต',
+    buNengSheZhiShu2: 'ไม่สามารถตั้งค่าสตรีมอินพุต',
   },
 };

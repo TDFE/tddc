@@ -54,8 +54,8 @@ export default (props) => {
       const shape = item.shape;
       if (
         ['circle'].includes(shape) ||
-        lowNodeType.includes(item.name) ||
-        lowNodeType.includes(item.name)
+        lowNodeType.includes('StartFlowNode') ||
+        lowNodeType.includes('EndFlowNode')
       ) {
         ItemMap.push({
           type: nodeType,
