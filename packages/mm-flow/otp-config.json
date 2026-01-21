@@ -19,7 +19,7 @@
   "defaultTranslateKeyApi": "Pinyin",
   "importI18N": "import mapLocale, { getLang } from './I18N';",
   "include": ["./src"],
-  "exclude": ["./src/DialogTest", "./src/locale", "./src/Images", "./src/Fonts"],
+  "exclude": ["./src/DialogTest", "./src/locale/*", "./src/Images", "./src/Fonts"],
   "regPath": "locale",
   "resourcePath": [],
   "reservedKey": ["template", "case"]

@@ -14,4 +14,7 @@ export default {
     buNengSheZhiShu: '不能设置输出流',
     buNengSheZhiShu2: '不能设置输入流',
   },
+  locale: {
+    jieXiShuJuCuo: '解析数据错误，',
+  },
 };
