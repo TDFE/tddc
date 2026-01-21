@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { forwardRef } from 'react';
 import Cookies from 'universal-cookie';
 import zhCN from '../.octopus/zh-CN';
 import zhTW from '../.octopus/zh-TW';
@@ -26,7 +26,7 @@ export const getLang = () => {
 };
 
 export const WrapLocaleReceiver = (Component) => {
-  return (props) => (
+  return forwardRef((props, ref) => (
     <LocaleReceiver componentName="TddcmmFlow">
       {(locale, localeCode) => {
         console.log(locale, localeCode);
@@ -35,11 +35,17 @@ export const WrapLocaleReceiver = (Component) => {
           : mapLocale[localeCode] || mapLocale[getLang()];
         const transformLocaleCode = localeCode === 'zh-cn' ? 'cn' : localeCode;
         return (
-          <Component locale={locale} localeCode={transformLocaleCode} I18N={I18N} {...props} />
+          <Component
+            ref={ref}
+            locale={locale}
+            localeCode={transformLocaleCode}
+            I18N={I18N}
+            {...props}
+          />
         );
       }}
     </LocaleReceiver>
-  );
+  ));
 };
 
 export default mapLocale;

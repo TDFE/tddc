@@ -11,335 +11,332 @@ import './index.less';
 import { WrapLocaleReceiver } from './I18N';
 
 export { sliceName };
-export default forwardRef(
-  WrapLocaleReceiver((props, ref) => {
-    const editorWrapRef = useRef();
-    const editorDomRef = useRef();
-    const editorRef = useRef();
-    const dialogHandleRef = useRef();
-    const [toolTipInfo, setToolTipInfo] = useState();
-    const [dialogShowInfo, setDialogShowInfo] = useState(null);
-    const [initReady, setInitReady] = useState(false);
+export default WrapLocaleReceiver((props) => {
+  const editorWrapRef = useRef();
+  const editorDomRef = useRef();
+  const editorRef = useRef();
+  const dialogHandleRef = useRef();
+  const [toolTipInfo, setToolTipInfo] = useState();
+  const [dialogShowInfo, setDialogShowInfo] = useState(null);
+  const [initReady, setInitReady] = useState(false);
+  const {
+    I18N,
+    type,
+    graphData,
+    flowNodesDict = [],
+    auditedNodes = [],
+    className,
+    showMiniMap = true,
+    DataConvert,
+    toolTipNameHandle,
+    dialogHide,
+    showType,
+    dialogDom = [],
+    editorStyle,
+    onRef,
+    checkLineExtendFn,
+    showLengend,
+    LengendDom,
+    autoDiffAuditNodes = true,
+    ref,
+  } = props;
+  const previewMode = type === 'view';
+
+  const auditedNodesPre = useRef(auditedNodes);
+
+  useImperativeHandle(ref, () => ({
+    updateGraph: setGraphData,
+  }));
+
+  const checkNewLine = (data, editor) => {
     const {
-      I18N,
-      type,
-      graphData,
-      flowNodesDict = [],
-      auditedNodes = [],
-      className,
-      showMiniMap = true,
-      DataConvert,
-      toolTipNameHandle,
-      dialogHide,
-      showType,
-      dialogDom = [],
-      editorStyle,
-      onRef,
-      checkLineExtendFn,
-      showLengend,
-      LengendDom,
-      autoDiffAuditNodes = true,
-    } = props;
-    const previewMode = type === 'view';
-
-    const auditedNodesPre = useRef(auditedNodes);
-
-    useImperativeHandle(ref, () => ({
-      updateGraph: setGraphData,
-    }));
-
-    const checkNewLine = (data, editor) => {
-      const {
-        graph: {
-          node: { nodes },
-        },
-      } = editor;
-      const { from, to } = data;
-      // 通组件输入输出不能连接
-      if (from === to) return false;
-      const fromNode = nodes[from];
-      const toNode = nodes[to];
-      const {
-        data: { type: fromType, name: fromName },
-        fromLines: sourceFromLines,
-      } = fromNode || {};
-      const {
-        data: { type: toType, name: toName },
-        toLines: targetToLines,
-      } = toNode || {};
-
-      if (['start'].includes(toType) && targetToLines && targetToLines.size) {
-        message.error(
-          toName + (getText('bunengshezhishuruliu', I18N) || I18N.src.index.buNengSheZhiShu2),
-        );
-        return false;
-      }
-      // 不能设置输出流
-      if (['end'].includes(fromType) && sourceFromLines && sourceFromLines.size) {
-        message.error(
-          fromName + (getText('bunengshezhishuchuliu', I18N) || I18N.src.index.buNengSheZhiShu),
-        );
-        return false;
-      }
-      checkLineExtendFn && checkLineExtendFn({ data, editor });
-      return true;
-    };
-
-    useEffect(() => {
-      const resizeBound = () => {
-        const { height: jobEditorHei, width: jobEditorWid } =
-          (editorWrapRef &&
-            editorWrapRef.current &&
-            editorWrapRef.current.getBoundingClientRect()) ||
-          {};
-        if (jobEditorHei && editorDomRef) {
-          editorDomRef.current.style.height = jobEditorHei - (!previewMode ? 48 : 0) + 'px';
-          editorDomRef.current.style.width = jobEditorWid - (!previewMode ? 140 : 0) + 'px';
-        }
-        if (editorRef.current) {
-          editorRef.current.controller.autoFit();
-        }
-      };
-      const init = async () => {
-        dialogHandleRef.current = new DialogHandle(showType);
-        resizeBound();
-        editorRef.current = new MMEditor({
-          dom: editorDomRef.current,
-          showMiniMap,
-          mode: previewMode ? 'view' : 'edit', // 只读模式设置 mode:"view"
-        });
-        // 注册节点
-        initShapes(editorRef.current, flowNodesDict);
-        if (graphData) {
-          await setGraphData(graphData);
-        }
-
-        // 连线时校验
-        if (editorRef.current.graph.line.shapes['default']) {
-          editorRef.current.graph.line.shapes['default'].checkNewLine = checkNewLine;
-        }
-
-        // 注册节点⌚️
-        addEditorEvent();
-
-        onRef && onRef(this);
-
-        setInitReady(true);
-      };
-      init();
-      window.addEventListener('resize', resizeBound);
-      return () => {
-        if (editorRef.current) {
-          editorRef.current.graph.clearGraph();
-          editorRef.current.destroy();
-          editorRef.current = null;
-        }
-        setInitReady(false);
-        window.removeEventListener('resize', resizeBound);
-      };
-    }, []);
-
-    const setGraphData = async (data) => {
-      try {
-        const dataFormatted = typeof data === 'object' ? data : JSON.parse(data || '{}');
-        let convertFun = DefaultDataConvert;
-        if (DataConvert) {
-          convertFun = DataConvert;
-        }
-        await editorRef.current.schema.setInitData(
-          convertFun?.convert(dataFormatted, editorRef.current, false, I18N),
-        );
-        await editorRef.current.controller.autoFit();
-        runFlow();
-      } catch (e) {
-        message.error((getText('parseErr') || I18N.src.index.jieXiShuJuCuo) + e?.message);
-      }
-    };
-
-    useEffect(() => {
-      if (editorRef.current && initReady) {
-        setGraphData(graphData);
-      }
-    }, [graphData, initReady]);
-
-    useEffect(() => {
-      if (
-        autoDiffAuditNodes &&
-        editorRef.current &&
-        initReady &&
-        JSON.stringify(auditedNodes) !== JSON.stringify(auditedNodesPre?.current)
-      ) {
-        setGraphData(graphData);
-        auditedNodesPre.current = auditedNodes;
-      }
-    }, [graphData, auditedNodes, autoDiffAuditNodes]);
-
-    // 初始化编辑器事件
-    const addEditorEvent = () => {
-      let timeStamp;
-      // 选中
-      editorRef?.current.graph.on('node:click', ({ node }) => {
-        document.getElementsByClassName('lb-workflow-header')[0]?.children[1]?.blur();
-        const now = new Date().getTime();
-        if (now - timeStamp < 300) {
-          // 产品说这个情况下就不用弹窗
-          !dialogHide &&
-            dialogHandleRef.current.show(node, editorRef?.current, (data) => {
-              setDialogShowInfo(data);
-            });
-        }
-        timeStamp = now;
-        props.onNodeClick && props.onNodeClick(node.data);
-      });
-
-      // 没有选中
-      editorRef?.current.graph.on('node:mouseenter', ({ node }) => {
-        const bbox = node.node.getBoundingClientRect();
-        setToolTipInfo({
-          nowTextNode: toolTipNameHandle ? toolTipNameHandle(node.data) : node.data,
-          textVisible: true,
-          textX: bbox.x + bbox.width / 2,
-          textY: bbox.y - 5,
-        });
-      });
-
-      editorRef?.current.graph.on('node:mouseleave', () => {
-        setToolTipInfo(null);
-      });
-
-      // 节点删除事件
-      editorRef?.current.graph.on('node:remove', () => {
-        setToolTipInfo(null);
-      });
-    };
-
-    // 动画效果
-    const runFlow = async () => {
-      if (!auditedNodes?.length) {
-        return;
-      }
-      const { graph } = editorRef?.current || {};
-      const {
+      graph: {
         node: { nodes },
-        line: { lines },
-      } = graph || {};
-      const [hasAuditedNodeUuids, auditedLine] = [[], []];
-      auditedNodes.forEach((node) => {
-        hasAuditedNodeUuids.push(node?.uuid);
-      });
-      auditedNodes.forEach((hasAudited) => {
-        const { uuid } = hasAudited || {};
-        const status = `instance ${hasAudited.status || ''}`;
-        Object.values(nodes).forEach((node) => {
-          if (node.data.uuid === uuid) {
-            node.data.className = `${node.data.className || ''} ${status}`;
-            node.addClass(status);
-          }
-        });
+      },
+    } = editor;
+    const { from, to } = data;
+    // 通组件输入输出不能连接
+    if (from === to) return false;
+    const fromNode = nodes[from];
+    const toNode = nodes[to];
+    const {
+      data: { type: fromType, name: fromName },
+      fromLines: sourceFromLines,
+    } = fromNode || {};
+    const {
+      data: { type: toType, name: toName },
+      toLines: targetToLines,
+    } = toNode || {};
 
-        for (let key in lines) {
-          const line = lines[key];
-          if (uuid === line.data.to && hasAuditedNodeUuids.indexOf(line.data.from) > -1) {
-            line.data.className = `${line.data.className || ''}  ${status}`;
-            line.addClass(status);
-            auditedLine.push(line.data.uuid);
-          }
-        }
-      });
+    if (['start'].includes(toType) && targetToLines && targetToLines.size) {
+      message.error(
+        toName + (getText('bunengshezhishuruliu', I18N) || I18N.src.index.buNengSheZhiShu2),
+      );
+      return false;
+    }
+    // 不能设置输出流
+    if (['end'].includes(fromType) && sourceFromLines && sourceFromLines.size) {
+      message.error(
+        fromName + (getText('bunengshezhishuchuliu', I18N) || I18N.src.index.buNengSheZhiShu),
+      );
+      return false;
+    }
+    checkLineExtendFn && checkLineExtendFn({ data, editor });
+    return true;
+  };
 
-      for (let key in nodes) {
-        if (!hasAuditedNodeUuids.includes(key)) {
-          const node = nodes[key];
-          node.data.className = `${node.data.className || ''} unrun`;
-          node.addClass('unrun');
-        }
+  useEffect(() => {
+    const resizeBound = () => {
+      const { height: jobEditorHei, width: jobEditorWid } =
+        (editorWrapRef && editorWrapRef.current && editorWrapRef.current.getBoundingClientRect()) ||
+        {};
+      if (jobEditorHei && editorDomRef) {
+        editorDomRef.current.style.height = jobEditorHei - (!previewMode ? 48 : 0) + 'px';
+        editorDomRef.current.style.width = jobEditorWid - (!previewMode ? 140 : 0) + 'px';
       }
+      if (editorRef.current) {
+        editorRef.current.controller.autoFit();
+      }
+    };
+    const init = async () => {
+      dialogHandleRef.current = new DialogHandle(showType);
+      resizeBound();
+      editorRef.current = new MMEditor({
+        dom: editorDomRef.current,
+        showMiniMap,
+        mode: previewMode ? 'view' : 'edit', // 只读模式设置 mode:"view"
+      });
+      // 注册节点
+      initShapes(editorRef.current, flowNodesDict);
+      if (graphData) {
+        await setGraphData(graphData);
+      }
+
+      // 连线时校验
+      if (editorRef.current.graph.line.shapes['default']) {
+        editorRef.current.graph.line.shapes['default'].checkNewLine = checkNewLine;
+      }
+
+      // 注册节点⌚️
+      addEditorEvent();
+
+      onRef && onRef(this);
+
+      setInitReady(true);
+    };
+    init();
+    window.addEventListener('resize', resizeBound);
+    return () => {
+      if (editorRef.current) {
+        editorRef.current.graph.clearGraph();
+        editorRef.current.destroy();
+        editorRef.current = null;
+      }
+      setInitReady(false);
+      window.removeEventListener('resize', resizeBound);
+    };
+  }, []);
+
+  const setGraphData = async (data) => {
+    try {
+      const dataFormatted = typeof data === 'object' ? data : JSON.parse(data || '{}');
+      let convertFun = DefaultDataConvert;
+      if (DataConvert) {
+        convertFun = DataConvert;
+      }
+      await editorRef.current.schema.setInitData(
+        convertFun?.convert(dataFormatted, editorRef.current, false, I18N),
+      );
+      await editorRef.current.controller.autoFit();
+      runFlow();
+    } catch (e) {
+      message.error((getText('parseErr') || I18N.src.index.jieXiShuJuCuo) + e?.message);
+    }
+  };
+
+  useEffect(() => {
+    if (editorRef.current && initReady) {
+      setGraphData(graphData);
+    }
+  }, [graphData, initReady]);
+
+  useEffect(() => {
+    if (
+      autoDiffAuditNodes &&
+      editorRef.current &&
+      initReady &&
+      JSON.stringify(auditedNodes) !== JSON.stringify(auditedNodesPre?.current)
+    ) {
+      setGraphData(graphData);
+      auditedNodesPre.current = auditedNodes;
+    }
+  }, [graphData, auditedNodes, autoDiffAuditNodes]);
+
+  // 初始化编辑器事件
+  const addEditorEvent = () => {
+    let timeStamp;
+    // 选中
+    editorRef?.current.graph.on('node:click', ({ node }) => {
+      document.getElementsByClassName('lb-workflow-header')[0]?.children[1]?.blur();
+      const now = new Date().getTime();
+      if (now - timeStamp < 300) {
+        // 产品说这个情况下就不用弹窗
+        !dialogHide &&
+          dialogHandleRef.current.show(node, editorRef?.current, (data) => {
+            setDialogShowInfo(data);
+          });
+      }
+      timeStamp = now;
+      props.onNodeClick && props.onNodeClick(node.data);
+    });
+
+    // 没有选中
+    editorRef?.current.graph.on('node:mouseenter', ({ node }) => {
+      const bbox = node.node.getBoundingClientRect();
+      setToolTipInfo({
+        nowTextNode: toolTipNameHandle ? toolTipNameHandle(node.data) : node.data,
+        textVisible: true,
+        textX: bbox.x + bbox.width / 2,
+        textY: bbox.y - 5,
+      });
+    });
+
+    editorRef?.current.graph.on('node:mouseleave', () => {
+      setToolTipInfo(null);
+    });
+
+    // 节点删除事件
+    editorRef?.current.graph.on('node:remove', () => {
+      setToolTipInfo(null);
+    });
+  };
+
+  // 动画效果
+  const runFlow = async () => {
+    if (!auditedNodes?.length) {
+      return;
+    }
+    const { graph } = editorRef?.current || {};
+    const {
+      node: { nodes },
+      line: { lines },
+    } = graph || {};
+    const [hasAuditedNodeUuids, auditedLine] = [[], []];
+    auditedNodes.forEach((node) => {
+      hasAuditedNodeUuids.push(node?.uuid);
+    });
+    auditedNodes.forEach((hasAudited) => {
+      const { uuid } = hasAudited || {};
+      const status = `instance ${hasAudited.status || ''}`;
+      Object.values(nodes).forEach((node) => {
+        if (node.data.uuid === uuid) {
+          node.data.className = `${node.data.className || ''} ${status}`;
+          node.addClass(status);
+        }
+      });
 
       for (let key in lines) {
-        if (!auditedLine.includes(key)) {
-          const line = lines[key];
-          line.data.className = `${line.data.className || ''} unrun`;
-          line.addClass('unrun');
+        const line = lines[key];
+        if (uuid === line.data.to && hasAuditedNodeUuids.indexOf(line.data.from) > -1) {
+          line.data.className = `${line.data.className || ''}  ${status}`;
+          line.addClass(status);
+          auditedLine.push(line.data.uuid);
         }
       }
-    };
+    });
 
-    // 目标放置
-    const onDrop = (item, e) => {
-      // 增加节点
-      const dom = editorRef?.current?.dom.node;
-      const name = item?.initName || item?.name;
-      const { size = [] } = item || {};
-      const transform = editorRef?.current.paper.transform();
-      const info = transform.globalMatrix.split();
-      const bbox = dom.getBoundingClientRect();
-      if (e.clientX - bbox.x < 0 || e.clientY - bbox.y < 0) return;
-      const x = (e.clientX - bbox.x - info.dx) / info.scalex - (size[0] / 2) * info.scalex;
-      const y = (e.clientY - bbox.y - info.dy) / info.scalex - (size[1] / 2) * info.scalex;
-      editorRef?.current?.graph.node.addNode(
-        Object.assign({}, item, {
-          type: item?.type,
-          data: item?.data || {},
-          name,
-          x,
-          y,
-        }),
-      );
-    };
+    for (let key in nodes) {
+      if (!hasAuditedNodeUuids.includes(key)) {
+        const node = nodes[key];
+        node.data.className = `${node.data.className || ''} unrun`;
+        node.addClass('unrun');
+      }
+    }
 
-    return (
-      <div ref={editorWrapRef} className={`job-editor ${className || ''}`} {...editorStyle}>
-        {!previewMode && initReady && editorRef?.current && (
-          <LeftBar {...props} editor={editorRef.current} onDrop={onDrop} I18N={I18N} />
-        )}
-        <div className="job-content flow-editor-content">
-          {initReady && !!editorRef?.current && (
-            <TopBar {...props} previewMode={previewMode} editor={editorRef.current} I18N={I18N} />
-          )}
-          <div className="job-mm-editor" ref={editorDomRef} />
-          {!!showLengend &&
-            (LengendDom || (
-              <Row type="flex" className="mm-lengend">
-                <span className="success">
-                  <i />
-                  {getText('yunxingwancheng', I18N) || I18N.src.index.yunXingWanCheng}
-                </span>
-                <span className="running">
-                  <i />
-                  {getText('yunxingzhong', I18N) || I18N.src.index.yunXingZhong}
-                </span>
-                <span className="fail">
-                  <i />
-                  {getText('yunxingshibai', I18N) || I18N.src.index.yunXingShiBai}
-                </span>
-              </Row>
-            ))}
-        </div>
+    for (let key in lines) {
+      if (!auditedLine.includes(key)) {
+        const line = lines[key];
+        line.data.className = `${line.data.className || ''} unrun`;
+        line.addClass('unrun');
+      }
+    }
+  };
 
-        {/* 节点hover展示 */}
-        <div
-          style={{
-            position: 'fixed',
-            left: toolTipInfo?.textX,
-            top: toolTipInfo?.textY,
-            display: toolTipInfo?.textVisible ? 'block' : 'none',
-          }}
-        >
-          <Tooltip visible={true} title={`${toolTipInfo?.nowTextNode?.name}`} />
-        </div>
-
-        {dialogDom?.map((dialog) => {
-          return React.cloneElement(dialog, {
-            ...props,
-            dialogShowInfo,
-            disabled: previewMode,
-            editor: editorRef?.current,
-            onCancel: () => {
-              setDialogShowInfo(null);
-            },
-          });
-        })}
-      </div>
+  // 目标放置
+  const onDrop = (item, e) => {
+    // 增加节点
+    const dom = editorRef?.current?.dom.node;
+    const name = item?.initName || item?.name;
+    const { size = [] } = item || {};
+    const transform = editorRef?.current.paper.transform();
+    const info = transform.globalMatrix.split();
+    const bbox = dom.getBoundingClientRect();
+    if (e.clientX - bbox.x < 0 || e.clientY - bbox.y < 0) return;
+    const x = (e.clientX - bbox.x - info.dx) / info.scalex - (size[0] / 2) * info.scalex;
+    const y = (e.clientY - bbox.y - info.dy) / info.scalex - (size[1] / 2) * info.scalex;
+    editorRef?.current?.graph.node.addNode(
+      Object.assign({}, item, {
+        type: item?.type,
+        data: item?.data || {},
+        name,
+        x,
+        y,
+      }),
     );
-  }),
-);
+  };
+
+  return (
+    <div ref={editorWrapRef} className={`job-editor ${className || ''}`} {...editorStyle}>
+      {!previewMode && initReady && editorRef?.current && (
+        <LeftBar {...props} editor={editorRef.current} onDrop={onDrop} I18N={I18N} />
+      )}
+      <div className="job-content flow-editor-content">
+        {initReady && !!editorRef?.current && (
+          <TopBar {...props} previewMode={previewMode} editor={editorRef.current} I18N={I18N} />
+        )}
+        <div className="job-mm-editor" ref={editorDomRef} />
+        {!!showLengend &&
+          (LengendDom || (
+            <Row type="flex" className="mm-lengend">
+              <span className="success">
+                <i />
+                {getText('yunxingwancheng', I18N) || I18N.src.index.yunXingWanCheng}
+              </span>
+              <span className="running">
+                <i />
+                {getText('yunxingzhong', I18N) || I18N.src.index.yunXingZhong}
+              </span>
+              <span className="fail">
+                <i />
+                {getText('yunxingshibai', I18N) || I18N.src.index.yunXingShiBai}
+              </span>
+            </Row>
+          ))}
+      </div>
+
+      {/* 节点hover展示 */}
+      <div
+        style={{
+          position: 'fixed',
+          left: toolTipInfo?.textX,
+          top: toolTipInfo?.textY,
+          display: toolTipInfo?.textVisible ? 'block' : 'none',
+        }}
+      >
+        <Tooltip visible={true} title={`${toolTipInfo?.nowTextNode?.name}`} />
+      </div>
+
+      {dialogDom?.map((dialog) => {
+        return React.cloneElement(dialog, {
+          ...props,
+          dialogShowInfo,
+          disabled: previewMode,
+          editor: editorRef?.current,
+          onCancel: () => {
+            setDialogShowInfo(null);
+          },
+        });
+      })}
+    </div>
+  );
+});

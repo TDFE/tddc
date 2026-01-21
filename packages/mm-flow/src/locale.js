@@ -22,7 +22,7 @@ export const geTextName = (I18N) => {
     yunxingshibai: I18N.src.index.yunXingShiBai,
     bunengshezhishuruliu: I18N.src.index.buNengSheZhiShu2,
     bunengshezhishuchuliu: I18N.src.index.buNengSheZhiShu,
-    parseErr: I18N.src.locale.jieXiShuJuCuo,
+    parseErr: I18N.src.index.jieXiShuJuCuo,
     configErr: I18N.src.defaultdataconvert.peiZhiBuHeFa,
     configEmpty: I18N.src.defaultdataconvert.peiZhiBuNengWei,
     startOutputMiss: I18N.src.defaultdataconvert.kaiShiQueShaoShu,
