@@ -1,5 +1,4 @@
-import { Button } from 'antd';
-import { Ellipsis } from 'tntd';
+import { Ellipsis, Button } from 'tntd';
 import { NODE_TYPE_MAP } from './constants';
 import './index.less';
 
