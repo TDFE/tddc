@@ -7556,6 +7556,12 @@
         get: function () {
           return u.default;
         },
+      }),
+      Object.defineProperty(t, 'treeView', {
+        enumerable: !0,
+        get: function () {
+          return u.default;
+        },
       });
     var u = n(r(7630));
   })(),
