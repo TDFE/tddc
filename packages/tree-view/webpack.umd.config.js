@@ -9,7 +9,7 @@ module.exports = {
   output: {
     path: path.resolve(__dirname, 'umd'),
     filename: 'tree-view.min.js',
-    library: 'TreeView',
+    library: 'treeView',
     libraryTarget: 'umd',
     // 兼容 Node.js / Browser 环境的全局对象
     globalObject: 'typeof self !== "undefined" ? self : this',
