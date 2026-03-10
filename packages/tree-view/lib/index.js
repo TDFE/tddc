@@ -341,7 +341,16 @@
           return t;
         }
         r(9330);
-        var f = (0, i.memo)(function (t) {
+        var f = function (t, n) {
+            var r = t.x,
+              e = t.y,
+              u = t.unique,
+              o = n.x,
+              i = n.y,
+              a = n.unique;
+            return (r === o && e === i && u === a) || (parent, !1);
+          },
+          l = (0, i.memo)(function (t) {
             var n = t.x,
               r = t.y,
               e = t.component;
@@ -358,17 +367,8 @@
               { className: 'wrap-node', style: c({}, o) },
               e(t),
             );
-          }, l),
-          l = function (t, n) {
-            var r = t.x,
-              e = t.y,
-              u = t.unique,
-              o = n.x,
-              i = n.y,
-              a = n.unique;
-            return (r === o && e === i && u === a) || (parent, !1);
-          };
-        n.default = f;
+          }, f);
+        n.default = l;
       },
       9423(t, n) {
         'use strict';
@@ -7551,13 +7551,13 @@
     var t = e,
       n = r(4994);
     Object.defineProperty(t, '__esModule', { value: !0 }),
-      Object.defineProperty(t, 'default', {
+      Object.defineProperty(t, 'TreeView', {
         enumerable: !0,
         get: function () {
           return u.default;
         },
       }),
-      Object.defineProperty(t, 'treeView', {
+      Object.defineProperty(t, 'default', {
         enumerable: !0,
         get: function () {
           return u.default;
